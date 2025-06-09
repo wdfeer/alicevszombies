@@ -8,21 +8,22 @@ type World struct {
 	player        Entity
 	projectileTag map[Entity]bool
 	enemyTag      map[Entity]bool
-	positions     map[Entity]rl.Vector2
-	velocities    map[Entity]rl.Vector2
+	position      map[Entity]rl.Vector2
+	velocity      map[Entity]rl.Vector2
+	drag          map[Entity]float32
 }
 
 func NewWorld() World {
 	world := World{
 		projectileTag: make(map[Entity]bool),
 		enemyTag:      make(map[Entity]bool),
-		positions:     make(map[Entity]rl.Vector2),
-		velocities:    make(map[Entity]rl.Vector2),
+		position:      make(map[Entity]rl.Vector2),
+		velocity:      make(map[Entity]rl.Vector2),
 	}
 
 	world.player = world.NewEntity()
-	world.positions[world.player] = rl.Vector2Zero()
-	world.velocities[world.player] = rl.Vector2Zero()
+	world.position[world.player] = rl.Vector2Zero()
+	world.velocity[world.player] = rl.Vector2Zero()
 
 	return world
 }
@@ -34,6 +35,7 @@ func (world *World) NewEntity() Entity {
 }
 
 func (world *World) Update() {
+	updateInput(world)
 	updateVelocity(world)
 
 	render(world)

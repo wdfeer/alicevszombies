@@ -8,7 +8,7 @@ import (
 
 func render(world *World) {
 	camera := rl.Camera2D{}
-	camera.Target = world.positions[world.player]
+	camera.Target = world.position[world.player]
 	camera.Offset = util.GetHalfScreen()
 	camera.Zoom = 8
 
@@ -24,7 +24,7 @@ func render(world *World) {
 }
 
 func renderPlayer(world *World) {
-	util.DrawTextureCentered(assets.Textures["player"], world.positions[world.player])
+	util.DrawTextureCentered(assets.Textures["player"], world.position[world.player])
 }
 
 func renderEnemies(world *World) {
