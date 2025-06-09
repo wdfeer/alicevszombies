@@ -13,9 +13,18 @@ type World struct {
 }
 
 func NewWorld() World {
-	return World{
-		nextID: 1,
+	world := World{
+		projectileTag: make(map[Entity]bool),
+		enemyTag:      make(map[Entity]bool),
+		positions:     make(map[Entity]rl.Vector2),
+		velocities:    make(map[Entity]rl.Vector2),
 	}
+
+	world.player = world.NewEntity()
+	world.positions[world.player] = rl.Vector2Zero()
+	world.velocities[world.player] = rl.Vector2Zero()
+
+	return world
 }
 
 func (world *World) NewEntity() Entity {
@@ -27,9 +36,5 @@ func (world *World) NewEntity() Entity {
 func (world *World) Update() {
 	updateVelocity(world)
 
-	rl.BeginDrawing()
-	renderPlayer(world)
-	renderEnemies(world)
-	renderProjectiles(world)
-	rl.EndDrawing()
+	render(world)
 }
