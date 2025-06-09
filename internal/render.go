@@ -13,9 +13,8 @@ func render(world *World) {
 
 	rl.ClearBackground(rl.Black)
 
-	renderGrid()
-
 	rl.BeginMode2D(createCamera(world))
+	renderGrid()
 	renderPlayer(world)
 	renderEnemies(world)
 	renderProjectiles(world)
@@ -24,7 +23,7 @@ func render(world *World) {
 
 func renderGrid() {
 	for i := -25; i <= 25; i++ {
-		spacing := 1000 * int32(i)
+		spacing := 100 * int32(i)
 		rl.DrawLine(-9999, spacing, 9999, spacing, rl.RayWhite)
 		rl.DrawLine(spacing, -9999, spacing, 9999, rl.RayWhite)
 	}

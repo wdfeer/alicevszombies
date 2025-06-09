@@ -25,7 +25,7 @@ func NewWorld() World {
 	world.player = world.NewEntity()
 	world.position[world.player] = rl.Vector2Zero()
 	world.velocity[world.player] = rl.Vector2Zero()
-	world.drag[world.player] = 1
+	world.drag[world.player] = 10
 
 	return world
 }
