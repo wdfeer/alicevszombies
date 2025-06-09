@@ -2,7 +2,7 @@ package internal
 
 import rl "github.com/gen2brain/raylib-go/raylib"
 
-const PLAYER_SPEED = 30
+const PLAYER_ACCELERATION = 3000
 
 func updateInput(world *World) {
 	dir := rl.Vector2Zero()
@@ -19,7 +19,8 @@ func updateInput(world *World) {
 			dir = rl.Vector2Add(dir, v)
 		}
 	}
+	dir = rl.Vector2Normalize(dir)
 
-	delta := rl.Vector2Scale(dir, PLAYER_SPEED)
+	delta := rl.Vector2Scale(dir, PLAYER_ACCELERATION*rl.GetFrameTime())
 	world.velocity[world.player] = rl.Vector2Add(world.velocity[world.player], delta)
 }

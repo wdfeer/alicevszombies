@@ -7,5 +7,6 @@ func GetHalfScreen() rl.Vector2 {
 }
 
 func DrawTextureCentered(texture rl.Texture2D, center rl.Vector2) {
-	rl.DrawTexture(texture, int32(center.X)-texture.Width/2, int32(center.Y)-texture.Height/2, rl.White)
+	pos := rl.Vector2Subtract(center, rl.Vector2{float32(texture.Width) / 2, float32(texture.Height) / 2})
+	rl.DrawTextureV(texture, pos, rl.White)
 }
