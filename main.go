@@ -14,6 +14,7 @@ func main() {
 
 	rl.SetWindowState(rl.FlagWindowResizable + rl.FlagBorderlessWindowedMode)
 
+	internal.LoadAssets()
 	world := internal.NewWorld()
 	for !rl.WindowShouldClose() {
 		world.Update()
