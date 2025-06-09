@@ -17,8 +17,5 @@ func main() {
 	world := internal.NewWorld()
 	for !rl.WindowShouldClose() {
 		world.Update()
-		rl.BeginDrawing()
-		world.Render()
-		rl.EndDrawing()
 	}
 }

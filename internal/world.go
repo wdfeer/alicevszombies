@@ -1,5 +1,7 @@
 package internal
 
+import rl "github.com/gen2brain/raylib-go/raylib"
+
 type Entity = uint32
 type World struct {
 	nextID Entity
@@ -20,8 +22,7 @@ func (world *World) NewEntity() Entity {
 
 func (world *World) Update() {
 
-}
-
-func (world World) Render() {
-
+	rl.BeginDrawing()
+	world.Render()
+	rl.EndDrawing()
 }
