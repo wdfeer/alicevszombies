@@ -19,11 +19,13 @@ func NewWorld() World {
 		enemyTag:      make(map[Entity]bool),
 		position:      make(map[Entity]rl.Vector2),
 		velocity:      make(map[Entity]rl.Vector2),
+		drag:          make(map[Entity]float32),
 	}
 
 	world.player = world.NewEntity()
 	world.position[world.player] = rl.Vector2Zero()
 	world.velocity[world.player] = rl.Vector2Zero()
+	world.drag[world.player] = 1
 
 	return world
 }
@@ -36,6 +38,7 @@ func (world *World) NewEntity() Entity {
 
 func (world *World) Update() {
 	updateInput(world)
+	updateDrag(world)
 	updateVelocity(world)
 
 	render(world)
