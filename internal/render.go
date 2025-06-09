@@ -1,5 +1,13 @@
 package internal
 
-func (world World) Render() {
+func renderPlayer(world *World) {
+
+}
+
+func renderEnemies(world *World) {
+
+}
+
+func renderProjectiles(world *World) {
 
 }
