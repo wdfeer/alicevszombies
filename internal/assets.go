@@ -11,12 +11,18 @@ type Assets struct {
 func LoadAssets() {
 	println("Starting to load assets...")
 	assets = Assets{
-		Textures: map[string]rl.Texture2D{
-			"player":       rl.LoadTexture("assets/player.png"),
-			"player_walk0": rl.LoadTexture("assets/player_walk0.png"),
-			"player_walk1": rl.LoadTexture("assets/player_walk1.png"),
-			"cursor":       rl.LoadTexture("assets/cursor.png"),
-		},
+		Textures: make(map[string]rl.Texture2D),
 	}
+
+	loadTexture("player")
+	loadTexture("player_walk0")
+	loadTexture("player_walk1")
+	loadTexture("cursor")
+	loadTexture("doll1")
+
 	println("Assets loaded!")
+}
+
+func loadTexture(name string) {
+	assets.Textures[name] = rl.LoadTexture("assets/" + name + ".png")
 }
