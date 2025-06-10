@@ -15,6 +15,7 @@ func LoadAssets() {
 			"player":       rl.LoadTexture("assets/player.png"),
 			"player_walk0": rl.LoadTexture("assets/player_walk0.png"),
 			"player_walk1": rl.LoadTexture("assets/player_walk1.png"),
+			"cursor":       rl.LoadTexture("assets/cursor.png"),
 		},
 	}
 	println("Assets loaded!")

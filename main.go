@@ -13,6 +13,7 @@ func main() {
 	rl.SetTargetFPS(400)
 
 	rl.SetWindowState(rl.FlagWindowResizable + rl.FlagBorderlessWindowedMode)
+	rl.HideCursor()
 
 	internal.LoadAssets()
 	world := internal.NewWorld()

@@ -7,7 +7,6 @@ import (
 )
 
 func render(world *World) {
-
 	rl.BeginDrawing()
 	defer rl.EndDrawing()
 
@@ -19,6 +18,8 @@ func render(world *World) {
 	renderEnemies(world)
 	renderProjectiles(world)
 	rl.EndMode2D()
+
+	renderCursor()
 }
 
 func renderGrid() {
@@ -51,4 +52,8 @@ func renderEnemies(world *World) {
 
 func renderProjectiles(world *World) {
 	// TODO
+}
+
+func renderCursor() {
+	rl.DrawTextureEx(assets.Textures["cursor"], rl.GetMousePosition(), 0, 4, rl.White)
 }
