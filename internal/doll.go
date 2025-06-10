@@ -15,6 +15,10 @@ func newDoll(world *World) Entity {
 	return id
 }
 
+func updateDolls(world *World) {
+	// TODO: fly around the player
+}
+
 func renderDolls(world *World) {
 	for id := range world.dollTag {
 		util.DrawTextureCentered(assets.Textures[world.texture[id]], world.position[id])

@@ -35,7 +35,7 @@ func NewWorld() World {
 }
 
 func (world *World) Update() {
-	updateInput(world)
+	updatePlayer(world)
 	updateDrag(world)
 	updateVelocity(world)
 
