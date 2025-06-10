@@ -6,7 +6,7 @@ type Entity = uint32
 type World struct {
 	nextID        Entity
 	player        Entity
-	dollTag       map[Entity]bool
+	doll          map[Entity]dollData
 	projectileTag map[Entity]bool
 	enemyTag      map[Entity]bool
 	position      map[Entity]rl.Vector2
@@ -18,7 +18,7 @@ type World struct {
 
 func NewWorld() World {
 	world := World{
-		dollTag:       make(map[Entity]bool),
+		doll:          make(map[Entity]dollData),
 		projectileTag: make(map[Entity]bool),
 		enemyTag:      make(map[Entity]bool),
 		position:      make(map[Entity]rl.Vector2),
@@ -36,6 +36,7 @@ func NewWorld() World {
 
 func (world *World) Update() {
 	updatePlayer(world)
+	updateDolls(world)
 	updateDrag(world)
 	updateVelocity(world)
 
