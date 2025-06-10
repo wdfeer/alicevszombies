@@ -30,6 +30,7 @@ func NewWorld() World {
 
 	newPlayer(&world)
 	newDoll(&world)
+	newDoll(&world)
 
 	return world
 }
