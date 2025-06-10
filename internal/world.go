@@ -11,6 +11,8 @@ type World struct {
 	position      map[Entity]rl.Vector2
 	velocity      map[Entity]rl.Vector2
 	drag          map[Entity]float32
+	texture       map[Entity]string
+	animTimer     map[Entity]float32
 }
 
 func NewWorld() World {
@@ -20,6 +22,8 @@ func NewWorld() World {
 		position:      make(map[Entity]rl.Vector2),
 		velocity:      make(map[Entity]rl.Vector2),
 		drag:          make(map[Entity]float32),
+		texture:       make(map[Entity]string),
+		animTimer:     make(map[Entity]float32),
 	}
 
 	world.player = world.NewEntity()
@@ -41,5 +45,6 @@ func (world *World) Update() {
 	updateDrag(world)
 	updateVelocity(world)
 
+	UpdateAnimationData(world)
 	render(world)
 }

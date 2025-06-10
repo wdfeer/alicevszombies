@@ -42,7 +42,7 @@ func createCamera(world *World) rl.Camera2D {
 }
 
 func renderPlayer(world *World) {
-	util.DrawTextureCentered(assets.Textures["player"], world.position[world.player])
+	util.DrawTextureCentered(assets.Textures[world.texture[world.player]], world.position[world.player])
 }
 
 func renderEnemies(world *World) {
