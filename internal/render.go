@@ -16,8 +16,6 @@ func render(world *World) {
 	renderGrid()
 	renderPlayer(world)
 	renderDolls(world)
-	renderEnemies(world)
-	renderProjectiles(world)
 	rl.EndMode2D()
 
 	renderCursor()
@@ -41,24 +39,6 @@ func createCamera(world *World) rl.Camera2D {
 	camera.Offset = util.GetHalfScreen()
 	camera.Zoom = 8
 	return camera
-}
-
-func renderPlayer(world *World) {
-	util.DrawTextureCentered(assets.Textures[world.texture[world.player]], world.position[world.player])
-}
-
-func renderDolls(world *World) {
-	for id, _ := range world.dollTag {
-		util.DrawTextureCentered(assets.Textures["doll1"], world.position[id])
-	}
-}
-
-func renderEnemies(world *World) {
-	// TODO
-}
-
-func renderProjectiles(world *World) {
-	// TODO
 }
 
 func renderCursor() {

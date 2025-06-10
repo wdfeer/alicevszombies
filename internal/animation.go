@@ -2,7 +2,7 @@ package internal
 
 import rl "github.com/gen2brain/raylib-go/raylib"
 
-func UpdateAnimationData(world *World) {
+func updateAnimationData(world *World) {
 	updatePlayerTexture(world)
 }
 

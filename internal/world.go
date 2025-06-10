@@ -28,20 +28,10 @@ func NewWorld() World {
 		animTimer:     make(map[Entity]float32),
 	}
 
-	world.player = world.NewEntity()
-	world.position[world.player] = rl.Vector2Zero()
-	world.velocity[world.player] = rl.Vector2Zero()
-	world.drag[world.player] = 10
-
-	SpawnDoll(&world)
+	newPlayer(&world)
+	newDoll(&world)
 
 	return world
-}
-
-func (world *World) NewEntity() Entity {
-	id := world.nextID
-	world.nextID++
-	return id
 }
 
 func (world *World) Update() {
@@ -49,6 +39,12 @@ func (world *World) Update() {
 	updateDrag(world)
 	updateVelocity(world)
 
-	UpdateAnimationData(world)
+	updateAnimationData(world)
 	render(world)
+}
+
+func (world *World) newEntity() Entity {
+	id := world.nextID
+	world.nextID++
+	return id
 }
