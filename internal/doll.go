@@ -26,8 +26,9 @@ func updateDolls(world *World) {
 		world.targeting[doll] = updateDollTargeting(world, doll)
 
 		for enemy := range world.enemyTag {
-			if rl.Vector2Distance(world.position[doll], world.position[enemy]) < 24 {
+			if rl.Vector2Distance(world.position[doll], world.position[enemy]) < 16 {
 				damageWithCooldown(world, enemy, 1, doll)
+				break
 			}
 		}
 	}
