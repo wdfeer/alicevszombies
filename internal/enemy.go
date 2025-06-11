@@ -23,6 +23,7 @@ func newEnemy(world *World) Entity {
 	world.drag[id] = 6
 	world.texture[id] = "zombie1"
 	world.animTimer[id] = 0
+	world.hp[id] = newHP(3)
 	return id
 }
 

@@ -14,6 +14,7 @@ type World struct {
 	drag      map[Entity]float32
 	texture   map[Entity]string
 	animTimer map[Entity]float32
+	hp        map[Entity]HP
 }
 
 func NewWorld() World {
@@ -26,6 +27,7 @@ func NewWorld() World {
 		drag:      make(map[Entity]float32),
 		texture:   make(map[Entity]string),
 		animTimer: make(map[Entity]float32),
+		hp:        make(map[Entity]HP),
 	}
 
 	newPlayer(&world)
@@ -37,6 +39,7 @@ func NewWorld() World {
 }
 
 func (world *World) Update() {
+	updateHP(world)
 	updatePlayer(world)
 	updateDolls(world)
 	updateEnemies(world)
@@ -52,4 +55,20 @@ func (world *World) newEntity() Entity {
 	id := world.nextID
 	world.nextID++
 	return id
+}
+
+func (world *World) deleteEntity(entity Entity) {
+	delete(world.targeting, entity)
+	delete(world.dollTag, entity)
+	delete(world.enemyTag, entity)
+	delete(world.position, entity)
+	delete(world.velocity, entity)
+	delete(world.drag, entity)
+	delete(world.texture, entity)
+	delete(world.animTimer, entity)
+	delete(world.hp, entity)
+
+	if world.player == entity {
+		println("DELETING THE PLAYER!")
+	}
 }

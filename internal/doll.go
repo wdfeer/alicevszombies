@@ -22,8 +22,14 @@ func newDoll(world *World) Entity {
 }
 
 func updateDolls(world *World) {
-	for id := range world.dollTag {
-		world.targeting[id] = updateDollTargeting(world, id)
+	for doll := range world.dollTag {
+		world.targeting[doll] = updateDollTargeting(world, doll)
+
+		for enemy := range world.enemyTag {
+			if rl.Vector2Distance(world.position[doll], world.position[enemy]) < 24 {
+				damageWithCooldown(world, enemy, 1, doll)
+			}
+		}
 	}
 }
 
