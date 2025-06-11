@@ -4,6 +4,7 @@ import rl "github.com/gen2brain/raylib-go/raylib"
 
 func updateAnimationData(world *World) {
 	updatePlayerTexture(world)
+	updateDollTexture(world)
 	updateZombieTexture(world)
 }
 
@@ -22,6 +23,16 @@ func updatePlayerTexture(world *World) {
 	} else {
 		world.animTimer[world.player] = 0
 		world.texture[world.player] = "player"
+	}
+}
+
+func updateDollTexture(world *World) {
+	for id := range world.dollTag {
+		if world.velocity[id].X >= 0 {
+			world.texture[id] = "doll1"
+		} else {
+			world.texture[id] = "doll1_fliph"
+		}
 	}
 }
 

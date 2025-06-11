@@ -18,7 +18,7 @@ func LoadAssets() {
 	loadTexture("player_walk0")
 	loadTexture("player_walk1")
 	loadTexture("cursor")
-	loadTexture("doll1")
+	loadTextureAndFlipped("doll1")
 	loadTexture("zombie1")
 	loadTexture("zombie1_walk0")
 	loadTexture("zombie1_walk1")
@@ -28,4 +28,11 @@ func LoadAssets() {
 
 func loadTexture(name string) {
 	assets.Textures[name] = rl.LoadTexture("assets/" + name + ".png")
+}
+
+func loadTextureAndFlipped(name string) {
+	image := rl.LoadImage("assets/" + name + ".png")
+	assets.Textures[name] = rl.LoadTextureFromImage(image)
+	rl.ImageFlipHorizontal(image)
+	assets.Textures[name+"_fliph"] = rl.LoadTextureFromImage(image)
 }
