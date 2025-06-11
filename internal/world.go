@@ -4,30 +4,32 @@ import rl "github.com/gen2brain/raylib-go/raylib"
 
 type Entity = uint32
 type World struct {
-	nextID    Entity
-	player    Entity
-	targeting map[Entity]Targeting
-	dollTag   map[Entity]bool
-	enemyTag  map[Entity]bool
-	position  map[Entity]rl.Vector2
-	velocity  map[Entity]rl.Vector2
-	drag      map[Entity]float32
-	texture   map[Entity]string
-	animTimer map[Entity]float32
-	hp        map[Entity]HP
+	nextID     Entity
+	player     Entity
+	targeting  map[Entity]Targeting
+	dollTag    map[Entity]bool
+	enemyTag   map[Entity]bool
+	position   map[Entity]rl.Vector2
+	velocity   map[Entity]rl.Vector2
+	drag       map[Entity]float32
+	texture    map[Entity]string
+	animTimer  map[Entity]float32
+	hp         map[Entity]HP
+	combatText map[Entity]string
 }
 
 func NewWorld() World {
 	world := World{
-		targeting: make(map[Entity]Targeting),
-		dollTag:   make(map[Entity]bool),
-		enemyTag:  make(map[Entity]bool),
-		position:  make(map[Entity]rl.Vector2),
-		velocity:  make(map[Entity]rl.Vector2),
-		drag:      make(map[Entity]float32),
-		texture:   make(map[Entity]string),
-		animTimer: make(map[Entity]float32),
-		hp:        make(map[Entity]HP),
+		targeting:  make(map[Entity]Targeting),
+		dollTag:    make(map[Entity]bool),
+		enemyTag:   make(map[Entity]bool),
+		position:   make(map[Entity]rl.Vector2),
+		velocity:   make(map[Entity]rl.Vector2),
+		drag:       make(map[Entity]float32),
+		texture:    make(map[Entity]string),
+		animTimer:  make(map[Entity]float32),
+		hp:         make(map[Entity]HP),
+		combatText: make(map[Entity]string),
 	}
 
 	newPlayer(&world)
@@ -47,6 +49,7 @@ func (world *World) Update() {
 	updateDrag(world)
 	updateVelocity(world)
 
+	updateCombatText(world)
 	updateAnimationData(world)
 	render(world)
 }
@@ -67,6 +70,7 @@ func (world *World) deleteEntity(entity Entity) {
 	delete(world.texture, entity)
 	delete(world.animTimer, entity)
 	delete(world.hp, entity)
+	delete(world.combatText, entity)
 
 	if world.player == entity {
 		println("DELETING THE PLAYER!")

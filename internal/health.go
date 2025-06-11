@@ -1,6 +1,9 @@
 package internal
 
-import rl "github.com/gen2brain/raylib-go/raylib"
+import (
+	"fmt"
+	rl "github.com/gen2brain/raylib-go/raylib"
+)
 
 type HP struct {
 	val              float32
@@ -33,7 +36,9 @@ func updateHP(world *World) {
 func damage(world *World, id Entity, amount float32) {
 	hp := world.hp[id]
 	hp.val -= amount
-	println("Entity with id", id, "damaged by", amount)
+
+	newCombatText(world, world.position[id], fmt.Sprint(amount))
+
 	if hp.val <= 0 {
 		println("Entity with id", id, "killed!")
 		world.deleteEntity(id)
@@ -50,4 +55,3 @@ func damageWithCooldown(world *World, id Entity, amount float32, attacker Entity
 		damage(world, id, amount)
 	}
 }
-

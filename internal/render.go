@@ -17,6 +17,7 @@ func render(world *World) {
 	renderPlayer(world)
 	renderEnemies(world)
 	renderDolls(world)
+	renderCombatText(world)
 	rl.EndMode2D()
 
 	renderCursor()
