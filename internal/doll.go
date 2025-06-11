@@ -61,7 +61,7 @@ func updateDollTargeting(world *World, doll Entity) Targeting {
 }
 
 func renderDolls(world *World) {
-	for id := range world.targeting {
+	for id := range world.dollTag {
 		util.DrawTextureCentered(assets.Textures[world.texture[id]], world.position[id])
 	}
 }
