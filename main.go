@@ -7,10 +7,12 @@ import (
 )
 
 func main() {
-	rl.InitWindow(1920, 1080, "alicevszombies")
+	monitor := rl.GetCurrentMonitor()
+
+	rl.InitWindow(int32(rl.GetMonitorWidth(monitor)), int32(rl.GetMonitorHeight(monitor)), "alicevszombies")
 	defer rl.CloseWindow()
 
-	rl.SetTargetFPS(400)
+	rl.SetTargetFPS(int32(rl.GetMonitorRefreshRate(monitor)))
 
 	rl.SetWindowState(rl.FlagWindowResizable + rl.FlagBorderlessWindowedMode)
 	rl.HideCursor()

@@ -43,8 +43,7 @@ func NewWorld() World {
 var dt float32
 
 func (world *World) Update() {
-	// To fix weird bug that stops dolls from moving
-	dt = max(1e-9, rl.GetFrameTime())
+	dt = rl.Clamp(rl.GetFrameTime(), 0.002, 0.05)
 
 	updateHP(world)
 	updatePlayer(world)
