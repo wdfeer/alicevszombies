@@ -33,17 +33,31 @@ func updateDolls(world *World) {
 	}
 }
 
-func updateDollTargeting(world *World, id Entity) Targeting {
-	doll := world.targeting[id]
-	doll.targetingTimer -= rl.GetFrameTime()
-	if doll.targetingTimer <= 0 || rl.Vector2Distance(doll.target, world.position[id]) < 2 {
-		doll.targetingTimer = 0.4
+func updateDollTargeting(world *World, doll Entity) Targeting {
+	targeting := world.targeting[doll]
+	targeting.targetingTimer -= rl.GetFrameTime()
+	if targeting.targetingTimer <= 0 || rl.Vector2Distance(targeting.target, world.position[doll]) < 2 {
+		targeting.targetingTimer = 0.4
 
-		plPos := world.position[world.player]
-		delta := rl.Vector2Rotate(rl.Vector2{X: 20, Y: 0}, rand.Float32()*math.Pi*2)
-		doll.target = rl.Vector2Add(plPos, delta)
+		var target rl.Vector2
+		enemyTargetFound := false
+
+		for enemy := range world.enemyTag {
+			if rl.Vector2Distance(world.position[doll], world.position[enemy]) < 160 {
+				target = world.position[enemy]
+				enemyTargetFound = true
+				break
+			}
+		}
+		if !enemyTargetFound {
+			plPos := world.position[world.player]
+			delta := rl.Vector2Rotate(rl.Vector2{X: 20, Y: 0}, rand.Float32()*math.Pi*2)
+			target = rl.Vector2Add(plPos, delta)
+		}
+
+		targeting.target = target
 	}
-	return doll
+	return targeting
 }
 
 func renderDolls(world *World) {
