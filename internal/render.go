@@ -15,6 +15,7 @@ func render(world *World) {
 	rl.BeginMode2D(createCamera(world))
 	renderGrid()
 	renderPlayer(world)
+	renderEnemies(world)
 	renderDolls(world)
 	rl.EndMode2D()
 

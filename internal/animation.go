@@ -4,6 +4,7 @@ import rl "github.com/gen2brain/raylib-go/raylib"
 
 func updateAnimationData(world *World) {
 	updatePlayerTexture(world)
+	updateZombieTexture(world)
 }
 
 func updatePlayerTexture(world *World) {
@@ -21,5 +22,25 @@ func updatePlayerTexture(world *World) {
 	} else {
 		world.animTimer[world.player] = 0
 		world.texture[world.player] = "player"
+	}
+}
+
+func updateZombieTexture(world *World) {
+	for id := range world.enemyTag {
+		if rl.Vector2Length(world.velocity[id]) > 0 {
+			if world.animTimer[id] > 0.15 {
+				world.animTimer[id] = 0
+				if world.texture[id] == "zombie_walk0" {
+					world.texture[id] = "zombie_walk1"
+				} else {
+					world.texture[id] = "zombie_walk0"
+				}
+			} else {
+				world.animTimer[id] = world.animTimer[id] + rl.GetFrameTime()
+			}
+		} else {
+			world.animTimer[id] = 0
+			world.texture[id] = "zombie"
+		}
 	}
 }

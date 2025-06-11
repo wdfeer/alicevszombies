@@ -19,6 +19,9 @@ func LoadAssets() {
 	loadTexture("player_walk1")
 	loadTexture("cursor")
 	loadTexture("doll1")
+	loadTexture("zombie1")
+	loadTexture("zombie1_walk0")
+	loadTexture("zombie1_walk1")
 
 	println("Assets loaded!")
 }

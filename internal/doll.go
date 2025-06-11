@@ -8,14 +8,12 @@ import (
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
-type dollData struct {
-	target         rl.Vector2
-	targetingTimer float32
-}
-
 func newDoll(world *World) Entity {
 	id := world.newEntity()
-	world.doll[id] = dollData{}
+	world.dollTag[id] = true
+	world.targeting[id] = Targeting{
+		accel: 350,
+	}
 	world.position[id] = rl.Vector2Zero()
 	world.velocity[id] = rl.Vector2Zero()
 	world.drag[id] = 1
@@ -24,20 +22,16 @@ func newDoll(world *World) Entity {
 }
 
 func updateDolls(world *World) {
-	for id := range world.doll {
-		world.doll[id] = updateTargetingData(world, id)
-
-		delta := rl.Vector2Subtract(world.doll[id].target, world.position[id])
-		dir := rl.Vector2Normalize(delta)
-		world.velocity[id] = rl.Vector2Add(world.velocity[id], rl.Vector2Scale(dir, 350*rl.GetFrameTime()))
+	for id := range world.dollTag {
+		world.targeting[id] = updateDollTargeting(world, id)
 	}
 }
 
-func updateTargetingData(world *World, id Entity) dollData {
-	doll := world.doll[id]
-	doll.targetingTimer += rl.GetFrameTime()
-	if doll.targetingTimer > 0.4 || rl.Vector2Distance(doll.target, world.position[id]) < 2 {
-		doll.targetingTimer = 0
+func updateDollTargeting(world *World, id Entity) Targeting {
+	doll := world.targeting[id]
+	doll.targetingTimer -= rl.GetFrameTime()
+	if doll.targetingTimer <= 0 || rl.Vector2Distance(doll.target, world.position[id]) < 2 {
+		doll.targetingTimer = 0.4
 
 		plPos := world.position[world.player]
 		delta := rl.Vector2Rotate(rl.Vector2{X: 20, Y: 0}, rand.Float32()*math.Pi*2)
@@ -47,7 +41,7 @@ func updateTargetingData(world *World, id Entity) dollData {
 }
 
 func renderDolls(world *World) {
-	for id := range world.doll {
+	for id := range world.targeting {
 		util.DrawTextureCentered(assets.Textures[world.texture[id]], world.position[id])
 	}
 }
