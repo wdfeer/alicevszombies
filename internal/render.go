@@ -14,13 +14,19 @@ func render(world *World) {
 
 	rl.BeginMode2D(createCamera(world))
 	renderGrid()
-	renderPlayer(world)
-	renderEnemies(world)
-	renderDolls(world)
+	renderTextures(world)
 	renderCombatText(world)
 	rl.EndMode2D()
 
 	renderCursor()
+}
+
+func renderTextures(world *World) {
+	for id, texture := range world.texture {
+		if pos, exists := world.position[id]; exists {
+			util.DrawTextureCentered(assets.Textures[texture], pos)
+		}
+	}
 }
 
 func renderGrid() {

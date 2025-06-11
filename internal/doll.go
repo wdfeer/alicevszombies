@@ -1,7 +1,6 @@
 package internal
 
 import (
-	"alicevszombies/internal/util"
 	"math"
 	"math/rand"
 
@@ -50,19 +49,13 @@ func updateDollTargeting(world *World, doll Entity) Targeting {
 				break
 			}
 		}
+
 		if !enemyTargetFound {
-			plPos := world.position[world.player]
 			delta := rl.Vector2Rotate(rl.Vector2{X: 20, Y: 0}, rand.Float32()*math.Pi*2)
-			target = rl.Vector2Add(plPos, delta)
+			target = rl.Vector2Add(world.position[world.player], delta)
 		}
 
 		targeting.target = target
 	}
 	return targeting
-}
-
-func renderDolls(world *World) {
-	for id := range world.dollTag {
-		util.DrawTextureCentered(assets.Textures[world.texture[id]], world.position[id])
-	}
 }

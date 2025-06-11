@@ -1,8 +1,6 @@
 package internal
 
 import (
-	"alicevszombies/internal/util"
-
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
@@ -36,8 +34,4 @@ func updatePlayer(world *World) {
 
 	delta := rl.Vector2Scale(dir, PLAYER_ACCELERATION*rl.GetFrameTime())
 	world.velocity[world.player] = rl.Vector2Add(world.velocity[world.player], delta)
-}
-
-func renderPlayer(world *World) {
-	util.DrawTextureCentered(assets.Textures[world.texture[world.player]], world.position[world.player])
 }

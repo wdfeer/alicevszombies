@@ -1,7 +1,6 @@
 package internal
 
 import (
-	"alicevszombies/internal/util"
 	"math/rand"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
@@ -42,11 +41,5 @@ func updateEnemies(world *World) {
 			targeting.target = world.position[world.player]
 		}
 		world.targeting[id] = targeting
-	}
-}
-
-func renderEnemies(world *World) {
-	for id := range world.enemyTag {
-		util.DrawTextureCentered(assets.Textures[world.texture[id]], world.position[id])
 	}
 }
