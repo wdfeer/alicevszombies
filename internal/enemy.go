@@ -27,7 +27,7 @@ func newEnemy(world *World) Entity {
 }
 
 func updateEnemies(world *World) {
-	enemySpawnTimer -= rl.GetFrameTime()
+	enemySpawnTimer -= dt
 	if enemySpawnTimer <= 0 {
 		newEnemy(world)
 		enemySpawnTimer = 2
@@ -35,7 +35,7 @@ func updateEnemies(world *World) {
 
 	for id := range world.enemyTag {
 		targeting := world.targeting[id]
-		targeting.targetingTimer -= rl.GetFrameTime()
+		targeting.targetingTimer -= dt
 		if targeting.targetingTimer <= 0 || rl.Vector2Distance(targeting.target, world.position[id]) < 2 {
 			targeting.targetingTimer = 0.4
 			targeting.target = world.position[world.player]

@@ -12,6 +12,6 @@ func updateTargetingMovement(world *World) {
 	for id, data := range world.targeting {
 		delta := rl.Vector2Subtract(data.target, world.position[id])
 		dir := rl.Vector2Normalize(delta)
-		world.velocity[id] = rl.Vector2Add(world.velocity[id], rl.Vector2Scale(dir, data.accel*rl.GetFrameTime()))
+		world.velocity[id] = rl.Vector2Add(world.velocity[id], rl.Vector2Scale(dir, data.accel*dt))
 	}
 }

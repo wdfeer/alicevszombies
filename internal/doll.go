@@ -35,7 +35,7 @@ func updateDolls(world *World) {
 
 func updateDollTargeting(world *World, doll Entity) Targeting {
 	targeting := world.targeting[doll]
-	targeting.targetingTimer -= rl.GetFrameTime()
+	targeting.targetingTimer -= dt
 	if targeting.targetingTimer <= 0 || rl.Vector2Distance(targeting.target, world.position[doll]) < 2 {
 		targeting.targetingTimer = 0.4
 

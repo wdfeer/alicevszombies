@@ -2,7 +2,6 @@ package internal
 
 import (
 	"fmt"
-	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
 type HP struct {
@@ -22,7 +21,7 @@ func updateHP(world *World) {
 		newMap := hp.attackerCooldown
 
 		for id := range newMap {
-			newMap[id] -= rl.GetFrameTime()
+			newMap[id] -= dt
 		}
 
 		world.hp[id] = HP{

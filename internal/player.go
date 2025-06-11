@@ -32,6 +32,6 @@ func updatePlayer(world *World) {
 	}
 	dir = rl.Vector2Normalize(dir)
 
-	delta := rl.Vector2Scale(dir, PLAYER_ACCELERATION*rl.GetFrameTime())
+	delta := rl.Vector2Scale(dir, PLAYER_ACCELERATION*dt)
 	world.velocity[world.player] = rl.Vector2Add(world.velocity[world.player], delta)
 }

@@ -17,7 +17,7 @@ func updatePlayerTexture(world *World) {
 				world.texture[world.player] = "player_walk0"
 			}
 		} else {
-			world.animTimer[world.player] = world.animTimer[world.player] + rl.GetFrameTime()
+			world.animTimer[world.player] = world.animTimer[world.player] + dt
 		}
 	} else {
 		world.animTimer[world.player] = 0
@@ -36,7 +36,7 @@ func updateZombieTexture(world *World) {
 					world.texture[id] = "zombie1_walk0"
 				}
 			} else {
-				world.animTimer[id] = world.animTimer[id] + rl.GetFrameTime()
+				world.animTimer[id] = world.animTimer[id] + dt
 			}
 		} else {
 			world.animTimer[id] = 0
