@@ -6,7 +6,19 @@ import (
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
-var enemySpawnTimer float32 = 2
+type EnemySpawner struct {
+	wave           uint32
+	enemiesToSpawn uint32
+	spawnTimer     float32
+}
+
+func newEnemySpawner() EnemySpawner {
+	return EnemySpawner{
+		wave:           0,
+		enemiesToSpawn: 0,
+		spawnTimer:     0,
+	}
+}
 
 func newEnemy(world *World) Entity {
 	id := world.newEntity()
@@ -26,13 +38,25 @@ func newEnemy(world *World) Entity {
 	return id
 }
 
-func updateEnemies(world *World) {
-	enemySpawnTimer -= dt
-	if enemySpawnTimer <= 0 {
-		newEnemy(world)
-		enemySpawnTimer = 2
+func updateEnemySpawner(world *World) {
+	spawner := world.enemySpawner
+
+	if spawner.enemiesToSpawn <= 0 {
+		spawner.wave++
+		spawner.enemiesToSpawn = 1 + spawner.wave*2
 	}
 
+	spawner.spawnTimer = spawner.spawnTimer - dt
+	if spawner.spawnTimer <= 0 {
+		newEnemy(world)
+		spawner.spawnTimer = 2 - min(1, float32(spawner.wave)/10)
+		spawner.enemiesToSpawn--
+	}
+
+	world.enemySpawner = spawner
+}
+
+func updateEnemies(world *World) {
 	for id := range world.enemyTag {
 		targeting := world.targeting[id]
 		targeting.targetingTimer -= dt
