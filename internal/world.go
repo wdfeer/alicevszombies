@@ -6,6 +6,7 @@ type Entity = uint32
 type World struct {
 	nextID       Entity
 	player       Entity
+	playerData   PlayerData
 	enemySpawner EnemySpawner
 	targeting    map[Entity]Targeting
 	dollTag      map[Entity]bool

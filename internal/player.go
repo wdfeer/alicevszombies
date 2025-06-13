@@ -4,12 +4,19 @@ import (
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
+type PlayerData struct {
+	mana float32
+}
+
 func newPlayer(world *World) Entity {
 	world.player = world.newEntity()
 	world.position[world.player] = rl.Vector2Zero()
 	world.velocity[world.player] = rl.Vector2Zero()
 	world.drag[world.player] = 10
 	world.hp[world.player] = newHP(10)
+	world.playerData = PlayerData{
+		mana: 0,
+	}
 
 	return world.player
 }

@@ -17,9 +17,16 @@ func renderUI(world *World) {
 		rl.DrawText(str, int32(pos.X), int32(pos.Y), 32, rl.White)
 	}
 
-	{ // Hp bar
+	{ // HP bar
 		str := "HP: " + fmt.Sprint(world.hp[world.player].val)
 		center := rl.Vector2{X: float32(rl.GetScreenWidth()) / 2, Y: float32(rl.GetScreenHeight())/2 + 200}
+		pos := util.CenterText(str, 32, center)
+		rl.DrawText(str, int32(pos.X), int32(pos.Y), 32, rl.White)
+	}
+
+	{ // MP bar
+		str := "MP: " + fmt.Sprint(world.playerData.mana)
+		center := rl.Vector2{X: float32(rl.GetScreenWidth()) / 2, Y: float32(rl.GetScreenHeight())/2 + 250}
 		pos := util.CenterText(str, 32, center)
 		rl.DrawText(str, int32(pos.X), int32(pos.Y), 32, rl.White)
 	}
