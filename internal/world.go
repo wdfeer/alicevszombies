@@ -50,6 +50,7 @@ func (world *World) Update() {
 
 	updateHP(world)
 	updatePlayer(world)
+	updateSpells(world)
 	updateDolls(world)
 	updateEnemySpawner(world)
 	updateEnemies(world)
