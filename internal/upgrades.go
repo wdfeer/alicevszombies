@@ -4,6 +4,7 @@ type Upgrade = uint8
 
 const (
 	DOLL_DAMAGE Upgrade = iota
+	DOLL_SPEED
 )
 
 func incrementUpgrade(world *World, upgrade Upgrade) {

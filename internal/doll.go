@@ -7,11 +7,13 @@ import (
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
+const BASE_DOLL_ACCELERATION = 350
+
 func newDoll(world *World) Entity {
 	id := world.newEntity()
 	world.dollTag[id] = true
 	world.targeting[id] = Targeting{
-		accel: 350,
+		accel: BASE_DOLL_ACCELERATION,
 	}
 	world.position[id] = rl.Vector2Zero()
 	world.velocity[id] = rl.Vector2Zero()
@@ -35,6 +37,7 @@ func updateDolls(world *World) {
 
 func updateDollTargeting(world *World, doll Entity) Targeting {
 	targeting := world.targeting[doll]
+	targeting.accel = float32(BASE_DOLL_ACCELERATION + 10*world.playerData.upgrades[DOLL_SPEED])
 	targeting.targetingTimer -= dt
 	if targeting.targetingTimer <= 0 || rl.Vector2Distance(targeting.target, world.position[doll]) < 2 {
 		targeting.targetingTimer = 0.4
