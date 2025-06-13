@@ -35,11 +35,14 @@ func renderUI(world *World) {
 		util.DrawTextureCenteredScaled(assets.Textures["heal_icon"],
 			rl.Vector2{X: 200, Y: float32(rl.GetScreenHeight())/2 - 50},
 			4)
+		util.DrawTextCentered("H", 40, rl.Vector2{X: 250, Y: float32(rl.GetScreenHeight())/2 - 50})
 		util.DrawTextureCenteredScaled(assets.Textures["doll_icon"],
 			rl.Vector2{X: 200, Y: float32(rl.GetScreenHeight()) / 2},
 			4)
+		util.DrawTextCentered("J", 40, rl.Vector2{X: 250, Y: float32(rl.GetScreenHeight()) / 2})
 		util.DrawTextureCenteredScaled(assets.Textures["pitem_icon"],
 			rl.Vector2{X: 200, Y: float32(rl.GetScreenHeight())/2 + 50},
 			4)
+		util.DrawTextCentered("K", 40, rl.Vector2{X: 250, Y: float32(rl.GetScreenHeight())/2 + 50})
 	}
 }
