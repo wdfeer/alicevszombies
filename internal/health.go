@@ -36,12 +36,21 @@ func updateHP(world *World) {
 	}
 }
 
+func heal(world *World, id Entity, amount float32) {
+	damage(world, id, -amount)
+}
+
 func damage(world *World, id Entity, dmg float32) {
 	hp := world.hp[id]
 	hp.val -= dmg
 
 	ctextID := newCombatText(world, world.position[id], fmt.Sprint(dmg))
-	if id == world.player {
+	if dmg < 0 {
+		world.combatText[ctextID] = CombatText{
+			text: world.combatText[ctextID].text,
+			hue:  rl.Green,
+		}
+	} else if id == world.player {
 		world.combatText[ctextID] = CombatText{
 			text: world.combatText[ctextID].text,
 			hue:  rl.Red,
