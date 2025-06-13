@@ -37,7 +37,16 @@ func updateHP(world *World) {
 }
 
 func heal(world *World, id Entity, amount float32) {
-	damage(world, id, -amount)
+	hp := world.hp[id]
+	hp.val += amount
+
+	ctextID := newCombatText(world, world.position[id], fmt.Sprint(amount))
+	world.combatText[ctextID] = CombatText{
+		text: world.combatText[ctextID].text,
+		hue:  rl.Green,
+	}
+
+	world.hp[id] = hp
 }
 
 func damage(world *World, id Entity, dmg float32) {
