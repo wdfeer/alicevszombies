@@ -11,6 +11,9 @@ func updateSpells(world *World) {
 		} else if rl.IsKeyPressed(rl.KeyTwo) {
 			heal(world, world.player, 5)
 			world.playerData.mana -= 10
+		} else if rl.IsKeyPressed(rl.KeyThree) {
+			world.playerData.dollDamage += 0.25
+			world.playerData.mana -= 10
 		}
 	}
 }

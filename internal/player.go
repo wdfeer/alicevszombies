@@ -5,7 +5,8 @@ import (
 )
 
 type PlayerData struct {
-	mana float32
+	mana       float32
+	dollDamage float32
 }
 
 func newPlayer(world *World) Entity {
@@ -19,7 +20,8 @@ func newPlayer(world *World) Entity {
 		attackerCooldown: make(map[Entity]float32),
 	}
 	world.playerData = PlayerData{
-		mana: 0,
+		mana:       0,
+		dollDamage: 1,
 	}
 
 	return world.player
