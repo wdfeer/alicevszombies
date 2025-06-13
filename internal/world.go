@@ -15,7 +15,7 @@ type World struct {
 	texture    map[Entity]string
 	animTimer  map[Entity]float32
 	hp         map[Entity]HP
-	combatText map[Entity]string
+	combatText map[Entity]CombatText
 }
 
 func NewWorld() World {
@@ -29,7 +29,7 @@ func NewWorld() World {
 		texture:    make(map[Entity]string),
 		animTimer:  make(map[Entity]float32),
 		hp:         make(map[Entity]HP),
-		combatText: make(map[Entity]string),
+		combatText: make(map[Entity]CombatText),
 	}
 
 	newPlayer(&world)

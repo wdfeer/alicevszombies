@@ -2,6 +2,8 @@ package internal
 
 import (
 	"fmt"
+
+	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
 type HP struct {
@@ -36,7 +38,13 @@ func damage(world *World, id Entity, dmg float32) {
 	hp := world.hp[id]
 	hp.val -= dmg
 
-	newCombatText(world, world.position[id], fmt.Sprint(dmg))
+	ctextID := newCombatText(world, world.position[id], fmt.Sprint(dmg))
+	if id == world.player {
+		world.combatText[ctextID] = CombatText{
+			text: world.combatText[ctextID].text,
+			hue:  rl.Red,
+		}
+	}
 
 	if hp.val <= 0 {
 		println("Entity with id", id, "killed!")
