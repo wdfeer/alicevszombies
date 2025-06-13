@@ -80,6 +80,7 @@ func (world *World) deleteEntity(entity Entity) {
 	delete(world.combatText, entity)
 
 	if world.player == entity {
-		println("DELETING THE PLAYER!")
+		println("Player died! Closing the game.")
+		rl.CloseWindow()
 	}
 }
