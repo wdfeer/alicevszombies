@@ -12,22 +12,34 @@ func renderUI(world *World) {
 
 	{ // Wave counter
 		str := "Wave " + fmt.Sprint(world.enemySpawner.wave)
-		center := rl.Vector2{X: float32(rl.GetScreenWidth()) / 2, Y: float32(rl.GetScreenHeight())/2 - 200}
+		center := rl.Vector2{X: float32(rl.GetScreenWidth()) / 2, Y: 200}
 		pos := util.CenterText(str, 32, center)
 		rl.DrawText(str, int32(pos.X), int32(pos.Y), 32, rl.White)
 	}
 
 	{ // HP bar
 		str := "HP: " + fmt.Sprint(world.hp[world.player].val)
-		center := rl.Vector2{X: float32(rl.GetScreenWidth()) / 2, Y: float32(rl.GetScreenHeight())/2 + 200}
+		center := rl.Vector2{X: float32(rl.GetScreenWidth()) / 2, Y: float32(rl.GetScreenHeight()) - 200}
 		pos := util.CenterText(str, 32, center)
 		rl.DrawText(str, int32(pos.X), int32(pos.Y), 32, rl.White)
 	}
 
 	{ // MP bar
 		str := "MP: " + fmt.Sprint(world.playerData.mana)
-		center := rl.Vector2{X: float32(rl.GetScreenWidth()) / 2, Y: float32(rl.GetScreenHeight())/2 + 250}
+		center := rl.Vector2{X: float32(rl.GetScreenWidth()) / 2, Y: float32(rl.GetScreenHeight()) - 250}
 		pos := util.CenterText(str, 32, center)
 		rl.DrawText(str, int32(pos.X), int32(pos.Y), 32, rl.White)
+	}
+
+	{ // Spell bar
+		util.DrawTextureCenteredScaled(assets.Textures["heal_icon"],
+			rl.Vector2{X: 200, Y: float32(rl.GetScreenHeight())/2 - 50},
+			4)
+		util.DrawTextureCenteredScaled(assets.Textures["doll_icon"],
+			rl.Vector2{X: 200, Y: float32(rl.GetScreenHeight()) / 2},
+			4)
+		util.DrawTextureCenteredScaled(assets.Textures["pitem_icon"],
+			rl.Vector2{X: 200, Y: float32(rl.GetScreenHeight())/2 + 50},
+			4)
 	}
 }

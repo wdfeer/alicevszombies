@@ -23,6 +23,10 @@ func LoadAssets() {
 	loadTexture("zombie1_walk0")
 	loadTexture("zombie1_walk1")
 
+	loadTexture("heal_icon")
+	loadTexture("doll_icon")
+	loadTexture("pitem_icon")
+
 	println("Assets loaded!")
 }
 
