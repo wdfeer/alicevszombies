@@ -33,16 +33,19 @@ func renderUI(world *World) {
 
 	{ // Spell bar
 		util.DrawTextureCenteredScaled(assets.Textures["heal_icon"],
-			rl.Vector2{X: 200, Y: float32(rl.GetScreenHeight())/2 - 50},
+			rl.Vector2{X: 200, Y: float32(rl.GetScreenHeight())/2 - 80},
 			4)
-		util.DrawTextCentered("H", 40, rl.Vector2{X: 250, Y: float32(rl.GetScreenHeight())/2 - 50})
+		util.DrawTextCentered("H", 40, rl.Vector2{X: 250, Y: float32(rl.GetScreenHeight())/2 - 80})
+		util.DrawTextCentered("5 MP", 20, rl.Vector2{X: 200, Y: float32(rl.GetScreenHeight())/2 - 50})
 		util.DrawTextureCenteredScaled(assets.Textures["doll_icon"],
 			rl.Vector2{X: 200, Y: float32(rl.GetScreenHeight()) / 2},
 			4)
 		util.DrawTextCentered("J", 40, rl.Vector2{X: 250, Y: float32(rl.GetScreenHeight()) / 2})
+		util.DrawTextCentered("10 MP", 20, rl.Vector2{X: 200, Y: float32(rl.GetScreenHeight())/2 + 30})
 		util.DrawTextureCenteredScaled(assets.Textures["pitem_icon"],
-			rl.Vector2{X: 200, Y: float32(rl.GetScreenHeight())/2 + 50},
+			rl.Vector2{X: 200, Y: float32(rl.GetScreenHeight())/2 + 80},
 			4)
-		util.DrawTextCentered("K", 40, rl.Vector2{X: 250, Y: float32(rl.GetScreenHeight())/2 + 50})
+		util.DrawTextCentered("K", 40, rl.Vector2{X: 250, Y: float32(rl.GetScreenHeight())/2 + 80})
+		util.DrawTextCentered("10 MP", 20, rl.Vector2{X: 200, Y: float32(rl.GetScreenHeight())/2 + 110})
 	}
 }
