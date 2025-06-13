@@ -18,7 +18,7 @@ func render(world *World) {
 	renderCombatText(world)
 	rl.EndMode2D()
 
-	renderCursor()
+	renderUI(world)
 }
 
 func renderTextures(world *World) {
@@ -47,8 +47,4 @@ func createCamera(world *World) rl.Camera2D {
 	camera.Offset = util.GetHalfScreen()
 	camera.Zoom = 8
 	return camera
-}
-
-func renderCursor() {
-	rl.DrawTextureEx(assets.Textures["cursor"], rl.GetMousePosition(), 0, 4, rl.White)
 }

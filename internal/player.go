@@ -9,6 +9,7 @@ func newPlayer(world *World) Entity {
 	world.position[world.player] = rl.Vector2Zero()
 	world.velocity[world.player] = rl.Vector2Zero()
 	world.drag[world.player] = 10
+	world.hp[world.player] = newHP(10)
 
 	return world.player
 }
