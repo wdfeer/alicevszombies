@@ -41,5 +41,9 @@ func updateEnemies(world *World) {
 			targeting.target = world.position[world.player]
 		}
 		world.targeting[id] = targeting
+
+		if rl.Vector2Distance(world.position[id], world.position[world.player]) < 24 {
+			damageWithCooldown(world, world.player, 1, id)
+		}
 	}
 }

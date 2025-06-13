@@ -32,11 +32,11 @@ func updateHP(world *World) {
 	}
 }
 
-func damage(world *World, id Entity, amount float32) {
+func damage(world *World, id Entity, dmg float32) {
 	hp := world.hp[id]
-	hp.val -= amount
+	hp.val -= dmg
 
-	newCombatText(world, world.position[id], fmt.Sprint(amount))
+	newCombatText(world, world.position[id], fmt.Sprint(dmg))
 
 	if hp.val <= 0 {
 		println("Entity with id", id, "killed!")
@@ -46,11 +46,11 @@ func damage(world *World, id Entity, amount float32) {
 	}
 }
 
-func damageWithCooldown(world *World, id Entity, amount float32, attacker Entity) {
+func damageWithCooldown(world *World, id Entity, dmg float32, attacker Entity) {
 	hp := world.hp[id]
 	if cooldown, exists := hp.attackerCooldown[attacker]; !exists || cooldown <= 0 {
 		hp.attackerCooldown[attacker] = 0.5
 		world.hp[id] = hp
-		damage(world, id, amount)
+		damage(world, id, dmg)
 	}
 }
