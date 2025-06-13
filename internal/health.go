@@ -9,12 +9,14 @@ import (
 type HP struct {
 	val              float32
 	attackerCooldown map[Entity]float32
+	immuneTime       float32
 }
 
 func newHP(amount float32) HP {
 	return HP{
 		val:              amount,
 		attackerCooldown: make(map[Entity]float32),
+		immuneTime:       0.5,
 	}
 }
 
@@ -29,8 +31,8 @@ func updateHP(world *World) {
 		world.hp[id] = HP{
 			val:              hp.val,
 			attackerCooldown: newMap,
+			immuneTime:       hp.immuneTime,
 		}
-
 	}
 }
 
@@ -57,7 +59,7 @@ func damage(world *World, id Entity, dmg float32) {
 func damageWithCooldown(world *World, id Entity, dmg float32, attacker Entity) {
 	hp := world.hp[id]
 	if cooldown, exists := hp.attackerCooldown[attacker]; !exists || cooldown <= 0 {
-		hp.attackerCooldown[attacker] = 0.5
+		hp.attackerCooldown[attacker] = hp.immuneTime
 		world.hp[id] = hp
 		damage(world, id, dmg)
 	}
