@@ -7,8 +7,20 @@ import (
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
+var previousMousePos rl.Vector2
+var cursorHideTimer float32
+
 func renderUI(world *World) {
-	rl.DrawTextureEx(assets.Textures["cursor"], rl.GetMousePosition(), 0, 4, rl.White)
+	if rl.GetMousePosition() == previousMousePos {
+		cursorHideTimer += dt
+	} else {
+		cursorHideTimer = 0
+	}
+	previousMousePos = rl.GetMousePosition()
+
+	if cursorHideTimer < 2.5 {
+		rl.DrawTextureEx(assets.Textures["cursor"], rl.GetMousePosition(), 0, 4, rl.White)
+	}
 
 	{ // Wave counter
 		str := "Wave " + fmt.Sprint(world.enemySpawner.wave)
