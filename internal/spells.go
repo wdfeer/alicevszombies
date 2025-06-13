@@ -13,7 +13,7 @@ func updateSpells(world *World) {
 		world.playerData.mana -= 10
 	}
 	if world.playerData.mana >= 10 && (rl.IsKeyPressed(rl.KeyThree) || rl.IsKeyPressed(rl.KeyK)) {
-		world.playerData.dollDamage += 0.25
+		incrementUpgrade(world, DOLL_DAMAGE)
 		world.playerData.mana -= 10
 	}
 }
