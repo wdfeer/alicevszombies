@@ -6,14 +6,14 @@ var assets Assets
 
 type Assets struct {
 	textures     map[string]rl.Texture2D
-	deathEffects map[string]DeathEffect
+	deathEffects map[string]DeathEffectAsset
 }
 
 func LoadAssets() {
 	println("Starting to load assets...")
 	assets = Assets{
 		textures:     make(map[string]rl.Texture2D),
-		deathEffects: make(map[string]DeathEffect),
+		deathEffects: make(map[string]DeathEffectAsset),
 	}
 
 	loadTexture("player")

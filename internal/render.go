@@ -16,6 +16,7 @@ func render(world *World) {
 	renderGrid()
 	renderTextures(world)
 	renderCombatText(world)
+	renderDeathEffects(world)
 	rl.EndMode2D()
 
 	renderUI(world)

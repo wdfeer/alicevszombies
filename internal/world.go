@@ -20,6 +20,7 @@ type World struct {
 	hp           map[Entity]HP
 	combatText   map[Entity]CombatText
 	size         map[Entity]rl.Vector2
+	deathEffect  map[Entity]DeathEffectParticle
 }
 
 func NewWorld() World {
@@ -37,6 +38,7 @@ func NewWorld() World {
 		hp:           make(map[Entity]HP),
 		combatText:   make(map[Entity]CombatText),
 		size:         make(map[Entity]rl.Vector2),
+		deathEffect:  make(map[Entity]DeathEffectParticle),
 	}
 
 	newPlayer(&world)
@@ -64,6 +66,7 @@ func (world *World) Update() {
 		updateVelocity(world)
 		updateCollisions(world)
 
+		updateDeathEffects(world)
 		updateCombatText(world)
 		updateAnimationData(world)
 	}
@@ -84,6 +87,7 @@ func (world *World) deleteEntity(entity Entity) {
 		rl.CloseWindow()
 	} else if world.enemyTag[entity] {
 		world.playerData.mana += 1
+		newDeathEffect(world, "zombie", world.position[entity])
 	}
 	delete(world.targeting, entity)
 	delete(world.dollTag, entity)
@@ -96,4 +100,5 @@ func (world *World) deleteEntity(entity Entity) {
 	delete(world.hp, entity)
 	delete(world.combatText, entity)
 	delete(world.size, entity)
+	delete(world.deathEffect, entity)
 }
