@@ -13,6 +13,7 @@ func main() {
 	defer rl.CloseWindow()
 
 	rl.SetTargetFPS(int32(rl.GetMonitorRefreshRate(monitor)))
+	rl.SetExitKey(rl.KeyDelete)
 
 	rl.SetWindowState(rl.FlagWindowResizable + rl.FlagBorderlessWindowedMode)
 	rl.HideCursor()
