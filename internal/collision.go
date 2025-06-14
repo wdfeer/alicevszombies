@@ -20,6 +20,7 @@ func updateCollisions(world *World) {
 			dollRec := util.CenterRectangle(world.position[doll], world.size[doll])
 			if rl.CheckCollisionRecs(dollRec, enemyRec) {
 				damageWithCooldown(world, enemy, 1+(float32(world.playerData.upgrades[DOLL_DAMAGE])/4), doll)
+				break
 			}
 		}
 	}
