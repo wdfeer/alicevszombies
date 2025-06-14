@@ -1,10 +1,10 @@
 package internal
 
-type Upgrade = uint8
+type Upgrade = string
 
 const (
-	DOLL_DAMAGE Upgrade = iota
-	DOLL_SPEED
+	DOLL_DAMAGE = "Doll Damage"
+	DOLL_SPEED  = "Doll Speed"
 )
 
 func incrementUpgrade(world *World, upgrade Upgrade) {
@@ -14,4 +14,8 @@ func incrementUpgrade(world *World, upgrade Upgrade) {
 	} else {
 		world.playerData.upgrades[upgrade] = 1
 	}
+
+	pos := world.position[world.player]
+	pos.Y -= 5
+	newCombatText(world, pos, upgrade+" +")
 }
