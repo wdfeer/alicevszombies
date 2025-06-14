@@ -24,7 +24,7 @@ func render(world *World) {
 func renderTextures(world *World) {
 	for id, texture := range world.texture {
 		if pos, exists := world.position[id]; exists {
-			util.DrawTextureCentered(assets.Textures[texture], pos)
+			util.DrawTextureCentered(assets.textures[texture], pos)
 		}
 	}
 }

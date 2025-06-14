@@ -5,13 +5,15 @@ import rl "github.com/gen2brain/raylib-go/raylib"
 var assets Assets
 
 type Assets struct {
-	Textures map[string]rl.Texture2D
+	textures     map[string]rl.Texture2D
+	deathEffects map[string]DeathEffect
 }
 
 func LoadAssets() {
 	println("Starting to load assets...")
 	assets = Assets{
-		Textures: make(map[string]rl.Texture2D),
+		textures:     make(map[string]rl.Texture2D),
+		deathEffects: make(map[string]DeathEffect),
 	}
 
 	loadTexture("player")
@@ -22,21 +24,24 @@ func LoadAssets() {
 	loadTexture("zombie")
 	loadTexture("zombie_walk0")
 	loadTexture("zombie_walk1")
-
 	loadTexture("heal_icon")
 	loadTexture("doll_icon")
 	loadTexture("pitem_icon")
 
-	println("Assets loaded!")
+	println("INFO: Textures loaded!")
+
+	loadDeathEffect("zombie")
+
+	println("INFO: Death Effects loaded!")
 }
 
 func loadTexture(name string) {
-	assets.Textures[name] = rl.LoadTexture("assets/" + name + ".png")
+	assets.textures[name] = rl.LoadTexture("assets/" + name + ".png")
 }
 
 func loadTextureAndFlipped(name string) {
 	image := rl.LoadImage("assets/" + name + ".png")
-	assets.Textures[name] = rl.LoadTextureFromImage(image)
+	assets.textures[name] = rl.LoadTextureFromImage(image)
 	rl.ImageFlipHorizontal(image)
-	assets.Textures[name+"_fliph"] = rl.LoadTextureFromImage(image)
+	assets.textures[name+"_fliph"] = rl.LoadTextureFromImage(image)
 }
