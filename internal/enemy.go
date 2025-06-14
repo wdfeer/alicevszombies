@@ -35,7 +35,7 @@ func newEnemy(world *World) Entity {
 	world.texture[id] = "zombie"
 	world.animTimer[id] = 0
 	world.hp[id] = newHP(3)
-	world.size[id] = rl.Vector2{}
+	world.size[id] = rl.Vector2{X: 8, Y: 16}
 	return id
 }
 
