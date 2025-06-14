@@ -63,7 +63,15 @@ func updateEnemies(world *World) {
 		targeting.targetingTimer -= dt
 		if targeting.targetingTimer <= 0 || rl.Vector2Distance(targeting.target, world.position[id]) < 2 {
 			targeting.targetingTimer = 0.4
-			targeting.target = world.position[world.player]
+			distance := rl.Vector2Distance(world.position[id], world.position[world.player])
+			if distance > 10 {
+				delta := rl.Vector2Normalize(rl.Vector2Subtract(world.position[world.player], world.position[id]))
+				delta = rl.Vector2Rotate(delta, rand.Float32()/2)
+				delta = rl.Vector2Scale(delta, distance/3)
+				targeting.target = rl.Vector2Add(world.position[id], delta)
+			} else {
+				targeting.target = world.position[world.player]
+			}
 		}
 		world.targeting[id] = targeting
 	}
