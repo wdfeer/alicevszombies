@@ -24,10 +24,6 @@ func updateUI(world *World) {
 }
 
 func renderUI(world *World) {
-	if cursorHideTimer < 2.5 {
-		rl.DrawTextureEx(assets.Textures["cursor"], rl.GetMousePosition(), 0, 4, rl.White)
-	}
-
 	{ // Wave counter
 		str := "Wave " + fmt.Sprint(world.enemySpawner.wave)
 		center := rl.Vector2{X: float32(rl.GetScreenWidth()) / 2, Y: 200}
@@ -65,5 +61,18 @@ func renderUI(world *World) {
 			4)
 		util.DrawTextCentered("K", 40, rl.Vector2{X: 250, Y: float32(rl.GetScreenHeight())/2 + 80})
 		util.DrawTextCentered("10 MP", 20, rl.Vector2{X: 200, Y: float32(rl.GetScreenHeight())/2 + 110})
+	}
+
+	if world.paused {
+		pos := util.GetHalfScreen()
+		util.DrawTextCenteredSpaced("Paused", 256, pos, 16)
+		pos.Y += 128
+		util.DrawTextCenteredSpaced("ESC = Resume", 64, pos, 4)
+		pos.Y += 64
+		util.DrawTextCenteredSpaced("DEL = Quit", 64, pos, 4)
+	}
+
+	if cursorHideTimer < 2.5 {
+		rl.DrawTextureEx(assets.Textures["cursor"], rl.GetMousePosition(), 0, 4, rl.White)
 	}
 }

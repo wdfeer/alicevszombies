@@ -21,7 +21,17 @@ func CenterText(text string, fontSize float32, desiredCenter rl.Vector2) rl.Vect
 	return rl.Vector2Subtract(desiredCenter, rl.Vector2Scale(size, 0.5))
 }
 
+func CenterTextSpaced(text string, fontSize float32, desiredCenter rl.Vector2, spacing float32) rl.Vector2 {
+	size := rl.MeasureTextEx(rl.GetFontDefault(), text, fontSize, spacing)
+	return rl.Vector2Subtract(desiredCenter, rl.Vector2Scale(size, 0.5))
+}
+
 func DrawTextCentered(text string, fontSize float32, center rl.Vector2) {
 	pos := CenterText(text, fontSize, center)
 	rl.DrawTextEx(rl.GetFontDefault(), text, pos, fontSize, 0, rl.White)
+}
+
+func DrawTextCenteredSpaced(text string, fontSize float32, center rl.Vector2, spacing float32) {
+	pos := CenterTextSpaced(text, fontSize, center, spacing)
+	rl.DrawTextEx(rl.GetFontDefault(), text, pos, fontSize, spacing, rl.White)
 }
