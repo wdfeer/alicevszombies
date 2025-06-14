@@ -41,7 +41,7 @@ func newDeathEffect(world *World, name string, center rl.Vector2) {
 	for pixelpos, color := range assets.deathEffects[name].pixels {
 		id := world.newEntity()
 		world.position[id] = rl.Vector2Add(position, pixelpos)
-		world.velocity[id] = rl.Vector2Rotate(rl.Vector2{X: 0, Y: 1}, rand.Float32()-0.5)
+		world.velocity[id] = rl.Vector2Rotate(rl.Vector2{X: 0, Y: 20}, rand.Float32()-0.5)
 		world.drag[id] = rand.Float32()/10 + 0.1
 		world.deathEffect[id] = DeathEffectParticle{
 			timeleft: 1,
