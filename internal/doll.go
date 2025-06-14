@@ -19,19 +19,13 @@ func newDoll(world *World) Entity {
 	world.velocity[id] = rl.Vector2Zero()
 	world.drag[id] = 1
 	world.texture[id] = "doll1"
+	world.size[id] = rl.Vector2{X: 8, Y: 8}
 	return id
 }
 
 func updateDolls(world *World) {
 	for doll := range world.dollTag {
 		world.targeting[doll] = updateDollTargeting(world, doll)
-
-		for enemy := range world.enemyTag {
-			if rl.Vector2Distance(world.position[doll], world.position[enemy]) < 16 {
-				damageWithCooldown(world, enemy, 1+(float32(world.playerData.upgrades[DOLL_DAMAGE])/4), doll)
-				break
-			}
-		}
 	}
 }
 

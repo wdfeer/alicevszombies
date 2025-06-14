@@ -8,10 +8,18 @@ import (
 
 func updateCollisions(world *World) {
 	playerRec := util.CenterRectangle(world.position[world.player], world.size[world.player])
-	for id := range world.enemyTag {
-		enemyRec := util.CenterRectangle(world.position[id], world.size[id])
+
+	for enemy := range world.enemyTag {
+		enemyRec := util.CenterRectangle(world.position[enemy], world.size[enemy])
 		if rl.CheckCollisionRecs(playerRec, enemyRec) {
-			damageWithCooldown(world, world.player, 1, id)
+			damageWithCooldown(world, world.player, 1, enemy)
+		}
+
+		for doll := range world.dollTag {
+			dollRec := util.CenterRectangle(world.position[doll], world.size[doll])
+			if rl.CheckCollisionRecs(dollRec, enemyRec) {
+				damageWithCooldown(world, enemy, 1+(float32(world.playerData.upgrades[DOLL_DAMAGE])/4), doll)
+			}
 		}
 	}
 }
