@@ -1,6 +1,10 @@
 package internal
 
-import rl "github.com/gen2brain/raylib-go/raylib"
+import (
+	"math/rand"
+
+	rl "github.com/gen2brain/raylib-go/raylib"
+)
 
 type CombatText struct {
 	text string
@@ -11,7 +15,7 @@ func newCombatText(world *World, position rl.Vector2, text string) Entity {
 	id := world.newEntity()
 	world.position[id] = position
 	world.velocity[id] = rl.Vector2{X: 0, Y: -10}
-	world.drag[id] = 0.5
+	world.drag[id] = 0.4 + rand.Float32()*0.2
 	world.combatText[id] = CombatText{
 		text: text,
 		hue:  rl.White,
