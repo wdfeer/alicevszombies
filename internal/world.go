@@ -19,6 +19,7 @@ type World struct {
 	animTimer    map[Entity]float32
 	hp           map[Entity]HP
 	combatText   map[Entity]CombatText
+	size         map[Entity]rl.Vector2
 }
 
 func NewWorld() World {
@@ -35,6 +36,7 @@ func NewWorld() World {
 		animTimer:    make(map[Entity]float32),
 		hp:           make(map[Entity]HP),
 		combatText:   make(map[Entity]CombatText),
+		size:         make(map[Entity]rl.Vector2),
 	}
 
 	newPlayer(&world)
@@ -60,6 +62,8 @@ func (world *World) Update() {
 		updateTargetingMovement(world)
 		updateDrag(world)
 		updateVelocity(world)
+		updateCollisions(world)
+
 		updateCombatText(world)
 		updateAnimationData(world)
 	}
@@ -91,4 +95,5 @@ func (world *World) deleteEntity(entity Entity) {
 	delete(world.animTimer, entity)
 	delete(world.hp, entity)
 	delete(world.combatText, entity)
+	delete(world.size, entity)
 }

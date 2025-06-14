@@ -35,6 +35,7 @@ func newEnemy(world *World) Entity {
 	world.texture[id] = "zombie"
 	world.animTimer[id] = 0
 	world.hp[id] = newHP(3)
+	world.size[id] = rl.Vector2{}
 	return id
 }
 
@@ -65,9 +66,5 @@ func updateEnemies(world *World) {
 			targeting.target = world.position[world.player]
 		}
 		world.targeting[id] = targeting
-
-		if rl.Vector2Distance(world.position[id], world.position[world.player]) < 24 {
-			damageWithCooldown(world, world.player, 1, id)
-		}
 	}
 }
