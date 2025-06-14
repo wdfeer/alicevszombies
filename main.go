@@ -16,7 +16,7 @@ func main() {
 	rl.SetTargetFPS(fps)
 	rl.SetExitKey(rl.KeyDelete)
 
-	rl.SetWindowState(rl.FlagWindowResizable + rl.FlagBorderlessWindowedMode)
+	rl.SetWindowState(rl.FlagWindowResizable)
 	rl.HideCursor()
 
 	internal.LoadAssets()
