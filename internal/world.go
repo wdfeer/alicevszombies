@@ -4,6 +4,7 @@ import rl "github.com/gen2brain/raylib-go/raylib"
 
 type Entity = uint32
 type World struct {
+	paused       bool
 	nextID       Entity
 	player       Entity
 	playerData   PlayerData
@@ -22,6 +23,7 @@ type World struct {
 
 func NewWorld() World {
 	world := World{
+		paused:       false,
 		enemySpawner: newEnemySpawner(),
 		targeting:    make(map[Entity]Targeting),
 		dollTag:      make(map[Entity]bool),
@@ -48,18 +50,21 @@ var dt float32
 func (world *World) Update() {
 	dt = rl.Clamp(rl.GetFrameTime(), 0.002, 0.05)
 
-	updateHP(world)
-	updatePlayer(world)
-	updateSpells(world)
-	updateDolls(world)
-	updateEnemySpawner(world)
-	updateEnemies(world)
-	updateTargetingMovement(world)
-	updateDrag(world)
-	updateVelocity(world)
+	if !world.paused {
+		updateHP(world)
+		updatePlayer(world)
+		updateSpells(world)
+		updateDolls(world)
+		updateEnemySpawner(world)
+		updateEnemies(world)
+		updateTargetingMovement(world)
+		updateDrag(world)
+		updateVelocity(world)
+		updateCombatText(world)
+		updateAnimationData(world)
+	}
 
-	updateCombatText(world)
-	updateAnimationData(world)
+	updateUI(world)
 	render(world)
 }
 

@@ -11,6 +11,10 @@ var previousMousePos rl.Vector2
 var cursorHideTimer float32
 
 func updateUI(world *World) {
+	if rl.IsKeyPressed(rl.KeyEscape) {
+		world.paused = !world.paused
+	}
+
 	if rl.GetMousePosition() == previousMousePos {
 		cursorHideTimer += dt
 	} else {
