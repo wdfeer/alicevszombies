@@ -11,6 +11,7 @@ func updateCollisions(world *World) {
 
 	for enemy := range world.enemyTag {
 		enemyRec := util.CenterRectangle(world.position[enemy], world.size[enemy])
+
 		if rl.CheckCollisionRecs(playerRec, enemyRec) {
 			damageWithCooldown(world, world.player, 1, enemy)
 		}

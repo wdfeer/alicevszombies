@@ -50,7 +50,12 @@ func heal(world *World, id Entity, amount float32) {
 }
 
 func damage(world *World, id Entity, dmg float32) {
-	hp := world.hp[id]
+	hp, exists := world.hp[id]
+	if !exists {
+		println("WARNING: Tried damaging deleted enemy with id", id)
+		return
+	}
+
 	hp.val -= dmg
 
 	ctextID := newCombatText(world, world.position[id], fmt.Sprint(dmg))
@@ -67,7 +72,7 @@ func damage(world *World, id Entity, dmg float32) {
 	}
 
 	if hp.val <= 0 {
-		println("Entity with id", id, "killed!")
+		println("INFO: Entity with id", id, "killed!")
 		world.deleteEntity(id)
 	} else {
 		world.hp[id] = hp
@@ -75,7 +80,11 @@ func damage(world *World, id Entity, dmg float32) {
 }
 
 func damageWithCooldown(world *World, id Entity, dmg float32, attacker Entity) {
-	hp := world.hp[id]
+	hp, exists := world.hp[id]
+	if !exists {
+		println("WARNING: Tried damaging deleted enemy with id", id)
+		return
+	}
 	if cooldown, exists := hp.attackerCooldown[attacker]; !exists || cooldown <= 0 {
 		hp.attackerCooldown[attacker] = hp.immuneTime
 		world.hp[id] = hp
