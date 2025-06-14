@@ -79,7 +79,7 @@ func (world *World) deleteEntity(entity Entity) {
 		println("Player died! Closing the game.")
 		rl.CloseWindow()
 	} else if world.enemyTag[entity] {
-		world.playerData.mana += 5
+		world.playerData.mana += 1
 	}
 	delete(world.targeting, entity)
 	delete(world.dollTag, entity)

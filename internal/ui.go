@@ -80,19 +80,22 @@ func renderUI(world *World) {
 		util.DrawTextCentered("10 MP", 20, rl.Vector2{X: 200, Y: float32(rl.GetScreenHeight())/2 + 110})
 	}
 
-	if uistate.upgradeScreen {
-		center := util.GetHalfScreen()
-		util.DrawTextCenteredSpaced("Increase Doll Damage", 40, rl.Vector2Add(center, rl.Vector2{X: -250, Y: -32}), 4)
-		util.DrawTextCenteredSpaced("1", 64, rl.Vector2Add(center, rl.Vector2{X: -250, Y: 32}), 4)
-		util.DrawTextCenteredSpaced("Increase Doll Speed", 40, rl.Vector2Add(center, rl.Vector2{X: 250, Y: -32}), 4)
-		util.DrawTextCenteredSpaced("2", 64, rl.Vector2Add(center, rl.Vector2{X: 250, Y: 32}), 4)
-	} else if world.paused {
-		pos := util.GetHalfScreen()
-		util.DrawTextCenteredSpaced("Paused", 256, pos, 16)
-		pos.Y += 128
-		util.DrawTextCenteredSpaced("ESC = Resume", 64, pos, 4)
-		pos.Y += 64
-		util.DrawTextCenteredSpaced("DEL = Quit", 64, pos, 4)
+	if world.paused {
+		rl.DrawRectangle(0, 0, int32(rl.GetScreenWidth()), int32(rl.GetScreenHeight()), rl.ColorAlpha(rl.Black, 0.4))
+		if uistate.upgradeScreen {
+			center := util.GetHalfScreen()
+			util.DrawTextCenteredSpaced("Increase Doll Damage", 40, rl.Vector2Add(center, rl.Vector2{X: -250, Y: -32}), 4)
+			util.DrawTextCenteredSpaced("1", 64, rl.Vector2Add(center, rl.Vector2{X: -250, Y: 32}), 4)
+			util.DrawTextCenteredSpaced("Increase Doll Speed", 40, rl.Vector2Add(center, rl.Vector2{X: 250, Y: -32}), 4)
+			util.DrawTextCenteredSpaced("2", 64, rl.Vector2Add(center, rl.Vector2{X: 250, Y: 32}), 4)
+		} else if world.paused {
+			pos := util.GetHalfScreen()
+			util.DrawTextCenteredSpaced("Paused", 256, pos, 16)
+			pos.Y += 128
+			util.DrawTextCenteredSpaced("ESC = Resume", 64, pos, 4)
+			pos.Y += 64
+			util.DrawTextCenteredSpaced("DEL = Quit", 64, pos, 4)
+		}
 	}
 
 	if uistate.cursorHideTimer < 2.5 {
