@@ -7,20 +7,24 @@ import (
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
-var previousMousePos rl.Vector2
-var cursorHideTimer float32
+type UIState struct {
+	previousMousePos rl.Vector2
+	cursorHideTimer  float32
+}
+
+var uistate UIState = UIState{}
 
 func updateUI(world *World) {
 	if rl.IsKeyPressed(rl.KeyEscape) {
 		world.paused = !world.paused
 	}
 
-	if rl.GetMousePosition() == previousMousePos {
-		cursorHideTimer += dt
+	if rl.GetMousePosition() == uistate.previousMousePos {
+		uistate.cursorHideTimer += dt
 	} else {
-		cursorHideTimer = 0
+		uistate.cursorHideTimer = 0
 	}
-	previousMousePos = rl.GetMousePosition()
+	uistate.previousMousePos = rl.GetMousePosition()
 }
 
 func renderUI(world *World) {
@@ -72,7 +76,7 @@ func renderUI(world *World) {
 		util.DrawTextCenteredSpaced("DEL = Quit", 64, pos, 4)
 	}
 
-	if cursorHideTimer < 2.5 {
+	if uistate.cursorHideTimer < 2.5 {
 		rl.DrawTextureEx(assets.Textures["cursor"], rl.GetMousePosition(), 0, 4, rl.White)
 	}
 }
