@@ -37,7 +37,7 @@ func loadDeathEffect(name string) {
 }
 
 func newDeathEffect(world *World, name string, center rl.Vector2) {
-	position := rl.Vector2Subtract(center, assets.deathEffects[name].size)
+	position := rl.Vector2Subtract(center, rl.Vector2Scale(assets.deathEffects[name].size, 0.5))
 	for pixelpos, color := range assets.deathEffects[name].pixels {
 		id := world.newEntity()
 		world.position[id] = rl.Vector2Add(position, pixelpos)
