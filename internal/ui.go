@@ -10,14 +10,16 @@ import (
 var previousMousePos rl.Vector2
 var cursorHideTimer float32
 
-func renderUI(world *World) {
+func updateUI(world *World) {
 	if rl.GetMousePosition() == previousMousePos {
 		cursorHideTimer += dt
 	} else {
 		cursorHideTimer = 0
 	}
 	previousMousePos = rl.GetMousePosition()
+}
 
+func renderUI(world *World) {
 	if cursorHideTimer < 2.5 {
 		rl.DrawTextureEx(assets.Textures["cursor"], rl.GetMousePosition(), 0, 4, rl.White)
 	}
