@@ -1,8 +1,6 @@
 package internal
 
 import (
-	"math/rand"
-
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
@@ -17,13 +15,8 @@ func updateSpells(world *World) {
 		world.playerData.mana -= 10
 	}
 	if world.playerData.mana >= 10 && (rl.IsKeyPressed(rl.KeyThree) || rl.IsKeyPressed(rl.KeyK)) {
-		var upgrade Upgrade
-		if rand.Float32() < 0.5 {
-			upgrade = DOLL_DAMAGE
-		} else {
-			upgrade = DOLL_SPEED
-		}
-		incrementUpgrade(world, upgrade)
+		world.paused = true
+		uistate.upgradeScreen = true
 		world.playerData.mana -= 10
 	}
 }

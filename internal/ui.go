@@ -10,12 +10,25 @@ import (
 type UIState struct {
 	previousMousePos rl.Vector2
 	cursorHideTimer  float32
+	upgradeScreen    bool
 }
 
 var uistate UIState = UIState{}
 
 func updateUI(world *World) {
-	if rl.IsKeyPressed(rl.KeyEscape) {
+	if uistate.upgradeScreen {
+		upgradeOne := rl.IsKeyPressed(rl.KeyOne)
+		upgradeTwo := rl.IsKeyPressed(rl.KeyTwo)
+		if upgradeOne || upgradeTwo {
+			if upgradeOne {
+				incrementUpgrade(world, DOLL_DAMAGE)
+			} else if upgradeTwo {
+				incrementUpgrade(world, DOLL_SPEED)
+			}
+			world.paused = false
+			uistate.upgradeScreen = false
+		}
+	} else if rl.IsKeyPressed(rl.KeyEscape) {
 		world.paused = !world.paused
 	}
 
@@ -67,7 +80,13 @@ func renderUI(world *World) {
 		util.DrawTextCentered("10 MP", 20, rl.Vector2{X: 200, Y: float32(rl.GetScreenHeight())/2 + 110})
 	}
 
-	if world.paused {
+	if uistate.upgradeScreen {
+		center := util.GetHalfScreen()
+		util.DrawTextCenteredSpaced("Increase Doll Damage", 40, rl.Vector2Add(center, rl.Vector2{X: -250, Y: -32}), 4)
+		util.DrawTextCenteredSpaced("1", 64, rl.Vector2Add(center, rl.Vector2{X: -250, Y: 32}), 4)
+		util.DrawTextCenteredSpaced("Increase Doll Speed", 40, rl.Vector2Add(center, rl.Vector2{X: 250, Y: -32}), 4)
+		util.DrawTextCenteredSpaced("2", 64, rl.Vector2Add(center, rl.Vector2{X: 250, Y: 32}), 4)
+	} else if world.paused {
 		pos := util.GetHalfScreen()
 		util.DrawTextCenteredSpaced("Paused", 256, pos, 16)
 		pos.Y += 128
