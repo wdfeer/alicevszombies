@@ -8,7 +8,7 @@ import (
 
 type DeathEffectParticle struct {
 	timeleft float32
-	color    rl.Color
+	tint     rl.Color
 }
 
 type DeathEffectAsset struct {
@@ -45,17 +45,27 @@ func newDeathEffect(world *World, name string, center rl.Vector2) {
 		world.drag[id] = rand.Float32()/10 + 0.1
 		world.deathEffect[id] = DeathEffectParticle{
 			timeleft: 1,
-			color:    color,
+			tint:     color,
 		}
 	}
 }
 
 func updateDeathEffects(world *World) {
 	for id, eff := range world.deathEffect {
-		// TODO
+		time := eff.timeleft - dt
+		if time > 0 {
+			world.deathEffect[id] = DeathEffectParticle{
+				timeleft: time,
+				tint:     eff.tint,
+			}
+		} else {
+			world.deleteEntity(id)
+		}
 	}
 }
 
 func renderDeathEffects(world *World) {
-	// TODO
+	for id, eff := range world.deathEffect {
+		rl.DrawRectangleV(world.position[id], rl.Vector2{X: 1, Y: 1}, rl.ColorAlpha(eff.tint, min(eff.timeleft, 1)))
+	}
 }
