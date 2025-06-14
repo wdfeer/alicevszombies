@@ -19,9 +19,9 @@ func LoadAssets() {
 	loadTexture("player_walk1")
 	loadTexture("cursor")
 	loadTextureAndFlipped("doll1")
-	loadTexture("zombie1")
-	loadTexture("zombie1_walk0")
-	loadTexture("zombie1_walk1")
+	loadTexture("zombie")
+	loadTexture("zombie_walk0")
+	loadTexture("zombie_walk1")
 
 	loadTexture("heal_icon")
 	loadTexture("doll_icon")

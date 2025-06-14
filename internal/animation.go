@@ -41,17 +41,17 @@ func updateZombieTexture(world *World) {
 		if rl.Vector2Length(world.velocity[id]) > 0 {
 			if world.animTimer[id] > 0.15 {
 				world.animTimer[id] = 0
-				if world.texture[id] == "zombie1_walk0" {
-					world.texture[id] = "zombie1_walk1"
+				if world.texture[id] == "zombie_walk0" {
+					world.texture[id] = "zombie_walk1"
 				} else {
-					world.texture[id] = "zombie1_walk0"
+					world.texture[id] = "zombie_walk0"
 				}
 			} else {
 				world.animTimer[id] = world.animTimer[id] + dt
 			}
 		} else {
 			world.animTimer[id] = 0
-			world.texture[id] = "zombie1"
+			world.texture[id] = "zombie"
 		}
 	}
 }

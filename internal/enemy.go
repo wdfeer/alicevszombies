@@ -32,7 +32,7 @@ func newEnemy(world *World) Entity {
 	)
 	world.velocity[id] = rl.Vector2Zero()
 	world.drag[id] = 6
-	world.texture[id] = "zombie1"
+	world.texture[id] = "zombie"
 	world.animTimer[id] = 0
 	world.hp[id] = newHP(3)
 	return id
