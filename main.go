@@ -12,7 +12,8 @@ func main() {
 	rl.InitWindow(int32(rl.GetMonitorWidth(monitor)), int32(rl.GetMonitorHeight(monitor)), "alicevszombies")
 	defer rl.CloseWindow()
 
-	rl.SetTargetFPS(int32(rl.GetMonitorRefreshRate(monitor)))
+	fps := int32(rl.GetMonitorRefreshRate(monitor))
+	rl.SetTargetFPS(fps)
 	rl.SetExitKey(rl.KeyDelete)
 
 	rl.SetWindowState(rl.FlagWindowResizable + rl.FlagBorderlessWindowedMode)

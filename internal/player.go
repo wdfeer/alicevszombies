@@ -28,7 +28,7 @@ func newPlayer(world *World) Entity {
 	return world.player
 }
 
-const PLAYER_ACCELERATION = 3000
+const PLAYER_ACCELERATION = 700
 
 func updatePlayer(world *World) {
 	dir := rl.Vector2Zero()

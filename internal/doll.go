@@ -7,7 +7,7 @@ import (
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
-const BASE_DOLL_ACCELERATION = 350
+const BASE_DOLL_ACCELERATION = 500
 
 func newDoll(world *World) Entity {
 	id := world.newEntity()
@@ -17,7 +17,7 @@ func newDoll(world *World) Entity {
 	}
 	world.position[id] = rl.Vector2Zero()
 	world.velocity[id] = rl.Vector2Zero()
-	world.drag[id] = 1
+	world.drag[id] = 5
 	world.texture[id] = "doll1"
 	world.size[id] = rl.Vector2{X: 8, Y: 8}
 	return id

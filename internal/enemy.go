@@ -24,14 +24,14 @@ func newEnemy(world *World) Entity {
 	id := world.newEntity()
 	world.enemyTag[id] = true
 	world.targeting[id] = Targeting{
-		accel: 1500,
+		accel: 700,
 	}
 	world.position[id] = rl.Vector2Add(
 		world.position[world.player],
 		rl.Vector2{X: (rand.Float32() - 0.5) * 500, Y: (rand.Float32() - 0.5) * 500},
 	)
 	world.velocity[id] = rl.Vector2Zero()
-	world.drag[id] = 6
+	world.drag[id] = 10
 	world.texture[id] = "zombie"
 	world.animTimer[id] = 0
 	world.hp[id] = newHP(3)
