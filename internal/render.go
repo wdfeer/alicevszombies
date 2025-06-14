@@ -37,14 +37,13 @@ func renderGrid() {
 	}
 }
 
+const CAMERA_ZOOM = 8
+
 func createCamera(world *World) rl.Camera2D {
 	camera := rl.Camera2D{
 		Target: world.position[world.player],
 		Offset: util.GetHalfScreen(),
-		Zoom:   8,
+		Zoom:   CAMERA_ZOOM,
 	}
-	camera.Target = world.position[world.player]
-	camera.Offset = util.GetHalfScreen()
-	camera.Zoom = 8
 	return camera
 }
