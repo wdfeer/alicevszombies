@@ -43,17 +43,17 @@ func newMedicine(world *World) Entity {
 	id := world.newEntity()
 	world.enemyTag[id] = true
 	world.targeting[id] = Targeting{
-		accel: 690,
+		accel: 730,
 	}
 	world.position[id] = rl.Vector2Add(
 		world.position[world.player],
-		rl.Vector2{X: (rand.Float32() - 0.5) * 800, Y: (rand.Float32() - 0.5) * 800},
+		rl.Vector2{X: (rand.Float32() - 0.5) * 1000, Y: (rand.Float32() - 0.5) * 1000},
 	)
 	world.velocity[id] = rl.Vector2Zero()
 	world.drag[id] = 10
 	world.walkAnimated[id] = WalkAnimation{"medicine"}
 	world.animTimer[id] = 0
-	world.hp[id] = newHP(90)
+	world.hp[id] = newHP(60)
 	world.size[id] = rl.Vector2{X: 8, Y: 16}
 	return id
 }
