@@ -39,6 +39,25 @@ func newEnemy(world *World) Entity {
 	return id
 }
 
+func newMedicine(world *World) Entity {
+	id := world.newEntity()
+	world.enemyTag[id] = true
+	world.targeting[id] = Targeting{
+		accel: 690,
+	}
+	world.position[id] = rl.Vector2Add(
+		world.position[world.player],
+		rl.Vector2{X: (rand.Float32() - 0.5) * 800, Y: (rand.Float32() - 0.5) * 800},
+	)
+	world.velocity[id] = rl.Vector2Zero()
+	world.drag[id] = 10
+	world.texture[id] = "medicine"
+	world.animTimer[id] = 0
+	world.hp[id] = newHP(90)
+	world.size[id] = rl.Vector2{X: 8, Y: 16}
+	return id
+}
+
 func updateEnemySpawner(world *World) {
 	spawner := world.enemySpawner
 
@@ -49,9 +68,15 @@ func updateEnemySpawner(world *World) {
 
 	spawner.spawnTimer = spawner.spawnTimer - dt
 	if spawner.spawnTimer <= 0 {
-		newEnemy(world)
-		spawner.spawnTimer = 2 - min(1, float32(spawner.wave)/10)
-		spawner.enemiesToSpawn--
+		if spawner.wave%10 == 0 && spawner.enemiesToSpawn > 1 {
+			newMedicine(world)
+			spawner.spawnTimer = 15
+			spawner.enemiesToSpawn = 1
+		} else {
+			newEnemy(world)
+			spawner.spawnTimer = 2 - min(1, float32(spawner.wave)/10)
+			spawner.enemiesToSpawn--
+		}
 	}
 
 	world.enemySpawner = spawner

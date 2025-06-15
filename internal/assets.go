@@ -24,6 +24,9 @@ func LoadAssets() {
 	loadTexture("zombie")
 	loadTexture("zombie_walk0")
 	loadTexture("zombie_walk1")
+	loadTexture("medicine")
+	loadTexture("medicine_walk0")
+	loadTexture("medicine_walk1")
 	loadTexture("heal_icon")
 	loadTexture("doll_icon")
 	loadTexture("pitem_icon")
@@ -32,6 +35,7 @@ func LoadAssets() {
 	println("INFO: Textures loaded!")
 
 	loadDeathEffect("zombie")
+	loadDeathEffect("medicine")
 
 	println("INFO: Death Effects loaded!")
 }
