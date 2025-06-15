@@ -24,6 +24,7 @@ func newPlayer(world *World) Entity {
 		upgrades: make(map[Upgrade]uint32),
 	}
 	world.size[world.player] = rl.Vector2{X: 8, Y: 16}
+	world.walkAnimated[world.player] = WalkAnimation{"player"}
 
 	return world.player
 }

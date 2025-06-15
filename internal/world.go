@@ -16,11 +16,12 @@ type World struct {
 	velocity     map[Entity]rl.Vector2
 	drag         map[Entity]float32
 	texture      map[Entity]string
-	animTimer    map[Entity]float32
 	hp           map[Entity]HP
 	combatText   map[Entity]CombatText
 	size         map[Entity]rl.Vector2
 	deathEffect  map[Entity]DeathEffectParticle
+	animTimer    map[Entity]float32
+	walkAnimated map[Entity]WalkAnimation
 }
 
 func NewWorld() World {
@@ -39,6 +40,7 @@ func NewWorld() World {
 		combatText:   make(map[Entity]CombatText),
 		size:         make(map[Entity]rl.Vector2),
 		deathEffect:  make(map[Entity]DeathEffectParticle),
+		walkAnimated: make(map[Entity]WalkAnimation),
 	}
 
 	newPlayer(&world)
@@ -102,4 +104,5 @@ func (world *World) deleteEntity(entity Entity) {
 	delete(world.combatText, entity)
 	delete(world.size, entity)
 	delete(world.deathEffect, entity)
+	delete(world.walkAnimated, entity)
 }
