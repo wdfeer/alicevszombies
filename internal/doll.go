@@ -37,9 +37,7 @@ func updateDollTargeting(world *World, doll Entity) Targeting {
 		targeting.targetingTimer = 0.4
 
 		var target rl.Vector2
-		enemyTargetFound := false
 
-		random := rand.New(rand.NewSource(int64(doll)))
 		nextIndex := 0
 		validEnemies := [16]Entity{}
 		for enemy := range world.enemyTag {
@@ -48,15 +46,16 @@ func updateDollTargeting(world *World, doll Entity) Targeting {
 			if dist < 160 && playerDist < 180 {
 				validEnemies[nextIndex] = enemy
 				nextIndex++
-				enemyTargetFound = true
 			}
 			if nextIndex == len(validEnemies)-1 {
 				break
 			}
 		}
 
-		if enemyTargetFound {
-			target = world.position[validEnemies[random.Int()%(nextIndex+1)]]
+		if nextIndex > 0 {
+			random := rand.New(rand.NewSource(int64(doll)))
+			enemy := validEnemies[random.Int()%nextIndex]
+			target = world.position[enemy]
 		} else {
 			delta := rl.Vector2Rotate(rl.Vector2{X: 20, Y: 0}, rand.Float32()*math.Pi*2)
 			target = rl.Vector2Add(world.position[world.player], delta)
