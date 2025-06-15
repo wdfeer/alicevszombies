@@ -43,6 +43,12 @@ func updateDollTargeting(world *World, doll Entity) Targeting {
 		for enemy := range world.enemyTag {
 			dist := rl.Vector2Distance(world.position[doll], world.position[enemy])
 			playerDist := rl.Vector2Distance(world.position[world.player], world.position[enemy])
+
+			if playerDist < 60 && doll%2 == 0 {
+				targeting.target = world.position[enemy]
+				return targeting
+			}
+
 			if dist < 160 && playerDist < 180 {
 				validEnemies[nextIndex] = enemy
 				nextIndex++
