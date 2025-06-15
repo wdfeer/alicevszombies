@@ -31,11 +31,12 @@ func renderTextures(world *World) {
 }
 
 func renderGrass(world *World) {
+	const GRASS_SIZE = 32
 	origin := rl.Vector2Subtract(world.position[world.player], rl.Vector2Scale(util.GetHalfScreen(), float32(1)/CAMERA_ZOOM))
-	origin.X = origin.X - util.ModF(origin.X, 16)
-	origin.Y = origin.Y - util.ModF(origin.Y, 16)
-	for x := -400; x < 400; x += 16 {
-		for y := -400; y < 400; y += 16 {
+	origin.X = origin.X - util.ModF(origin.X, GRASS_SIZE)
+	origin.Y = origin.Y - util.ModF(origin.Y, GRASS_SIZE)
+	for x := -400; x < 400; x += GRASS_SIZE {
+		for y := -400; y < 400; y += GRASS_SIZE {
 			pos := rl.Vector2{X: origin.X + float32(x), Y: origin.Y + float32(y)}
 			rl.DrawTextureV(assets.textures["grass"], pos, rl.White)
 		}
