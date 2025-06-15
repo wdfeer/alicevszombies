@@ -33,7 +33,6 @@ func newEnemy(world *World) Entity {
 	world.velocity[id] = rl.Vector2Zero()
 	world.drag[id] = 10
 	world.walkAnimated[id] = WalkAnimation{"zombie"}
-	world.animTimer[id] = 0
 	world.hp[id] = newHP(3 + float32(world.enemySpawner.wave/10))
 	world.size[id] = rl.Vector2{X: 8, Y: 16}
 	return id
@@ -52,8 +51,7 @@ func newMedicine(world *World) Entity {
 	world.velocity[id] = rl.Vector2Zero()
 	world.drag[id] = 10
 	world.walkAnimated[id] = WalkAnimation{"medicine"}
-	world.animTimer[id] = 0
-	world.hp[id] = newHP(60)
+	world.hp[id] = newHP(60 + 4*float32(world.enemySpawner.wave))
 	world.size[id] = rl.Vector2{X: 8, Y: 16}
 	return id
 }
