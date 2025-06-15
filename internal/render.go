@@ -13,7 +13,7 @@ func render(world *World) {
 	rl.ClearBackground(rl.Black)
 
 	rl.BeginMode2D(createCamera(world))
-	renderGrid()
+	renderGrass()
 	renderTextures(world)
 	renderCombatText(world)
 	renderDeathEffects(world)
@@ -30,11 +30,12 @@ func renderTextures(world *World) {
 	}
 }
 
-func renderGrid() {
-	for i := -25; i <= 25; i++ {
-		spacing := 100 * int32(i)
-		rl.DrawLine(-9999, spacing, 9999, spacing, rl.RayWhite)
-		rl.DrawLine(spacing, -9999, spacing, 9999, rl.RayWhite)
+func renderGrass() {
+	// TODO: only draw visible grass
+	for x := int32(-500); x < 500; x += 16 {
+		for y := int32(-500); y < 500; y += 16 {
+			rl.DrawTexture(assets.textures["grass"], x, y, rl.White)
+		}
 	}
 }
 
