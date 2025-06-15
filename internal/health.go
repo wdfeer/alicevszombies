@@ -22,15 +22,13 @@ func newHP(amount float32) HP {
 
 func updateHP(world *World) {
 	for id, hp := range world.hp {
-		newMap := hp.attackerCooldown
-
-		for id := range newMap {
-			newMap[id] -= dt
+		for id := range hp.attackerCooldown {
+			hp.attackerCooldown[id] -= dt
 		}
 
 		world.hp[id] = HP{
 			val:              hp.val,
-			attackerCooldown: newMap,
+			attackerCooldown: hp.attackerCooldown,
 			immuneTime:       hp.immuneTime,
 		}
 	}
