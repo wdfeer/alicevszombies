@@ -34,7 +34,7 @@ func newEnemy(world *World) Entity {
 	world.drag[id] = 10
 	world.walkAnimated[id] = WalkAnimation{"zombie"}
 	world.animTimer[id] = 0
-	world.hp[id] = newHP(3)
+	world.hp[id] = newHP(3 + float32(world.enemySpawner.wave/10))
 	world.size[id] = rl.Vector2{X: 8, Y: 16}
 	return id
 }
