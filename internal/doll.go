@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"alicevszombies/internal/util"
 	"math"
 	"math/rand"
 
@@ -65,7 +66,14 @@ func updateDollTargeting(world *World, doll Entity) Targeting {
 		if nextIndex > 0 {
 			random := rand.New(rand.NewSource(int64(doll)))
 			enemy := validEnemies[random.Int()%nextIndex]
-			target = world.position[enemy]
+			dollType := world.doll[doll]
+			enemyPos := world.position[enemy]
+			switch {
+			case dollType.contactDamage > 0:
+				target = enemyPos
+			default:
+				target = rl.Vector2Add(enemyPos, rl.Vector2Scale(util.Vector2Random(), 32))
+			}
 		} else {
 			delta := rl.Vector2Rotate(rl.Vector2{X: 20, Y: 0}, rand.Float32()*math.Pi*2)
 			target = rl.Vector2Add(world.position[world.player], delta)
