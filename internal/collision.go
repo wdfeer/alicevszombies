@@ -35,7 +35,7 @@ func updateCollisions(world *World) {
 					damage(world, enemy, proj.typ.damage)
 					world.deleteEntity(id)
 				} else {
-					damageWithCooldown(world, enemy, proj.typ.damage, id)
+					damageWithCooldown(world, enemy, proj.typ.damage+(float32(world.playerData.upgrades[DOLL_DAMAGE])/8), id)
 				}
 				break
 			}
