@@ -7,9 +7,10 @@ type Upgrade = string
 const (
 	DOLL_DAMAGE = "Doll Damage"
 	DOLL_SPEED  = "Doll Speed"
+	FUSE_LANCE  = "Lance Doll"
 )
 
-var allUpgrades = []Upgrade{DOLL_DAMAGE, DOLL_SPEED}
+var allUpgrades = []Upgrade{DOLL_DAMAGE, DOLL_SPEED, FUSE_LANCE}
 
 func randomUpgrades() [2]Upgrade {
 	upgrade1 := allUpgrades[rand.Int()%len(allUpgrades)]
@@ -31,4 +32,22 @@ func incrementUpgrade(world *World, upgrade Upgrade) {
 	pos := world.position[world.player]
 	pos.Y -= 5
 	newCombatText(world, pos, upgrade+" +")
+
+	onUpgradeGet(world, upgrade)
+}
+
+func onUpgradeGet(world *World, upgrade Upgrade) {
+	switch upgrade {
+	case FUSE_LANCE:
+		sacrificed := false
+		for id, ok := range world.dollTag {
+			if ok {
+				sacrificed = true
+				world.deleteEntity(id)
+			}
+		}
+		if sacrificed {
+			newLance(world)
+		}
+	}
 }

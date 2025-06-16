@@ -23,6 +23,20 @@ func newDoll(world *World) Entity {
 	return id
 }
 
+func newLance(world *World) Entity {
+	id := world.newEntity()
+	world.dollTag[id] = true
+	world.targeting[id] = Targeting{
+		accel: BASE_DOLL_ACCELERATION,
+	}
+	world.position[id] = rl.Vector2Zero()
+	world.velocity[id] = rl.Vector2Zero()
+	world.drag[id] = 5
+	world.size[id] = rl.Vector2{X: 9, Y: 8}
+	world.flipping[id] = Flipping{"doll_lance"}
+	return id
+}
+
 func updateDolls(world *World) {
 	for doll := range world.dollTag {
 		world.targeting[doll] = updateDollTargeting(world, doll)
