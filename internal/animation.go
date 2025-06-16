@@ -4,7 +4,7 @@ import rl "github.com/gen2brain/raylib-go/raylib"
 
 func updateAnimationData(world *World) {
 	updateWalkAnimations(world)
-	updateDollTexture(world)
+	updateFlipping(world)
 }
 
 type WalkAnimation struct {
@@ -35,12 +35,20 @@ func updateWalkAnimations(world *World) {
 	}
 }
 
-func updateDollTexture(world *World) {
-	for id := range world.dollTag {
+type Flipping struct {
+	baseTexture string
+}
+
+func updateFlipping(world *World) {
+	for id, data := range world.flipping {
+		if _, ok := world.velocity[id]; !ok {
+			return
+		}
+
 		if world.velocity[id].X >= 0 {
-			world.texture[id] = "doll"
+			world.texture[id] = data.baseTexture
 		} else {
-			world.texture[id] = "doll_fliph"
+			world.texture[id] = data.baseTexture + "_fliph"
 		}
 	}
 }

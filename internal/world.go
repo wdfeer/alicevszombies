@@ -23,6 +23,7 @@ type World struct {
 	deathEffect  map[Entity]DeathEffectParticle
 	animTimer    map[Entity]float32
 	walkAnimated map[Entity]WalkAnimation
+	flipping     map[Entity]Flipping
 }
 
 func NewWorld() World {
@@ -42,6 +43,7 @@ func NewWorld() World {
 		size:         make(map[Entity]rl.Vector2),
 		deathEffect:  make(map[Entity]DeathEffectParticle),
 		walkAnimated: make(map[Entity]WalkAnimation),
+		flipping:     make(map[Entity]Flipping),
 		uistate:      UIState{},
 	}
 
@@ -107,4 +109,5 @@ func (world *World) deleteEntity(entity Entity) {
 	delete(world.size, entity)
 	delete(world.deathEffect, entity)
 	delete(world.walkAnimated, entity)
+	delete(world.flipping, entity)
 }
