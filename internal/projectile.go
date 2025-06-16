@@ -13,7 +13,7 @@ func newProjectile(world *World, pos rl.Vector2, vel rl.Vector2, typ ProjectileT
 	world.velocity[id] = vel
 	world.projectile[id] = Projectile{
 		typ:      typ,
-		timeLeft: 10,
+		timeLeft: 4,
 	}
 	world.texture[id] = typ.texture
 	world.size[id] = typ.size
