@@ -16,16 +16,10 @@ func updateCollisions(world *World) {
 			damageWithCooldown(world, world.player, 1, enemy)
 		}
 
-		for doll := range world.dollTag {
-			dollRec := util.CenterRectangle(world.position[doll], world.size[doll])
+		for dollID, dollTyp := range world.doll {
+			dollRec := util.CenterRectangle(world.position[dollID], world.size[dollID])
 			if rl.CheckCollisionRecs(dollRec, enemyRec) {
-				// TODO: implement doll types
-
-				baseDamage := 1
-				if world.flipping[doll].baseTexture == "doll_lance" {
-					baseDamage = 2
-				}
-				damageWithCooldown(world, enemy, float32(baseDamage)+(float32(world.playerData.upgrades[DOLL_DAMAGE])/4), doll)
+				damageWithCooldown(world, enemy, dollTyp.baseDamage+(float32(world.playerData.upgrades[DOLL_DAMAGE])/4), dollID)
 				break
 			}
 		}

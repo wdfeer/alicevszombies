@@ -16,8 +16,8 @@ func getAvailableUpgrades(world *World) []Upgrade {
 	newSlice := []Upgrade{}
 	for _, up := range allUpgrades {
 		if up == LANCE_DOLL {
-			for id := range world.dollTag {
-				if world.flipping[id].baseTexture == "doll" {
+			for _, typ := range world.doll {
+				if typ == dollTypes.knifeDoll {
 					newSlice = append(newSlice, up)
 					break
 				}
@@ -57,15 +57,15 @@ func onUpgradeGet(world *World, upgrade Upgrade) {
 	switch upgrade {
 	case LANCE_DOLL:
 		sacrificed := false
-		for id, ok := range world.dollTag {
-			if ok && world.flipping[id].baseTexture == "doll" {
+		for id, typ := range world.doll {
+			if typ == dollTypes.knifeDoll {
 				sacrificed = true
 				world.deleteEntity(id)
 				break
 			}
 		}
 		if sacrificed {
-			id := newLance(world)
+			id := newDoll(world, dollTypes.lanceDoll)
 			world.position[id] = world.position[world.player]
 		}
 	}

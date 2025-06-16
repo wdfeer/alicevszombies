@@ -1,6 +1,8 @@
 package internal
 
-import rl "github.com/gen2brain/raylib-go/raylib"
+import (
+	rl "github.com/gen2brain/raylib-go/raylib"
+)
 
 type Entity = uint32
 type World struct {
@@ -11,7 +13,7 @@ type World struct {
 	playerData   PlayerData
 	enemySpawner EnemySpawner
 	targeting    map[Entity]Targeting
-	dollTag      map[Entity]bool
+	doll         map[Entity]DollType
 	enemyTag     map[Entity]bool
 	position     map[Entity]rl.Vector2
 	velocity     map[Entity]rl.Vector2
@@ -23,7 +25,6 @@ type World struct {
 	deathEffect  map[Entity]DeathEffectParticle
 	animTimer    map[Entity]float32
 	walkAnimated map[Entity]WalkAnimation
-	flipping     map[Entity]Flipping
 }
 
 func NewWorld() World {
@@ -31,7 +32,7 @@ func NewWorld() World {
 		paused:       false,
 		enemySpawner: newEnemySpawner(),
 		targeting:    make(map[Entity]Targeting),
-		dollTag:      make(map[Entity]bool),
+		doll:         make(map[Entity]DollType),
 		enemyTag:     make(map[Entity]bool),
 		position:     make(map[Entity]rl.Vector2),
 		velocity:     make(map[Entity]rl.Vector2),
@@ -43,13 +44,12 @@ func NewWorld() World {
 		size:         make(map[Entity]rl.Vector2),
 		deathEffect:  make(map[Entity]DeathEffectParticle),
 		walkAnimated: make(map[Entity]WalkAnimation),
-		flipping:     make(map[Entity]Flipping),
 		uistate:      UIState{},
 	}
 
 	newPlayer(&world)
-	newDoll(&world)
-	newDoll(&world)
+	newDoll(&world, dollTypes.knifeDoll)
+	newDoll(&world, dollTypes.knifeDoll)
 	newEnemy(&world)
 
 	return world
@@ -97,7 +97,7 @@ func (world *World) deleteEntity(entity Entity) {
 		newDeathEffect(world, "zombie", world.position[entity])
 	}
 	delete(world.targeting, entity)
-	delete(world.dollTag, entity)
+	delete(world.doll, entity)
 	delete(world.enemyTag, entity)
 	delete(world.position, entity)
 	delete(world.velocity, entity)
@@ -109,5 +109,4 @@ func (world *World) deleteEntity(entity Entity) {
 	delete(world.size, entity)
 	delete(world.deathEffect, entity)
 	delete(world.walkAnimated, entity)
-	delete(world.flipping, entity)
 }

@@ -40,15 +40,11 @@ type Flipping struct {
 }
 
 func updateFlipping(world *World) {
-	for id, data := range world.flipping {
-		if _, ok := world.velocity[id]; !ok {
-			return
-		}
-
+	for id, dollType := range world.doll {
 		if world.velocity[id].X >= 0 {
-			world.texture[id] = data.baseTexture
+			world.texture[id] = dollType.texture
 		} else {
-			world.texture[id] = data.baseTexture + "_fliph"
+			world.texture[id] = dollType.texture + "_fliph"
 		}
 	}
 }
