@@ -16,7 +16,7 @@ func updateSpells(world *World) {
 	}
 	if world.playerData.mana >= 10 && (rl.IsKeyPressed(rl.KeyThree) || rl.IsKeyPressed(rl.KeyK)) {
 		world.paused = true
-		uistate.upgradeScreen = true
 		world.playerData.mana -= 10
+		newUpgradeScreen(world)
 	}
 }
