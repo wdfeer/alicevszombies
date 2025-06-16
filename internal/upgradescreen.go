@@ -13,7 +13,7 @@ type UpgradeScreen struct {
 func newUpgradeScreen(world *World) {
 	uistate.upgradeScreenShown = true
 	uistate.upgradeScreen = UpgradeScreen{
-		upgrades: [2]Upgrade{DOLL_DAMAGE, DOLL_SPEED},
+		upgrades: randomUpgrades(),
 	}
 }
 
@@ -22,9 +22,9 @@ func updateUpgradeScreen(world *World) {
 	upgradeTwo := rl.IsKeyPressed(rl.KeyTwo)
 	if upgradeOne || upgradeTwo {
 		if upgradeOne {
-			incrementUpgrade(world, DOLL_DAMAGE)
+			incrementUpgrade(world, uistate.upgradeScreen.upgrades[0])
 		} else if upgradeTwo {
-			incrementUpgrade(world, DOLL_SPEED)
+			incrementUpgrade(world, uistate.upgradeScreen.upgrades[1])
 		}
 		world.paused = false
 		uistate.upgradeScreenShown = false
@@ -33,8 +33,8 @@ func updateUpgradeScreen(world *World) {
 
 func renderUpgradeScreen(world *World) {
 	center := util.GetHalfScreen()
-	util.DrawTextCenteredSpaced("Increase Doll Damage", 40, rl.Vector2Add(center, rl.Vector2{X: -250, Y: -32}), 4)
+	util.DrawTextCenteredSpaced(uistate.upgradeScreen.upgrades[0], 40, rl.Vector2Add(center, rl.Vector2{X: -250, Y: -32}), 4)
 	util.DrawTextCenteredSpaced("1", 64, rl.Vector2Add(center, rl.Vector2{X: -250, Y: 32}), 4)
-	util.DrawTextCenteredSpaced("Increase Doll Speed", 40, rl.Vector2Add(center, rl.Vector2{X: 250, Y: -32}), 4)
+	util.DrawTextCenteredSpaced(uistate.upgradeScreen.upgrades[1], 40, rl.Vector2Add(center, rl.Vector2{X: 250, Y: -32}), 4)
 	util.DrawTextCenteredSpaced("2", 64, rl.Vector2Add(center, rl.Vector2{X: 250, Y: 32}), 4)
 }
