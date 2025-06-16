@@ -1,12 +1,10 @@
 package internal
 
-type DollTypes struct {
+var dollTypes = struct {
 	swordDoll DollType
 	lanceDoll DollType
 	knifeDoll DollType
-}
-
-var dollTypes = DollTypes{
+}{
 	swordDoll: DollType{
 		contactDamage: 1,
 		texture:       "doll_sword",

@@ -38,11 +38,9 @@ type ProjectileType struct {
 	deleteOnHit bool
 }
 
-type ProjectileTypes struct {
+var projectileTypes = struct {
 	knife ProjectileType
-}
-
-var projectileTypes = ProjectileTypes{
+}{
 	knife: ProjectileType{
 		damage:      1,
 		texture:     "knife",
