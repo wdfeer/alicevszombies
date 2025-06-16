@@ -56,8 +56,14 @@ func incrementUpgrade(world *World, upgrade Upgrade) {
 }
 
 func onUpgradeGet(world *World, upgrade Upgrade) {
-	switch upgrade {
-	case LANCE_DOLL:
+	if upgrade == LANCE_DOLL || upgrade == KNIFE_DOLL {
+		var dollType DollType
+		if upgrade == LANCE_DOLL {
+			dollType = dollTypes.lanceDoll
+		} else {
+			dollType = dollTypes.knifeDoll
+		}
+
 		sacrificed := false
 		for id, typ := range world.doll {
 			if typ == dollTypes.swordDoll {
@@ -67,7 +73,7 @@ func onUpgradeGet(world *World, upgrade Upgrade) {
 			}
 		}
 		if sacrificed {
-			id := newDoll(world, dollTypes.lanceDoll)
+			id := newDoll(world, dollType)
 			world.position[id] = world.position[world.player]
 		}
 	}
