@@ -14,21 +14,19 @@ type UIState struct {
 	upgradeScreen      UpgradeScreen
 }
 
-var uistate UIState = UIState{}
-
 func updateUI(world *World) {
-	if uistate.upgradeScreenShown {
+	if world.uistate.upgradeScreenShown {
 		updateUpgradeScreen(world)
 	} else if rl.IsKeyPressed(rl.KeyEscape) {
 		world.paused = !world.paused
 	}
 
-	if rl.GetMousePosition() == uistate.previousMousePos {
-		uistate.cursorHideTimer += dt
+	if rl.GetMousePosition() == world.uistate.previousMousePos {
+		world.uistate.cursorHideTimer += dt
 	} else {
-		uistate.cursorHideTimer = 0
+		world.uistate.cursorHideTimer = 0
 	}
-	uistate.previousMousePos = rl.GetMousePosition()
+	world.uistate.previousMousePos = rl.GetMousePosition()
 }
 
 func renderUI(world *World) {
@@ -73,7 +71,7 @@ func renderUI(world *World) {
 
 	if world.paused {
 		rl.DrawRectangle(0, 0, int32(rl.GetScreenWidth()), int32(rl.GetScreenHeight()), rl.ColorAlpha(rl.Black, 0.4))
-		if uistate.upgradeScreenShown {
+		if world.uistate.upgradeScreenShown {
 			renderUpgradeScreen(world)
 		} else if world.paused {
 			pos := util.GetHalfScreen()
@@ -85,7 +83,7 @@ func renderUI(world *World) {
 		}
 	}
 
-	if uistate.cursorHideTimer < 2.5 {
+	if world.uistate.cursorHideTimer < 2.5 {
 		rl.DrawTextureEx(assets.textures["cursor"], rl.GetMousePosition(), 0, 4, rl.White)
 	}
 }

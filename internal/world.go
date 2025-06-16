@@ -5,6 +5,7 @@ import rl "github.com/gen2brain/raylib-go/raylib"
 type Entity = uint32
 type World struct {
 	paused       bool
+	uistate      UIState
 	nextID       Entity
 	player       Entity
 	playerData   PlayerData
@@ -41,6 +42,7 @@ func NewWorld() World {
 		size:         make(map[Entity]rl.Vector2),
 		deathEffect:  make(map[Entity]DeathEffectParticle),
 		walkAnimated: make(map[Entity]WalkAnimation),
+		uistate:      UIState{},
 	}
 
 	newPlayer(&world)
