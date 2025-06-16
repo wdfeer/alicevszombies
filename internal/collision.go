@@ -17,6 +17,10 @@ func updateCollisions(world *World) {
 		}
 
 		for dollID, dollTyp := range world.doll {
+			if dollTyp.contactDamage <= 0 {
+				continue
+			}
+
 			dollRec := util.CenterRectangle(world.position[dollID], world.size[dollID])
 			if rl.CheckCollisionRecs(dollRec, enemyRec) {
 				damageWithCooldown(world, enemy, dollTyp.contactDamage+(float32(world.playerData.upgrades[DOLL_DAMAGE])/4), dollID)
