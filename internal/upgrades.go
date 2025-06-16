@@ -64,7 +64,8 @@ func onUpgradeGet(world *World, upgrade Upgrade) {
 			}
 		}
 		if sacrificed {
-			newLance(world)
+			id := newLance(world)
+			world.position[id] = world.position[world.player]
 		}
 	}
 }
