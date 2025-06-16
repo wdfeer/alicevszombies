@@ -21,9 +21,10 @@ func newProjectile(world *World, pos rl.Vector2, vel rl.Vector2, typ ProjectileT
 }
 
 type ProjectileType struct {
-	damage  float32
-	texture string
-	size    rl.Vector2
+	damage      float32
+	texture     string
+	size        rl.Vector2
+	deleteOnHit bool
 }
 
 type ProjectileTypes struct {
@@ -32,8 +33,9 @@ type ProjectileTypes struct {
 
 var projectileTypes = ProjectileTypes{
 	knife: ProjectileType{
-		damage:  1,
-		texture: "knife",
-		size:    rl.Vector2{X: 1, Y: 4},
+		damage:      1,
+		texture:     "knife",
+		size:        rl.Vector2{X: 1, Y: 4},
+		deleteOnHit: true,
 	},
 }

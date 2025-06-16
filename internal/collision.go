@@ -16,14 +16,27 @@ func updateCollisions(world *World) {
 			damageWithCooldown(world, world.player, 1, enemy)
 		}
 
-		for dollID, dollTyp := range world.doll {
-			if dollTyp.contactDamage <= 0 {
+		for doll, typ := range world.doll {
+			if typ.contactDamage <= 0 {
 				continue
 			}
 
-			dollRec := util.CenterRectangle(world.position[dollID], world.size[dollID])
+			dollRec := util.CenterRectangle(world.position[doll], world.size[doll])
 			if rl.CheckCollisionRecs(dollRec, enemyRec) {
-				damageWithCooldown(world, enemy, dollTyp.contactDamage+(float32(world.playerData.upgrades[DOLL_DAMAGE])/4), dollID)
+				damageWithCooldown(world, enemy, typ.contactDamage+(float32(world.playerData.upgrades[DOLL_DAMAGE])/4), doll)
+				break
+			}
+		}
+
+		for id, proj := range world.projectile {
+			projRec := util.CenterRectangle(world.position[id], proj.typ.size)
+			if rl.CheckCollisionRecs(enemyRec, projRec) {
+				if proj.typ.deleteOnHit {
+					damage(world, enemy, proj.typ.damage)
+					world.deleteEntity(id)
+				} else {
+					damageWithCooldown(world, enemy, proj.typ.damage, id)
+				}
 				break
 			}
 		}
