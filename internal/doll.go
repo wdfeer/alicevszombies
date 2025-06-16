@@ -29,8 +29,11 @@ func newDoll(world *World, typ DollType) Entity {
 }
 
 func updateDolls(world *World) {
-	for doll := range world.doll {
+	for doll, typ := range world.doll {
 		world.targeting[doll] = updateDollTargeting(world, doll)
+		if typ.contactDamage == 0 {
+			updateDollRanged(world, doll)
+		}
 	}
 }
 
@@ -82,4 +85,23 @@ func updateDollTargeting(world *World, doll Entity) Targeting {
 		targeting.target = target
 	}
 	return targeting
+}
+
+func updateDollRanged(world *World, doll Entity) {
+	enemyFound := false
+	var enemyTarget Entity
+	var minDist float32 = 9e25
+	for enemy := range world.enemyTag {
+		dist := rl.Vector2Distance(world.position[doll], world.position[enemy])
+		if dist < minDist {
+			enemyFound = true
+			enemyTarget = enemy
+			minDist = dist
+		}
+	}
+
+	if enemyFound {
+		dir := util.Vector2Direction(world.position[doll], world.position[enemyTarget])
+		newProjectile(world, world.position[doll], rl.Vector2Scale(dir, 10), projectileTypes.knife)
+	}
 }
