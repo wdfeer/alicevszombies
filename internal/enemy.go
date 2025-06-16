@@ -72,7 +72,13 @@ func updateEnemySpawner(world *World) {
 			spawner.enemiesToSpawn = 1
 		} else {
 			newEnemy(world)
-			spawner.spawnTimer = 2 - min(1, float32(spawner.wave)/10)
+			spawner.spawnTimer = 2 - min(1.4, float32(spawner.wave)/10)
+			if spawner.enemiesToSpawn > 10 {
+				spawner.spawnTimer /= 2
+			}
+			if spawner.enemiesToSpawn > 30 {
+				spawner.spawnTimer /= 2
+			}
 			spawner.enemiesToSpawn--
 		}
 	}
