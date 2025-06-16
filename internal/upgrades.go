@@ -61,6 +61,7 @@ func onUpgradeGet(world *World, upgrade Upgrade) {
 			if ok {
 				sacrificed = true
 				world.deleteEntity(id)
+				break
 			}
 		}
 		if sacrificed {
