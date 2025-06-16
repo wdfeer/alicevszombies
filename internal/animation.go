@@ -38,9 +38,9 @@ func updateWalkAnimations(world *World) {
 func updateDollTexture(world *World) {
 	for id := range world.dollTag {
 		if world.velocity[id].X >= 0 {
-			world.texture[id] = "doll1"
+			world.texture[id] = "doll"
 		} else {
-			world.texture[id] = "doll1_fliph"
+			world.texture[id] = "doll_fliph"
 		}
 	}
 }
