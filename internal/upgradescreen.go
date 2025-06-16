@@ -13,7 +13,7 @@ type UpgradeScreen struct {
 func newUpgradeScreen(world *World) {
 	world.uistate.upgradeScreenShown = true
 	world.uistate.upgradeScreen = UpgradeScreen{
-		upgrades: randomUpgrades(),
+		upgrades: randomUpgrades(world),
 	}
 }
 

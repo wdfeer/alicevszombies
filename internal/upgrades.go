@@ -29,11 +29,12 @@ func getAvailableUpgrades(world *World) []Upgrade {
 	return newSlice
 }
 
-func randomUpgrades() [2]Upgrade {
-	upgrade1 := allUpgrades[rand.Int()%len(allUpgrades)]
+func randomUpgrades(world *World) [2]Upgrade {
+	available := getAvailableUpgrades(world)
+	upgrade1 := available[rand.Int()%len(available)]
 	upgrade2 := upgrade1
 	for upgrade2 == upgrade1 {
-		upgrade2 = allUpgrades[rand.Int()%len(allUpgrades)]
+		upgrade2 = available[rand.Int()%len(available)]
 	}
 	return [2]Upgrade{upgrade1, upgrade2}
 }
