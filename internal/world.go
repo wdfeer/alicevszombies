@@ -15,6 +15,7 @@ type World struct {
 	targeting    map[Entity]Targeting
 	doll         map[Entity]DollType
 	enemyTag     map[Entity]bool
+	projectile   map[Entity]Projectile
 	position     map[Entity]rl.Vector2
 	velocity     map[Entity]rl.Vector2
 	drag         map[Entity]float32
@@ -44,6 +45,7 @@ func NewWorld() World {
 		size:         make(map[Entity]rl.Vector2),
 		deathEffect:  make(map[Entity]DeathEffectParticle),
 		walkAnimated: make(map[Entity]WalkAnimation),
+		projectile:   make(map[Entity]Projectile),
 		uistate:      UIState{},
 	}
 
@@ -109,4 +111,5 @@ func (world *World) deleteEntity(entity Entity) {
 	delete(world.size, entity)
 	delete(world.deathEffect, entity)
 	delete(world.walkAnimated, entity)
+	delete(world.projectile, entity)
 }
