@@ -41,7 +41,7 @@ type Flipping struct {
 
 func updateFlipping(world *World) {
 	for id, dollType := range world.doll {
-		if dollType.contactDamage >= 0 {
+		if dollType.contactDamage > 0 {
 			if world.velocity[id].X >= 0 {
 				world.texture[id] = dollType.texture
 			} else {
