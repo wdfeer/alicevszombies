@@ -17,7 +17,7 @@ func getAvailableUpgrades(world *World) []Upgrade {
 	for _, up := range allUpgrades {
 		if up == LANCE_DOLL {
 			for _, typ := range world.doll {
-				if typ == dollTypes.knifeDoll {
+				if typ == dollTypes.swordDoll {
 					newSlice = append(newSlice, up)
 					break
 				}
@@ -59,7 +59,7 @@ func onUpgradeGet(world *World, upgrade Upgrade) {
 	case LANCE_DOLL:
 		sacrificed := false
 		for id, typ := range world.doll {
-			if typ == dollTypes.knifeDoll {
+			if typ == dollTypes.swordDoll {
 				sacrificed = true
 				world.deleteEntity(id)
 				break

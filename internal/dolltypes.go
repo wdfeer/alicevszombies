@@ -1,14 +1,14 @@
 package internal
 
 type DollTypes struct {
-	knifeDoll DollType
+	swordDoll DollType
 	lanceDoll DollType
 }
 
 var dollTypes = DollTypes{
-	knifeDoll: DollType{
+	swordDoll: DollType{
 		baseDamage: 1,
-		texture:    "doll",
+		texture:    "doll_sword",
 	},
 	lanceDoll: DollType{
 		baseDamage: 2,

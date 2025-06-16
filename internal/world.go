@@ -48,8 +48,8 @@ func NewWorld() World {
 	}
 
 	newPlayer(&world)
-	newDoll(&world, dollTypes.knifeDoll)
-	newDoll(&world, dollTypes.knifeDoll)
+	newDoll(&world, dollTypes.swordDoll)
+	newDoll(&world, dollTypes.swordDoll)
 	newEnemy(&world)
 
 	return world
