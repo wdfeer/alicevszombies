@@ -11,12 +11,29 @@ func newProjectile(world *World, pos rl.Vector2, vel rl.Vector2, typ ProjectileT
 	id := world.newEntity()
 	world.position[id] = pos
 	world.velocity[id] = vel
-	//TODO
+	world.projectile[id] = Projectile{
+		typ:      typ,
+		timeLeft: 10,
+	}
+	world.texture[id] = typ.texture
+	world.size[id] = typ.size
 	return id
 }
 
-type ProjectileType = uint8 // TODO: make struct
+type ProjectileType struct {
+	damage  float32
+	texture string
+	size    rl.Vector2
+}
 
-const (
-	KNIFE_PROJECTILE ProjectileType = iota
-)
+type ProjectileTypes struct {
+	knife ProjectileType
+}
+
+var projectileTypes = ProjectileTypes{
+	knife: ProjectileType{
+		damage:  1,
+		texture: "knife",
+		size:    rl.Vector2{X: 1, Y: 4},
+	},
+}
