@@ -69,6 +69,7 @@ func (world *World) Update() {
 		updatePlayer(world)
 		updateSpells(world)
 		updateDolls(world)
+		updateProjectiles(world)
 		updateEnemySpawner(world)
 		updateEnemies(world)
 		updateTargetingMovement(world)
