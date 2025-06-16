@@ -28,7 +28,7 @@ func newEnemy(world *World) Entity {
 	}
 	world.position[id] = rl.Vector2Add(
 		world.position[world.player],
-		rl.Vector2{X: (rand.Float32() - 0.5) * 500, Y: (rand.Float32() - 0.5) * 500},
+		rl.Vector2{X: (rand.Float32() - 0.5) * 800, Y: (rand.Float32() - 0.5) * 800},
 	)
 	world.velocity[id] = rl.Vector2Zero()
 	world.drag[id] = 10
@@ -46,7 +46,7 @@ func newMedicine(world *World) Entity {
 	}
 	world.position[id] = rl.Vector2Add(
 		world.position[world.player],
-		rl.Vector2{X: (rand.Float32() - 0.5) * 1000, Y: (rand.Float32() - 0.5) * 1000},
+		rl.Vector2{X: (rand.Float32() - 0.5) * 1200, Y: (rand.Float32() - 0.5) * 1200},
 	)
 	world.velocity[id] = rl.Vector2Zero()
 	world.drag[id] = 10
