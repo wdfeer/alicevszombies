@@ -58,7 +58,7 @@ func onUpgradeGet(world *World, upgrade Upgrade) {
 	case LANCE_DOLL:
 		sacrificed := false
 		for id, ok := range world.dollTag {
-			if ok {
+			if ok && world.flipping[id].baseTexture == "doll" {
 				sacrificed = true
 				world.deleteEntity(id)
 				break
