@@ -8,14 +8,15 @@ const (
 	DOLL_DAMAGE = "Doll Damage"
 	DOLL_SPEED  = "Doll Speed"
 	LANCE_DOLL  = "Lance Doll"
+	KNIFE_DOLL  = "Knife Doll"
 )
 
-var allUpgrades = []Upgrade{DOLL_DAMAGE, DOLL_SPEED, LANCE_DOLL}
+var allUpgrades = []Upgrade{DOLL_DAMAGE, DOLL_SPEED, LANCE_DOLL, KNIFE_DOLL}
 
 func getAvailableUpgrades(world *World) []Upgrade {
 	newSlice := []Upgrade{}
 	for _, up := range allUpgrades {
-		if up == LANCE_DOLL {
+		if up == LANCE_DOLL || up == KNIFE_DOLL {
 			for _, typ := range world.doll {
 				if typ == dollTypes.swordDoll {
 					newSlice = append(newSlice, up)
