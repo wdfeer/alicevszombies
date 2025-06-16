@@ -3,11 +3,11 @@ package internal
 import rl "github.com/gen2brain/raylib-go/raylib"
 
 type Projectile struct {
-	typ      ProjectileType
+	typ      *ProjectileType
 	timeLeft float32
 }
 
-func newProjectile(world *World, pos rl.Vector2, vel rl.Vector2, typ ProjectileType) Entity {
+func newProjectile(world *World, pos rl.Vector2, vel rl.Vector2, typ *ProjectileType) Entity {
 	id := world.newEntity()
 	world.position[id] = pos
 	world.velocity[id] = vel
