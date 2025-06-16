@@ -26,6 +26,7 @@ type World struct {
 	deathEffect  map[Entity]DeathEffectParticle
 	animTimer    map[Entity]float32
 	walkAnimated map[Entity]WalkAnimation
+	rangedTimer  map[Entity]float32
 }
 
 func NewWorld() World {
@@ -46,6 +47,7 @@ func NewWorld() World {
 		deathEffect:  make(map[Entity]DeathEffectParticle),
 		walkAnimated: make(map[Entity]WalkAnimation),
 		projectile:   make(map[Entity]Projectile),
+		rangedTimer:  make(map[Entity]float32),
 		uistate:      UIState{},
 	}
 
@@ -112,4 +114,5 @@ func (world *World) deleteEntity(entity Entity) {
 	delete(world.deathEffect, entity)
 	delete(world.walkAnimated, entity)
 	delete(world.projectile, entity)
+	delete(world.rangedTimer, entity)
 }
