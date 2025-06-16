@@ -6,9 +6,16 @@ func GetHalfScreen() rl.Vector2 {
 	return rl.Vector2{X: float32(rl.GetScreenWidth()) / 2, Y: float32(rl.GetScreenHeight()) / 2}
 }
 
+func CenterSomething(width float32, height float32, desiredCenter rl.Vector2) rl.Vector2 {
+	return rl.Vector2Subtract(desiredCenter, rl.Vector2{X: width / 2, Y: height / 2})
+}
+
+func CenterTexture(texture *rl.Texture2D, desiredCenter rl.Vector2) rl.Vector2 {
+	return rl.Vector2Subtract(desiredCenter, rl.Vector2{X: float32(texture.Width) / 2, Y: float32(texture.Height) / 2})
+}
+
 func DrawTextureCentered(texture rl.Texture2D, center rl.Vector2) {
-	pos := rl.Vector2Subtract(center, rl.Vector2{X: float32(texture.Width) / 2, Y: float32(texture.Height) / 2})
-	rl.DrawTextureV(texture, pos, rl.White)
+	rl.DrawTextureV(texture, CenterTexture(&texture, center), rl.White)
 }
 
 func DrawTextureCenteredScaled(texture rl.Texture2D, center rl.Vector2, scale float32) {

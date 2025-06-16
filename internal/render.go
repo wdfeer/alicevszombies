@@ -25,7 +25,18 @@ func render(world *World) {
 func renderTextures(world *World) {
 	for id, texture := range world.texture {
 		if pos, exists := world.position[id]; exists {
-			util.DrawTextureCentered(assets.textures[texture], pos)
+			if texture == "knife" {
+				pos := util.CenterSomething(4, 4, pos)
+				rl.DrawTextureEx(
+					assets.textures[texture],
+					pos,
+					-rl.Vector2Angle(world.velocity[id], rl.Vector2{X: 0, Y: 1})*rl.Rad2deg+180,
+					1,
+					rl.White,
+				)
+			} else {
+				util.DrawTextureCentered(assets.textures[texture], pos)
+			}
 		}
 	}
 }
