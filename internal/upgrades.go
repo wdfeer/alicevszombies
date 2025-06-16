@@ -7,10 +7,27 @@ type Upgrade = string
 const (
 	DOLL_DAMAGE = "Doll Damage"
 	DOLL_SPEED  = "Doll Speed"
-	FUSE_LANCE  = "Lance Doll"
+	LANCE_DOLL  = "Lance Doll"
 )
 
-var allUpgrades = []Upgrade{DOLL_DAMAGE, DOLL_SPEED, FUSE_LANCE}
+var allUpgrades = []Upgrade{DOLL_DAMAGE, DOLL_SPEED, LANCE_DOLL}
+
+func getAvailableUpgrades(world *World) []Upgrade {
+	newSlice := []Upgrade{}
+	for _, up := range allUpgrades {
+		if up == LANCE_DOLL {
+			for id := range world.dollTag {
+				if world.flipping[id].baseTexture == "doll" {
+					newSlice = append(newSlice, up)
+					break
+				}
+			}
+		} else {
+			newSlice = append(newSlice, up)
+		}
+	}
+	return newSlice
+}
 
 func randomUpgrades() [2]Upgrade {
 	upgrade1 := allUpgrades[rand.Int()%len(allUpgrades)]
@@ -38,7 +55,7 @@ func incrementUpgrade(world *World, upgrade Upgrade) {
 
 func onUpgradeGet(world *World, upgrade Upgrade) {
 	switch upgrade {
-	case FUSE_LANCE:
+	case LANCE_DOLL:
 		sacrificed := false
 		for id, ok := range world.dollTag {
 			if ok {
