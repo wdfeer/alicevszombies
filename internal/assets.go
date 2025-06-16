@@ -24,6 +24,7 @@ func LoadAssets() {
 	loadTextureAndFlipped("doll_sword")
 	loadTextureAndFlipped("doll_lance")
 	loadTexture("doll_knife")
+	loadTexture("knife")
 
 	loadTexture("zombie")
 	loadTexture("zombie_walk0")
