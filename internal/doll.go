@@ -10,8 +10,8 @@ import (
 const BASE_DOLL_ACCELERATION = 500
 
 type DollType struct {
-	baseDamage float32
-	texture    string
+	contactDamage float32
+	texture       string
 }
 
 func newDoll(world *World, typ DollType) Entity {
