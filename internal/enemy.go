@@ -54,7 +54,14 @@ func updateEnemySpawner(world *World) {
 			spawner.spawnTimer = 15 - float32(world.difficulty)*3
 			spawner.enemiesToSpawn = 1
 		} else {
-			newEnemy(world, &enemyTypes.zombie)
+			var typ *EnemyType
+			if spawner.wave < 20 || rand.Float32() < 0.9 {
+				typ = &enemyTypes.zombie
+			} else {
+				typ = &enemyTypes.redZombie
+			}
+			newEnemy(world, typ)
+
 			spawner.spawnTimer = 2 - min(1.4, float32(spawner.wave)/10)
 			if spawner.enemiesToSpawn > 10 {
 				spawner.spawnTimer /= max(2, float32(world.difficulty))
@@ -99,7 +106,14 @@ func updateEnemies(world *World) {
 	}
 }
 
-func preEnemyDeath(world *World, entity Entity) {
+func preEnemyDeath(world *World, id Entity) {
+	switch world.enemy[id] {
+	case &enemyTypes.redZombie:
+		for range 6 {
+			newProjectile(world, world.position[id], rl.Vector2Scale(util.Vector2Random(), 80), &projectileTypes.redBullet)
+		}
+	}
+
 	world.playerData.mana += 1
-	newDeathEffect(world, world.enemy[entity].texture, world.position[entity])
+	newDeathEffect(world, world.enemy[id].texture, world.position[id])
 }
