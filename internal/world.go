@@ -8,6 +8,7 @@ type Entity = uint32
 type World struct {
 	paused       bool
 	uistate      UIState
+	difficulty   Difficulty
 	nextID       Entity
 	player       Entity
 	playerData   PlayerData
