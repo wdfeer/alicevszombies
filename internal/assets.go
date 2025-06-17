@@ -24,7 +24,6 @@ func LoadAssets() {
 	loadTextureAndFlipped("doll_sword")
 	loadTextureAndFlipped("doll_lance")
 	loadTexture("doll_knife")
-	loadTexture("knife")
 
 	loadTexture("zombie")
 	loadTexture("zombie_walk0")
@@ -36,6 +35,9 @@ func LoadAssets() {
 	loadTexture("doll_icon")
 	loadTexture("pitem_icon")
 	loadTexture("grass")
+
+	loadTexture("knife")
+	loadTexture("red_bullet")
 
 	println("INFO: Textures loaded!")
 
