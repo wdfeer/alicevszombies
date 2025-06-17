@@ -43,7 +43,7 @@ func renderTextures(world *World) {
 
 func renderGrass(world *World) {
 	const GRASS_SIZE = 32
-	origin := rl.Vector2Subtract(world.position[world.player], rl.Vector2Scale(util.GetHalfScreen(), float32(1)/CAMERA_ZOOM))
+	origin := rl.Vector2Subtract(world.position[world.player], rl.Vector2Scale(util.HalfScreenSize(), float32(1)/CAMERA_ZOOM))
 	origin.X = origin.X - util.ModF(origin.X, GRASS_SIZE)
 	origin.Y = origin.Y - util.ModF(origin.Y, GRASS_SIZE)
 	for x := -400; x < 400; x += GRASS_SIZE {
@@ -59,7 +59,7 @@ const CAMERA_ZOOM = 8
 func createCamera(world *World) rl.Camera2D {
 	camera := rl.Camera2D{
 		Target: world.position[world.player],
-		Offset: util.GetHalfScreen(),
+		Offset: util.HalfScreenSize(),
 		Zoom:   CAMERA_ZOOM,
 	}
 	return camera

@@ -7,21 +7,36 @@ import (
 )
 
 func updateMainMenu(world *World) {
-	if rl.IsKeyPressed(rl.KeyJ) {
-		world.paused = false
-		world.uistate.isMainMenu = false
+	if rl.IsKeyPressed(rl.KeyOne) {
+		world.difficulty = EASY
+	} else {
+		return
 	}
+	world.paused = false
+	world.uistate.isMainMenu = false
 }
 
 func renderMainMenu() {
-	rl.DrawRectangle(0, 0, int32(rl.GetScreenWidth()), int32(rl.GetScreenHeight()), rl.ColorAlpha(rl.Black, 0.9))
+	screenSize := util.ScreenSize()
+	rl.DrawRectangleV(rl.Vector2Zero(), screenSize, rl.ColorAlpha(rl.Black, 0.9))
+
 	util.DrawTextCenteredSpaced("alicevszombies", 80, rl.Vector2{X: float32(rl.GetScreenWidth()) / 2, Y: 120}, 16)
 
-	halfHeight := int32(rl.GetScreenHeight() / 2)
-	rl.DrawText("Start", 160, halfHeight-75, 64, rl.White)
-	rl.DrawText("J", 550, halfHeight-75, 60, rl.White)
-	rl.DrawText("Fullscreen", 160, halfHeight, 64, rl.White)
-	rl.DrawText("F", 550, halfHeight, 60, rl.White)
-	rl.DrawText("Exit", 160, halfHeight+75, 64, rl.White)
-	rl.DrawText("DEL", 550, halfHeight+75, 60, rl.White)
+	{ // Left Side
+		height := int32(screenSize.Y)
+		rl.DrawText("Fullscreen = F", 160, height-160, 64, rl.White)
+		rl.DrawText("Exit = DEL", 160, height-96, 64, rl.White)
+	}
+
+	{ // Right Side
+		spacing := float32(8)
+		pos := util.AlignTextRight("Easy = 1", 64, rl.Vector2{X: screenSize.X - 160, Y: screenSize.Y - 64*4}, spacing)
+		rl.DrawTextEx(rl.GetFontDefault(), "Easy = 1", pos, 64, spacing, rl.White)
+		pos = util.AlignTextRight("Normal = 2", 64, rl.Vector2{X: screenSize.X - 160, Y: screenSize.Y - 64*3}, spacing)
+		rl.DrawTextEx(rl.GetFontDefault(), "Normal = 2", pos, 64, spacing, rl.White)
+		pos = util.AlignTextRight("Hard = 3", 64, rl.Vector2{X: screenSize.X - 160, Y: screenSize.Y - 64*2}, spacing)
+		rl.DrawTextEx(rl.GetFontDefault(), "Hard = 3", pos, 64, spacing, rl.White)
+		pos = util.AlignTextRight("Lunatic = 4", 64, rl.Vector2{X: screenSize.X - 160, Y: screenSize.Y - 64}, spacing)
+		rl.DrawTextEx(rl.GetFontDefault(), "Lunatic = 4", pos, 64, spacing, rl.White)
+	}
 }

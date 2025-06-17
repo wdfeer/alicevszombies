@@ -82,7 +82,7 @@ func renderUI(world *World) {
 			if world.uistate.upgradeScreenShown {
 				renderUpgradeScreen(world)
 			} else if world.paused {
-				pos := util.GetHalfScreen()
+				pos := util.HalfScreenSize()
 				util.DrawTextCenteredSpaced("Paused", 256, pos, 16)
 				pos.Y += 128
 				util.DrawTextCenteredSpaced("ESC = Resume", 64, pos, 4)

@@ -2,7 +2,11 @@ package util
 
 import rl "github.com/gen2brain/raylib-go/raylib"
 
-func GetHalfScreen() rl.Vector2 {
+func ScreenSize() rl.Vector2 {
+	return rl.Vector2{X: float32(rl.GetScreenWidth()), Y: float32(rl.GetScreenHeight())}
+}
+
+func HalfScreenSize() rl.Vector2 {
 	return rl.Vector2{X: float32(rl.GetScreenWidth()) / 2, Y: float32(rl.GetScreenHeight()) / 2}
 }
 
@@ -31,6 +35,11 @@ func CenterText(text string, fontSize float32, desiredCenter rl.Vector2) rl.Vect
 func CenterTextSpaced(text string, fontSize float32, desiredCenter rl.Vector2, spacing float32) rl.Vector2 {
 	size := rl.MeasureTextEx(rl.GetFontDefault(), text, fontSize, spacing)
 	return rl.Vector2Subtract(desiredCenter, rl.Vector2Scale(size, 0.5))
+}
+
+func AlignTextRight(text string, fontSize float32, desiredRightCenter rl.Vector2, spacing float32) rl.Vector2 {
+	size := rl.MeasureTextEx(rl.GetFontDefault(), text, fontSize, spacing)
+	return rl.Vector2{X: desiredRightCenter.X - size.X, Y: desiredRightCenter.Y - size.Y/2}
 }
 
 func DrawTextCentered(text string, fontSize float32, center rl.Vector2) {
