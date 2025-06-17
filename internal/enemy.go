@@ -21,38 +21,20 @@ func newEnemySpawner() EnemySpawner {
 	}
 }
 
-func newEnemy(world *World) Entity {
+func newEnemy(world *World, typ *EnemyType) Entity {
 	id := world.newEntity()
-	world.enemy[id] = &enemyTypes.zombie
+	world.enemy[id] = typ
 	world.targeting[id] = Targeting{
-		accel: 700,
+		accel: typ.acceleration,
 	}
 	world.position[id] = rl.Vector2Add(
 		world.position[world.player],
-		rl.Vector2Scale(util.Vector2Random(), 450),
+		rl.Vector2Scale(util.Vector2Random(), 500),
 	)
 	world.velocity[id] = rl.Vector2Zero()
 	world.drag[id] = 10
-	world.walkAnimated[id] = WalkAnimation{"zombie"}
-	world.hp[id] = newHP(3 + float32(world.enemySpawner.wave/10))
-	world.size[id] = rl.Vector2{X: 8, Y: 16}
-	return id
-}
-
-func newMedicine(world *World) Entity {
-	id := world.newEntity()
-	world.enemy[id] = &enemyTypes.medicine
-	world.targeting[id] = Targeting{
-		accel: 730,
-	}
-	world.position[id] = rl.Vector2Add(
-		world.position[world.player],
-		rl.Vector2Scale(util.Vector2Random(), 800),
-	)
-	world.velocity[id] = rl.Vector2Zero()
-	world.drag[id] = 10
-	world.walkAnimated[id] = WalkAnimation{"medicine"}
-	world.hp[id] = newHP(60 + 4*float32(world.enemySpawner.wave))
+	world.walkAnimated[id] = WalkAnimation{typ.texture}
+	world.hp[id] = newHP(typ.baseHP * (1 + float32(world.enemySpawner.wave/20)))
 	world.size[id] = rl.Vector2{X: 8, Y: 16}
 	return id
 }
@@ -68,11 +50,11 @@ func updateEnemySpawner(world *World) {
 	spawner.spawnTimer = spawner.spawnTimer - dt
 	if spawner.spawnTimer <= 0 {
 		if spawner.wave%10 == 0 && spawner.enemiesToSpawn > 1 {
-			newMedicine(world)
+			newEnemy(world, &enemyTypes.medicine)
 			spawner.spawnTimer = 15
 			spawner.enemiesToSpawn = 1
 		} else {
-			newEnemy(world)
+			newEnemy(world, &enemyTypes.zombie)
 			spawner.spawnTimer = 2 - min(1.4, float32(spawner.wave)/10)
 			if spawner.enemiesToSpawn > 10 {
 				spawner.spawnTimer /= 2
