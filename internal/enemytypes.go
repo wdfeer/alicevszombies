@@ -4,6 +4,7 @@ type EnemyType struct {
 	texture      string
 	acceleration float32
 	baseHP       float32
+	ranged       bool
 }
 
 var enemyTypes = struct {
@@ -19,5 +20,6 @@ var enemyTypes = struct {
 		texture:      "medicine",
 		acceleration: 730,
 		baseHP:       50,
+		ranged:       true,
 	},
 }

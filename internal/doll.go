@@ -89,8 +89,8 @@ func updateDollTargeting(world *World, doll Entity) Targeting {
 }
 
 func updateDollRanged(world *World, doll Entity) {
-	world.rangedTimer[doll] -= dt
-	if world.rangedTimer[doll] <= 0 {
+	world.shootTimer[doll] -= dt
+	if world.shootTimer[doll] <= 0 {
 		enemyFound := false
 		var enemyTarget Entity
 		var minDist float32 = 9e25
@@ -106,7 +106,7 @@ func updateDollRanged(world *World, doll Entity) {
 		if enemyFound {
 			dir := util.Vector2Direction(world.position[doll], world.position[enemyTarget])
 			newProjectile(world, world.position[doll], rl.Vector2Scale(dir, 200), &projectileTypes.knife)
-			world.rangedTimer[doll] = 1
+			world.shootTimer[doll] = 1
 		}
 	}
 }

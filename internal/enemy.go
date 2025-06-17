@@ -70,21 +70,31 @@ func updateEnemySpawner(world *World) {
 }
 
 func updateEnemies(world *World) {
-	for id := range world.enemy {
+	for id, typ := range world.enemy {
 		targeting := world.targeting[id]
 		targeting.targetingTimer -= dt
 		if targeting.targetingTimer <= 0 || rl.Vector2Distance(targeting.target, world.position[id]) < 2 {
 			targeting.targetingTimer = 0.4
 			distance := rl.Vector2Distance(world.position[id], world.position[world.player])
-			if distance > 10 {
+			if !typ.ranged {
 				delta := rl.Vector2Normalize(rl.Vector2Subtract(world.position[world.player], world.position[id]))
 				delta = rl.Vector2Rotate(delta, rand.Float32()/2)
 				delta = rl.Vector2Scale(delta, distance/3)
 				targeting.target = rl.Vector2Add(world.position[id], delta)
 			} else {
-				targeting.target = world.position[world.player]
+				targeting.target = rl.Vector2Add(world.position[world.player], rl.Vector2Scale(util.Vector2Random(), 70))
 			}
 		}
 		world.targeting[id] = targeting
+
+		if typ.ranged {
+			world.shootTimer[id] -= dt
+			if world.shootTimer[id] <= 0 {
+				world.shootTimer[id] = 1
+
+				vel := rl.Vector2Scale(util.Vector2Direction(world.position[id], world.position[world.player]), 100)
+				newProjectile(world, world.position[id], vel, &projectileTypes.redBullet)
+			}
+		}
 	}
 }
