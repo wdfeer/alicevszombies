@@ -36,7 +36,7 @@ func updateUI(world *World) {
 
 func renderUI(world *World) {
 	if world.uistate.isMainMenu {
-		renderMainMenu(world)
+		renderMainMenu()
 	} else {
 		{ // Wave counter
 			str := "Wave " + fmt.Sprint(world.enemySpawner.wave)
@@ -90,9 +90,9 @@ func renderUI(world *World) {
 				util.DrawTextCenteredSpaced("DEL = Quit", 64, pos, 4)
 			}
 		}
+	}
 
-		if world.uistate.cursorHideTimer < 2.5 {
-			rl.DrawTextureEx(assets.textures["cursor"], rl.GetMousePosition(), 0, 4, rl.White)
-		}
+	if world.uistate.cursorHideTimer < 2.5 {
+		rl.DrawTextureEx(assets.textures["cursor"], rl.GetMousePosition(), 0, 4, rl.White)
 	}
 }
