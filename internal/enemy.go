@@ -34,7 +34,7 @@ func newEnemy(world *World, typ *EnemyType) Entity {
 	world.velocity[id] = rl.Vector2Zero()
 	world.drag[id] = 10
 	world.walkAnimated[id] = WalkAnimation{typ.texture}
-	world.hp[id] = newHP(typ.baseHP * (1 + float32(world.enemySpawner.wave/20)) * (1 + (float32(world.difficulty)-1)/3))
+	world.hp[id] = newHP(typ.baseHP * (1 + float32(world.enemySpawner.wave/(23-uint32(world.difficulty)*3))))
 	world.size[id] = rl.Vector2{X: 8, Y: 16}
 	return id
 }
@@ -44,20 +44,20 @@ func updateEnemySpawner(world *World) {
 
 	if spawner.enemiesToSpawn <= 0 {
 		spawner.wave++
-		spawner.enemiesToSpawn = 1 + spawner.wave*2
+		spawner.enemiesToSpawn = 2 + spawner.wave*2
 	}
 
 	spawner.spawnTimer = spawner.spawnTimer - dt
 	if spawner.spawnTimer <= 0 {
 		if spawner.wave%10 == 0 && spawner.enemiesToSpawn > 1 {
 			newEnemy(world, &enemyTypes.medicine)
-			spawner.spawnTimer = 15
+			spawner.spawnTimer = 15 - float32(world.difficulty)*3
 			spawner.enemiesToSpawn = 1
 		} else {
 			newEnemy(world, &enemyTypes.zombie)
 			spawner.spawnTimer = 2 - min(1.4, float32(spawner.wave)/10)
 			if spawner.enemiesToSpawn > 10 {
-				spawner.spawnTimer /= 2
+				spawner.spawnTimer /= max(2, float32(world.difficulty))
 			}
 			if spawner.enemiesToSpawn > 30 {
 				spawner.spawnTimer /= 2
