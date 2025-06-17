@@ -14,7 +14,7 @@ type World struct {
 	enemySpawner EnemySpawner
 	targeting    map[Entity]Targeting
 	doll         map[Entity]DollType
-	enemyTag     map[Entity]bool
+	enemy        map[Entity]*EnemyType
 	projectile   map[Entity]Projectile
 	position     map[Entity]rl.Vector2
 	velocity     map[Entity]rl.Vector2
@@ -35,7 +35,7 @@ func NewWorld() World {
 		enemySpawner: newEnemySpawner(),
 		targeting:    make(map[Entity]Targeting),
 		doll:         make(map[Entity]DollType),
-		enemyTag:     make(map[Entity]bool),
+		enemy:        make(map[Entity]*EnemyType),
 		position:     make(map[Entity]rl.Vector2),
 		velocity:     make(map[Entity]rl.Vector2),
 		drag:         make(map[Entity]float32),
@@ -97,13 +97,13 @@ func (world *World) deleteEntity(entity Entity) {
 	if world.player == entity {
 		println("Player died! Closing the game.")
 		rl.CloseWindow()
-	} else if world.enemyTag[entity] {
+	} else if _, ok := world.enemy[entity]; ok {
 		world.playerData.mana += 1
 		newDeathEffect(world, "zombie", world.position[entity])
 	}
 	delete(world.targeting, entity)
 	delete(world.doll, entity)
-	delete(world.enemyTag, entity)
+	delete(world.enemy, entity)
 	delete(world.position, entity)
 	delete(world.velocity, entity)
 	delete(world.drag, entity)

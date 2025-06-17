@@ -23,7 +23,7 @@ func newEnemySpawner() EnemySpawner {
 
 func newEnemy(world *World) Entity {
 	id := world.newEntity()
-	world.enemyTag[id] = true
+	world.enemy[id] = &enemyTypes.zombie
 	world.targeting[id] = Targeting{
 		accel: 700,
 	}
@@ -41,7 +41,7 @@ func newEnemy(world *World) Entity {
 
 func newMedicine(world *World) Entity {
 	id := world.newEntity()
-	world.enemyTag[id] = true
+	world.enemy[id] = &enemyTypes.medicine
 	world.targeting[id] = Targeting{
 		accel: 730,
 	}
@@ -88,7 +88,7 @@ func updateEnemySpawner(world *World) {
 }
 
 func updateEnemies(world *World) {
-	for id := range world.enemyTag {
+	for id := range world.enemy {
 		targeting := world.targeting[id]
 		targeting.targetingTimer -= dt
 		if targeting.targetingTimer <= 0 || rl.Vector2Distance(targeting.target, world.position[id]) < 2 {

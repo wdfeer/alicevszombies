@@ -9,7 +9,7 @@ import (
 func updateCollisions(world *World) {
 	playerRec := util.CenterRectangle(world.position[world.player], world.size[world.player])
 
-	for enemy := range world.enemyTag {
+	for enemy := range world.enemy {
 		enemyRec := util.CenterRectangle(world.position[enemy], world.size[enemy])
 
 		// Enemy -> Player

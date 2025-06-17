@@ -49,7 +49,7 @@ func updateDollTargeting(world *World, doll Entity) Targeting {
 
 		nextIndex := 0
 		validEnemies := [16]Entity{}
-		for enemy := range world.enemyTag {
+		for enemy := range world.enemy {
 			dist := rl.Vector2Distance(world.position[doll], world.position[enemy])
 			playerDist := rl.Vector2Distance(world.position[world.player], world.position[enemy])
 
@@ -94,7 +94,7 @@ func updateDollRanged(world *World, doll Entity) {
 		enemyFound := false
 		var enemyTarget Entity
 		var minDist float32 = 9e25
-		for enemy := range world.enemyTag {
+		for enemy := range world.enemy {
 			dist := rl.Vector2Distance(world.position[doll], world.position[enemy])
 			if dist < minDist {
 				enemyFound = true
