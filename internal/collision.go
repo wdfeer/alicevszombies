@@ -12,10 +12,12 @@ func updateCollisions(world *World) {
 	for enemy := range world.enemyTag {
 		enemyRec := util.CenterRectangle(world.position[enemy], world.size[enemy])
 
+		// Enemy -> Player
 		if rl.CheckCollisionRecs(playerRec, enemyRec) {
 			damageWithCooldown(world, world.player, 1, enemy)
 		}
 
+		// Doll -> Enemy
 		for doll, typ := range world.doll {
 			if typ.contactDamage <= 0 {
 				continue
@@ -28,6 +30,7 @@ func updateCollisions(world *World) {
 			}
 		}
 
+		// Projectile -> Enemy
 		for id, proj := range world.projectile {
 			if proj.typ.hostile {
 				continue
@@ -43,6 +46,20 @@ func updateCollisions(world *World) {
 				}
 				break
 			}
+		}
+	}
+
+	// Projectile -> Player
+	for id, proj := range world.projectile {
+		if !proj.typ.hostile {
+			continue
+		}
+
+		projRec := util.CenterRectangle(world.position[id], proj.typ.size)
+		if rl.CheckCollisionRecs(playerRec, projRec) {
+
+			damageWithCooldown(world, world.player, proj.typ.damage, id)
+			break
 		}
 	}
 }
