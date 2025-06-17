@@ -7,9 +7,16 @@ import (
 )
 
 func updateMainMenu(world *World) {
-	if rl.IsKeyPressed(rl.KeyOne) {
+	switch rl.GetKeyPressed() {
+	case rl.KeyOne:
 		world.difficulty = EASY
-	} else {
+	case rl.KeyTwo:
+		world.difficulty = NORMAL
+	case rl.KeyThree:
+		world.difficulty = HARD
+	case rl.KeyFour:
+		world.difficulty = LUNATIC
+	default:
 		return
 	}
 	world.paused = false
