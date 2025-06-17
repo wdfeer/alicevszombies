@@ -31,7 +31,7 @@ type World struct {
 
 func NewWorld() World {
 	world := World{
-		paused:       false,
+		paused:       true,
 		enemySpawner: newEnemySpawner(),
 		targeting:    make(map[Entity]Targeting),
 		doll:         make(map[Entity]DollType),
@@ -48,7 +48,9 @@ func NewWorld() World {
 		walkAnimated: make(map[Entity]WalkAnimation),
 		projectile:   make(map[Entity]Projectile),
 		shootTimer:   make(map[Entity]float32),
-		uistate:      UIState{},
+		uistate: UIState{
+			isMainMenu: true,
+		},
 	}
 
 	newPlayer(&world)
