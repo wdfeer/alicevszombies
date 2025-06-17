@@ -18,8 +18,10 @@ func renderMainMenu() {
 	util.DrawTextCenteredSpaced("alicevszombies", 80, rl.Vector2{X: float32(rl.GetScreenWidth()) / 2, Y: 120}, 16)
 
 	halfHeight := int32(rl.GetScreenHeight() / 2)
-	rl.DrawText("Start", 160, halfHeight-50, 64, rl.White)
-	rl.DrawText("J", 400, halfHeight-50, 60, rl.White)
-	rl.DrawText("Exit", 160, halfHeight+50, 64, rl.White)
-	rl.DrawText("DEL", 400, halfHeight+50, 60, rl.White)
+	rl.DrawText("Start", 160, halfHeight-75, 64, rl.White)
+	rl.DrawText("J", 550, halfHeight-75, 60, rl.White)
+	rl.DrawText("Fullscreen", 160, halfHeight, 64, rl.White)
+	rl.DrawText("F", 550, halfHeight, 60, rl.White)
+	rl.DrawText("Exit", 160, halfHeight+75, 64, rl.White)
+	rl.DrawText("DEL", 550, halfHeight+75, 60, rl.White)
 }
