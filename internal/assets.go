@@ -41,6 +41,7 @@ func LoadAssets() {
 
 	println("INFO: Textures loaded!")
 
+	loadDeathEffect("player")
 	loadDeathEffect("zombie")
 	loadDeathEffect("medicine")
 

@@ -8,13 +8,21 @@ import (
 )
 
 func onPlayerDeath(world *World) {
-	// TODO: player death effect
-	delete(world.texture, world.player)
 	world.paused = true
 	world.uistate.isDeathScreen = true
+
+	// Delete all velocities to only animate player death effect
+	for id := range world.velocity {
+		world.velocity[id] = rl.Vector2Zero()
+	}
+	newDeathEffect(world, "player", world.position[world.player])
+	delete(world.texture, world.player)
 }
 
 func updateDeathScreen(world *World) {
+	updateDeathEffects(world)
+	updateVelocity(world)
+
 	if rl.IsKeyPressed(rl.KeyEscape) {
 		// Goes back to main menu, as on game start
 		world.Reset()
