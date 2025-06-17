@@ -109,7 +109,7 @@ func updateEnemies(world *World) {
 func preEnemyDeath(world *World, id Entity) {
 	switch world.enemy[id] {
 	case &enemyTypes.redZombie:
-		for range 6 {
+		for range 1 + world.difficulty*3 {
 			newProjectile(world, world.position[id], rl.Vector2Scale(util.Vector2Random(), 80), &projectileTypes.redBullet)
 		}
 	}
