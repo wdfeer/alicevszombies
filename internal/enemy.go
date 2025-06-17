@@ -98,3 +98,8 @@ func updateEnemies(world *World) {
 		}
 	}
 }
+
+func preEnemyDeath(world *World, entity Entity) {
+	world.playerData.mana += 1
+	newDeathEffect(world, world.enemy[entity].texture, world.position[entity])
+}

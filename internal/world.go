@@ -101,8 +101,7 @@ func (world *World) deleteEntity(entity Entity) {
 		println("Player died! Closing the game.")
 		rl.CloseWindow()
 	} else if _, ok := world.enemy[entity]; ok {
-		world.playerData.mana += 1
-		newDeathEffect(world, "zombie", world.position[entity])
+		preEnemyDeath(world, entity)
 	}
 	delete(world.targeting, entity)
 	delete(world.doll, entity)
