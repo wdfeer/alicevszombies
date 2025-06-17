@@ -54,8 +54,10 @@ func NewWorld() World {
 	}
 
 	newPlayer(&world)
-	newDoll(&world, dollTypes.swordDoll)
-	newDoll(&world, dollTypes.swordDoll)
+	id := newDoll(&world, dollTypes.swordDoll)
+	world.position[id] = rl.Vector2{X: -20, Y: 4}
+	id = newDoll(&world, dollTypes.swordDoll)
+	world.position[id] = rl.Vector2{X: 20, Y: -4}
 
 	return world
 }

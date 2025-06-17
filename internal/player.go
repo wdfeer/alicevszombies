@@ -25,6 +25,7 @@ func newPlayer(world *World) Entity {
 	}
 	world.size[world.player] = rl.Vector2{X: 8, Y: 16}
 	world.walkAnimated[world.player] = WalkAnimation{"player"}
+	world.texture[world.player] = "player"
 
 	return world.player
 }
