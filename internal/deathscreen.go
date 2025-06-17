@@ -15,9 +15,8 @@ func onPlayerDeath(world *World) {
 
 func updateDeathScreen(world *World) {
 	if rl.IsKeyPressed(rl.KeyEscape) {
-		world.uistate.isDeathScreen = false
-		world.uistate.isMainMenu = true
-		// TODO: reset world
+		// Goes back to main menu, as on game start
+		world.Reset()
 	}
 }
 

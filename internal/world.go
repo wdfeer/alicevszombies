@@ -31,36 +31,38 @@ type World struct {
 }
 
 func NewWorld() World {
-	world := World{
-		paused:       true,
-		enemySpawner: newEnemySpawner(),
-		targeting:    make(map[Entity]Targeting),
-		doll:         make(map[Entity]DollType),
-		enemy:        make(map[Entity]*EnemyType),
-		position:     make(map[Entity]rl.Vector2),
-		velocity:     make(map[Entity]rl.Vector2),
-		drag:         make(map[Entity]float32),
-		texture:      make(map[Entity]string),
-		animTimer:    make(map[Entity]float32),
-		hp:           make(map[Entity]HP),
-		combatText:   make(map[Entity]CombatText),
-		size:         make(map[Entity]rl.Vector2),
-		deathEffect:  make(map[Entity]DeathEffectParticle),
-		walkAnimated: make(map[Entity]WalkAnimation),
-		projectile:   make(map[Entity]Projectile),
-		shootTimer:   make(map[Entity]float32),
-		uistate: UIState{
-			isMainMenu: true,
-		},
+	world := World{}
+	world.Reset()
+	return world
+}
+
+func (world *World) Reset() {
+	world.paused = true
+	world.enemySpawner = newEnemySpawner()
+	world.targeting = make(map[Entity]Targeting)
+	world.doll = make(map[Entity]DollType)
+	world.enemy = make(map[Entity]*EnemyType)
+	world.position = make(map[Entity]rl.Vector2)
+	world.velocity = make(map[Entity]rl.Vector2)
+	world.drag = make(map[Entity]float32)
+	world.texture = make(map[Entity]string)
+	world.animTimer = make(map[Entity]float32)
+	world.hp = make(map[Entity]HP)
+	world.combatText = make(map[Entity]CombatText)
+	world.size = make(map[Entity]rl.Vector2)
+	world.deathEffect = make(map[Entity]DeathEffectParticle)
+	world.walkAnimated = make(map[Entity]WalkAnimation)
+	world.projectile = make(map[Entity]Projectile)
+	world.shootTimer = make(map[Entity]float32)
+	world.uistate = UIState{
+		isMainMenu: true,
 	}
 
-	newPlayer(&world)
-	id := newDoll(&world, dollTypes.swordDoll)
+	newPlayer(world)
+	id := newDoll(world, dollTypes.swordDoll)
 	world.position[id] = rl.Vector2{X: -20, Y: 4}
-	id = newDoll(&world, dollTypes.swordDoll)
+	id = newDoll(world, dollTypes.swordDoll)
 	world.position[id] = rl.Vector2{X: 20, Y: -4}
-
-	return world
 }
 
 var dt float32
