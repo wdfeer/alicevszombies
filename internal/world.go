@@ -99,8 +99,8 @@ func (world *World) newEntity() Entity {
 
 func (world *World) deleteEntity(entity Entity) {
 	if world.player == entity {
-		println("Player died! Closing the game.")
-		rl.CloseWindow()
+		println("INFO: Player died!")
+		onPlayerDeath(world)
 	} else if _, ok := world.enemy[entity]; ok {
 		preEnemyDeath(world, entity)
 	}

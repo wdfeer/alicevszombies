@@ -11,7 +11,7 @@ type UpgradeScreen struct {
 }
 
 func newUpgradeScreen(world *World) {
-	world.uistate.upgradeScreenShown = true
+	world.uistate.isUpgradeScreen = true
 	world.uistate.upgradeScreen = UpgradeScreen{
 		upgrades: randomUpgrades(world),
 	}
@@ -27,7 +27,7 @@ func updateUpgradeScreen(world *World) {
 			incrementUpgrade(world, world.uistate.upgradeScreen.upgrades[1])
 		}
 		world.paused = false
-		world.uistate.upgradeScreenShown = false
+		world.uistate.isUpgradeScreen = false
 	}
 }
 
