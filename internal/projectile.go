@@ -32,6 +32,7 @@ func updateProjectiles(world *World) {
 }
 
 type ProjectileType struct {
+	hostile     bool
 	damage      float32
 	texture     string
 	size        rl.Vector2
@@ -42,6 +43,7 @@ var projectileTypes = struct {
 	knife ProjectileType
 }{
 	knife: ProjectileType{
+		hostile:     false,
 		damage:      1,
 		texture:     "knife",
 		size:        rl.Vector2{X: 1, Y: 4},

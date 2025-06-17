@@ -29,6 +29,10 @@ func updateCollisions(world *World) {
 		}
 
 		for id, proj := range world.projectile {
+			if proj.typ.hostile {
+				continue
+			}
+
 			projRec := util.CenterRectangle(world.position[id], proj.typ.size)
 			if rl.CheckCollisionRecs(enemyRec, projRec) {
 				if proj.typ.deleteOnHit {
