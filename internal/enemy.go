@@ -34,7 +34,7 @@ func newEnemy(world *World, typ *EnemyType) Entity {
 	world.velocity[id] = rl.Vector2Zero()
 	world.drag[id] = 10
 	world.walkAnimated[id] = WalkAnimation{typ.texture}
-	world.hp[id] = newHP(typ.baseHP * (1 + float32(world.enemySpawner.wave/20)))
+	world.hp[id] = newHP(typ.baseHP * (1 + float32(world.enemySpawner.wave/20)) * (1 + (float32(world.difficulty)-1)/3))
 	world.size[id] = rl.Vector2{X: 8, Y: 16}
 	return id
 }
