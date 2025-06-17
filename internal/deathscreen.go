@@ -3,6 +3,7 @@ package internal
 import (
 	"alicevszombies/internal/util"
 
+	"fmt"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
@@ -25,6 +26,7 @@ func renderDeathScreen(world *World) {
 	pos := util.HalfScreenSize()
 	util.DrawTextCenteredSpaced("You Died!", 256, pos, 16)
 	pos.Y += 128
+	util.DrawTextCenteredSpaced("Reached Wave "+fmt.Sprint(world.enemySpawner.wave), 64, pos, 4)
+	pos.Y += 256
 	util.DrawTextCenteredSpaced("ESC = Main Menu", 64, pos, 4)
-	// TODO: show wave reached
 }
