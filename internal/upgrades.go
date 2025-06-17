@@ -9,9 +9,10 @@ const (
 	DOLL_SPEED  = "Doll Speed"
 	LANCE_DOLL  = "Lance Doll"
 	KNIFE_DOLL  = "Knife Doll"
+	CRIT_CHANCE = "Crit Chance"
 )
 
-var allUpgrades = []Upgrade{DOLL_DAMAGE, DOLL_SPEED, LANCE_DOLL, KNIFE_DOLL}
+var allUpgrades = []Upgrade{DOLL_DAMAGE, DOLL_SPEED, LANCE_DOLL, KNIFE_DOLL, CRIT_CHANCE}
 
 func getAvailableUpgrades(world *World) []Upgrade {
 	newSlice := []Upgrade{}

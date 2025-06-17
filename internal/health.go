@@ -89,3 +89,19 @@ func damageWithCooldown(world *World, id Entity, dmg float32, attacker Entity) {
 		damage(world, id, dmg)
 	}
 }
+
+// Damages the enemy whilst applying upgrades
+func damageEnemy(world *World, enemy Entity, baseDamage float32, source Entity) {
+	dmg := baseDamage
+	if _, ok := world.doll[source]; ok {
+		dmg += float32(world.playerData.upgrades[DOLL_DAMAGE]) / 4
+		damageWithCooldown(world, enemy, dmg, source)
+	} else if proj, ok := world.projectile[source]; ok {
+		dmg += float32(world.playerData.upgrades[DOLL_DAMAGE]) / 8
+		if proj.typ.deleteOnHit {
+			damage(world, enemy, dmg)
+		} else {
+			damageWithCooldown(world, enemy, dmg, source)
+		}
+	}
+}
