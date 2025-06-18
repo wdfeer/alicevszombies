@@ -56,6 +56,7 @@ func LoadAssets() {
 
 	rl.InitAudioDevice()
 	loadSound("player_hit")
+	loadSound("enemy_hit")
 	println("INFO: Sounds loaded!")
 }
 
