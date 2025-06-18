@@ -8,18 +8,11 @@ import (
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
-const BASE_DOLL_ACCELERATION = 500
-
-type DollType struct {
-	contactDamage float32
-	texture       string
-}
-
-func newDoll(world *World, typ DollType) Entity {
+func newDoll(world *World, typ *DollType) Entity {
 	id := world.newEntity()
 	world.doll[id] = typ
 	world.targeting[id] = Targeting{
-		accel: BASE_DOLL_ACCELERATION,
+		accel: typ.accel,
 	}
 	world.position[id] = rl.Vector2Zero()
 	world.velocity[id] = rl.Vector2Zero()
@@ -39,8 +32,9 @@ func updateDolls(world *World) {
 }
 
 func updateDollTargeting(world *World, doll Entity) Targeting {
+	typ := world.doll[doll]
 	targeting := world.targeting[doll]
-	targeting.accel = float32(BASE_DOLL_ACCELERATION + 10*world.playerData.upgrades[DOLL_SPEED])
+	targeting.accel = typ.accel + float32(10*world.playerData.upgrades[DOLL_SPEED])
 	targeting.targetingTimer -= dt
 	if targeting.targetingTimer <= 0 || rl.Vector2Distance(targeting.target, world.position[doll]) < 2 {
 		targeting.targetingTimer = 0.4
@@ -70,12 +64,10 @@ func updateDollTargeting(world *World, doll Entity) Targeting {
 		if nextIndex > 0 {
 			random := rand.New(rand.NewSource(int64(doll)))
 			enemy := validEnemies[random.Int()%nextIndex]
-			dollType := world.doll[doll]
 			enemyPos := world.position[enemy]
-			switch {
-			case dollType.contactDamage > 0:
+			if typ.contactDamage > 0 {
 				target = enemyPos
-			default:
+			} else {
 				target = rl.Vector2Add(enemyPos, rl.Vector2Scale(util.Vector2Random(), 32))
 			}
 		} else {

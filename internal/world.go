@@ -16,7 +16,7 @@ type World struct {
 	playerData   PlayerData
 	enemySpawner EnemySpawner
 	targeting    map[Entity]Targeting
-	doll         map[Entity]DollType
+	doll         map[Entity]*DollType
 	enemy        map[Entity]*EnemyType
 	projectile   map[Entity]Projectile
 	position     map[Entity]rl.Vector2
@@ -47,7 +47,7 @@ func (world *World) Reset() {
 	world.paused = true
 	world.enemySpawner = newEnemySpawner()
 	world.targeting = make(map[Entity]Targeting)
-	world.doll = make(map[Entity]DollType)
+	world.doll = make(map[Entity]*DollType)
 	world.enemy = make(map[Entity]*EnemyType)
 	world.position = make(map[Entity]rl.Vector2)
 	world.velocity = make(map[Entity]rl.Vector2)
@@ -66,9 +66,9 @@ func (world *World) Reset() {
 	}
 
 	newPlayer(world)
-	id := newDoll(world, dollTypes.swordDoll)
+	id := newDoll(world, &dollTypes.swordDoll)
 	world.position[id] = rl.Vector2{X: -20, Y: 4}
-	id = newDoll(world, dollTypes.swordDoll)
+	id = newDoll(world, &dollTypes.swordDoll)
 	world.position[id] = rl.Vector2{X: 20, Y: -4}
 }
 
