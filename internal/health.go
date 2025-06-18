@@ -63,6 +63,7 @@ func damage(world *World, id Entity, dmg float32) {
 			hue:  rl.Green,
 		}
 	} else if id == world.player {
+		rl.PlaySound(assets.sounds["player_hit"])
 		world.combatText[ctextID] = CombatText{
 			text: world.combatText[ctextID].text,
 			hue:  rl.Red,
