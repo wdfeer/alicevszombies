@@ -22,25 +22,6 @@ func render(world *World) {
 	renderUI(world)
 }
 
-func renderTextures(world *World) {
-	for id, texture := range world.texture {
-		if pos, exists := world.position[id]; exists {
-			if texture == "knife" || texture == "magic_missile" {
-				pos := util.CenterSomething(4, 4, pos)
-				rl.DrawTextureEx(
-					assets.textures[texture],
-					pos,
-					-rl.Vector2Angle(world.velocity[id], rl.Vector2{X: 1, Y: 0})*rl.Rad2deg,
-					1,
-					rl.White,
-				)
-			} else {
-				util.DrawTextureCentered(assets.textures[texture], pos)
-			}
-		}
-	}
-}
-
 func renderGrass(world *World) {
 	const GRASS_SIZE = 32
 	origin := rl.Vector2Subtract(world.position[world.player], rl.Vector2Scale(util.HalfScreenSize(), float32(1)/CAMERA_ZOOM))
