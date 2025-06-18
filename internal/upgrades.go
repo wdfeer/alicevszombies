@@ -20,6 +20,17 @@ func getAvailableUpgrades(world *World) []Upgrade {
 		switch up {
 		default:
 			newSlice = append(newSlice, up)
+		case DOLL_SPEED:
+			meleeCount := 0
+			for _, typ := range world.doll {
+				if typ.projectileType == nil {
+					meleeCount++
+					if meleeCount > 1 {
+						newSlice = append(newSlice, up)
+						break
+					}
+				}
+			}
 		case LANCE_DOLL:
 			fallthrough
 		case KNIFE_DOLL:
