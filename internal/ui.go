@@ -18,7 +18,6 @@ type UIState struct {
 
 func updateUI(world *World) {
 	if world.uistate.isMainMenu {
-		updateMainMenu(world)
 	} else if world.uistate.isDeathScreen {
 		updateDeathScreen(world)
 	} else {
@@ -80,7 +79,7 @@ func renderHUD(world *World) {
 
 func renderUI(world *World) {
 	if world.uistate.isMainMenu {
-		renderMainMenu()
+		renderMainMenu(world)
 	} else if world.uistate.isDeathScreen {
 		renderDeathScreen(world)
 	} else {
