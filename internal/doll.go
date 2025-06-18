@@ -17,7 +17,7 @@ func newDoll(world *World, typ *DollType) Entity {
 	world.position[id] = rl.Vector2Zero()
 	world.velocity[id] = rl.Vector2Zero()
 	world.drag[id] = 5
-	world.size[id] = rl.Vector2{X: 8, Y: 8}
+	world.size[id] = typ.size
 	world.texture[id] = typ.texture
 	return id
 }
