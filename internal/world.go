@@ -1,6 +1,8 @@
 package internal
 
 import (
+	"alicevszombies/internal/util"
+
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
@@ -37,6 +39,11 @@ func NewWorld() World {
 }
 
 func (world *World) Reset() {
+	{
+		halfSize := util.HalfScreenSize()
+		rl.SetMousePosition(int(halfSize.X), int(halfSize.Y))
+	}
+
 	world.paused = true
 	world.enemySpawner = newEnemySpawner()
 	world.targeting = make(map[Entity]Targeting)
