@@ -17,6 +17,7 @@ func main() {
 	rl.SetExitKey(rl.KeyDelete)
 
 	rl.SetWindowState(rl.FlagWindowResizable)
+	rl.ToggleFullscreen()
 	rl.HideCursor()
 
 	internal.LoadAssets()
