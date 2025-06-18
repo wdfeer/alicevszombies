@@ -4,6 +4,8 @@ import (
 	"alicevszombies/internal/util"
 
 	"fmt"
+
+	"github.com/gen2brain/raylib-go/raygui"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
@@ -20,11 +22,12 @@ func onPlayerDeath(world *World) {
 }
 
 func updateDeathScreen(world *World) {
+	world.uistate.cursorHideTimer = 0
+
 	updateDeathEffects(world)
 	updateVelocity(world)
 
 	if rl.IsKeyPressed(rl.KeyEscape) {
-		// Goes back to main menu, as on game start
 		world.Reset()
 	}
 }
@@ -35,6 +38,15 @@ func renderDeathScreen(world *World) {
 	util.DrawTextCenteredSpaced("You Died!", 256, pos, 16)
 	pos.Y += 128
 	util.DrawTextCenteredSpaced("Reached Wave "+fmt.Sprint(world.enemySpawner.wave), 64, pos, 4)
-	pos.Y += 256
-	util.DrawTextCenteredSpaced("ESC = Main Menu", 64, pos, 4)
+
+	buttonWidth := float32(400)
+	buttonHeight := float32(120)
+
+	startY := pos.Y + 128
+	centerX := pos.X - buttonWidth/2
+
+	resumeRect := rl.Rectangle{X: centerX, Y: startY, Width: buttonWidth, Height: buttonHeight}
+	if raygui.Button(resumeRect, "Main Menu") {
+		world.Reset()
+	}
 }
