@@ -2,6 +2,7 @@ package internal
 
 import (
 	"fmt"
+	"math/rand"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
@@ -69,7 +70,12 @@ func damage(world *World, id Entity, dmg float32) {
 			hue:  rl.Red,
 		}
 	} else if _, ok := world.enemy[id]; ok {
-		rl.PlaySound(assets.sounds["enemy_hit"])
+		dist := rl.Vector2Distance(world.position[world.player], world.position[id])
+		if dist < 200 {
+			rl.SetSoundPitch(assets.sounds["enemy_hit"], 0.8+0.2*rand.Float32())
+			rl.SetSoundVolume(assets.sounds["enemy_hit"], (1 - dist/200))
+			rl.PlaySound(assets.sounds["enemy_hit"])
+		}
 	}
 
 	if hp.val <= 0 {
