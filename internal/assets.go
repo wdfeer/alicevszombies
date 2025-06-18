@@ -7,6 +7,7 @@ var assets Assets
 type Assets struct {
 	textures     map[string]rl.Texture2D
 	deathEffects map[string]DeathEffectAsset
+	sounds       map[string]rl.Sound
 }
 
 func LoadAssets() {
@@ -50,11 +51,17 @@ func LoadAssets() {
 	loadDeathEffect("medicine")
 
 	println("INFO: Death Effects loaded!")
+
+	loadSound("player_hit")
+	println("INFO: Sounds loaded!")
 }
 
 func UnloadAssets() {
 	for _, texture := range assets.textures {
 		rl.UnloadTexture(texture)
+	}
+	for _, sound := range assets.sounds {
+		rl.UnloadSound(sound)
 	}
 }
 
@@ -67,4 +74,8 @@ func loadTextureAndFlipped(name string) {
 	assets.textures[name] = rl.LoadTextureFromImage(image)
 	rl.ImageFlipHorizontal(image)
 	assets.textures[name+"_fliph"] = rl.LoadTextureFromImage(image)
+}
+
+func loadSound(name string) {
+	assets.sounds[name] = rl.LoadSound("assets/" + name + ".wav")
 }
