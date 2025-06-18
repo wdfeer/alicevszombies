@@ -24,9 +24,15 @@ func newEnemySpawner() EnemySpawner {
 func newEnemy(world *World, typ *EnemyType) Entity {
 	id := world.newEntity()
 	world.enemy[id] = typ
-	world.targeting[id] = Targeting{
-		accel: typ.acceleration,
+
+	accel := typ.acceleration
+	if world.difficulty == EASY {
+		accel *= 0.92
 	}
+	world.targeting[id] = Targeting{
+		accel: accel,
+	}
+
 	world.position[id] = rl.Vector2Add(
 		world.position[world.player],
 		rl.Vector2Scale(util.Vector2Random(), 500),
@@ -34,8 +40,14 @@ func newEnemy(world *World, typ *EnemyType) Entity {
 	world.velocity[id] = rl.Vector2Zero()
 	world.drag[id] = 10
 	world.walkAnimated[id] = WalkAnimation{typ.texture}
-	world.hp[id] = newHP(typ.baseHP * (1 + float32(world.enemySpawner.wave/(23-uint32(world.difficulty)*3))))
 	world.size[id] = rl.Vector2{X: 8, Y: 16}
+
+	hp := typ.baseHP * (1 + float32(world.enemySpawner.wave/(23-uint32(world.difficulty)*3)))
+	if world.enemySpawner.wave > 30 {
+		hp *= 1 + float32(world.enemySpawner.wave-30+uint32(world.difficulty)*4)/30
+	}
+	world.hp[id] = newHP(hp)
+
 	return id
 }
 
@@ -55,11 +67,16 @@ func updateEnemySpawner(world *World) {
 			spawner.enemiesToSpawn = 1
 		} else {
 			var typ *EnemyType
-			if spawner.wave < 20 || rand.Float32() < 0.9 {
+			if world.difficulty == LUNATIC && rand.Float32() < 0.05 {
+				typ = &enemyTypes.redZombie
+			} else if spawner.wave < 20 || rand.Float32() < 0.9 {
 				typ = &enemyTypes.zombie
+			} else if world.difficulty > NORMAL && spawner.wave > 30 && rand.Float32() < 0.02 {
+				typ = &enemyTypes.medicine
 			} else {
 				typ = &enemyTypes.redZombie
 			}
+
 			newEnemy(world, typ)
 
 			spawner.spawnTimer = 2 - min(1.4, float32(spawner.wave)/10)
@@ -99,8 +116,13 @@ func updateEnemies(world *World) {
 			if world.shootTimer[id] <= 0 {
 				world.shootTimer[id] = 1
 
-				vel := rl.Vector2Scale(util.Vector2Direction(world.position[id], world.position[world.player]), 100)
+				dir := util.Vector2Direction(world.position[id], world.position[world.player])
+				vel := rl.Vector2Scale(dir, 100)
 				newProjectile(world, world.position[id], vel, &projectileTypes.redBullet)
+
+				if world.difficulty > NORMAL {
+					vel = rl.Vector2Rotate(vel, (rand.Float32()-0.5)/10)
+				}
 			}
 		}
 	}
