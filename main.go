@@ -20,6 +20,8 @@ func main() {
 	rl.HideCursor()
 
 	internal.LoadAssets()
+	defer internal.UnloadAssets()
+
 	world := internal.NewWorld()
 	for !rl.WindowShouldClose() {
 		world.Update()

@@ -52,6 +52,12 @@ func LoadAssets() {
 	println("INFO: Death Effects loaded!")
 }
 
+func UnloadAssets() {
+	for _, texture := range assets.textures {
+		rl.UnloadTexture(texture)
+	}
+}
+
 func loadTexture(name string) {
 	assets.textures[name] = rl.LoadTexture("assets/" + name + ".png")
 }
