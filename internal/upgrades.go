@@ -62,25 +62,28 @@ func incrementUpgrade(world *World, upgrade Upgrade) {
 }
 
 func onUpgradeGet(world *World, upgrade Upgrade) {
-	if upgrade == LANCE_DOLL || upgrade == KNIFE_DOLL {
-		var dollType DollType
-		if upgrade == LANCE_DOLL {
-			dollType = dollTypes.lanceDoll
-		} else {
-			dollType = dollTypes.knifeDoll
-		}
+	dollUpgrades := map[Upgrade]*DollType{
+		LANCE_DOLL:    &dollTypes.lanceDoll,
+		KNIFE_DOLL:    &dollTypes.knifeDoll,
+		MAGICIAN_DOLL: &dollTypes.magicianDoll,
+	}
 
-		sacrificed := false
-		for id, typ := range world.doll {
-			if typ == &dollTypes.swordDoll {
-				sacrificed = true
-				world.deleteEntity(id)
-				break
+	for up, dollType := range dollUpgrades {
+		if up == upgrade {
+			sacrificed := false
+			for id, typ := range world.doll {
+				if typ == &dollTypes.swordDoll {
+					sacrificed = true
+					world.deleteEntity(id)
+					break
+				}
 			}
-		}
-		if sacrificed {
-			id := newDoll(world, &dollType)
-			world.position[id] = world.position[world.player]
+			if sacrificed {
+				id := newDoll(world, dollType)
+				world.position[id] = world.position[world.player]
+			}
+
+			break
 		}
 	}
 }
