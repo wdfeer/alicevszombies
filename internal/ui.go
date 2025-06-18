@@ -84,18 +84,10 @@ func renderUI(world *World) {
 		renderDeathScreen(world)
 	} else {
 		renderHUD(world)
-		if world.paused {
-			rl.DrawRectangle(0, 0, int32(rl.GetScreenWidth()), int32(rl.GetScreenHeight()), rl.ColorAlpha(rl.Black, 0.4))
-			if world.uistate.isUpgradeScreen {
-				renderUpgradeScreen(world)
-			} else {
-				pos := util.HalfScreenSize()
-				util.DrawTextCenteredSpaced("Paused", 256, pos, 16)
-				pos.Y += 128
-				util.DrawTextCenteredSpaced("ESC = Resume", 64, pos, 4)
-				pos.Y += 64
-				util.DrawTextCenteredSpaced("DEL = Quit", 64, pos, 4)
-			}
+		if world.uistate.isUpgradeScreen {
+			renderUpgradeScreen(world)
+		} else if world.paused {
+			renderPauseMenu(world)
 		}
 	}
 

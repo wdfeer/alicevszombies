@@ -32,6 +32,7 @@ func updateUpgradeScreen(world *World) {
 }
 
 func renderUpgradeScreen(world *World) {
+	rl.DrawRectangle(0, 0, int32(rl.GetScreenWidth()), int32(rl.GetScreenHeight()), rl.ColorAlpha(rl.Black, 0.4))
 	center := util.HalfScreenSize()
 	util.DrawTextCenteredSpaced(world.uistate.upgradeScreen.upgrades[0], 40, rl.Vector2Add(center, rl.Vector2{X: -250, Y: -32}), 4)
 	util.DrawTextCenteredSpaced("1", 64, rl.Vector2Add(center, rl.Vector2{X: -250, Y: 32}), 4)
