@@ -10,7 +10,7 @@ func updateSpells(world *World) {
 		world.playerData.mana -= 5
 	}
 	if world.playerData.mana >= 10 && (rl.IsKeyPressed(rl.KeyTwo) || rl.IsKeyPressed(rl.KeyJ)) {
-		id := newDoll(world, &dollTypes.swordDoll)
+		id := newDoll(world, &dollTypes.basicDoll)
 		world.position[id] = world.position[world.player]
 		world.playerData.mana -= 10
 	}

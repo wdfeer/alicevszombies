@@ -66,9 +66,9 @@ func (world *World) Reset() {
 	}
 
 	newPlayer(world)
-	id := newDoll(world, &dollTypes.swordDoll)
+	id := newDoll(world, &dollTypes.basicDoll)
 	world.position[id] = rl.Vector2{X: -20, Y: 4}
-	id = newDoll(world, &dollTypes.swordDoll)
+	id = newDoll(world, &dollTypes.basicDoll)
 	world.position[id] = rl.Vector2{X: 20, Y: -4}
 }
 

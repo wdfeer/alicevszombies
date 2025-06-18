@@ -22,6 +22,7 @@ func getAvailableUpgrades(world *World) []Upgrade {
 			newSlice = append(newSlice, up)
 		case DOLL_SPEED:
 			meleeCount := 0
+			basicDollPresent := false
 			for _, typ := range world.doll {
 				if typ.projectileType == nil {
 					meleeCount++
@@ -30,12 +31,18 @@ func getAvailableUpgrades(world *World) []Upgrade {
 						break
 					}
 				}
+				if typ == &dollTypes.basicDoll {
+					basicDollPresent = true
+				}
+			}
+			if !basicDollPresent {
+				newSlice = append(newSlice, up)
 			}
 		case LANCE_DOLL:
 			fallthrough
 		case KNIFE_DOLL:
 			for _, typ := range world.doll {
-				if typ == &dollTypes.swordDoll {
+				if typ == &dollTypes.basicDoll {
 					newSlice = append(newSlice, up)
 					break
 				}
@@ -95,7 +102,7 @@ func onUpgradeGet(world *World, upgrade Upgrade) {
 
 		for id, typ := range world.doll {
 			if up != MAGICIAN_DOLL {
-				if typ == &dollTypes.swordDoll {
+				if typ == &dollTypes.basicDoll {
 					world.deleteEntity(id)
 					break
 				}
