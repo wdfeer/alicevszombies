@@ -16,47 +16,43 @@ var allUpgrades = []Upgrade{DOLL_DAMAGE, DOLL_SPEED, LANCE_DOLL, KNIFE_DOLL, MAG
 
 func getAvailableUpgrades(world *World) []Upgrade {
 	newSlice := []Upgrade{}
+
+	basicDollCount := 0
+	for _, typ := range world.doll {
+		if typ == &dollTypes.basicDoll {
+			basicDollCount++
+		}
+	}
+
 	for _, up := range allUpgrades {
 		switch up {
 		default:
 			newSlice = append(newSlice, up)
 		case DOLL_SPEED:
-			meleeCount := 0
-			basicDollPresent := false
-			for _, typ := range world.doll {
-				if typ.projectileType == nil {
-					meleeCount++
-					if meleeCount > 1 {
-						newSlice = append(newSlice, up)
-						break
+			if basicDollCount == 0 {
+
+				newSlice = append(newSlice, up)
+			} else {
+				meleeCount := 0
+				for _, typ := range world.doll {
+					if typ.projectileType == nil {
+						meleeCount++
+						if meleeCount > 1 {
+							newSlice = append(newSlice, up)
+							break
+						}
 					}
 				}
-				if typ == &dollTypes.basicDoll {
-					basicDollPresent = true
-				}
-			}
-			if !basicDollPresent {
-				newSlice = append(newSlice, up)
 			}
 		case LANCE_DOLL:
 			fallthrough
 		case KNIFE_DOLL:
-			for _, typ := range world.doll {
-				if typ == &dollTypes.basicDoll {
-					newSlice = append(newSlice, up)
-					break
-				}
+			if basicDollCount > 0 {
+				newSlice = append(newSlice, up)
 			}
 		case MAGICIAN_DOLL:
-			count := 0
-			for _, typ := range world.doll {
-				if typ == &dollTypes.knifeDoll {
-					count++
-					if count >= 2 {
-						newSlice = append(newSlice, up)
-						break
-					}
-				}
+			if basicDollCount > 1 {
+				newSlice = append(newSlice, up)
 			}
 		}
 	}
