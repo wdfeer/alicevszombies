@@ -8,21 +8,26 @@ const (
 	DOLL_DAMAGE   = "Doll Damage"
 	DOLL_SPEED    = "Doll Speed"
 	LANCE_DOLL    = "Lance Doll"
+	SCYTHE_DOLL   = "Scythe Doll"
 	KNIFE_DOLL    = "Knife Doll"
 	MAGICIAN_DOLL = "Magician Doll"
 )
 
-var allUpgrades = []Upgrade{DOLL_DAMAGE, DOLL_SPEED, LANCE_DOLL, KNIFE_DOLL, MAGICIAN_DOLL}
+var allUpgrades = []Upgrade{DOLL_DAMAGE, DOLL_SPEED, LANCE_DOLL, SCYTHE_DOLL, KNIFE_DOLL, MAGICIAN_DOLL}
 
 func getAvailableUpgrades(world *World) []Upgrade {
 	newSlice := []Upgrade{}
 
 	basicDollCount := 0
+	lanceDollCount := 0
 	knifeDollCount := 0
 	for _, typ := range world.doll {
-		if typ == &dollTypes.basicDoll {
+		switch typ {
+		case &dollTypes.basicDoll:
 			basicDollCount++
-		} else if typ == &dollTypes.knifeDoll {
+		case &dollTypes.lanceDoll:
+			lanceDollCount++
+		case &dollTypes.knifeDoll:
 			knifeDollCount++
 		}
 	}
@@ -57,6 +62,10 @@ func getAvailableUpgrades(world *World) []Upgrade {
 			if knifeDollCount > 1 {
 				newSlice = append(newSlice, up)
 			}
+		case SCYTHE_DOLL:
+			if lanceDollCount > 1 {
+				newSlice = append(newSlice, up)
+			}
 		}
 	}
 	return newSlice
@@ -88,8 +97,10 @@ func incrementUpgrade(world *World, upgrade Upgrade) {
 }
 
 func onUpgradeGet(world *World, upgrade Upgrade) {
+	// TODO: make Upgrade a struct to refactor this somehow
 	dollUpgrades := map[Upgrade]*DollType{
 		LANCE_DOLL:    &dollTypes.lanceDoll,
+		SCYTHE_DOLL:   &dollTypes.scytheDoll,
 		KNIFE_DOLL:    &dollTypes.knifeDoll,
 		MAGICIAN_DOLL: &dollTypes.magicianDoll,
 	}
@@ -100,14 +111,20 @@ func onUpgradeGet(world *World, upgrade Upgrade) {
 		}
 
 		for id, typ := range world.doll {
-			if up != MAGICIAN_DOLL {
+			if up != MAGICIAN_DOLL && up != SCYTHE_DOLL {
 				if typ == &dollTypes.basicDoll {
 					world.deleteEntity(id)
 					break
 				}
 			} else {
+				var desiredType *DollType
+				if up == MAGICIAN_DOLL {
+					desiredType = &dollTypes.knifeDoll
+				} else {
+					desiredType = &dollTypes.lanceDoll
+				}
 				count := 0
-				if typ == &dollTypes.knifeDoll {
+				if typ == desiredType {
 					world.deleteEntity(id)
 					count++
 					if count >= 2 {
