@@ -58,7 +58,7 @@ func renderMainMenu(world *World) {
 }
 
 func startGame(world *World, difficulty Difficulty) {
-	world.difficulty = difficulty
+	selectDifficulty(world, difficulty)
 	world.paused = false
 	world.uistate.isMainMenu = false
 }
