@@ -7,7 +7,6 @@ import (
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
-// Both update and render
 func renderMainMenu(world *World) {
 	screenSize := util.ScreenSize()
 	rl.DrawRectangleV(rl.Vector2Zero(), screenSize, rl.ColorAlpha(rl.Black, 0.9))
@@ -17,14 +16,15 @@ func renderMainMenu(world *World) {
 		Y: 120,
 	}, 16)
 
-	buttonWidth := float32(240)
-	buttonHeight := float32(60)
-	buttonSpacing := float32(20)
+	buttonWidth := float32(400)
+	buttonHeight := float32(120)
+	buttonSpacing := float32(40)
 	startY := screenSize.Y/2 - (buttonHeight*2 + buttonSpacing*1.5)
 
 	x := screenSize.X/2 - buttonWidth/2
 	y := startY
 
+	rg.SetStyle(rg.DEFAULT, rg.TEXT_SIZE, 80)
 	if rg.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Easy") {
 		startGame(world, EASY)
 	}
@@ -44,15 +44,15 @@ func renderMainMenu(world *World) {
 		startGame(world, LUNATIC)
 	}
 
-	bottomY := screenSize.Y - 80
+	bottomY := screenSize.Y - buttonHeight - 80
 	leftX := float32(80)
 	rightX := screenSize.X - buttonWidth - 80
 
-	if rg.Button(rl.Rectangle{X: leftX, Y: bottomY, Width: buttonWidth, Height: buttonHeight}, "Toggle Fullscreen") {
+	if rg.Button(rl.Rectangle{X: leftX, Y: bottomY, Width: buttonWidth, Height: buttonHeight}, "Fullscreen") {
 		rl.ToggleFullscreen()
 	}
 
-	if rg.Button(rl.Rectangle{X: rightX, Y: bottomY, Width: buttonWidth, Height: buttonHeight}, "Exit Game") {
+	if rg.Button(rl.Rectangle{X: rightX, Y: bottomY, Width: buttonWidth, Height: buttonHeight}, "Exit") {
 		rl.CloseWindow()
 	}
 }
