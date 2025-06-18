@@ -97,7 +97,7 @@ func updateDollRanged(world *World, doll Entity) {
 
 		if enemyFound {
 			dir := util.Vector2Direction(world.position[doll], world.position[enemyTarget])
-			newProjectile(world, world.position[doll], rl.Vector2Scale(dir, 200), &projectileTypes.knife)
+			newProjectile(world, world.position[doll], rl.Vector2Scale(dir, 200), world.doll[doll].projectileType)
 			world.shootTimer[doll] = 1
 		}
 	}

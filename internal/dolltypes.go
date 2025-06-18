@@ -1,9 +1,10 @@
 package internal
 
 type DollType struct {
-	contactDamage float32
-	texture       string
-	accel         float32
+	contactDamage  float32
+	texture        string
+	accel          float32
+	projectileType *ProjectileType
 }
 
 var dollTypes = struct {
@@ -23,13 +24,15 @@ var dollTypes = struct {
 		accel:         500,
 	},
 	knifeDoll: DollType{
-		contactDamage: 0,
-		texture:       "doll_knife",
-		accel:         400,
+		contactDamage:  0,
+		texture:        "doll_knife",
+		accel:          400,
+		projectileType: &projectileTypes.knife,
 	},
 	magicianDoll: DollType{
-		contactDamage: 0,
-		texture:       "doll_magician",
-		accel:         550,
+		contactDamage:  0,
+		texture:        "doll_magician",
+		accel:          550,
+		projectileType: &projectileTypes.magicMissile,
 	},
 }
