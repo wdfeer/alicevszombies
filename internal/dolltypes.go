@@ -7,9 +7,10 @@ type DollType struct {
 }
 
 var dollTypes = struct {
-	swordDoll DollType
-	lanceDoll DollType
-	knifeDoll DollType
+	swordDoll    DollType
+	lanceDoll    DollType
+	knifeDoll    DollType
+	magicianDoll DollType
 }{
 	swordDoll: DollType{
 		contactDamage: 1,
@@ -25,5 +26,10 @@ var dollTypes = struct {
 		contactDamage: 0,
 		texture:       "doll_knife",
 		accel:         400,
+	},
+	magicianDoll: DollType{
+		contactDamage: 0,
+		texture:       "doll_magician",
+		accel:         550,
 	},
 }

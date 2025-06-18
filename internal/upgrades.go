@@ -5,26 +5,32 @@ import "math/rand"
 type Upgrade = string
 
 const (
-	DOLL_DAMAGE = "Doll Damage"
-	DOLL_SPEED  = "Doll Speed"
-	LANCE_DOLL  = "Lance Doll"
-	KNIFE_DOLL  = "Knife Doll"
+	DOLL_DAMAGE   = "Doll Damage"
+	DOLL_SPEED    = "Doll Speed"
+	LANCE_DOLL    = "Lance Doll"
+	KNIFE_DOLL    = "Knife Doll"
+	MAGICIAN_DOLL = "Magician Doll"
 )
 
-var allUpgrades = []Upgrade{DOLL_DAMAGE, DOLL_SPEED, LANCE_DOLL, KNIFE_DOLL}
+var allUpgrades = []Upgrade{DOLL_DAMAGE, DOLL_SPEED, LANCE_DOLL, KNIFE_DOLL, MAGICIAN_DOLL}
 
 func getAvailableUpgrades(world *World) []Upgrade {
 	newSlice := []Upgrade{}
 	for _, up := range allUpgrades {
-		if up == LANCE_DOLL || up == KNIFE_DOLL {
+		switch up {
+		default:
+			newSlice = append(newSlice, up)
+		case LANCE_DOLL:
+			fallthrough
+		case KNIFE_DOLL:
+			fallthrough
+		case MAGICIAN_DOLL:
 			for _, typ := range world.doll {
 				if typ == &dollTypes.swordDoll {
 					newSlice = append(newSlice, up)
 					break
 				}
 			}
-		} else {
-			newSlice = append(newSlice, up)
 		}
 	}
 	return newSlice
