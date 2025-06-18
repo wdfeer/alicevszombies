@@ -2,22 +2,18 @@ package internal
 
 import rl "github.com/gen2brain/raylib-go/raylib"
 
-var assets Assets
-
-type Assets struct {
+var assets = struct {
 	textures     map[string]rl.Texture2D
 	deathEffects map[string]DeathEffectAsset
 	sounds       map[string]rl.Sound
+}{
+	textures:     make(map[string]rl.Texture2D),
+	deathEffects: make(map[string]DeathEffectAsset),
+	sounds:       make(map[string]rl.Sound),
 }
 
 func LoadAssets() {
-
 	println("Starting to load assets...")
-	assets = Assets{
-		textures:     make(map[string]rl.Texture2D),
-		deathEffects: make(map[string]DeathEffectAsset),
-		sounds:       make(map[string]rl.Sound),
-	}
 
 	loadTexture("player")
 	loadTexture("player_walk0")
