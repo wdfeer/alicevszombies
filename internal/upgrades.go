@@ -23,12 +23,21 @@ func getAvailableUpgrades(world *World) []Upgrade {
 		case LANCE_DOLL:
 			fallthrough
 		case KNIFE_DOLL:
-			fallthrough
-		case MAGICIAN_DOLL:
 			for _, typ := range world.doll {
 				if typ == &dollTypes.swordDoll {
 					newSlice = append(newSlice, up)
 					break
+				}
+			}
+		case MAGICIAN_DOLL:
+			count := 0
+			for _, typ := range world.doll {
+				if typ == &dollTypes.knifeDoll {
+					count++
+					if count >= 2 {
+						newSlice = append(newSlice, up)
+						break
+					}
 				}
 			}
 		}
@@ -69,21 +78,31 @@ func onUpgradeGet(world *World, upgrade Upgrade) {
 	}
 
 	for up, dollType := range dollUpgrades {
-		if up == upgrade {
-			sacrificed := false
-			for id, typ := range world.doll {
+		if up != upgrade {
+			continue
+		}
+
+		for id, typ := range world.doll {
+			if up != MAGICIAN_DOLL {
 				if typ == &dollTypes.swordDoll {
-					sacrificed = true
 					world.deleteEntity(id)
 					break
 				}
+			} else {
+				count := 0
+				if typ == &dollTypes.knifeDoll {
+					world.deleteEntity(id)
+					count++
+					if count >= 2 {
+						break
+					}
+				}
 			}
-			if sacrificed {
-				id := newDoll(world, dollType)
-				world.position[id] = world.position[world.player]
-			}
-
-			break
 		}
+
+		id := newDoll(world, dollType)
+		world.position[id] = world.position[world.player]
+
+		break
 	}
 }
