@@ -3,7 +3,7 @@ package internal
 import (
 	"alicevszombies/internal/util"
 
-	rg "github.com/gen2brain/raylib-go/raygui"
+	"github.com/gen2brain/raylib-go/raygui"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
@@ -24,23 +24,23 @@ func renderMainMenu(world *World) {
 	x := screenSize.X/2 - buttonWidth/2
 	y := startY
 
-	rg.SetStyle(rg.DEFAULT, rg.TEXT_SIZE, 80)
-	if rg.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Easy") {
+	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, 80)
+	if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Easy") {
 		startGame(world, EASY)
 	}
 	y += buttonHeight + buttonSpacing
 
-	if rg.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Normal") {
+	if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Normal") {
 		startGame(world, NORMAL)
 	}
 	y += buttonHeight + buttonSpacing
 
-	if rg.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Hard") {
+	if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Hard") {
 		startGame(world, HARD)
 	}
 	y += buttonHeight + buttonSpacing
 
-	if rg.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Lunatic") {
+	if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Lunatic") {
 		startGame(world, LUNATIC)
 	}
 
@@ -48,11 +48,11 @@ func renderMainMenu(world *World) {
 	leftX := float32(80)
 	rightX := screenSize.X - buttonWidth - 80
 
-	if rg.Button(rl.Rectangle{X: leftX, Y: bottomY, Width: buttonWidth, Height: buttonHeight}, "Fullscreen") {
+	if raygui.Button(rl.Rectangle{X: leftX, Y: bottomY, Width: buttonWidth, Height: buttonHeight}, "Fullscreen") {
 		rl.ToggleFullscreen()
 	}
 
-	if rg.Button(rl.Rectangle{X: rightX, Y: bottomY, Width: buttonWidth, Height: buttonHeight}, "Exit") {
+	if raygui.Button(rl.Rectangle{X: rightX, Y: bottomY, Width: buttonWidth, Height: buttonHeight}, "Exit") {
 		rl.CloseWindow()
 	}
 }
