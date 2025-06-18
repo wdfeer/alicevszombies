@@ -79,7 +79,6 @@ func damage(world *World, id Entity, dmg float32) {
 	}
 
 	if hp.val <= 0 {
-		println("INFO: Entity with id", id, "killed!")
 		world.deleteEntity(id)
 	} else {
 		world.hp[id] = hp
