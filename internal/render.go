@@ -30,7 +30,7 @@ func renderTextures(world *World) {
 				rl.DrawTextureEx(
 					assets.textures[texture],
 					pos,
-					-rl.Vector2Angle(world.velocity[id], rl.Vector2{X: 1, Y: 0})*rl.Rad2deg+180,
+					-rl.Vector2Angle(world.velocity[id], rl.Vector2{X: 1, Y: 0})*rl.Rad2deg,
 					1,
 					rl.White,
 				)
