@@ -48,7 +48,7 @@ var projectileTypes = struct {
 		hostile:     false,
 		damage:      1,
 		texture:     "knife",
-		size:        rl.Vector2{X: 1, Y: 4},
+		size:        rl.Vector2{X: 4, Y: 4},
 		deleteOnHit: true,
 	},
 	redBullet: ProjectileType{
