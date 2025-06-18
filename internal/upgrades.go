@@ -18,9 +18,12 @@ func getAvailableUpgrades(world *World) []Upgrade {
 	newSlice := []Upgrade{}
 
 	basicDollCount := 0
+	knifeDollCount := 0
 	for _, typ := range world.doll {
 		if typ == &dollTypes.basicDoll {
 			basicDollCount++
+		} else if typ == &dollTypes.knifeDoll {
+			knifeDollCount++
 		}
 	}
 
@@ -51,7 +54,7 @@ func getAvailableUpgrades(world *World) []Upgrade {
 				newSlice = append(newSlice, up)
 			}
 		case MAGICIAN_DOLL:
-			if basicDollCount > 1 {
+			if knifeDollCount > 1 {
 				newSlice = append(newSlice, up)
 			}
 		}
