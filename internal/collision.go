@@ -19,13 +19,17 @@ func updateCollisions(world *World) {
 
 		// Doll -> Enemy
 		for doll, typ := range world.doll {
-			if typ.contactDamage <= 0 {
+			if typ.contactDamage <= 0 || typ.size.X <= 0 {
 				continue
 			}
 
 			dollRec := util.CenterRectangle(world.position[doll], world.size[doll])
 			if rl.CheckCollisionRecs(dollRec, enemyRec) {
-				damageWithCooldown(world, enemy, typ.contactDamage+(float32(world.playerData.upgrades[DOLL_DAMAGE])/4), doll)
+				if typ == &dollTypes.scytheDoll {
+					damageWithCooldown(world, enemy, typ.contactDamage+(float32(world.playerData.upgrades[DOLL_DAMAGE])/2), doll)
+				} else {
+					damageWithCooldown(world, enemy, typ.contactDamage+(float32(world.playerData.upgrades[DOLL_DAMAGE])/4), doll)
+				}
 				break
 			}
 		}
