@@ -14,15 +14,33 @@ func newPlayer(world *World) Entity {
 	world.position[world.player] = rl.Vector2Zero()
 	world.velocity[world.player] = rl.Vector2Zero()
 	world.drag[world.player] = 10
+
+	var iTime float32
+	switch world.difficulty {
+	case EASY:
+		iTime = 1.8
+	case NORMAL:
+		iTime = 1.2
+	case HARD:
+		iTime = 1
+	case LUNATIC:
+		iTime = 0.8
+	}
 	world.hp[world.player] = HP{
 		val:              10,
-		immuneTime:       1.2,
+		immuneTime:       iTime,
 		attackerCooldown: make(map[Entity]float32),
 	}
+
+	mana := float32(0)
+	if world.difficulty == EASY {
+		mana += 10
+	}
 	world.playerData = PlayerData{
-		mana:     0,
+		mana:     mana,
 		upgrades: make(map[Upgrade]uint32),
 	}
+
 	world.size[world.player] = rl.Vector2{X: 8, Y: 16}
 	world.walkAnimated[world.player] = WalkAnimation{"player"}
 	world.texture[world.player] = "player"
