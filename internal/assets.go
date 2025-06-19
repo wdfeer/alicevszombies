@@ -16,10 +16,10 @@ var assets = struct {
 }
 
 func LoadAssets() {
-	println("Starting to load assets...")
+	println("INFO: Starting to load assets...")
 
 	rl.SetWindowIcon(*rl.LoadImage("assets/icon.png"))
-	println("Icon loaded!")
+	println("INFO: Icon loaded!")
 
 	loadTexture("player")
 	loadTexture("player_walk0")
