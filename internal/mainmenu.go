@@ -29,33 +29,15 @@ func renderMainMenu(world *World) {
 	x := screenSize.X / 20
 	y := startY
 
-	if world.uistate.mainMenu.difficultySelect {
-		raygui.SetState(raygui.STATE_PRESSED)
-		if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Start") {
-			world.uistate.mainMenu.difficultySelect = !world.uistate.mainMenu.difficultySelect
-		}
-		raygui.SetState(raygui.STATE_NORMAL)
-	} else {
-		if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Start") {
-			world.uistate.mainMenu.difficultySelect = !world.uistate.mainMenu.difficultySelect
-			world.uistate.mainMenu.options = false
-		}
-	}
+	mainMenu := &world.uistate.mainMenu
+
+	mainMenu.difficultySelect = raygui.Toggle(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Start", mainMenu.difficultySelect)
+	mainMenu.options = mainMenu.options && !mainMenu.difficultySelect
 
 	y += buttonHeight + buttonSpacing
 
-	if world.uistate.mainMenu.options {
-		raygui.SetState(raygui.STATE_PRESSED)
-		if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Options") {
-			world.uistate.mainMenu.options = !world.uistate.mainMenu.options
-		}
-		raygui.SetState(raygui.STATE_NORMAL)
-	} else {
-		if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Options") {
-			world.uistate.mainMenu.options = !world.uistate.mainMenu.options
-			world.uistate.mainMenu.difficultySelect = false
-		}
-	}
+	mainMenu.options = raygui.Toggle(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Options", mainMenu.options)
+	mainMenu.difficultySelect = mainMenu.difficultySelect && !mainMenu.options
 
 	y += buttonHeight + buttonSpacing
 
@@ -65,7 +47,7 @@ func renderMainMenu(world *World) {
 
 	x += buttonWidth * 1.1
 	y = startY - buttonHeight/2
-	if world.uistate.mainMenu.difficultySelect {
+	if mainMenu.difficultySelect {
 		if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Easy") {
 			startGame(world, EASY)
 		}
@@ -84,7 +66,7 @@ func renderMainMenu(world *World) {
 		if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Lunatic") {
 			startGame(world, LUNATIC)
 		}
-	} else if world.uistate.mainMenu.options {
+	} else if mainMenu.options {
 		renderOptions(world, rl.Vector2{X: x, Y: y})
 	}
 }
