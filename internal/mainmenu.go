@@ -7,6 +7,10 @@ import (
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
+type MainMenu struct {
+	difficultySelect bool
+}
+
 func renderMainMenu(world *World) {
 	screenSize := util.ScreenSize()
 	rl.DrawRectangleV(rl.Vector2Zero(), screenSize, rl.ColorAlpha(rl.Black, 0.9))
@@ -19,40 +23,57 @@ func renderMainMenu(world *World) {
 	buttonWidth := float32(480)
 	buttonHeight := float32(120)
 	buttonSpacing := float32(40)
-	startY := screenSize.Y/2 - (buttonHeight*2 + buttonSpacing*1.5)
+	startY := screenSize.Y / 2
 
-	x := screenSize.X/2 - buttonWidth/2
+	x := screenSize.X / 20
 	y := startY
 
-	if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Easy") {
-		startGame(world, EASY)
+	if world.uistate.mainMenu.difficultySelect {
+		raygui.SetState(raygui.STATE_PRESSED)
+		if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Start") {
+			world.uistate.mainMenu.difficultySelect = !world.uistate.mainMenu.difficultySelect
+		}
+		raygui.SetState(raygui.STATE_NORMAL)
+	} else {
+		if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Start") {
+			world.uistate.mainMenu.difficultySelect = !world.uistate.mainMenu.difficultySelect
+		}
 	}
+
 	y += buttonHeight + buttonSpacing
 
-	if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Normal") {
-		startGame(world, NORMAL)
-	}
-	y += buttonHeight + buttonSpacing
-
-	if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Hard") {
-		startGame(world, HARD)
-	}
-	y += buttonHeight + buttonSpacing
-
-	if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Lunatic") {
-		startGame(world, LUNATIC)
-	}
-
-	bottomY := screenSize.Y - buttonHeight - 80
-	leftX := float32(80)
-	rightX := screenSize.X - buttonWidth - 80
-
-	if raygui.Button(rl.Rectangle{X: leftX, Y: bottomY, Width: buttonWidth, Height: buttonHeight}, "Fullscreen") {
+	if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Fullscreen") {
 		rl.ToggleFullscreen()
 	}
 
-	if raygui.Button(rl.Rectangle{X: rightX, Y: bottomY, Width: buttonWidth, Height: buttonHeight}, "Exit") {
+	y += buttonHeight + buttonSpacing
+
+	if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Exit") {
 		rl.CloseWindow()
+	}
+
+	if world.uistate.mainMenu.difficultySelect {
+		x += buttonWidth * 1.1
+		y := startY - buttonHeight/2
+
+		if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Easy") {
+			startGame(world, EASY)
+		}
+		y += buttonHeight + buttonSpacing
+
+		if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Normal") {
+			startGame(world, NORMAL)
+		}
+		y += buttonHeight + buttonSpacing
+
+		if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Hard") {
+			startGame(world, HARD)
+		}
+		y += buttonHeight + buttonSpacing
+
+		if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Lunatic") {
+			startGame(world, LUNATIC)
+		}
 	}
 }
 

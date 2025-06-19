@@ -14,6 +14,7 @@ type UIState struct {
 	previousMousePos rl.Vector2
 	cursorHideTimer  float32
 	upgradeScreen    UpgradeScreen
+	mainMenu         MainMenu
 }
 
 func updateUI(world *World) {
