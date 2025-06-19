@@ -88,6 +88,10 @@ func renderMainMenu(world *World) {
 		if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Fullscreen") {
 			rl.ToggleFullscreen()
 		}
+
+		y += buttonHeight + buttonSpacing
+
+		soundVolume = raygui.Slider(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "", "", soundVolume, 0, 1)
 	}
 }
 
