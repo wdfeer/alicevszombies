@@ -100,7 +100,7 @@ func renderMainMenu(world *World) {
 		y += buttonHeight + buttonSpacing
 		buttonWidth += maxTextWidth
 		if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Fullscreen") {
-			rl.ToggleFullscreen()
+			rl.ToggleBorderlessWindowed()
 		}
 	}
 }

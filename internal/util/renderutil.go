@@ -14,6 +14,10 @@ func CenterSomething(width float32, height float32, desiredCenter rl.Vector2) rl
 	return rl.Vector2Subtract(desiredCenter, rl.Vector2{X: width / 2, Y: height / 2})
 }
 
+func CenterSomethingV(size rl.Vector2, desiredCenter rl.Vector2) rl.Vector2 {
+	return rl.Vector2Subtract(desiredCenter, rl.Vector2Scale(size, 0.5))
+}
+
 func CenterTexture(texture *rl.Texture2D, desiredCenter rl.Vector2) rl.Vector2 {
 	return rl.Vector2Subtract(desiredCenter, rl.Vector2{X: float32(texture.Width) / 2, Y: float32(texture.Height) / 2})
 }
@@ -35,11 +39,6 @@ func CenterText(text string, fontSize float32, desiredCenter rl.Vector2) rl.Vect
 func CenterTextSpaced(text string, fontSize float32, desiredCenter rl.Vector2, spacing float32) rl.Vector2 {
 	size := rl.MeasureTextEx(rl.GetFontDefault(), text, fontSize, spacing)
 	return rl.Vector2Subtract(desiredCenter, rl.Vector2Scale(size, 0.5))
-}
-
-func AlignTextRight(text string, fontSize float32, desiredRightCenter rl.Vector2, spacing float32) rl.Vector2 {
-	size := rl.MeasureTextEx(rl.GetFontDefault(), text, fontSize, spacing)
-	return rl.Vector2{X: desiredRightCenter.X - size.X, Y: desiredRightCenter.Y - size.Y/2}
 }
 
 func DrawTextCentered(text string, fontSize float32, center rl.Vector2) {
