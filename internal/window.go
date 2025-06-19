@@ -19,8 +19,14 @@ func InitWindowSettings() {
 	rl.HideCursor()
 }
 
-func updateFullscreenToggleInput() {
+func updateFullscreen() {
 	if rl.IsKeyPressed(rl.KeyF) {
+		options.Fullscreen = !options.Fullscreen
+		saveOptions()
+	}
+
+	isFullscreen := rl.IsWindowState(rl.FlagBorderlessWindowedMode)
+	if (options.Fullscreen && !isFullscreen) || (!options.Fullscreen && isFullscreen) {
 		rl.ToggleBorderlessWindowed()
 	}
 }

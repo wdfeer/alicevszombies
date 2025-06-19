@@ -95,7 +95,7 @@ func (world *World) Update() {
 		updateAnimationData(world)
 	}
 
-	updateFullscreenToggleInput()
+	updateFullscreen()
 	updateUI(world)
 	render(world)
 }
