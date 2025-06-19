@@ -14,13 +14,9 @@ type Options struct {
 	cursorType int32
 }
 
-var options = Options{
-	fullscreen: true,
-	volume:     1,
-	cursorType: 0,
-}
+var options Options
 
-func loadOptions() {
+func LoadOptions() {
 	data, err := os.ReadFile("user/options.bin")
 	if err == nil {
 		if err = util.Deserialize(data, options); err == nil {
@@ -31,6 +27,12 @@ func loadOptions() {
 		}
 	} else {
 		println("ERROR: Failed reading options file!")
+	}
+
+	options = Options{
+		fullscreen: true,
+		volume:     1,
+		cursorType: 0,
 	}
 
 	saveOptions()
