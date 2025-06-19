@@ -2,8 +2,6 @@ package internal
 
 import rl "github.com/gen2brain/raylib-go/raylib"
 
-var soundVolume float32 = 1
-
 func playSound(name string) {
 	rl.SetSoundVolume(assets.sounds[name], soundVolume)
 	rl.PlaySound(assets.sounds[name])

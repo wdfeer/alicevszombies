@@ -12,7 +12,6 @@ type UIState struct {
 	isUpgradeScreen  bool
 	isDeathScreen    bool
 	previousMousePos rl.Vector2
-	cursorType       int32
 	cursorHideTimer  float32
 	upgradeScreen    UpgradeScreen
 	mainMenu         MainMenu

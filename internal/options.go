@@ -1,9 +1,41 @@
 package internal
 
 import (
+	"os"
+
 	"github.com/gen2brain/raylib-go/raygui"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
+
+type Options struct {
+	fullscreen bool
+	volume float32
+	cursorType uint8
+}
+
+var options = Options{
+	fullscreen: true,
+	volume: 1,
+	cursorType: 0,
+}
+
+func loadOptions() {
+	bytes, err := os.ReadFile("user/options.bin")
+	if err == nil {
+		// TODO: deserialize to options
+	} else {
+		println("ERR: Failed reading options file! Creating default...")
+		saveOptions()
+	}
+}
+
+func saveOptions() {
+	bytes := // TODO: serialize options
+	err := os.WriteFile("user/options.bin", bytes, 0644)
+	if err != nil {
+		println("ERR: Failed writing options file!")
+	}
+}
 
 func renderOptions(world *World, origin rl.Vector2) {
 	var maxTextWidth float32
