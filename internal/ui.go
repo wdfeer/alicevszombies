@@ -93,6 +93,6 @@ func renderUI(world *World) {
 	}
 
 	if world.uistate.cursorHideTimer < 2.5 {
-		rl.DrawTextureEx(assets.textures["cursor"+fmt.Sprint(world.uistate.cursorType)], rl.GetMousePosition(), 0, 4, rl.White)
+		rl.DrawTextureEx(assets.textures["cursor"+fmt.Sprint(options.cursorType)], rl.GetMousePosition(), 0, 4, rl.White)
 	}
 }

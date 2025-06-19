@@ -11,7 +11,7 @@ import (
 type Options struct {
 	fullscreen bool
 	volume     float32
-	cursorType uint8
+	cursorType int32
 }
 
 var options = Options{
@@ -48,6 +48,8 @@ func saveOptions() {
 }
 
 func renderOptions(world *World, origin rl.Vector2) {
+	newOptions := options
+
 	var maxTextWidth float32
 	volumeTextSize := float32(rl.MeasureText("Volume", int32(raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE))))
 	cursorTextSize := float32(rl.MeasureText("Cursor", int32(raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE))))
@@ -58,15 +60,18 @@ func renderOptions(world *World, origin rl.Vector2) {
 	buttonSpacing := float32(40)
 
 	buttonWidth -= maxTextWidth / 2
-	soundVolume = raygui.SliderBar(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "", "Volume", soundVolume, 0, 1)
+	newOptions.volume = raygui.SliderBar(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "", "Volume", options.volume, 0, 1)
 
 	origin.Y += buttonHeight + buttonSpacing
 	raygui.SetStyle(raygui.SPINNER, raygui.ARROWS_SIZE, int64(buttonWidth)/7)
-	raygui.Spinner(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "Cursor", &world.uistate.cursorType, 0, 1, false)
+	raygui.Spinner(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "Cursor", &newOptions.cursorType, 0, 1, false)
 
 	origin.Y += buttonHeight + buttonSpacing
 	buttonWidth += maxTextWidth
-	if raygui.Button(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "Fullscreen") {
-		rl.ToggleBorderlessWindowed()
+	newOptions.fullscreen = raygui.Toggle(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "Fullscreen", options.fullscreen)
+
+	if newOptions != options {
+		options = newOptions
+		saveOptions() // TODO: maybe run in background
 	}
 }
