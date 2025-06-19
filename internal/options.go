@@ -37,7 +37,7 @@ func LoadOptions() {
 		CursorType: 0,
 	}
 
-	saveOptions()
+	go saveOptions()
 }
 
 func saveOptions() {
@@ -86,6 +86,6 @@ func renderOptions(world *World, origin rl.Vector2) {
 
 	if newOptions != options {
 		options = newOptions
-		saveOptions() // TODO: maybe run in background
+		go saveOptions()
 	}
 }
