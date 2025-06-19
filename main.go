@@ -7,18 +7,10 @@ import (
 )
 
 func main() {
-	monitor := rl.GetCurrentMonitor()
-
-	rl.InitWindow(int32(rl.GetMonitorWidth(monitor)), int32(rl.GetMonitorHeight(monitor)), "alicevszombies")
+	rl.InitWindow(int32(rl.GetScreenWidth()), int32(rl.GetScreenHeight()), "alicevszombies")
 	defer rl.CloseWindow()
 
-	fps := int32(rl.GetMonitorRefreshRate(monitor))
-	rl.SetTargetFPS(fps)
-	rl.SetExitKey(rl.KeyDelete)
-
-	rl.SetWindowState(rl.FlagWindowResizable)
-	rl.ToggleFullscreen()
-	rl.HideCursor()
+	internal.InitWindowSettings()
 
 	internal.LoadAssets()
 	defer internal.UnloadAssets()
