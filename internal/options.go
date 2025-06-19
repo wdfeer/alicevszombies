@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"alicevszombies/internal/util"
 	"os"
 
 	"github.com/gen2brain/raylib-go/raygui"
@@ -9,31 +10,40 @@ import (
 
 type Options struct {
 	fullscreen bool
-	volume float32
+	volume     float32
 	cursorType uint8
 }
 
 var options = Options{
 	fullscreen: true,
-	volume: 1,
+	volume:     1,
 	cursorType: 0,
 }
 
 func loadOptions() {
-	bytes, err := os.ReadFile("user/options.bin")
+	data, err := os.ReadFile("user/options.bin")
 	if err == nil {
-		// TODO: deserialize to options
+		if err = util.Deserialize(data, options); err == nil {
+			println("INFO: Loaded options successfully!")
+			return
+		} else {
+			println("ERROR: Failed deserializing options!")
+		}
 	} else {
-		println("ERR: Failed reading options file! Creating default...")
-		saveOptions()
+		println("ERROR: Failed reading options file!")
 	}
+
+	saveOptions()
 }
 
 func saveOptions() {
-	bytes := // TODO: serialize options
-	err := os.WriteFile("user/options.bin", bytes, 0644)
+	bytes, err := util.Serialize(options)
 	if err != nil {
-		println("ERR: Failed writing options file!")
+		println("ERROR: Failed serializing options!")
+	}
+	err = os.WriteFile("user/options.bin", bytes, 0644)
+	if err != nil {
+		println("ERROR: Failed writing options file!")
 	}
 }
 
