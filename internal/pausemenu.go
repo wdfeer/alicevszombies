@@ -10,24 +10,27 @@ import (
 func renderPauseMenu(world *World) {
 	rl.DrawRectangle(0, 0, int32(rl.GetScreenWidth()), int32(rl.GetScreenHeight()), rl.ColorAlpha(rl.Black, 0.4))
 
-	center := util.HalfScreenSize()
-	util.DrawTextCenteredSpaced("Paused", 256, center, 16)
+	pos := util.HalfScreenSize()
+	pos.Y *= 0.9
 
-	buttonWidth := float32(400)
-	buttonHeight := float32(120)
-	buttonSpacing := float32(40)
+	rectSize := rl.Vector2{X: 900, Y: 120}
+	spacing := float32(40)
 
-	startY := center.Y + 128
-	centerX := center.X - buttonWidth/2
+	oldFontsize := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE)
+	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, 256)
+	raygui.Label(util.CenterRectangle(pos, rectSize), "Paused")
+	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, oldFontsize)
 
-	resumeRect := rl.Rectangle{X: centerX, Y: startY, Width: buttonWidth, Height: buttonHeight}
-	quitRect := rl.Rectangle{X: centerX, Y: startY + buttonHeight + buttonSpacing, Width: buttonWidth, Height: buttonHeight}
+	rectSize.X /= 2
+	pos.Y += rectSize.Y + spacing*2
 
-	if raygui.Button(resumeRect, "Resume") {
+	if raygui.Button(util.CenterRectangle(pos, rectSize), "Resume") {
 		world.paused = false
 	}
 
-	if raygui.Button(quitRect, "Quit") {
+	pos.Y += rectSize.Y + spacing
+
+	if raygui.Button(util.CenterRectangle(pos, rectSize), "Quit") {
 		rl.CloseWindow()
 	}
 }
