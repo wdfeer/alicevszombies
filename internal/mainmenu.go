@@ -92,6 +92,7 @@ func renderMainMenu(world *World) {
 		y += buttonHeight + buttonSpacing
 
 		soundVolume = raygui.Slider(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "", "", soundVolume, 0, 1)
+		raygui.Label(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Volume")
 	}
 }
 
