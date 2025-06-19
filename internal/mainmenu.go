@@ -85,23 +85,7 @@ func renderMainMenu(world *World) {
 			startGame(world, LUNATIC)
 		}
 	} else if world.uistate.mainMenu.options {
-		var maxTextWidth float32
-		volumeTextSize := float32(rl.MeasureText("Volume", int32(raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE))))
-		cursorTextSize := float32(rl.MeasureText("Cursor", int32(raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE))))
-		maxTextWidth = max(volumeTextSize, cursorTextSize)
-
-		buttonWidth -= maxTextWidth / 2
-		soundVolume = raygui.SliderBar(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "", "Volume", soundVolume, 0, 1)
-
-		y += buttonHeight + buttonSpacing
-		raygui.SetStyle(raygui.SPINNER, raygui.ARROWS_SIZE, int64(buttonWidth)/7)
-		raygui.Spinner(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Cursor", &world.uistate.cursorType, 0, 1, false)
-
-		y += buttonHeight + buttonSpacing
-		buttonWidth += maxTextWidth
-		if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Fullscreen") {
-			rl.ToggleBorderlessWindowed()
-		}
+		renderOptions(world, rl.Vector2{X: x, Y: y})
 	}
 }
 
