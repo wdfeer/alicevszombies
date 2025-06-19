@@ -29,6 +29,8 @@ func LoadOptions() {
 		println("ERROR: Failed reading options file!")
 	}
 
+	println("WARNING: Creating default options file...")
+
 	options = Options{
 		Fullscreen: true,
 		Volume:     1,
@@ -42,7 +44,17 @@ func saveOptions() {
 	bytes, err := util.Serialize(&options)
 	if err != nil {
 		println("ERROR: Failed serializing options!")
+		return
 	}
+
+	if _, err = os.Stat("user"); err != nil {
+		err = os.Mkdir("user", 0755)
+		if err != nil {
+			println("ERROR: Failed creating \"user\" directory!")
+			return
+		}
+	}
+
 	err = os.WriteFile("user/options.bin", bytes, 0644)
 	if err != nil {
 		println("ERROR: Failed writing options file!")
