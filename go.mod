@@ -8,7 +8,7 @@ require (
 )
 
 require (
-	github.com/ebitengine/purego v0.8.1 // indirect
-	golang.org/x/exp v0.0.0-20241108190413-2d47ceb2692f // indirect
-	golang.org/x/sys v0.27.0 // indirect
+	github.com/ebitengine/purego v0.8.4 // indirect
+	golang.org/x/exp v0.0.0-20250606033433-dcc06ee1d476 // indirect
+	golang.org/x/sys v0.33.0 // indirect
 )
