@@ -12,6 +12,7 @@ type UIState struct {
 	isUpgradeScreen  bool
 	isDeathScreen    bool
 	previousMousePos rl.Vector2
+	cursorType       int32
 	cursorHideTimer  float32
 	upgradeScreen    UpgradeScreen
 	mainMenu         MainMenu
@@ -93,6 +94,6 @@ func renderUI(world *World) {
 	}
 
 	if world.uistate.cursorHideTimer < 2.5 {
-		rl.DrawTextureEx(assets.textures["cursor"], rl.GetMousePosition(), 0, 4, rl.White)
+		rl.DrawTextureEx(assets.textures["cursor"+fmt.Sprint(world.uistate.cursorType)], rl.GetMousePosition(), 0, 4, rl.White)
 	}
 }

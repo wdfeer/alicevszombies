@@ -21,7 +21,8 @@ func LoadAssets() {
 	loadTexture("player")
 	loadTexture("player_walk0")
 	loadTexture("player_walk1")
-	loadTexture("cursor")
+	loadTexture("cursor0")
+	loadTexture("cursor1")
 
 	loadTextureAndFlipped("doll_sword")
 	loadTextureAndFlipped("doll_lance")
