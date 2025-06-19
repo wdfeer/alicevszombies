@@ -16,7 +16,7 @@ func renderMainMenu(world *World) {
 		Y: 120,
 	}, 16)
 
-	buttonWidth := float32(400)
+	buttonWidth := float32(480)
 	buttonHeight := float32(120)
 	buttonSpacing := float32(40)
 	startY := screenSize.Y/2 - (buttonHeight*2 + buttonSpacing*1.5)
@@ -24,7 +24,6 @@ func renderMainMenu(world *World) {
 	x := screenSize.X/2 - buttonWidth/2
 	y := startY
 
-	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, 80)
 	if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Easy") {
 		startGame(world, EASY)
 	}

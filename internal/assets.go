@@ -1,6 +1,9 @@
 package internal
 
-import rl "github.com/gen2brain/raylib-go/raylib"
+import (
+	"github.com/gen2brain/raylib-go/raygui"
+	rl "github.com/gen2brain/raylib-go/raylib"
+)
 
 var assets = struct {
 	textures     map[string]rl.Texture2D
@@ -57,6 +60,11 @@ func LoadAssets() {
 	loadSound("player_hit")
 	loadSound("enemy_hit")
 	println("INFO: Sounds loaded!")
+
+	raygui.LoadStyle("assets/style.rgs")
+	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, 80)
+	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SPACING, 8)
+	println("INFO: Raygui style loaded!")
 }
 
 func UnloadAssets() {
