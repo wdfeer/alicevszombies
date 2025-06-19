@@ -9,6 +9,7 @@ import (
 
 type MainMenu struct {
 	difficultySelect bool
+	options          bool
 }
 
 func renderMainMenu(world *World) {
@@ -37,13 +38,23 @@ func renderMainMenu(world *World) {
 	} else {
 		if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Start") {
 			world.uistate.mainMenu.difficultySelect = !world.uistate.mainMenu.difficultySelect
+			world.uistate.mainMenu.options = false
 		}
 	}
 
 	y += buttonHeight + buttonSpacing
 
-	if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Fullscreen") {
-		rl.ToggleFullscreen()
+	if world.uistate.mainMenu.options {
+		raygui.SetState(raygui.STATE_PRESSED)
+		if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Options") {
+			world.uistate.mainMenu.options = !world.uistate.mainMenu.options
+		}
+		raygui.SetState(raygui.STATE_NORMAL)
+	} else {
+		if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Options") {
+			world.uistate.mainMenu.options = !world.uistate.mainMenu.options
+			world.uistate.mainMenu.difficultySelect = false
+		}
 	}
 
 	y += buttonHeight + buttonSpacing
@@ -52,10 +63,9 @@ func renderMainMenu(world *World) {
 		rl.CloseWindow()
 	}
 
+	x += buttonWidth * 1.1
+	y = startY - buttonHeight/2
 	if world.uistate.mainMenu.difficultySelect {
-		x += buttonWidth * 1.1
-		y := startY - buttonHeight/2
-
 		if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Easy") {
 			startGame(world, EASY)
 		}
@@ -73,6 +83,10 @@ func renderMainMenu(world *World) {
 
 		if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Lunatic") {
 			startGame(world, LUNATIC)
+		}
+	} else if world.uistate.mainMenu.options {
+		if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Fullscreen") {
+			rl.ToggleFullscreen()
 		}
 	}
 }
