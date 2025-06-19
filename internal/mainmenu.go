@@ -85,14 +85,14 @@ func renderMainMenu(world *World) {
 			startGame(world, LUNATIC)
 		}
 	} else if world.uistate.mainMenu.options {
+		volumeTextSize := float32(rl.MeasureText("Volume", int32(raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE))))
+		soundVolume = raygui.SliderBar(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "", "Volume", soundVolume, 0, 1)
+
+		y += buttonHeight + buttonSpacing
+		buttonWidth += volumeTextSize
 		if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Fullscreen") {
 			rl.ToggleFullscreen()
 		}
-
-		y += buttonHeight + buttonSpacing
-
-		soundVolume = raygui.Slider(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "", "", soundVolume, 0, 1)
-		raygui.Label(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Volume")
 	}
 }
 
