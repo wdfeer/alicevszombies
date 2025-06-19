@@ -9,9 +9,9 @@ import (
 )
 
 type Options struct {
-	fullscreen bool
-	volume     float32
-	cursorType int32
+	Fullscreen bool
+	Volume     float32
+	CursorType int32
 }
 
 var options Options
@@ -19,7 +19,7 @@ var options Options
 func LoadOptions() {
 	data, err := os.ReadFile("user/options.bin")
 	if err == nil {
-		if err = util.Deserialize(data, options); err == nil {
+		if err = util.Deserialize(data, &options); err == nil {
 			println("INFO: Loaded options successfully!")
 			return
 		} else {
@@ -30,16 +30,16 @@ func LoadOptions() {
 	}
 
 	options = Options{
-		fullscreen: true,
-		volume:     1,
-		cursorType: 0,
+		Fullscreen: true,
+		Volume:     1,
+		CursorType: 0,
 	}
 
 	saveOptions()
 }
 
 func saveOptions() {
-	bytes, err := util.Serialize(options)
+	bytes, err := util.Serialize(&options)
 	if err != nil {
 		println("ERROR: Failed serializing options!")
 	}
@@ -62,15 +62,15 @@ func renderOptions(world *World, origin rl.Vector2) {
 	buttonSpacing := float32(40)
 
 	buttonWidth -= maxTextWidth / 2
-	newOptions.volume = raygui.SliderBar(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "", "Volume", options.volume, 0, 1)
+	newOptions.Volume = raygui.SliderBar(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "", "Volume", options.Volume, 0, 1)
 
 	origin.Y += buttonHeight + buttonSpacing
 	raygui.SetStyle(raygui.SPINNER, raygui.ARROWS_SIZE, int64(buttonWidth)/7)
-	raygui.Spinner(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "Cursor", &newOptions.cursorType, 0, 1, false)
+	raygui.Spinner(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "Cursor", &newOptions.CursorType, 0, 1, false)
 
 	origin.Y += buttonHeight + buttonSpacing
 	buttonWidth += maxTextWidth
-	newOptions.fullscreen = raygui.Toggle(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "Fullscreen", options.fullscreen)
+	newOptions.Fullscreen = raygui.Toggle(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "Fullscreen", options.Fullscreen)
 
 	if newOptions != options {
 		options = newOptions
