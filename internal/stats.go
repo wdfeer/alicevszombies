@@ -4,7 +4,6 @@ import (
 	"alicevszombies/internal/util"
 	"fmt"
 	"os"
-	"strconv"
 
 	"github.com/gen2brain/raylib-go/raygui"
 	rl "github.com/gen2brain/raylib-go/raylib"
@@ -80,7 +79,7 @@ func renderStats(origin rl.Vector2) {
 	raygui.Panel(util.RectangleV(origin, panelSize), "")
 
 	origin.Y += spacing
-	timePlayed := "Time played: " + strconv.FormatFloat(float64(stats.TimePlayed), 'f', 2, 64)
+	timePlayed := "Time played: " + fmt.Sprint(int(stats.TimePlayed))
 	raygui.Label(util.RectangleV(origin, size), timePlayed)
 
 	origin.Y += spacing
