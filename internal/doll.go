@@ -20,7 +20,9 @@ func newDoll(world *World, typ *DollType) Entity {
 	world.size[id] = typ.size
 	world.texture[id] = typ.texture
 
-	stats.DollsSummoned++
+	if !world.uistate.isMainMenu && !world.uistate.isDeathScreen {
+		stats.DollsSummoned++
+	}
 
 	return id
 }
