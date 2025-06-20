@@ -3,7 +3,11 @@ package internal
 type Difficulty = uint8
 
 const (
-	EASY Difficulty = iota
+	// Used for tracking stats in main menu
+	UNDEFINED Difficulty = iota
+	// FIXME: adding UNDEFINED made everything using Difficulty as uint8 for difficulty adjustments essentially harder
+
+	EASY
 	NORMAL
 	HARD
 	LUNATIC

@@ -10,20 +10,23 @@ import (
 )
 
 var stats = struct {
-	TimePlayed    float32
-	EnemiesKilled uint
-	DollsSummoned uint
+	TimePlayed    map[Difficulty]float32
+	EnemiesKilled map[Difficulty]uint
+	DollsSummoned map[Difficulty]uint
 	HighestWave   map[Difficulty]uint
 	RunCount      map[Difficulty]uint
 }{
-	HighestWave: make(map[Difficulty]uint),
-	RunCount:    make(map[Difficulty]uint),
+	TimePlayed:    make(map[Difficulty]float32),
+	EnemiesKilled: make(map[Difficulty]uint),
+	DollsSummoned: make(map[Difficulty]uint),
+	HighestWave:   make(map[Difficulty]uint),
+	RunCount:      make(map[Difficulty]uint),
 }
 
 var statAutosaveTimer float32 = 0
 
 func updateStats(world *World) {
-	stats.TimePlayed += dt
+	stats.TimePlayed[world.difficulty] += dt
 
 	if world.enemySpawner.wave > uint32(stats.HighestWave[world.difficulty]) {
 		stats.HighestWave[world.difficulty] = uint(world.enemySpawner.wave)
@@ -88,21 +91,33 @@ func renderStats(origin rl.Vector2) {
 	raygui.Panel(util.RectangleV(origin, panelSize), "")
 
 	origin.Y += spacing
-	timePlayed := "Time played: "
-	if stats.TimePlayed > 60 {
-		timePlayed += fmt.Sprint(int(stats.TimePlayed)/60) + "m"
-		timePlayed += fmt.Sprint(int(stats.TimePlayed)%60) + "s"
-	} else {
-		timePlayed += fmt.Sprint(int(stats.TimePlayed)) + "s"
+	timePlayed := float32(0)
+	for _, v := range stats.TimePlayed {
+		timePlayed += v
 	}
-	raygui.Label(util.RectangleV(origin, size), timePlayed)
+	timePlayedText := "Time played: "
+	if timePlayed > 60 {
+		timePlayedText += fmt.Sprint(int(timePlayed)/60) + "m"
+		timePlayedText += fmt.Sprint(int(timePlayed)%60) + "s"
+	} else {
+		timePlayedText += fmt.Sprint(int(timePlayed)) + "s"
+	}
+	raygui.Label(util.RectangleV(origin, size), timePlayedText)
 
 	origin.Y += spacing
-	dollsSummoned := "Dolls summoned: " + fmt.Sprint(stats.DollsSummoned)
-	raygui.Label(util.RectangleV(origin, size), dollsSummoned)
+	dollsSummoned := uint(0)
+	for _, v := range stats.DollsSummoned {
+		dollsSummoned += v
+	}
+	dollsSummonedText := "Dolls summoned: " + fmt.Sprint(dollsSummoned)
+	raygui.Label(util.RectangleV(origin, size), dollsSummonedText)
 
 	origin.Y += spacing
-	killCounter := "Enemies killed: " + fmt.Sprint(stats.EnemiesKilled)
+	kills := uint(0)
+	for _, v := range stats.EnemiesKilled {
+		kills += v
+	}
+	killCounter := "Enemies killed: " + fmt.Sprint(kills)
 	raygui.Label(util.RectangleV(origin, size), killCounter)
 
 	origin.Y += spacing
