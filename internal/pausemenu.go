@@ -30,7 +30,7 @@ func renderPauseMenu(world *World) {
 
 	pos.Y += rectSize.Y + spacing
 
-	if raygui.Button(util.CenterRectangle(pos, rectSize), "Quit") {
-		rl.CloseWindow()
+	if raygui.Button(util.CenterRectangle(pos, rectSize), "Main Menu") {
+		world.Reset()
 	}
 }
