@@ -2,6 +2,7 @@ package internal
 
 import (
 	"alicevszombies/internal/util"
+	"fmt"
 	"os"
 	"strconv"
 
@@ -10,14 +11,14 @@ import (
 )
 
 var stats = struct {
-	TimePlayed float32
-}{
-	0,
-}
+	TimePlayed    float32
+	EnemiesKilled uint
+	DollsSummoned uint
+}{}
 
 var statAutosaveTimer float32 = 0
 
-func updateStats(world *World) {
+func updateStats() {
 	stats.TimePlayed += dt
 
 	statAutosaveTimer += dt
@@ -81,6 +82,14 @@ func renderStats(origin rl.Vector2) {
 	origin.Y += spacing
 	timePlayed := "Time played: " + strconv.FormatFloat(float64(stats.TimePlayed), 'f', 2, 64)
 	raygui.Label(util.RectangleV(origin, size), timePlayed)
+
+	origin.Y += spacing
+	dollsSummoned := "Dolls summoned: " + fmt.Sprint(stats.DollsSummoned)
+	raygui.Label(util.RectangleV(origin, size), dollsSummoned)
+
+	origin.Y += spacing
+	killCounter := "Enemies killed: " + fmt.Sprint(stats.EnemiesKilled)
+	raygui.Label(util.RectangleV(origin, size), killCounter)
 
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, oldFontsize)
 }

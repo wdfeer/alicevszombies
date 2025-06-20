@@ -19,6 +19,9 @@ func newDoll(world *World, typ *DollType) Entity {
 	world.drag[id] = 5
 	world.size[id] = typ.size
 	world.texture[id] = typ.texture
+
+	stats.DollsSummoned++
+
 	return id
 }
 

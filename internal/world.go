@@ -95,9 +95,9 @@ func (world *World) Update() {
 		updateAnimationData(world)
 	}
 
-	updateFullscreen()
 	updateUI(world)
-	updateStats(world)
+	updateFullscreen()
+	updateStats()
 	render(world)
 }
 

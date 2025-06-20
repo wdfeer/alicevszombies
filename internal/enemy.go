@@ -138,4 +138,6 @@ func preEnemyDeath(world *World, id Entity) {
 
 	world.playerData.mana += 1
 	newDeathEffect(world, world.enemy[id].texture, world.position[id])
+
+	stats.EnemiesKilled++
 }
