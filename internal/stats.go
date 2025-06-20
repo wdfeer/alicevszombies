@@ -22,6 +22,7 @@ func updateStats(world *World) {
 
 	statAutosaveTimer += dt
 	if statAutosaveTimer >= 15 {
+		statAutosaveTimer = 0
 		go saveStats()
 	}
 }
