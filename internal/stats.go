@@ -105,5 +105,15 @@ func renderStats(origin rl.Vector2) {
 	killCounter := "Enemies killed: " + fmt.Sprint(stats.EnemiesKilled)
 	raygui.Label(util.RectangleV(origin, size), killCounter)
 
+	origin.Y += spacing
+	var highestWave uint
+	for _, v := range stats.HighestWave {
+		if v > highestWave {
+			highestWave = v
+		}
+	}
+	highestWaveText := "Highest wave: " + fmt.Sprint(highestWave)
+	raygui.Label(util.RectangleV(origin, size), highestWaveText)
+
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, oldFontsize)
 }
