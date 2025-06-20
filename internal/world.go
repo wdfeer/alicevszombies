@@ -45,6 +45,7 @@ func (world *World) Reset() {
 	}
 
 	world.paused = true
+	world.difficulty = UNDEFINED
 	world.enemySpawner = newEnemySpawner()
 	world.targeting = make(map[Entity]Targeting)
 	world.doll = make(map[Entity]*DollType)
