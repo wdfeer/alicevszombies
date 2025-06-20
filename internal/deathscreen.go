@@ -39,7 +39,7 @@ func renderDeathScreen(world *World) {
 	pos.Y += 128
 	util.DrawTextCenteredSpaced("Reached Wave "+fmt.Sprint(world.enemySpawner.wave), 64, pos, 4)
 
-	buttonWidth := float32(400)
+	buttonWidth := float32(450)
 	buttonHeight := float32(120)
 
 	startY := pos.Y + 128
