@@ -79,7 +79,13 @@ func renderStats(origin rl.Vector2) {
 	raygui.Panel(util.RectangleV(origin, panelSize), "")
 
 	origin.Y += spacing
-	timePlayed := "Time played: " + fmt.Sprint(int(stats.TimePlayed))
+	timePlayed := "Time played: "
+	if stats.TimePlayed > 60 {
+		timePlayed += fmt.Sprint(int(stats.TimePlayed)/60) + "m"
+		timePlayed += fmt.Sprint(int(stats.TimePlayed)%60) + "s"
+	} else {
+		timePlayed += fmt.Sprint(int(stats.TimePlayed)) + "s"
+	}
 	raygui.Label(util.RectangleV(origin, size), timePlayed)
 
 	origin.Y += spacing
