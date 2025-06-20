@@ -80,6 +80,8 @@ func saveStats() {
 	println("INFO: Stats saved!")
 }
 
+var statSelectedDifficulty int32 = 0
+
 func renderStats(origin rl.Vector2) {
 	size := rl.Vector2{X: 480, Y: 120}
 	spacing := float32(40)
@@ -91,6 +93,10 @@ func renderStats(origin rl.Vector2) {
 	raygui.Panel(util.RectangleV(origin, panelSize), "")
 
 	origin.Y += spacing
+	diffText := "Overall\nEasy\nNormal\nHard\nLunatic"
+	statSelectedDifficulty = raygui.ComboBox(util.RectangleV(origin, size), diffText, statSelectedDifficulty)
+
+	origin.Y += spacing + size.Y
 	timePlayed := float32(0)
 	for _, v := range stats.TimePlayed {
 		timePlayed += v
