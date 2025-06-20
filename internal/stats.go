@@ -115,5 +115,13 @@ func renderStats(origin rl.Vector2) {
 	highestWaveText := "Highest wave: " + fmt.Sprint(highestWave)
 	raygui.Label(util.RectangleV(origin, size), highestWaveText)
 
+	origin.Y += spacing
+	var runCount uint
+	for _, v := range stats.RunCount {
+		runCount += v
+	}
+	runCountText := "Run count: " + fmt.Sprint(runCount)
+	raygui.Label(util.RectangleV(origin, size), runCountText)
+
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, oldFontsize)
 }
