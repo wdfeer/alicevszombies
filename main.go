@@ -13,6 +13,8 @@ func main() {
 	internal.InitWindowSettings()
 
 	internal.LoadUserData()
+	defer internal.SaveUserData()
+
 	internal.LoadAssets()
 	defer internal.UnloadAssets()
 

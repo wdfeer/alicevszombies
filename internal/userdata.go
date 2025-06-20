@@ -4,3 +4,8 @@ func LoadUserData() {
 	loadOptions()
 	loadStats()
 }
+
+func SaveUserData() {
+	saveOptions()
+	saveStats()
+}
