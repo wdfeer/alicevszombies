@@ -80,7 +80,7 @@ func saveStats() {
 	println("INFO: Stats saved!")
 }
 
-var statSelectedDifficulty int32 = 0
+var statSelectedDifficulty Difficulty = UNDEFINED
 
 func renderStats(origin rl.Vector2) {
 	size := rl.Vector2{X: 480, Y: 120}
@@ -94,12 +94,16 @@ func renderStats(origin rl.Vector2) {
 
 	origin.Y += spacing
 	diffText := "Overall\nEasy\nNormal\nHard\nLunatic"
-	statSelectedDifficulty = raygui.ComboBox(util.RectangleV(origin, size), diffText, statSelectedDifficulty)
+	statSelectedDifficulty = Difficulty(raygui.ComboBox(util.RectangleV(origin, size), diffText, int32(statSelectedDifficulty)))
 
 	origin.Y += spacing + size.Y
 	timePlayed := float32(0)
-	for _, v := range stats.TimePlayed {
-		timePlayed += v
+	if statSelectedDifficulty == UNDEFINED {
+		for _, v := range stats.TimePlayed {
+			timePlayed += v
+		}
+	} else {
+		timePlayed = stats.TimePlayed[statSelectedDifficulty]
 	}
 	timePlayedText := "Time played: "
 	if timePlayed > 60 {
@@ -112,34 +116,50 @@ func renderStats(origin rl.Vector2) {
 
 	origin.Y += spacing
 	dollsSummoned := uint(0)
-	for _, v := range stats.DollsSummoned {
-		dollsSummoned += v
+	if statSelectedDifficulty == UNDEFINED {
+		for _, v := range stats.DollsSummoned {
+			dollsSummoned += v
+		}
+	} else {
+		dollsSummoned = stats.DollsSummoned[statSelectedDifficulty]
 	}
 	dollsSummonedText := "Dolls summoned: " + fmt.Sprint(dollsSummoned)
 	raygui.Label(util.RectangleV(origin, size), dollsSummonedText)
 
 	origin.Y += spacing
 	kills := uint(0)
-	for _, v := range stats.EnemiesKilled {
-		kills += v
+	if statSelectedDifficulty == UNDEFINED {
+		for _, v := range stats.EnemiesKilled {
+			kills += v
+		}
+	} else {
+		kills = stats.EnemiesKilled[statSelectedDifficulty]
 	}
 	killCounter := "Enemies killed: " + fmt.Sprint(kills)
 	raygui.Label(util.RectangleV(origin, size), killCounter)
 
 	origin.Y += spacing
 	var highestWave uint
-	for _, v := range stats.HighestWave {
-		if v > highestWave {
-			highestWave = v
+	if statSelectedDifficulty == UNDEFINED {
+		for _, v := range stats.HighestWave {
+			if v > highestWave {
+				highestWave = v
+			}
 		}
+	} else {
+		highestWave = stats.HighestWave[statSelectedDifficulty]
 	}
 	highestWaveText := "Highest wave: " + fmt.Sprint(highestWave)
 	raygui.Label(util.RectangleV(origin, size), highestWaveText)
 
 	origin.Y += spacing
 	var runCount uint
-	for _, v := range stats.RunCount {
-		runCount += v
+	if statSelectedDifficulty == UNDEFINED {
+		for _, v := range stats.RunCount {
+			runCount += v
+		}
+	} else {
+		runCount = stats.RunCount[statSelectedDifficulty]
 	}
 	runCountText := "Run count: " + fmt.Sprint(runCount)
 	raygui.Label(util.RectangleV(origin, size), runCountText)
