@@ -13,12 +13,21 @@ var stats = struct {
 	TimePlayed    float32
 	EnemiesKilled uint
 	DollsSummoned uint
-}{}
+	HighestWave   map[Difficulty]uint
+	RunCount      map[Difficulty]uint
+}{
+	HighestWave: make(map[Difficulty]uint),
+	RunCount:    make(map[Difficulty]uint),
+}
 
 var statAutosaveTimer float32 = 0
 
-func updateStats() {
+func updateStats(world *World) {
 	stats.TimePlayed += dt
+
+	if world.enemySpawner.wave > uint32(stats.HighestWave[world.difficulty]) {
+		stats.HighestWave[world.difficulty] = uint(world.enemySpawner.wave)
+	}
 
 	statAutosaveTimer += dt
 	if statAutosaveTimer >= 15 {

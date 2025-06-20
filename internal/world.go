@@ -97,7 +97,7 @@ func (world *World) Update() {
 
 	updateUI(world)
 	updateFullscreen()
-	updateStats()
+	updateStats(world)
 	render(world)
 }
 
