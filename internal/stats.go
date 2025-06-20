@@ -15,6 +15,7 @@ var statAutosaveTimer float32 = 0
 
 func updateStats(world *World) {
 	stats.TimePlayed += dt
+
 	statAutosaveTimer += dt
 	if statAutosaveTimer >= 15 {
 		go saveStats()
@@ -59,4 +60,5 @@ func saveStats() {
 		println("ERROR: Failed writing stats file!")
 		return
 	}
+	println("INFO: Stats saved!")
 }

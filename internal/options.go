@@ -58,7 +58,9 @@ func saveOptions() {
 	err = os.WriteFile("user/options.bin", bytes, 0644)
 	if err != nil {
 		println("ERROR: Failed writing options file!")
+		return
 	}
+	println("INFO: Options saved!")
 }
 
 func renderOptions(world *World, origin rl.Vector2) {
