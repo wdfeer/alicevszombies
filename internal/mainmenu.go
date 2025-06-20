@@ -23,7 +23,7 @@ func renderMainMenu(world *World) {
 	buttonWidth := float32(480)
 	buttonHeight := float32(120)
 	buttonSpacing := float32(40)
-	startY := screenSize.Y / 2
+	startY := screenSize.Y/2 - buttonHeight - buttonSpacing
 
 	x := screenSize.X / 20
 	y := startY
@@ -37,9 +37,16 @@ func renderMainMenu(world *World) {
 	}
 
 	y += buttonHeight + buttonSpacing
-	if raygui.Toggle(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Options", mainMenu.selected == 2) {
+	if raygui.Toggle(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Stats", mainMenu.selected == 2) {
 		mainMenu.selected = 2
 	} else if mainMenu.selected == 2 {
+		mainMenu.selected = 0
+	}
+
+	y += buttonHeight + buttonSpacing
+	if raygui.Toggle(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Options", mainMenu.selected == 3) {
+		mainMenu.selected = 3
+	} else if mainMenu.selected == 3 {
 		mainMenu.selected = 0
 	}
 
@@ -50,7 +57,8 @@ func renderMainMenu(world *World) {
 
 	x += buttonWidth * 1.1
 	y = startY - buttonHeight/2
-	if mainMenu.selected == 1 {
+	switch mainMenu.selected {
+	case 1:
 		if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Easy") {
 			startGame(world, EASY)
 		}
@@ -69,8 +77,10 @@ func renderMainMenu(world *World) {
 		if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Lunatic") {
 			startGame(world, LUNATIC)
 		}
-	} else if mainMenu.selected == 2 {
-		renderOptions(world, rl.Vector2{X: x, Y: y})
+	case 2:
+		renderStats(rl.Vector2{X: x, Y: y})
+	case 3:
+		renderOptions(rl.Vector2{X: x, Y: y})
 	}
 }
 

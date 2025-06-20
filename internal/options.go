@@ -63,7 +63,7 @@ func saveOptions() {
 	println("INFO: Options saved!")
 }
 
-func renderOptions(world *World, origin rl.Vector2) {
+func renderOptions(origin rl.Vector2) {
 	newOptions := options
 
 	var maxTextWidth float32
