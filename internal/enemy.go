@@ -2,6 +2,7 @@ package internal
 
 import (
 	"alicevszombies/internal/util"
+	"math"
 	"math/rand"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
@@ -131,8 +132,10 @@ func updateEnemies(world *World) {
 func preEnemyDeath(world *World, id Entity) {
 	switch world.enemy[id] {
 	case &enemyTypes.redZombie:
-		for range 1 + world.difficulty*3 {
-			newProjectile(world, world.position[id], rl.Vector2Scale(util.Vector2Random(), 80), &projectileTypes.redBullet)
+		count := 2 + world.difficulty*3
+		for i := range count {
+			ratio := (float32(i) + 1) / float32(count)
+			newProjectile(world, world.position[id], rl.Vector2Rotate(rl.Vector2{X: 80, Y: 0}, math.Pi*2*ratio), &projectileTypes.redBullet)
 		}
 	}
 
