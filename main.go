@@ -12,7 +12,7 @@ func main() {
 
 	internal.InitWindowSettings()
 
-	internal.LoadOptions()
+	internal.LoadUserData()
 	internal.LoadAssets()
 	defer internal.UnloadAssets()
 

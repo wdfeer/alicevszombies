@@ -16,7 +16,7 @@ type Options struct {
 
 var options Options
 
-func LoadOptions() {
+func loadOptions() {
 	data, err := os.ReadFile("user/options.bin")
 	if err == nil {
 		if err = util.Deserialize(data, &options); err == nil {
