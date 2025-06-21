@@ -70,8 +70,10 @@ func updateEnemySpawner(world *World) {
 			var typ *EnemyType
 			if world.difficulty == LUNATIC && rand.Float32() < 0.05 {
 				typ = &enemyTypes.redZombie
-			} else if spawner.wave < 20 || rand.Float32() < 0.9 {
+			} else if spawner.wave < 20 || rand.Float32() < 0.95 {
 				typ = &enemyTypes.zombie
+			} else if spawner.wave > 12-uint32(world.difficulty)*2 && rand.Float32() < 0.07 {
+				typ = &enemyTypes.smallZombie
 			} else if world.difficulty > NORMAL && spawner.wave > 30 && rand.Float32() < 0.02 {
 				typ = &enemyTypes.medicine
 			} else {
