@@ -67,20 +67,7 @@ func updateEnemySpawner(world *World) {
 			spawner.spawnTimer = 15 - float32(world.difficulty)*3
 			spawner.enemiesToSpawn = 1
 		} else {
-			var typ *EnemyType
-			if world.difficulty == LUNATIC && rand.Float32() < 0.05 {
-				typ = &enemyTypes.redZombie
-			} else if spawner.wave < 20 || rand.Float32() < 0.95 {
-				typ = &enemyTypes.zombie
-			} else if spawner.wave > 12-uint32(world.difficulty)*2 && rand.Float32() < 0.07 {
-				typ = &enemyTypes.smallZombie
-			} else if world.difficulty > NORMAL && spawner.wave > 30 && rand.Float32() < 0.02 {
-				typ = &enemyTypes.medicine
-			} else {
-				typ = &enemyTypes.redZombie
-			}
-
-			newEnemy(world, typ)
+			newEnemy(world, enemyTypeToSpawn(world))
 
 			spawner.spawnTimer = 2 - min(1.4, float32(spawner.wave)/10)
 			if spawner.enemiesToSpawn > 10 {
@@ -94,6 +81,20 @@ func updateEnemySpawner(world *World) {
 	}
 
 	world.enemySpawner = spawner
+}
+
+func enemyTypeToSpawn(world *World) *EnemyType {
+	wave := world.enemySpawner.wave
+	switch {
+	case wave > 35 && rand.Float32() < 0.01:
+		return &enemyTypes.medicine
+	case (world.difficulty == LUNATIC || wave > 20) && (rand.Float32() < 0.05 || (wave%6 == 0 && rand.Float32() < 0.2)):
+		return &enemyTypes.redZombie
+	case (wave%3 == 0 && rand.Float32() < 0.1) || rand.Float32() < 0.03:
+		return &enemyTypes.smallZombie
+	default:
+		return &enemyTypes.zombie
+	}
 }
 
 func updateEnemies(world *World) {
