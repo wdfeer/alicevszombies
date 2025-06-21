@@ -15,26 +15,28 @@ func renderMainMenu(world *World) {
 	screenSize := util.ScreenSize()
 	rl.DrawRectangleV(rl.Vector2Zero(), screenSize, rl.ColorAlpha(rl.Black, 0.9))
 
-	util.DrawTextCenteredSpaced("alicevszombies", 80, rl.Vector2{
-		X: screenSize.X / 2,
-		Y: 120,
-	}, 16)
-
 	buttonWidth := float32(480)
 	buttonHeight := float32(120)
 	buttonSpacing := float32(40)
-	startY := screenSize.Y/2 - buttonHeight - buttonSpacing
+	startY := buttonHeight + buttonSpacing
 
 	x := screenSize.X / 20
 	y := startY
 
 	mainMenu := &world.uistate.mainMenu
 
+	raygui.LabelButton(rl.Rectangle{X: screenSize.X - buttonWidth*1.5, Y: y, Width: buttonWidth * 1.5, Height: buttonHeight}, "alicevszombies")
+
 	if raygui.Toggle(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Start", mainMenu.selected == 1) {
 		mainMenu.selected = 1
 	} else if mainMenu.selected == 1 {
 		mainMenu.selected = 0
 	}
+
+	y += buttonHeight + buttonSpacing
+	raygui.Disable()
+	raygui.Toggle(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Goals", mainMenu.selected == 2)
+	raygui.Enable()
 
 	y += buttonHeight + buttonSpacing
 	if raygui.Toggle(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Stats", mainMenu.selected == 2) {
