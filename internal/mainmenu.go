@@ -2,13 +2,16 @@ package internal
 
 import (
 	"alicevszombies/internal/util"
+	"math/rand"
 
 	"github.com/gen2brain/raylib-go/raygui"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
 type MainMenu struct {
-	selected uint8
+	selected     uint8
+	dollPosition [8]rl.Vector2
+	dollVelocity [8]rl.Vector2
 }
 
 func renderMainMenu(world *World) {
@@ -25,7 +28,25 @@ func renderMainMenu(world *World) {
 
 	mainMenu := &world.uistate.mainMenu
 
-	raygui.LabelButton(rl.Rectangle{X: screenSize.X - buttonWidth*1.5, Y: y, Width: buttonWidth * 1.5, Height: buttonHeight}, "alicevszombies")
+	if raygui.LabelButton(rl.Rectangle{X: screenSize.X - buttonWidth*1.5, Y: y, Width: buttonWidth * 1.5, Height: buttonHeight}, "alicevszombies") {
+		for i, p := range mainMenu.dollPosition {
+			if p == rl.Vector2Zero() {
+				mainMenu.dollPosition[i] = rl.Vector2{X: screenSize.X * rand.Float32(), Y: -20}
+				mainMenu.dollVelocity[i] = rl.Vector2{X: (rand.Float32() - 0.5) * screenSize.X, Y: 0}
+				break
+			}
+		}
+	}
+	for i, p := range mainMenu.dollPosition {
+		if p != rl.Vector2Zero() {
+			rl.DrawTextureEx(assets.textures["doll_sword"], p, 0, 8, rl.White)
+			mainMenu.dollVelocity[i] = rl.Vector2Add(mainMenu.dollVelocity[i], rl.Vector2{X: 0, Y: screenSize.Y * dt * 4})
+			mainMenu.dollPosition[i] = rl.Vector2Add(p, rl.Vector2Scale(mainMenu.dollVelocity[i], dt))
+			if mainMenu.dollPosition[i].Y > screenSize.Y+100 {
+				mainMenu.dollPosition[i] = rl.Vector2Zero()
+			}
+		}
+	}
 
 	if raygui.Toggle(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Start", mainMenu.selected == 1) {
 		mainMenu.selected = 1

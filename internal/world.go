@@ -64,6 +64,10 @@ func (world *World) Reset() {
 	world.shootTimer = make(map[Entity]float32)
 	world.uistate = UIState{
 		isMainMenu: true,
+		mainMenu: MainMenu{
+			dollPosition: [8]rl.Vector2{},
+			dollVelocity: [8]rl.Vector2{},
+		},
 	}
 
 	newPlayer(world)
