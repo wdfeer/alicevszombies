@@ -5,7 +5,6 @@ type Difficulty = uint8
 const (
 	// Used for tracking stats in main menu
 	UNDEFINED Difficulty = iota
-	// FIXME: adding UNDEFINED made everything using Difficulty as uint8 for difficulty adjustments essentially harder
 
 	EASY
 	NORMAL
