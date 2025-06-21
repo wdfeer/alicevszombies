@@ -56,8 +56,12 @@ func updateCollisions(world *World) {
 		}
 
 		// Enemy <-> Enemy, knockback only
+		enemyRec.Width /= 2
+		enemyRec.Y += enemyRec.Width
 		for otherEnemy := range world.enemy {
 			otherRec := util.CenterRectangle(world.position[otherEnemy], world.size[otherEnemy])
+			otherRec.Width /= 2
+			otherRec.Y += otherRec.Width
 			if rl.CheckCollisionRecs(enemyRec, otherRec) {
 				dir := util.Vector2Direction(world.position[enemy], world.position[otherEnemy])
 				world.velocity[otherEnemy] = rl.Vector2Add(world.velocity[otherEnemy], rl.Vector2Scale(dir, 800*dt))
