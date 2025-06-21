@@ -27,7 +27,7 @@ var dollTypes = struct {
 		contactDamage: 2,
 		texture:       "doll_lance",
 		accel:         500,
-		size:          rl.Vector2{X: 9, Y: 8},
+		size:          rl.Vector2{X: 11, Y: 8},
 	},
 	scytheDoll: DollType{
 		contactDamage: 3,
