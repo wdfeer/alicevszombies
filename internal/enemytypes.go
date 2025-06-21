@@ -14,12 +14,12 @@ var enemyTypes = struct {
 }{
 	EnemyType{
 		texture:      "zombie",
-		acceleration: 700,
+		acceleration: 680,
 		baseHP:       3,
 	},
 	EnemyType{
 		texture:      "red_zombie",
-		acceleration: 720,
+		acceleration: 700,
 		baseHP:       2,
 	},
 	EnemyType{
