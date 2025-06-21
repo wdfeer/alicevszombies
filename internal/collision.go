@@ -18,7 +18,6 @@ func updateCollisions(world *World) {
 
 			dir := util.Vector2Direction(world.position[world.player], world.position[enemy])
 			world.velocity[enemy] = rl.Vector2Add(world.velocity[enemy], rl.Vector2Scale(dir, 400*dt))
-			world.velocity[world.player] = rl.Vector2Add(world.velocity[enemy], rl.Vector2Scale(dir, -50*dt))
 		}
 
 		// Doll -> Enemy
