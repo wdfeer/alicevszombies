@@ -81,7 +81,6 @@ func (world *World) Update() {
 	if !world.paused {
 		updateHP(world)
 		updatePlayer(world)
-		updateSpells(world)
 		updateDolls(world)
 		updateProjectiles(world)
 		updateEnemySpawner(world)

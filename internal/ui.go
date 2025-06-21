@@ -59,7 +59,7 @@ func renderHUD(world *World) {
 		rl.DrawText(str, int32(pos.X), int32(pos.Y), 32, rl.White)
 	}
 
-	renderSpellsBar()
+	renderSpells(world)
 }
 
 func renderUI(world *World) {
