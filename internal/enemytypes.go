@@ -8,14 +8,20 @@ type EnemyType struct {
 }
 
 var enemyTypes = struct {
-	zombie    EnemyType
-	redZombie EnemyType
-	medicine  EnemyType
+	zombie      EnemyType
+	smallZombie EnemyType
+	redZombie   EnemyType
+	medicine    EnemyType
 }{
 	EnemyType{
 		texture:      "zombie",
 		acceleration: 680,
 		baseHP:       3,
+	},
+	EnemyType{
+		texture:      "small_zombie",
+		acceleration: 740,
+		baseHP:       1,
 	},
 	EnemyType{
 		texture:      "red_zombie",
