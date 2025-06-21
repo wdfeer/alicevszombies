@@ -17,7 +17,7 @@ func updateCollisions(world *World) {
 			damageWithCooldown(world, world.player, 1, enemy)
 
 			dir := util.Vector2Direction(world.position[world.player], world.position[enemy])
-			world.velocity[enemy] = rl.Vector2Add(world.velocity[enemy], rl.Vector2Scale(dir, 400*dt))
+			world.velocity[enemy] = rl.Vector2Add(world.velocity[enemy], rl.Vector2Scale(dir, 800*dt))
 		}
 
 		// Doll -> Enemy
@@ -60,8 +60,8 @@ func updateCollisions(world *World) {
 			otherRec := util.CenterRectangle(world.position[otherEnemy], world.size[otherEnemy])
 			if rl.CheckCollisionRecs(enemyRec, otherRec) {
 				dir := util.Vector2Direction(world.position[enemy], world.position[otherEnemy])
-				world.velocity[otherEnemy] = rl.Vector2Add(world.velocity[otherEnemy], rl.Vector2Scale(dir, 80*dt))
-				world.velocity[enemy] = rl.Vector2Add(world.velocity[otherEnemy], rl.Vector2Scale(dir, -80*dt))
+				world.velocity[otherEnemy] = rl.Vector2Add(world.velocity[otherEnemy], rl.Vector2Scale(dir, 800*dt))
+				world.velocity[enemy] = rl.Vector2Add(world.velocity[otherEnemy], rl.Vector2Scale(dir, -800*dt))
 			}
 		}
 	}
