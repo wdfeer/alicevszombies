@@ -58,6 +58,7 @@ func LoadAssets() {
 
 	loadDeathEffect("player")
 	loadDeathEffect("zombie")
+	loadDeathEffect("small_zombie")
 	loadDeathEffect("red_zombie")
 	loadDeathEffect("medicine")
 
