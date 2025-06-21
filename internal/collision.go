@@ -55,6 +55,16 @@ func updateCollisions(world *World) {
 				break
 			}
 		}
+
+		// Enemy <-> Enemy, knockback only
+		for otherEnemy := range world.enemy {
+			otherRec := util.CenterRectangle(world.position[otherEnemy], world.size[otherEnemy])
+			if rl.CheckCollisionRecs(enemyRec, otherRec) {
+				dir := util.Vector2Direction(world.position[enemy], world.position[otherEnemy])
+				world.velocity[otherEnemy] = rl.Vector2Add(world.velocity[otherEnemy], rl.Vector2Scale(dir, 80*dt))
+				world.velocity[enemy] = rl.Vector2Add(world.velocity[otherEnemy], rl.Vector2Scale(dir, -80*dt))
+			}
+		}
 	}
 
 	// Projectile -> Player
