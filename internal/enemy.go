@@ -118,7 +118,7 @@ func updateEnemies(world *World) {
 		if typ.ranged {
 			world.shootTimer[id] -= dt
 			if world.shootTimer[id] <= 0 {
-				world.shootTimer[id] = 1
+				world.shootTimer[id] = 1 - float32(world.difficulty)/10
 
 				dir := util.Vector2Direction(world.position[id], world.position[world.player])
 				vel := rl.Vector2Scale(dir, 100)
