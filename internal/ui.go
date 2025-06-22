@@ -13,6 +13,7 @@ type UIState struct {
 	isDeathScreen    bool
 	previousMousePos rl.Vector2
 	cursorHideTimer  float32
+	pauseMenu        PauseMenu
 	upgradeScreen    UpgradeScreen
 	mainMenu         MainMenu
 }
