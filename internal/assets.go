@@ -40,9 +40,9 @@ func LoadAssets() {
 	loadTexture("small_zombie")
 	loadTexture("small_zombie_walk0")
 	loadTexture("small_zombie_walk1")
-	loadTexture("red_zombie")
-	loadTexture("red_zombie_walk0")
-	loadTexture("red_zombie_walk1")
+	loadTexture("purple_zombie")
+	loadTexture("purple_zombie_walk0")
+	loadTexture("purple_zombie_walk1")
 	loadTexture("medicine")
 	loadTexture("medicine_walk0")
 	loadTexture("medicine_walk1")
@@ -54,13 +54,14 @@ func LoadAssets() {
 	loadTexture("knife")
 	loadTexture("red_bullet")
 	loadTexture("magic_missile")
+	loadTexture("purple_missile")
 
 	println("INFO: Textures loaded!")
 
 	loadDeathEffect("player")
 	loadDeathEffect("zombie")
 	loadDeathEffect("small_zombie")
-	loadDeathEffect("red_zombie")
+	loadDeathEffect("purple_zombie")
 	loadDeathEffect("medicine")
 
 	println("INFO: Death Effects loaded!")

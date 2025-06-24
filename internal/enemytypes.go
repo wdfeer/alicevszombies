@@ -11,10 +11,10 @@ type EnemyType struct {
 }
 
 var enemyTypes = struct {
-	zombie      EnemyType
-	smallZombie EnemyType
-	redZombie   EnemyType
-	medicine    EnemyType
+	zombie       EnemyType
+	smallZombie  EnemyType
+	purpleZombie EnemyType
+	medicine     EnemyType
 }{
 	EnemyType{
 		texture:      "zombie",
@@ -29,7 +29,7 @@ var enemyTypes = struct {
 		size:         rl.Vector2{X: 4, Y: 8},
 	},
 	EnemyType{
-		texture:      "red_zombie",
+		texture:      "purple_zombie",
 		acceleration: 700,
 		baseHP:       2,
 		size:         rl.Vector2{X: 8, Y: 16},

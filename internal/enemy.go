@@ -89,7 +89,7 @@ func enemyTypeToSpawn(world *World) *EnemyType {
 	case wave > 35 && rand.Float32() < 0.01:
 		return &enemyTypes.medicine
 	case (world.difficulty == LUNATIC || wave > 20) && (rand.Float32() < 0.05 || (wave%6 == 0 && rand.Float32() < 0.2)):
-		return &enemyTypes.redZombie
+		return &enemyTypes.purpleZombie
 	case (wave%3 == 0 && rand.Float32() < 0.1) || rand.Float32() < 0.03:
 		return &enemyTypes.smallZombie
 	default:
@@ -134,7 +134,7 @@ func updateEnemies(world *World) {
 
 func preEnemyDeath(world *World, id Entity) {
 	switch world.enemy[id] {
-	case &enemyTypes.redZombie:
+	case &enemyTypes.purpleZombie:
 		count := 2 + world.difficulty*3
 		for i := range count {
 			ratio := (float32(i) + 1) / float32(count)
