@@ -5,15 +5,15 @@ import "math/rand"
 type Upgrade = string
 
 const (
-	DOLL_DAMAGE   = "Doll Damage"
-	DOLL_SPEED    = "Doll Speed"
-	LANCE_DOLL    = "Lance Doll"
-	SCYTHE_DOLL   = "Scythe Doll"
-	KNIFE_DOLL    = "Knife Doll"
-	MAGICIAN_DOLL = "Magician Doll"
+	DollDamage   = "Doll Damage"
+	DollSpeed    = "Doll Speed"
+	LanceDoll    = "Lance Doll"
+	ScytheDoll   = "Scythe Doll"
+	KnifeDoll    = "Knife Doll"
+	MagicianDoll = "Magician Doll"
 )
 
-var allUpgrades = []Upgrade{DOLL_DAMAGE, DOLL_SPEED, LANCE_DOLL, SCYTHE_DOLL, KNIFE_DOLL, MAGICIAN_DOLL}
+var allUpgrades = []Upgrade{DollDamage, DollSpeed, LanceDoll, ScytheDoll, KnifeDoll, MagicianDoll}
 
 func getAvailableUpgrades(world *World) []Upgrade {
 	newSlice := []Upgrade{}
@@ -36,7 +36,7 @@ func getAvailableUpgrades(world *World) []Upgrade {
 		switch up {
 		default:
 			newSlice = append(newSlice, up)
-		case DOLL_SPEED:
+		case DollSpeed:
 			if basicDollCount == 0 {
 
 				newSlice = append(newSlice, up)
@@ -52,17 +52,17 @@ func getAvailableUpgrades(world *World) []Upgrade {
 					}
 				}
 			}
-		case LANCE_DOLL:
+		case LanceDoll:
 			fallthrough
-		case KNIFE_DOLL:
+		case KnifeDoll:
 			if basicDollCount > 0 {
 				newSlice = append(newSlice, up)
 			}
-		case MAGICIAN_DOLL:
+		case MagicianDoll:
 			if knifeDollCount > 1 {
 				newSlice = append(newSlice, up)
 			}
-		case SCYTHE_DOLL:
+		case ScytheDoll:
 			if lanceDollCount > 1 {
 				newSlice = append(newSlice, up)
 			}
@@ -99,10 +99,10 @@ func incrementUpgrade(world *World, upgrade Upgrade) {
 func onUpgradeGet(world *World, upgrade Upgrade) {
 	// TODO: make Upgrade a struct to refactor this somehow
 	dollUpgrades := map[Upgrade]*DollType{
-		LANCE_DOLL:    &dollTypes.lanceDoll,
-		SCYTHE_DOLL:   &dollTypes.scytheDoll,
-		KNIFE_DOLL:    &dollTypes.knifeDoll,
-		MAGICIAN_DOLL: &dollTypes.magicianDoll,
+		LanceDoll:    &dollTypes.lanceDoll,
+		ScytheDoll:   &dollTypes.scytheDoll,
+		KnifeDoll:    &dollTypes.knifeDoll,
+		MagicianDoll: &dollTypes.magicianDoll,
 	}
 
 	for up, dollType := range dollUpgrades {
@@ -111,14 +111,14 @@ func onUpgradeGet(world *World, upgrade Upgrade) {
 		}
 
 		for id, typ := range world.doll {
-			if up != MAGICIAN_DOLL && up != SCYTHE_DOLL {
+			if up != MagicianDoll && up != ScytheDoll {
 				if typ == &dollTypes.basicDoll {
 					world.deleteEntity(id)
 					break
 				}
 			} else {
 				var desiredType *DollType
-				if up == MAGICIAN_DOLL {
+				if up == MagicianDoll {
 					desiredType = &dollTypes.knifeDoll
 				} else {
 					desiredType = &dollTypes.lanceDoll

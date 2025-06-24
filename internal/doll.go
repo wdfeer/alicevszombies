@@ -39,7 +39,7 @@ func updateDolls(world *World) {
 func updateDollTargeting(world *World, doll Entity) Targeting {
 	typ := world.doll[doll]
 	targeting := world.targeting[doll]
-	targeting.accel = typ.accel + float32(10*world.playerData.upgrades[DOLL_SPEED])
+	targeting.accel = typ.accel + float32(10*world.playerData.upgrades[DollSpeed])
 	targeting.targetingTimer -= dt
 	if targeting.targetingTimer <= 0 || rl.Vector2Distance(targeting.target, world.position[doll]) < 2 {
 		targeting.targetingTimer = 0.4
