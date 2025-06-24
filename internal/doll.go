@@ -104,6 +104,13 @@ func updateDollRanged(world *World, doll Entity) {
 			dir := util.Vector2Direction(world.position[doll], world.position[enemyTarget])
 			newProjectile(world, world.position[doll], rl.Vector2Scale(dir, 200), world.doll[doll].projectileType)
 			world.shootTimer[doll] = 1
+
+			if world.doll[doll] == &dollTypes.destructionDoll {
+				for i := range 5 {
+					dir := rl.Vector2Rotate(dir, math.Pi*2*float32(i)/5)
+					newProjectile(world, world.position[doll], rl.Vector2Scale(dir, 200), world.doll[doll].projectileType)
+				}
+			}
 		}
 	}
 }
