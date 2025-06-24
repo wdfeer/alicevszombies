@@ -108,9 +108,10 @@ func onUpgradeGet(world *World, upgrade *Upgrade) {
 	}
 
 	for typ, count := range upgrade.cost {
-		for _, d := range world.doll {
+		for id, d := range world.doll {
 			if d == typ {
 				count--
+				world.deleteEntity(id)
 			}
 			if count <= 0 {
 				break
