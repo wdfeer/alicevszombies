@@ -16,7 +16,7 @@ func renderSpells(world *World) {
 		raygui.Disable()
 	}
 
-	if raygui.Button(util.CenterRectangle(center, size), "") && world.playerData.mana >= 5 && !world.paused {
+	if (raygui.Button(util.CenterRectangle(center, size), "") || rl.IsKeyPressed(rl.KeyH)) && world.playerData.mana >= 5 && !world.paused {
 		heal(world, world.player, 5)
 		world.playerData.mana -= 5
 	}
@@ -28,7 +28,7 @@ func renderSpells(world *World) {
 	}
 
 	center.Y += size.Y * 1.2
-	if raygui.Button(util.CenterRectangle(center, size), "") && world.playerData.mana >= 10 && !world.paused {
+	if (raygui.Button(util.CenterRectangle(center, size), "") || rl.IsKeyPressed(rl.KeyJ)) && world.playerData.mana >= 10 && !world.paused {
 		id := newDoll(world, &dollTypes.basicDoll)
 		world.position[id] = world.position[world.player]
 		world.playerData.mana -= 10
@@ -37,7 +37,7 @@ func renderSpells(world *World) {
 	util.DrawTextCentered("J", 40, rl.Vector2{X: center.X + size.X/5, Y: center.Y})
 
 	center.Y += size.Y * 1.2
-	if raygui.Button(util.CenterRectangle(center, size), "") && world.playerData.mana >= 10 && !world.paused {
+	if (raygui.Button(util.CenterRectangle(center, size), "") || rl.IsKeyPressed(rl.KeyK)) && world.playerData.mana >= 10 && !world.paused {
 		world.paused = true
 		world.playerData.mana -= 10
 		newUpgradeScreen(world)
