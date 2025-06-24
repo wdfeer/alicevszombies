@@ -66,7 +66,7 @@ var projectileTypes = struct {
 		deleteOnHit: false,
 	},
 	redBullet: ProjectileType{
-		hostile: true,
+		hostile: false,
 		damage:  5,
 		texture: "red_bullet",
 		size:    rl.Vector2{X: 4, Y: 4},
