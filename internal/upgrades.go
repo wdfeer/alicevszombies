@@ -42,10 +42,10 @@ var (
 	}
 )
 
-var allUpgrades = []Upgrade{DollDamage, DollSpeed, LanceDoll, ScytheDoll, KnifeDoll, MagicianDoll, DestructionDoll}
+var allUpgrades = []*Upgrade{&DollDamage, &DollSpeed, &LanceDoll, &ScytheDoll, &KnifeDoll, &MagicianDoll, &DestructionDoll}
 
-func getAvailableUpgrades(world *World) []Upgrade {
-	newSlice := []Upgrade{}
+func getAvailableUpgrades(world *World) []*Upgrade {
+	newSlice := []*Upgrade{}
 
 	dollCounts := make(map[*DollType]uint8, 0)
 
@@ -84,7 +84,7 @@ func randomUpgrades(world *World) [2]*Upgrade {
 	for upgrade2.name == upgrade1.name {
 		upgrade2 = available[rand.Int()%len(available)]
 	}
-	return [2]*Upgrade{&upgrade1, &upgrade2}
+	return [2]*Upgrade{upgrade1, upgrade2}
 }
 
 func incrementUpgrade(world *World, upgrade *Upgrade) {
