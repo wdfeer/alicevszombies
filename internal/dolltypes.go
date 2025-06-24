@@ -52,6 +52,7 @@ var dollTypes = struct {
 		contactDamage:  5,
 		texture:        "doll_destruction",
 		accel:          400,
+		size:           rl.Vector2{X: 18, Y: 10},
 		projectileType: &projectileTypes.redBullet,
 	},
 }
