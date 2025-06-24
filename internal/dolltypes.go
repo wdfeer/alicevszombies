@@ -52,6 +52,6 @@ var dollTypes = struct {
 		contactDamage:  5,
 		texture:        "doll_destruction",
 		accel:          400,
-		projectileType: &projectileTypes.magicMissile,
+		projectileType: &projectileTypes.redBullet,
 	},
 }
