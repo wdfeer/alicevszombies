@@ -35,9 +35,14 @@ var (
 		dollType: &dollTypes.magicianDoll,
 		cost:     map[*DollType]uint8{&dollTypes.knifeDoll: 2},
 	}
+	DestructionDoll = Upgrade{
+		name:     "Destruction Doll",
+		dollType: &dollTypes.destructionDoll,
+		cost:     map[*DollType]uint8{&dollTypes.magicianDoll: 2, &dollTypes.scytheDoll: 2},
+	}
 )
 
-var allUpgrades = []Upgrade{DollDamage, DollSpeed, LanceDoll, ScytheDoll, KnifeDoll, MagicianDoll}
+var allUpgrades = []Upgrade{DollDamage, DollSpeed, LanceDoll, ScytheDoll, KnifeDoll, MagicianDoll, DestructionDoll}
 
 func getAvailableUpgrades(world *World) []Upgrade {
 	newSlice := []Upgrade{}
