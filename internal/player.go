@@ -6,7 +6,7 @@ import (
 
 type PlayerData struct {
 	mana     float32
-	upgrades map[Upgrade]uint32
+	upgrades map[*Upgrade]uint32
 }
 
 func newPlayer(world *World) Entity {

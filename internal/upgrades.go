@@ -2,15 +2,39 @@ package internal
 
 import "math/rand"
 
-type Upgrade = string
+type Upgrade struct {
+	name     string
+	dollType *DollType
+	cost     map[*DollType]uint8
+}
 
-const (
-	DollDamage   = "Doll Damage"
-	DollSpeed    = "Doll Speed"
-	LanceDoll    = "Lance Doll"
-	ScytheDoll   = "Scythe Doll"
-	KnifeDoll    = "Knife Doll"
-	MagicianDoll = "Magician Doll"
+var (
+	DollDamage = Upgrade{
+		name: "Doll Damage",
+	}
+	DollSpeed = Upgrade{
+		name: "Doll Speed",
+	}
+	LanceDoll = Upgrade{
+		name:     "Lance Doll",
+		dollType: &dollTypes.lanceDoll,
+		cost:     map[*DollType]uint8{&dollTypes.basicDoll: 1},
+	}
+	ScytheDoll = Upgrade{
+		name:     "Scythe Doll",
+		dollType: &dollTypes.scytheDoll,
+		cost:     map[*DollType]uint8{&dollTypes.lanceDoll: 2},
+	}
+	KnifeDoll = Upgrade{
+		name:     "Knife Doll",
+		dollType: &dollTypes.knifeDoll,
+		cost:     map[*DollType]uint8{&dollTypes.basicDoll: 1},
+	}
+	MagicianDoll = Upgrade{
+		name:     "Magician Doll",
+		dollType: &dollTypes.magicianDoll,
+		cost:     map[*DollType]uint8{&dollTypes.knifeDoll: 2},
+	}
 )
 
 var allUpgrades = []Upgrade{DollDamage, DollSpeed, LanceDoll, ScytheDoll, KnifeDoll, MagicianDoll}
@@ -18,70 +42,47 @@ var allUpgrades = []Upgrade{DollDamage, DollSpeed, LanceDoll, ScytheDoll, KnifeD
 func getAvailableUpgrades(world *World) []Upgrade {
 	newSlice := []Upgrade{}
 
-	basicDollCount := 0
-	lanceDollCount := 0
-	knifeDollCount := 0
+	dollCounts := make(map[*DollType]uint8, 0)
+
 	for _, typ := range world.doll {
-		switch typ {
-		case &dollTypes.basicDoll:
-			basicDollCount++
-		case &dollTypes.lanceDoll:
-			lanceDollCount++
-		case &dollTypes.knifeDoll:
-			knifeDollCount++
+		if _, ok := dollCounts[typ]; ok {
+			dollCounts[typ]++
+		} else {
+			dollCounts[typ] = 1
 		}
 	}
 
 	for _, up := range allUpgrades {
-		switch up {
-		default:
+		if up.cost == nil {
 			newSlice = append(newSlice, up)
-		case DollSpeed:
-			if basicDollCount == 0 {
+			continue
+		}
 
-				newSlice = append(newSlice, up)
-			} else {
-				meleeCount := 0
-				for _, typ := range world.doll {
-					if typ.projectileType == nil {
-						meleeCount++
-						if meleeCount > 1 {
-							newSlice = append(newSlice, up)
-							break
-						}
-					}
-				}
+		failed := false
+		for doll, required := range up.cost {
+			if count, ok := dollCounts[doll]; required > 0 && (!ok || count < required) {
+				failed = true
 			}
-		case LanceDoll:
-			fallthrough
-		case KnifeDoll:
-			if basicDollCount > 0 {
-				newSlice = append(newSlice, up)
-			}
-		case MagicianDoll:
-			if knifeDollCount > 1 {
-				newSlice = append(newSlice, up)
-			}
-		case ScytheDoll:
-			if lanceDollCount > 1 {
-				newSlice = append(newSlice, up)
-			}
+		}
+
+		if !failed {
+			newSlice = append(newSlice, up)
 		}
 	}
 	return newSlice
 }
 
-func randomUpgrades(world *World) [2]Upgrade {
+func randomUpgrades(world *World) [2]*Upgrade {
 	available := getAvailableUpgrades(world)
 	upgrade1 := available[rand.Int()%len(available)]
 	upgrade2 := upgrade1
-	for upgrade2 == upgrade1 {
+	for upgrade2.name == upgrade1.name {
 		upgrade2 = available[rand.Int()%len(available)]
 	}
-	return [2]Upgrade{upgrade1, upgrade2}
+	return [2]*Upgrade{&upgrade1, &upgrade2}
 }
 
-func incrementUpgrade(world *World, upgrade Upgrade) {
+func incrementUpgrade(world *World, upgrade *Upgrade) {
 	lvl, exists := world.playerData.upgrades[upgrade]
 	if exists {
 		world.playerData.upgrades[upgrade] = lvl + 1
@@ -91,52 +92,27 @@ func incrementUpgrade(world *World, upgrade Upgrade) {
 
 	pos := world.position[world.player]
 	pos.Y -= 5
-	newCombatText(world, pos, upgrade+" +")
+	newCombatText(world, pos, upgrade.name+" +")
 
 	onUpgradeGet(world, upgrade)
 }
 
-func onUpgradeGet(world *World, upgrade Upgrade) {
-	// TODO: make Upgrade a struct to refactor this somehow
-	dollUpgrades := map[Upgrade]*DollType{
-		LanceDoll:    &dollTypes.lanceDoll,
-		ScytheDoll:   &dollTypes.scytheDoll,
-		KnifeDoll:    &dollTypes.knifeDoll,
-		MagicianDoll: &dollTypes.magicianDoll,
+func onUpgradeGet(world *World, upgrade *Upgrade) {
+	if upgrade.dollType == nil {
+		return
 	}
 
-	for up, dollType := range dollUpgrades {
-		if up != upgrade {
-			continue
-		}
-
-		for id, typ := range world.doll {
-			if up != MagicianDoll && up != ScytheDoll {
-				if typ == &dollTypes.basicDoll {
-					world.deleteEntity(id)
-					break
-				}
-			} else {
-				var desiredType *DollType
-				if up == MagicianDoll {
-					desiredType = &dollTypes.knifeDoll
-				} else {
-					desiredType = &dollTypes.lanceDoll
-				}
-				count := 0
-				if typ == desiredType {
-					world.deleteEntity(id)
-					count++
-					if count >= 2 {
-						break
-					}
-				}
+	for typ, count := range upgrade.cost {
+		for _, d := range world.doll {
+			if d == typ {
+				count--
+			}
+			if count <= 0 {
+				break
 			}
 		}
-
-		id := newDoll(world, dollType)
-		world.position[id] = world.position[world.player]
-
-		break
 	}
+
+	id := newDoll(world, upgrade.dollType)
+	world.position[id] = world.position[world.player]
 }

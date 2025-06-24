@@ -38,7 +38,7 @@ func selectDifficulty(world *World, difficulty Difficulty) {
 	}
 	world.playerData = PlayerData{
 		mana:     mana,
-		upgrades: make(map[Upgrade]uint32),
+		upgrades: make(map[*Upgrade]uint32),
 	}
 
 	stats.RunCount[difficulty]++
