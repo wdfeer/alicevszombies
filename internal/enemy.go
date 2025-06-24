@@ -122,7 +122,7 @@ func updateEnemies(world *World) {
 
 				dir := util.Vector2Direction(world.position[id], world.position[world.player])
 				vel := rl.Vector2Scale(dir, 100)
-				newProjectile(world, world.position[id], vel, &projectileTypes.redBullet)
+				newProjectile(world, world.position[id], vel, &projectileTypes.purpleBullet)
 
 				if world.difficulty > NORMAL {
 					vel = rl.Vector2Rotate(vel, (rand.Float32()-0.5)/10)
@@ -138,7 +138,7 @@ func preEnemyDeath(world *World, id Entity) {
 		count := 2 + world.difficulty*3
 		for i := range count {
 			ratio := (float32(i) + 1) / float32(count)
-			newProjectile(world, world.position[id], rl.Vector2Rotate(rl.Vector2{X: 80, Y: 0}, math.Pi*2*ratio), &projectileTypes.redBullet)
+			newProjectile(world, world.position[id], rl.Vector2Rotate(rl.Vector2{X: 80, Y: 0}, math.Pi*2*ratio), &projectileTypes.purpleBullet)
 		}
 	}
 
