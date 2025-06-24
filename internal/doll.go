@@ -30,7 +30,7 @@ func newDoll(world *World, typ *DollType) Entity {
 func updateDolls(world *World) {
 	for doll, typ := range world.doll {
 		world.targeting[doll] = updateDollTargeting(world, doll)
-		if typ.contactDamage == 0 {
+		if typ.projectileType != nil {
 			updateDollRanged(world, doll)
 		}
 	}
