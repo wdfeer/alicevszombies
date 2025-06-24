@@ -54,7 +54,7 @@ func LoadAssets() {
 	loadTexture("knife")
 	loadTexture("red_bullet")
 	loadTexture("magic_missile")
-	loadTexture("purple_missile")
+	loadTexture("purple_bullet")
 
 	println("INFO: Textures loaded!")
 
