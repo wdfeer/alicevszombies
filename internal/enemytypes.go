@@ -49,5 +49,6 @@ var enemyTypes = struct {
 		baseHP:       50,
 		ranged:       true,
 		size:         rl.Vector2{X: 8, Y: 16},
+		flippable:    true,
 	},
 }
