@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"alicevszombies/internal/ui"
 	"alicevszombies/internal/util"
 	"fmt"
 
@@ -19,6 +20,8 @@ type UIState struct {
 }
 
 func updateUI(world *World) {
+	ui.UpdateUIScale()
+
 	if world.uistate.isMainMenu {
 	} else if world.uistate.isDeathScreen {
 		updateDeathScreen(world)
