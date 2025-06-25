@@ -52,7 +52,7 @@ func updateDollTargeting(world *World, doll Entity) Targeting {
 			dist := rl.Vector2Distance(world.position[doll], world.position[enemy])
 			playerDist := rl.Vector2Distance(world.position[world.player], world.position[enemy])
 
-			if playerDist < 60 && doll%2 == 0 {
+			if playerDist < 70 && doll%3 < 2 {
 				targeting.target = world.position[enemy]
 				return targeting
 			}
