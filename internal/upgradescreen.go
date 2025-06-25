@@ -3,6 +3,7 @@ package internal
 import (
 	"alicevszombies/internal/util"
 
+	"github.com/gen2brain/raylib-go/raygui"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
@@ -32,10 +33,23 @@ func updateUpgradeScreen(world *World) {
 }
 
 func renderUpgradeScreen(world *World) {
+	oldFontSize := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE)
+	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, 40)
+
 	rl.DrawRectangle(0, 0, int32(rl.GetScreenWidth()), int32(rl.GetScreenHeight()), rl.ColorAlpha(rl.Black, 0.4))
 	center := util.HalfScreenSize()
-	util.DrawTextCenteredSpaced(world.uistate.upgradeScreen.upgrades[0].name, 40, rl.Vector2Add(center, rl.Vector2{X: -250, Y: -32}), 4)
-	util.DrawTextCenteredSpaced("1", 64, rl.Vector2Add(center, rl.Vector2{X: -250, Y: 32}), 4)
-	util.DrawTextCenteredSpaced(world.uistate.upgradeScreen.upgrades[1].name, 40, rl.Vector2Add(center, rl.Vector2{X: 250, Y: -32}), 4)
-	util.DrawTextCenteredSpaced("2", 64, rl.Vector2Add(center, rl.Vector2{X: 250, Y: 32}), 4)
+	rect := rl.NewRectangle(center.X-320-60, center.Y-64, 320, 128)
+	raygui.Panel(rect, "")
+	raygui.Label(rect, world.uistate.upgradeScreen.upgrades[0].name)
+	rect.Y += 144
+	rect.Height = 64
+	raygui.Button(rect, "1")
+	rect.X += 320 + 60*2
+	raygui.Button(rect, "2")
+	rect.Y -= 144
+	rect.Height = 128
+	raygui.Panel(rect, "")
+	raygui.Label(rect, world.uistate.upgradeScreen.upgrades[1].name)
+
+	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, oldFontSize)
 }
