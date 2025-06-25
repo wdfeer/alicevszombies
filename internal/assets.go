@@ -75,6 +75,7 @@ func LoadAssets() {
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, 80)
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SPACING, 8)
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_ALIGNMENT, raygui.TEXT_ALIGN_CENTER)
+	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_ALIGNMENT_VERTICAL, raygui.TEXT_ALIGN_MIDDLE)
 	println("INFO: Raygui style loaded!")
 }
 
