@@ -23,9 +23,7 @@ func updateUI(world *World) {
 	} else if world.uistate.isDeathScreen {
 		updateDeathScreen(world)
 	} else {
-		if world.uistate.isUpgradeScreen {
-			updateUpgradeScreen(world)
-		} else if rl.IsKeyPressed(rl.KeyEscape) {
+		if rl.IsKeyPressed(rl.KeyEscape) && !world.uistate.isUpgradeScreen {
 			world.paused = !world.paused
 		}
 

@@ -18,21 +18,9 @@ func newUpgradeScreen(world *World) {
 	}
 }
 
-func updateUpgradeScreen(world *World) {
-	upgradeOne := rl.IsKeyPressed(rl.KeyOne)
-	upgradeTwo := rl.IsKeyPressed(rl.KeyTwo)
-	if upgradeOne || upgradeTwo {
-		if upgradeOne {
-			incrementUpgrade(world, world.uistate.upgradeScreen.upgrades[0])
-		} else if upgradeTwo {
-			incrementUpgrade(world, world.uistate.upgradeScreen.upgrades[1])
-		}
-		world.paused = false
-		world.uistate.isUpgradeScreen = false
-	}
-}
-
 func renderUpgradeScreen(world *World) {
+	upgrade := -1
+
 	oldFontSize := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE)
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, 40)
 
@@ -43,13 +31,24 @@ func renderUpgradeScreen(world *World) {
 	raygui.Label(rect, world.uistate.upgradeScreen.upgrades[0].name)
 	rect.Y += 144
 	rect.Height = 64
-	raygui.Button(rect, "1")
+	if raygui.Button(rect, "1") || rl.IsKeyPressed(rl.KeyOne) {
+		upgrade = 0
+	}
+
 	rect.X += 320 + 60*2
-	raygui.Button(rect, "2")
+	if raygui.Button(rect, "2") || rl.IsKeyPressed(rl.KeyTwo) {
+		upgrade = 1
+	}
 	rect.Y -= 144
 	rect.Height = 128
 	raygui.Panel(rect, "")
 	raygui.Label(rect, world.uistate.upgradeScreen.upgrades[1].name)
 
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, oldFontSize)
+
+	if upgrade != -1 {
+		incrementUpgrade(world, world.uistate.upgradeScreen.upgrades[upgrade])
+		world.paused = false
+		world.uistate.isUpgradeScreen = false
+	}
 }
