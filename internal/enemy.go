@@ -90,7 +90,7 @@ func enemyTypeToSpawn(world *World) *EnemyType {
 		return &enemyTypes.medicine
 	case (world.difficulty == LUNATIC || wave > 20) && (rand.Float32() < 0.05 || (wave%6 == 0 && rand.Float32() < 0.2)):
 		return &enemyTypes.purpleZombie
-	case (wave%3 == 0 && rand.Float32() < 0.1) || rand.Float32() < 0.03:
+	case (wave%3 == 0 && rand.Float32() < 0.3) || rand.Float32() < 0.08:
 		return &enemyTypes.smallZombie
 	default:
 		return &enemyTypes.zombie
