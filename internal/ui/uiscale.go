@@ -4,10 +4,11 @@ import rl "github.com/gen2brain/raylib-go/raylib"
 
 var UIScale float32 = 1
 
-const StandardHeight float32 = 1440
+const defaultHeight float32 = 1440
 
 func UpdateUIScale() {
-	UIScale = float32(rl.GetScreenHeight()) / StandardHeight
+	UIScale = float32(rl.GetScreenHeight()) / defaultHeight
+	updateFontSizes()
 }
 
 func ScaleV(vec rl.Vector2) rl.Vector2 {
