@@ -21,7 +21,7 @@ func renderSpells(world *World) {
 		heal(world, world.player, 5)
 		world.playerData.mana -= 5
 	}
-	util.DrawTextureCenteredScaled(assets.textures["heal_icon"], rl.Vector2{X: center.X - size.X/5, Y: center.Y}, 4)
+	ui.TextureC(assets.textures["heal_icon"], rl.Vector2{X: center.X - size.X/5, Y: center.Y}, 4)
 	util.DrawTextCentered("H", 40, rl.Vector2{X: center.X + size.X/5, Y: center.Y})
 
 	if world.playerData.mana < 10 {
@@ -34,7 +34,7 @@ func renderSpells(world *World) {
 		world.position[id] = world.position[world.player]
 		world.playerData.mana -= 10
 	}
-	util.DrawTextureCenteredScaled(assets.textures["doll_icon"], rl.Vector2{X: center.X - size.X/5, Y: center.Y}, 4)
+	ui.TextureC(assets.textures["doll_icon"], rl.Vector2{X: center.X - size.X/5, Y: center.Y}, 4)
 	util.DrawTextCentered("J", 40, rl.Vector2{X: center.X + size.X/5, Y: center.Y})
 
 	center.Y += size.Y * 1.2
@@ -43,7 +43,7 @@ func renderSpells(world *World) {
 		world.playerData.mana -= 10
 		newUpgradeScreen(world)
 	}
-	util.DrawTextureCenteredScaled(assets.textures["pitem_icon"], rl.Vector2{X: center.X - size.X/5, Y: center.Y}, 4)
+	ui.TextureC(assets.textures["pitem_icon"], rl.Vector2{X: center.X - size.X/5, Y: center.Y}, 4)
 	util.DrawTextCentered("K", 40, rl.Vector2{X: center.X + size.X/5, Y: center.Y})
 
 	raygui.Enable()
