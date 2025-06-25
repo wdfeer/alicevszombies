@@ -84,6 +84,7 @@ func saveStats() {
 var statSelectedDifficulty Difficulty = UNDEFINED
 
 func renderStats(origin rl.Vector2) { // TODO: refactor this monstrosity of a function
+	ui.SetFontSize(ui.TextSmall)
 	size := rl.Vector2{X: 480, Y: 120}
 	spacing := float32(40)
 	panelSize := rl.Vector2{X: size.X, Y: size.Y*4 + spacing*5}
@@ -95,11 +96,8 @@ func renderStats(origin rl.Vector2) { // TODO: refactor this monstrosity of a fu
 	origin.Y += spacing
 	diffText := "Overall\nEasy\nNormal\nHard\nLunatic"
 
-	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, 48)
 	raygui.SetStyle(raygui.COMBOBOX, raygui.COMBO_BUTTON_WIDTH, int64(size.X)/4)
 	statSelectedDifficulty = Difficulty(raygui.ComboBox(util.RectangleV(origin, size), diffText, int32(statSelectedDifficulty)))
-
-	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, 32)
 
 	origin.Y += spacing + size.Y
 	timePlayed := float32(0)

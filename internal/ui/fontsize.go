@@ -18,6 +18,7 @@ var fontSizeMap = make(map[FontSize]float32)
 
 func SetFontSize(fontSize FontSize) {
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, int64(fontSizeMap[fontSize]))
+	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SPACING, int64(fontSizeMap[fontSize]/10))
 }
 
 func updateFontSizes() {

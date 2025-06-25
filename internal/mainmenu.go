@@ -16,6 +16,8 @@ type MainMenu struct {
 }
 
 func renderMainMenu(world *World) {
+	ui.SetFontSize(ui.TextBig)
+
 	screenSize := util.ScreenSize()
 	rl.DrawRectangleV(rl.Vector2Zero(), screenSize, rl.ColorAlpha(rl.Black, 0.9))
 
