@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"alicevszombies/internal/ui"
 	"alicevszombies/internal/util"
 	"math/rand"
 
@@ -28,7 +29,7 @@ func renderMainMenu(world *World) {
 
 	mainMenu := &world.uistate.mainMenu
 
-	if raygui.LabelButton(rl.Rectangle{X: screenSize.X - buttonWidth*1.5, Y: y, Width: buttonWidth * 1.5, Height: buttonHeight}, "alicevszombies") {
+	if ui.LabelButton(rl.Rectangle{X: screenSize.X - buttonWidth*1.5, Y: y, Width: buttonWidth * 1.5, Height: buttonHeight}, "alicevszombies") {
 		for i, p := range mainMenu.dollPosition {
 			if p == rl.Vector2Zero() {
 				mainMenu.dollPosition[i] = rl.Vector2{X: screenSize.X * rand.Float32(), Y: -20}
@@ -48,7 +49,7 @@ func renderMainMenu(world *World) {
 		}
 	}
 
-	if raygui.Toggle(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Start", mainMenu.selected == 1) {
+	if ui.Toggle(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Start", mainMenu.selected == 1) {
 		mainMenu.selected = 1
 	} else if mainMenu.selected == 1 {
 		mainMenu.selected = 0
@@ -56,25 +57,25 @@ func renderMainMenu(world *World) {
 
 	y += buttonHeight + buttonSpacing
 	raygui.Disable()
-	raygui.Toggle(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Goals", mainMenu.selected == 2)
+	ui.Toggle(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Goals", mainMenu.selected == 2)
 	raygui.Enable()
 
 	y += buttonHeight + buttonSpacing
-	if raygui.Toggle(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Stats", mainMenu.selected == 2) {
+	if ui.Toggle(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Stats", mainMenu.selected == 2) {
 		mainMenu.selected = 2
 	} else if mainMenu.selected == 2 {
 		mainMenu.selected = 0
 	}
 
 	y += buttonHeight + buttonSpacing
-	if raygui.Toggle(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Options", mainMenu.selected == 3) {
+	if ui.Toggle(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Options", mainMenu.selected == 3) {
 		mainMenu.selected = 3
 	} else if mainMenu.selected == 3 {
 		mainMenu.selected = 0
 	}
 
 	y += buttonHeight + buttonSpacing
-	if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Exit") {
+	if ui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Exit") {
 		rl.CloseWindow()
 	}
 
@@ -82,22 +83,22 @@ func renderMainMenu(world *World) {
 	y = startY - buttonHeight/2
 	switch mainMenu.selected {
 	case 1:
-		if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Easy") {
+		if ui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Easy") {
 			startGame(world, EASY)
 		}
 		y += buttonHeight + buttonSpacing
 
-		if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Normal") {
+		if ui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Normal") {
 			startGame(world, NORMAL)
 		}
 		y += buttonHeight + buttonSpacing
 
-		if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Hard") {
+		if ui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Hard") {
 			startGame(world, HARD)
 		}
 		y += buttonHeight + buttonSpacing
 
-		if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Lunatic") {
+		if ui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Lunatic") {
 			startGame(world, LUNATIC)
 		}
 	case 2:

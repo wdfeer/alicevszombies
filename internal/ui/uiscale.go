@@ -4,8 +4,10 @@ import rl "github.com/gen2brain/raylib-go/raylib"
 
 var UIScale float32 = 1
 
+const StandardHeight float32 = 1440
+
 func UpdateUIScale() {
-	UIScale = float32(rl.GetScreenHeight()) / 1440
+	UIScale = float32(rl.GetScreenHeight()) / StandardHeight
 }
 
 func ScaleV(vec rl.Vector2) rl.Vector2 {

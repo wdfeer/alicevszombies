@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"alicevszombies/internal/ui"
 	"alicevszombies/internal/util"
 	"fmt"
 	"os"
@@ -116,7 +117,7 @@ func renderStats(origin rl.Vector2) { // TODO: refactor this monstrosity of a fu
 	} else {
 		timePlayedText += fmt.Sprint(int(timePlayed)) + "s"
 	}
-	raygui.Label(util.RectangleV(origin, size), timePlayedText)
+	ui.Label(util.RectangleV(origin, size), timePlayedText)
 
 	origin.Y += spacing
 	dollsSummoned := uint(0)
@@ -128,7 +129,7 @@ func renderStats(origin rl.Vector2) { // TODO: refactor this monstrosity of a fu
 		dollsSummoned = stats.DollsSummoned[statSelectedDifficulty]
 	}
 	dollsSummonedText := "Dolls summoned: " + fmt.Sprint(dollsSummoned)
-	raygui.Label(util.RectangleV(origin, size), dollsSummonedText)
+	ui.Label(util.RectangleV(origin, size), dollsSummonedText)
 
 	origin.Y += spacing
 	kills := uint(0)
@@ -140,7 +141,7 @@ func renderStats(origin rl.Vector2) { // TODO: refactor this monstrosity of a fu
 		kills = stats.EnemiesKilled[statSelectedDifficulty]
 	}
 	killCounter := "Enemies killed: " + fmt.Sprint(kills)
-	raygui.Label(util.RectangleV(origin, size), killCounter)
+	ui.Label(util.RectangleV(origin, size), killCounter)
 
 	origin.Y += spacing
 	var highestWave uint
@@ -154,7 +155,7 @@ func renderStats(origin rl.Vector2) { // TODO: refactor this monstrosity of a fu
 		highestWave = stats.HighestWave[statSelectedDifficulty]
 	}
 	highestWaveText := "Highest wave: " + fmt.Sprint(highestWave)
-	raygui.Label(util.RectangleV(origin, size), highestWaveText)
+	ui.Label(util.RectangleV(origin, size), highestWaveText)
 
 	origin.Y += spacing
 	var runCount uint
@@ -166,7 +167,7 @@ func renderStats(origin rl.Vector2) { // TODO: refactor this monstrosity of a fu
 		runCount = stats.RunCount[statSelectedDifficulty]
 	}
 	runCountText := "Run count: " + fmt.Sprint(runCount)
-	raygui.Label(util.RectangleV(origin, size), runCountText)
+	ui.Label(util.RectangleV(origin, size), runCountText)
 
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, oldFontsize)
 }

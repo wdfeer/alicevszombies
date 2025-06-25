@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"alicevszombies/internal/ui"
 	"alicevszombies/internal/util"
 
 	"github.com/gen2brain/raylib-go/raygui"
@@ -22,21 +23,21 @@ func renderPauseMenu(world *World) {
 
 	oldFontsize := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE)
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, 256)
-	raygui.Label(util.CenterRectangle(pos, rectSize), "Paused")
+	ui.Label(util.CenterRectangle(pos, rectSize), "Paused")
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, oldFontsize)
 
 	rectSize.X /= 2
 	pos = util.HalfScreenSize()
 
-	if raygui.Button(util.CenterRectangle(pos, rectSize), "Resume") {
+	if ui.Button(util.CenterRectangle(pos, rectSize), "Resume") {
 		world.paused = false
 	}
 
 	pos.Y += rectSize.Y + spacing
-	world.uistate.pauseMenu.options = raygui.Toggle(util.CenterRectangle(pos, rectSize), "Options", world.uistate.pauseMenu.options)
+	world.uistate.pauseMenu.options = ui.Toggle(util.CenterRectangle(pos, rectSize), "Options", world.uistate.pauseMenu.options)
 
 	pos.Y += rectSize.Y + spacing
-	if raygui.Button(util.CenterRectangle(pos, rectSize), "Main Menu") {
+	if ui.Button(util.CenterRectangle(pos, rectSize), "Main Menu") {
 		world.Reset()
 	}
 

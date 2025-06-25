@@ -1,11 +1,11 @@
 package internal
 
 import (
+	"alicevszombies/internal/ui"
 	"alicevszombies/internal/util"
 
 	"fmt"
 
-	"github.com/gen2brain/raylib-go/raygui"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
@@ -46,7 +46,7 @@ func renderDeathScreen(world *World) {
 	centerX := pos.X - buttonWidth/2
 
 	resumeRect := rl.Rectangle{X: centerX, Y: startY, Width: buttonWidth, Height: buttonHeight}
-	if raygui.Button(resumeRect, "Main Menu") {
+	if ui.Button(resumeRect, "Main Menu") {
 		world.Reset()
 	}
 }
