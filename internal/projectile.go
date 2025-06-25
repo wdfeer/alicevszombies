@@ -52,12 +52,6 @@ var projectileTypes = struct {
 		size:        rl.Vector2{X: 4, Y: 4},
 		deleteOnHit: true,
 	},
-	purpleBullet: ProjectileType{
-		hostile: true,
-		damage:  5,
-		texture: "purple_bullet",
-		size:    rl.Vector2{X: 4, Y: 4},
-	},
 	magicMissile: ProjectileType{
 		hostile:     false,
 		damage:      2,
@@ -69,6 +63,12 @@ var projectileTypes = struct {
 		hostile: false,
 		damage:  5,
 		texture: "red_bullet",
+		size:    rl.Vector2{X: 4, Y: 4},
+	},
+	purpleBullet: ProjectileType{
+		hostile: true,
+		damage:  5,
+		texture: "purple_bullet",
 		size:    rl.Vector2{X: 4, Y: 4},
 	},
 }
