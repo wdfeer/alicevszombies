@@ -12,6 +12,7 @@ type Options struct {
 	Fullscreen bool
 	Volume     float32
 	CursorType int32
+	Zoom       float32
 }
 
 var options Options
@@ -35,6 +36,7 @@ func loadOptions() {
 		Fullscreen: true,
 		Volume:     1,
 		CursorType: 0,
+		Zoom:       8,
 	}
 
 	go saveOptions()
