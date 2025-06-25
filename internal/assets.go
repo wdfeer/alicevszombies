@@ -66,6 +66,7 @@ func LoadAssets() {
 	loadDeathEffect("small_zombie")
 	loadDeathEffect("purple_zombie")
 	loadDeathEffect("medicine")
+	loadDeathEffect("kogasa")
 
 	println("INFO: Death Effects loaded!")
 
