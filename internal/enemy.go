@@ -64,7 +64,12 @@ func updateEnemySpawner(world *World) {
 	spawner.spawnTimer = spawner.spawnTimer - dt
 	if spawner.spawnTimer <= 0 {
 		if spawner.wave%10 == 0 && spawner.enemiesToSpawn > 1 {
-			newEnemy(world, &enemyTypes.medicine)
+			switch rand.Int() % 2 {
+			case 0:
+				newEnemy(world, &enemyTypes.medicine)
+			case 1:
+				newEnemy(world, &enemyTypes.kogasa)
+			}
 			spawner.spawnTimer = 15 - float32(world.difficulty)*3
 			spawner.enemiesToSpawn = 1
 		} else {
@@ -88,7 +93,12 @@ func enemyTypeToSpawn(world *World) *EnemyType {
 	wave := world.enemySpawner.wave
 	switch {
 	case wave > 35 && rand.Float32() < 0.01:
-		return &enemyTypes.medicine
+		switch rand.Int() % 2 {
+		case 0:
+			return &enemyTypes.medicine
+		case 1:
+			return &enemyTypes.kogasa
+		}
 	case (world.difficulty == LUNATIC || wave > 20) && (rand.Float32() < 0.05 || (wave%6 == 0 && rand.Float32() < 0.2)):
 		return &enemyTypes.purpleZombie
 	case (wave%3 == 0 && rand.Float32() < 0.3) || rand.Float32() < 0.08:
