@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"alicevszombies/internal/ui"
 	"alicevszombies/internal/util"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
@@ -24,7 +25,7 @@ func render(world *World) {
 
 func renderGrass(world *World) {
 	const GRASS_SIZE = 32
-	origin := rl.Vector2Subtract(world.position[world.player], rl.Vector2Scale(util.HalfScreenSize(), float32(1)/CAMERA_ZOOM))
+	origin := rl.Vector2Subtract(world.position[world.player], rl.Vector2Scale(util.HalfScreenSize(), float32(1)/8/ui.UIScale))
 	origin.X = origin.X - util.ModF(origin.X, GRASS_SIZE)
 	origin.Y = origin.Y - util.ModF(origin.Y, GRASS_SIZE)
 	for x := -400; x < 400; x += GRASS_SIZE {
@@ -35,13 +36,11 @@ func renderGrass(world *World) {
 	}
 }
 
-const CAMERA_ZOOM = 8
-
 func createCamera(world *World) rl.Camera2D {
 	camera := rl.Camera2D{
 		Target: world.position[world.player],
 		Offset: util.HalfScreenSize(),
-		Zoom:   CAMERA_ZOOM,
+		Zoom:   8 * ui.UIScale,
 	}
 	return camera
 }
