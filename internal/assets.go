@@ -96,11 +96,13 @@ func loadTexture(name string) {
 	assets.textures[name] = rl.LoadTexture("assets/" + name + ".png")
 }
 
+const FlippedSuffix = "_fliph"
+
 func loadTextureAndFlipped(name string) {
 	image := rl.LoadImage("assets/" + name + ".png")
 	assets.textures[name] = rl.LoadTextureFromImage(image)
 	rl.ImageFlipHorizontal(image)
-	assets.textures[name+"_fliph"] = rl.LoadTextureFromImage(image)
+	assets.textures[name+FlippedSuffix] = rl.LoadTextureFromImage(image)
 }
 
 func loadSound(name string) {

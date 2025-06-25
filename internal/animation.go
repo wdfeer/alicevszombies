@@ -1,6 +1,10 @@
 package internal
 
-import rl "github.com/gen2brain/raylib-go/raylib"
+import (
+	"strings"
+
+	rl "github.com/gen2brain/raylib-go/raylib"
+)
 
 func updateAnimationData(world *World) {
 	updateWalkAnimations(world)
@@ -35,18 +39,12 @@ func updateWalkAnimations(world *World) {
 	}
 }
 
-type Flipping struct {
-	baseTexture string
-}
-
 func updateFlipping(world *World) {
-	for id, dollType := range world.doll {
-		if dollType.contactDamage > 0 {
-			if world.velocity[id].X >= 0 {
-				world.texture[id] = dollType.texture
-			} else {
-				world.texture[id] = dollType.texture + "_fliph"
-			}
+	for id := range world.flippable {
+		if world.velocity[id].X >= 0 {
+			world.texture[id] = strings.TrimSuffix(world.texture[id], FlippedSuffix)
+		} else if !strings.HasSuffix(world.texture[id], FlippedSuffix) {
+			world.texture[id] += FlippedSuffix
 		}
 	}
 }

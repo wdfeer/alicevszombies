@@ -8,6 +8,7 @@ type EnemyType struct {
 	baseHP       float32
 	ranged       bool
 	size         rl.Vector2
+	flippable    bool
 }
 
 var enemyTypes = struct {
@@ -15,6 +16,7 @@ var enemyTypes = struct {
 	smallZombie  EnemyType
 	purpleZombie EnemyType
 	medicine     EnemyType
+	kogasa       EnemyType
 }{
 	EnemyType{
 		texture:      "zombie",
@@ -37,6 +39,13 @@ var enemyTypes = struct {
 	EnemyType{
 		texture:      "medicine",
 		acceleration: 730,
+		baseHP:       50,
+		ranged:       true,
+		size:         rl.Vector2{X: 8, Y: 16},
+	},
+	EnemyType{
+		texture:      "kogasa",
+		acceleration: 715,
 		baseHP:       50,
 		ranged:       true,
 		size:         rl.Vector2{X: 8, Y: 16},

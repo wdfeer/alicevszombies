@@ -29,6 +29,7 @@ type World struct {
 	deathEffect  map[Entity]DeathEffectParticle
 	animTimer    map[Entity]float32
 	walkAnimated map[Entity]WalkAnimation
+	flippable    map[Entity]bool
 	shootTimer   map[Entity]float32
 }
 
@@ -60,6 +61,7 @@ func (world *World) Reset() {
 	world.size = make(map[Entity]rl.Vector2)
 	world.deathEffect = make(map[Entity]DeathEffectParticle)
 	world.walkAnimated = make(map[Entity]WalkAnimation)
+	world.flippable = make(map[Entity]bool)
 	world.projectile = make(map[Entity]Projectile)
 	world.shootTimer = make(map[Entity]float32)
 	world.uistate = UIState{
