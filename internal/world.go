@@ -102,6 +102,7 @@ func (world *World) Update() {
 	updateUI(world)
 	updateFullscreen()
 	updateStats(world)
+	updateCameraZoom()
 	render(world)
 }
 
