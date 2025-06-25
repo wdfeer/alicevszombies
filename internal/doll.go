@@ -90,7 +90,7 @@ func updateDollRanged(world *World, doll Entity) {
 	if world.shootTimer[doll] <= 0 {
 		enemyFound := false
 		var enemyTarget Entity
-		var minDist float32 = 9e25
+		var minDist float32 = 220
 		for enemy := range world.enemy {
 			dist := rl.Vector2Distance(world.position[doll], world.position[enemy])
 			if dist < minDist {
