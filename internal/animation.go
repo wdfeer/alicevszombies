@@ -21,30 +21,45 @@ func updateWalkAnimations(world *World) {
 			return
 		}
 
+		var newTexture string
 		if rl.Vector2Length(world.velocity[id]) > 0 {
 			if world.animTimer[id] > 0.15 {
 				world.animTimer[id] = 0
-				if world.texture[id] == data.baseTexture+"_walk0" {
-					world.texture[id] = data.baseTexture + "_walk1"
+				if strings.HasSuffix(world.texture[id], "_walk0") || strings.HasSuffix(world.texture[id], "_walk0"+FlippedSuffix) {
+					newTexture = data.baseTexture + "_walk1"
 				} else {
-					world.texture[id] = data.baseTexture + "_walk0"
+					newTexture = data.baseTexture + "_walk0"
 				}
 			} else {
-				world.animTimer[id] = world.animTimer[id] + dt
+				world.animTimer[id] += dt
+				continue
 			}
 		} else {
 			world.animTimer[id] = 0
-			world.texture[id] = data.baseTexture
+			newTexture = data.baseTexture
 		}
+
+		if strings.HasSuffix(world.texture[id], FlippedSuffix) {
+			newTexture += FlippedSuffix
+		}
+
+		world.texture[id] = newTexture
 	}
 }
 
 func updateFlipping(world *World) {
 	for id := range world.flippable {
+		texture := world.texture[id]
+		isFlipped := strings.HasSuffix(texture, FlippedSuffix)
+
 		if world.velocity[id].X >= 0 {
-			world.texture[id] = strings.TrimSuffix(world.texture[id], FlippedSuffix)
-		} else if !strings.HasSuffix(world.texture[id], FlippedSuffix) {
-			world.texture[id] += FlippedSuffix
+			if isFlipped {
+				world.texture[id] = strings.TrimSuffix(texture, FlippedSuffix)
+			}
+		} else {
+			if !isFlipped {
+				world.texture[id] = texture + FlippedSuffix
+			}
 		}
 	}
 }

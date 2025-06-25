@@ -19,7 +19,9 @@ func newDoll(world *World, typ *DollType) Entity {
 	world.drag[id] = 5
 	world.size[id] = typ.size
 	world.texture[id] = typ.texture
-	world.flippable[id] = typ.contactDamage > 0
+	if typ.contactDamage > 0 {
+		world.flippable[id] = true
+	}
 
 	if !world.uistate.isMainMenu && !world.uistate.isDeathScreen {
 		stats.DollsSummoned[world.difficulty]++

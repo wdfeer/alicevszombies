@@ -41,7 +41,9 @@ func newEnemy(world *World, typ *EnemyType) Entity {
 	world.velocity[id] = rl.Vector2Zero()
 	world.drag[id] = 10
 	world.walkAnimated[id] = WalkAnimation{typ.texture}
-	world.flippable[id] = typ.flippable
+	if typ.flippable {
+		world.flippable[id] = true
+	}
 	world.size[id] = typ.size
 
 	hp := typ.baseHP * (1 + float32(world.enemySpawner.wave/(23-uint32(world.difficulty)*3)))
@@ -103,9 +105,8 @@ func enemyTypeToSpawn(world *World) *EnemyType {
 		return &enemyTypes.purpleZombie
 	case (wave%3 == 0 && rand.Float32() < 0.3) || rand.Float32() < 0.08:
 		return &enemyTypes.smallZombie
-	default:
-		return &enemyTypes.zombie
 	}
+	return &enemyTypes.zombie
 }
 
 func updateEnemies(world *World) {
