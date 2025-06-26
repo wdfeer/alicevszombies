@@ -23,8 +23,8 @@ type DeathExplode struct {
 	countDiffMult uint
 }
 
-func (self DeathExplode) getProjectileCount(world *World) uint {
-	return self.countFlat + self.countDiffMult*uint(world.difficulty)
+func (exploding DeathExplode) getProjectileCount(world *World) uint {
+	return exploding.countFlat + exploding.countDiffMult*uint(world.difficulty)
 }
 
 var enemyTypes = struct {

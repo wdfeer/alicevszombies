@@ -16,10 +16,10 @@ type SpawnData struct {
 	minWaveDiffMult int
 }
 
-func (self SpawnData) canSpawn(world *World) bool {
+func (data SpawnData) canSpawn(world *World) bool {
 	wave := world.enemySpawner.wave
-	return wave >= uint32(int(self.minWave)+self.minWaveDiffMult*int(world.difficulty)) &&
-		(!self.boss || (wave%10 == 0 && wave > 0))
+	return wave >= uint32(int(data.minWave)+data.minWaveDiffMult*int(world.difficulty)) &&
+		(!data.boss || (wave%10 == 0 && wave > 0))
 }
 
 func updateEnemySpawner(world *World) {
@@ -48,7 +48,7 @@ func updateEnemySpawner(world *World) {
 }
 
 func enemyTypeToSpawn(world *World) *EnemyType {
-	valid := []*EnemyType{}
+	var valid []*EnemyType
 	totalWeight := float32(0)
 	for _, typ := range allEnemyTypes {
 		if typ.spawnData.canSpawn(world) {
@@ -63,10 +63,10 @@ func enemyTypeToSpawn(world *World) *EnemyType {
 	}
 
 	val := rand.Float32() * totalWeight
-	cum_weight := float32(0)
+	cumWeight := float32(0)
 	for _, typ := range valid {
-		cum_weight += typ.spawnData.weight
-		if cum_weight > val {
+		cumWeight += typ.spawnData.weight
+		if cumWeight > val {
 			return typ
 		}
 	}
