@@ -8,15 +8,25 @@ import (
 )
 
 func renderTextures(world *World) {
+	cameraRect := util.CenterRectangle(world.position[world.player], rl.Vector2Scale(util.ScreenSize(), 1/options.Zoom))
 	items := make([]Entity, 0, len(world.texture))
 	for id := range world.texture {
-		if _, ok := world.position[id]; ok {
+		pos, ok := world.position[id]
+		if !ok {
+			continue
+		}
+
+		if rl.CheckCollisionRecs(cameraRect, util.CenterRectangle(pos, rl.Vector2{X: 100, Y: 100})) {
 			items = append(items, id)
 		}
 	}
 	slices.Sort(items)
 
-	for _, id := range items {
+	renderNeededTextures(world, items)
+}
+
+func renderNeededTextures(world *World, ids []Entity) {
+	for _, id := range ids {
 		texture := world.texture[id]
 		pos := world.position[id]
 		if texture == "knife" || texture == "magic_missile" {
