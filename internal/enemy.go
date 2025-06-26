@@ -143,11 +143,10 @@ func updateRangedEnemy(world *World, id Entity) {
 		vel := rl.Vector2Scale(dir, 100)
 		newProjectile(world, world.position[id], vel, typ.projectileType)
 
-		if world.difficulty > EASY {
-			count := rand.Int()%3 + int(world.difficulty)
-			for i := range count {
-				vel = rl.Vector2Rotate(vel, math.Pi*2*float32(i)/float32(count))
-			}
+		count := rand.Int()%3 + int(world.difficulty)
+		for i := range count {
+			vel = rl.Vector2Rotate(vel, math.Pi*2*float32(i)/float32(count))
+			newProjectile(world, world.position[id], vel, typ.projectileType)
 		}
 	}
 }
