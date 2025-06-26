@@ -14,20 +14,6 @@ type EnemyType struct {
 	deathExplode   DeathExplode
 }
 
-type SpawnData struct {
-	boss    bool
-	weight  float32
-	minWave uint
-	// Multiplied by the difficulty, this changes the min wave
-	minWaveDiffMult int
-}
-
-func (self SpawnData) canSpawn(world *World) bool {
-	wave := world.enemySpawner.wave
-	return wave >= uint32(int(self.minWave)+self.minWaveDiffMult*int(world.difficulty)) &&
-		(!self.boss || (wave%10 == 0 && wave > 0))
-}
-
 type DeathExplode struct {
 	active         bool
 	projectileType *ProjectileType
