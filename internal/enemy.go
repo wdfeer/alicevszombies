@@ -171,7 +171,7 @@ func preEnemyDeath(world *World, id Entity) {
 		count := deathExplode.getProjectileCount(world)
 		for i := range count {
 			ratio := (float32(i) + 1) / float32(count)
-			newProjectile(world, world.position[id], rl.Vector2Rotate(rl.Vector2{X: 80, Y: 0}, math.Pi*2*ratio), &projectileTypes.purpleBullet)
+			newProjectile(world, world.position[id], rl.Vector2Rotate(rl.Vector2{X: 80, Y: 0}, math.Pi*2*ratio), deathExplode.projectileType)
 		}
 	}
 
