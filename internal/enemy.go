@@ -128,17 +128,25 @@ func updateEnemies(world *World) {
 		world.targeting[id] = targeting
 
 		if typ.ranged {
-			world.shootTimer[id] -= dt
-			if world.shootTimer[id] <= 0 {
-				world.shootTimer[id] = 1 - float32(world.difficulty)/10
+			updateRangedEnemy(world, id)
+		}
+	}
+}
 
-				dir := util.Vector2Direction(world.position[id], world.position[world.player])
-				vel := rl.Vector2Scale(dir, 100)
-				newProjectile(world, world.position[id], vel, &projectileTypes.purpleBullet)
+func updateRangedEnemy(world *World, id Entity) {
+	world.shootTimer[id] -= dt
+	if world.shootTimer[id] <= 0 {
+		typ := world.enemy[id]
+		world.shootTimer[id] = 1 - float32(world.difficulty)/10
 
-				if world.difficulty > NORMAL {
-					vel = rl.Vector2Rotate(vel, (rand.Float32()-0.5)/10)
-				}
+		dir := util.Vector2Direction(world.position[id], world.position[world.player])
+		vel := rl.Vector2Scale(dir, 100)
+		newProjectile(world, world.position[id], vel, typ.projectileType)
+
+		if world.difficulty > EASY {
+			count := rand.Int()%3 + int(world.difficulty)
+			for i := range count {
+				vel = rl.Vector2Rotate(vel, math.Pi*2*float32(i)/float32(count))
 			}
 		}
 	}

@@ -58,6 +58,7 @@ func LoadAssets() {
 	loadTexture("red_bullet")
 	loadTexture("magic_missile")
 	loadTexture("purple_bullet")
+	loadTexture("blue_bullet")
 
 	println("INFO: Textures loaded!")
 

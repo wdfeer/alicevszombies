@@ -3,12 +3,13 @@ package internal
 import rl "github.com/gen2brain/raylib-go/raylib"
 
 type EnemyType struct {
-	texture      string
-	acceleration float32
-	baseHP       float32
-	ranged       bool
-	size         rl.Vector2
-	flippable    bool
+	texture        string
+	acceleration   float32
+	baseHP         float32
+	ranged         bool
+	projectileType *ProjectileType
+	size           rl.Vector2
+	flippable      bool
 }
 
 var enemyTypes = struct {
@@ -37,18 +38,20 @@ var enemyTypes = struct {
 		size:         rl.Vector2{X: 8, Y: 16},
 	},
 	EnemyType{
-		texture:      "medicine",
-		acceleration: 730,
-		baseHP:       50,
-		ranged:       true,
-		size:         rl.Vector2{X: 8, Y: 16},
+		texture:        "medicine",
+		acceleration:   730,
+		baseHP:         50,
+		ranged:         true,
+		size:           rl.Vector2{X: 8, Y: 16},
+		projectileType: &projectileTypes.purpleBullet,
 	},
 	EnemyType{
-		texture:      "kogasa",
-		acceleration: 715,
-		baseHP:       50,
-		ranged:       true,
-		size:         rl.Vector2{X: 8, Y: 16},
-		flippable:    true,
+		texture:        "kogasa",
+		acceleration:   715,
+		baseHP:         50,
+		ranged:         true,
+		size:           rl.Vector2{X: 8, Y: 16},
+		flippable:      true,
+		projectileType: &projectileTypes.blueBullet,
 	},
 }

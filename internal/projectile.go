@@ -44,6 +44,7 @@ var projectileTypes = struct {
 	purpleBullet ProjectileType
 	magicMissile ProjectileType
 	redBullet    ProjectileType
+	blueBullet   ProjectileType
 }{
 	knife: ProjectileType{
 		hostile:     false,
@@ -69,6 +70,12 @@ var projectileTypes = struct {
 		hostile: true,
 		damage:  5,
 		texture: "purple_bullet",
+		size:    rl.Vector2{X: 4, Y: 4},
+	},
+	blueBullet: ProjectileType{
+		hostile: true,
+		damage:  4,
+		texture: "blue_bullet",
 		size:    rl.Vector2{X: 4, Y: 4},
 	},
 }
