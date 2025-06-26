@@ -65,53 +65,47 @@ func updateEnemySpawner(world *World) {
 
 	spawner.spawnTimer = spawner.spawnTimer - dt
 	if spawner.spawnTimer <= 0 {
-		if spawner.wave%10 == 0 && spawner.enemiesToSpawn > 1 {
-			switch rand.Int() % 2 {
-			case 0:
-				newEnemy(world, &enemyTypes.medicine)
-			case 1:
-				newEnemy(world, &enemyTypes.kogasa)
-			}
-			spawner.spawnTimer = 15 - float32(world.difficulty)*3
-			spawner.enemiesToSpawn = 1
-		} else {
-			newEnemy(world, enemyTypeToSpawn(world))
+		newEnemy(world, enemyTypeToSpawn(world))
 
-			spawner.spawnTimer = 2 - min(1.4, float32(spawner.wave)/10)
-			if spawner.enemiesToSpawn > 10 {
-				spawner.spawnTimer /= max(2, float32(world.difficulty))
-			}
-			if spawner.enemiesToSpawn > 30 {
-				spawner.spawnTimer /= 2
-			}
-			spawner.enemiesToSpawn--
+		spawner.spawnTimer = 2 - min(1.4, float32(spawner.wave)/10)
+		if spawner.enemiesToSpawn > 10 {
+			spawner.spawnTimer /= max(2, float32(world.difficulty))
 		}
+		if spawner.enemiesToSpawn > 30 {
+			spawner.spawnTimer /= 2
+		}
+		spawner.enemiesToSpawn--
 	}
 
 	world.enemySpawner = spawner
 }
 
 func enemyTypeToSpawn(world *World) *EnemyType {
-	wave := world.enemySpawner.wave
-	switch {
-	case wave > 35 && rand.Float32() < 0.01:
-		switch rand.Int() % 2 {
-		case 0:
-			return &enemyTypes.medicine
-		case 1:
-			return &enemyTypes.kogasa
+	valid := []*EnemyType{}
+	totalWeight := float32(0)
+	for _, typ := range allEnemyTypes {
+		if typ.spawnData.canSpawn(world) {
+			valid = append(valid, typ)
+			totalWeight += typ.spawnData.weight
 		}
-	case (world.difficulty == LUNATIC || wave > 18) && (rand.Float32() < 0.05 || (wave%6 == 0 && rand.Float32() < 0.2)):
-		switch rand.Int() % 2 {
-		case 0:
-			return &enemyTypes.purpleZombie
-		case 1:
-			return &enemyTypes.blueZombie
-		}
-	case (wave%3 == 0 && rand.Float32() < 0.3) || rand.Float32() < 0.08:
-		return &enemyTypes.smallZombie
 	}
-	return &enemyTypes.zombie
+
+	if len(valid) == 0 {
+		println("WARNING: no valid enemy type to spawn found!")
+		return &enemyTypes.zombie
+	}
+
+	val := rand.Float32() * totalWeight
+	cum_weight := float32(0)
+	for _, typ := range valid {
+		cum_weight += typ.spawnData.weight
+		if cum_weight > val {
+			return typ
+		}
+	}
+
+	println("WARNING: weighted enemy spawning failed!")
+	return valid[rand.Int()%len(valid)]
 }
 
 func updateEnemies(world *World) {

@@ -10,14 +10,31 @@ type EnemyType struct {
 	projectileType *ProjectileType
 	size           rl.Vector2
 	flippable      bool
+	spawnData      SpawnData
 	deathExplode   DeathExplode
+}
+
+type SpawnData struct {
+	boss    bool
+	weight  float32
+	minWave uint
+	// Multiplied by the difficulty, this changes the min wave
+	minWaveDiffMult int
+}
+
+func (self SpawnData) canSpawn(world *World) bool {
+	wave := world.enemySpawner.wave
+	return wave >= uint32(int(self.minWave)+self.minWaveDiffMult*int(world.difficulty)) &&
+		(!self.boss || (wave%10 == 0 && wave > 0))
 }
 
 type DeathExplode struct {
 	active         bool
 	projectileType *ProjectileType
-	countFlat      uint
-	countDiffMult  uint
+	// Flat projectile count summand
+	countFlat uint
+	// Projectile count summand that is to be multiplied by difficulty
+	countDiffMult uint
 }
 
 func (self DeathExplode) getProjectileCount(world *World) uint {
@@ -37,18 +54,30 @@ var enemyTypes = struct {
 		acceleration: 680,
 		baseHP:       3,
 		size:         rl.Vector2{X: 8, Y: 16},
+		spawnData: SpawnData{
+			weight: 1,
+		},
 	},
 	EnemyType{
 		texture:      "small_zombie",
 		acceleration: 740,
 		baseHP:       1,
 		size:         rl.Vector2{X: 4, Y: 8},
+		spawnData: SpawnData{
+			weight:  0.2,
+			minWave: 4,
+		},
 	},
 	EnemyType{
 		texture:      "purple_zombie",
 		acceleration: 700,
 		baseHP:       2,
 		size:         rl.Vector2{X: 8, Y: 16},
+		spawnData: SpawnData{
+			weight:          0.05,
+			minWave:         26,
+			minWaveDiffMult: -6,
+		},
 		deathExplode: DeathExplode{
 			active:         true,
 			projectileType: &projectileTypes.purpleBullet,
@@ -61,6 +90,11 @@ var enemyTypes = struct {
 		acceleration: 690,
 		baseHP:       4,
 		size:         rl.Vector2{X: 8, Y: 16},
+		spawnData: SpawnData{
+			weight:          0.05,
+			minWave:         26,
+			minWaveDiffMult: -6,
+		},
 		deathExplode: DeathExplode{
 			active:         true,
 			projectileType: &projectileTypes.blueBullet,
@@ -75,6 +109,10 @@ var enemyTypes = struct {
 		ranged:         true,
 		size:           rl.Vector2{X: 8, Y: 16},
 		projectileType: &projectileTypes.purpleBullet,
+		spawnData: SpawnData{
+			boss:   true,
+			weight: 1,
+		},
 	},
 	EnemyType{
 		texture:        "kogasa",
@@ -84,5 +122,18 @@ var enemyTypes = struct {
 		size:           rl.Vector2{X: 8, Y: 16},
 		flippable:      true,
 		projectileType: &projectileTypes.blueBullet,
+		spawnData: SpawnData{
+			boss:   true,
+			weight: 1,
+		},
 	},
+}
+
+var allEnemyTypes = []*EnemyType{
+	&enemyTypes.zombie,
+	&enemyTypes.smallZombie,
+	&enemyTypes.purpleZombie,
+	&enemyTypes.blueZombie,
+	&enemyTypes.medicine,
+	&enemyTypes.kogasa,
 }
