@@ -101,8 +101,13 @@ func enemyTypeToSpawn(world *World) *EnemyType {
 		case 1:
 			return &enemyTypes.kogasa
 		}
-	case (world.difficulty == LUNATIC || wave > 20) && (rand.Float32() < 0.05 || (wave%6 == 0 && rand.Float32() < 0.2)):
-		return &enemyTypes.purpleZombie
+	case (world.difficulty == LUNATIC || wave > 18) && (rand.Float32() < 0.05 || (wave%6 == 0 && rand.Float32() < 0.2)):
+		switch rand.Int() % 2 {
+		case 0:
+			return &enemyTypes.purpleZombie
+		case 1:
+			return &enemyTypes.blueZombie
+		}
 	case (wave%3 == 0 && rand.Float32() < 0.3) || rand.Float32() < 0.08:
 		return &enemyTypes.smallZombie
 	}
@@ -161,9 +166,9 @@ func updateRangedEnemy(world *World, id Entity) {
 }
 
 func preEnemyDeath(world *World, id Entity) {
-	switch world.enemy[id] {
-	case &enemyTypes.purpleZombie:
-		count := 2 + world.difficulty*3
+	deathExplode := world.enemy[id].deathExplode
+	if deathExplode.active {
+		count := deathExplode.getProjectileCount(world)
 		for i := range count {
 			ratio := (float32(i) + 1) / float32(count)
 			newProjectile(world, world.position[id], rl.Vector2Rotate(rl.Vector2{X: 80, Y: 0}, math.Pi*2*ratio), &projectileTypes.purpleBullet)

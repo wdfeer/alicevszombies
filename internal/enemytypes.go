@@ -10,12 +10,25 @@ type EnemyType struct {
 	projectileType *ProjectileType
 	size           rl.Vector2
 	flippable      bool
+	deathExplode   DeathExplode
+}
+
+type DeathExplode struct {
+	active         bool
+	projectileType *ProjectileType
+	countFlat      uint
+	countDiffMult  uint
+}
+
+func (self DeathExplode) getProjectileCount(world *World) uint {
+	return self.countFlat + self.countDiffMult*uint(world.difficulty)
 }
 
 var enemyTypes = struct {
 	zombie       EnemyType
 	smallZombie  EnemyType
 	purpleZombie EnemyType
+	blueZombie   EnemyType
 	medicine     EnemyType
 	kogasa       EnemyType
 }{
@@ -36,6 +49,24 @@ var enemyTypes = struct {
 		acceleration: 700,
 		baseHP:       2,
 		size:         rl.Vector2{X: 8, Y: 16},
+		deathExplode: DeathExplode{
+			active:         true,
+			projectileType: &projectileTypes.purpleBullet,
+			countFlat:      4,
+			countDiffMult:  1,
+		},
+	},
+	EnemyType{
+		texture:      "blue_zombie",
+		acceleration: 700,
+		baseHP:       4,
+		size:         rl.Vector2{X: 8, Y: 16},
+		deathExplode: DeathExplode{
+			active:         true,
+			projectileType: &projectileTypes.blueBullet,
+			countFlat:      2,
+			countDiffMult:  2,
+		},
 	},
 	EnemyType{
 		texture:        "medicine",
