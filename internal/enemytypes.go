@@ -58,13 +58,13 @@ var enemyTypes = struct {
 	},
 	EnemyType{
 		texture:      "blue_zombie",
-		acceleration: 700,
+		acceleration: 690,
 		baseHP:       4,
 		size:         rl.Vector2{X: 8, Y: 16},
 		deathExplode: DeathExplode{
 			active:         true,
 			projectileType: &projectileTypes.blueBullet,
-			countFlat:      2,
+			countFlat:      3,
 			countDiffMult:  2,
 		},
 	},
