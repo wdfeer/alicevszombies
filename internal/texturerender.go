@@ -9,14 +9,14 @@ import (
 
 func renderTextures(world *World) {
 	cameraRect := util.CenterRectangle(world.position[world.player], rl.Vector2Scale(util.ScreenSize(), 1/options.Zoom))
-	items := make([]Entity, 0, len(world.texture))
-	for id := range world.texture {
+	items := []Entity{}
+	for id, textureName := range world.texture {
 		pos, ok := world.position[id]
 		if !ok {
 			continue
 		}
 
-		if rl.CheckCollisionRecs(cameraRect, util.CenterRectangle(pos, rl.Vector2{X: 100, Y: 100})) {
+		if rl.CheckCollisionRecs(cameraRect, util.CenterRectangle(pos, rl.Vector2{X: float32(assets.textures[textureName].Width), Y: float32(assets.textures[textureName].Height)})) {
 			items = append(items, id)
 		}
 	}
