@@ -48,7 +48,7 @@ var enemyTypes = struct {
 	EnemyType{
 		texture:        "kogasa",
 		acceleration:   715,
-		baseHP:         50,
+		baseHP:         70,
 		ranged:         true,
 		size:           rl.Vector2{X: 8, Y: 16},
 		flippable:      true,
