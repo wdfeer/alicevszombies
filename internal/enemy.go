@@ -81,11 +81,11 @@ func updateRangedEnemy(world *World, id Entity) {
 			newProjectile(world, world.position[id], rl.Vector2Rotate(vel, math.Pi*2*ratio), typ.projectileType)
 		}
 
-		if world.enemySpawner.wave > 20 {
-			count := int(world.difficulty)*2 - 1
-			vel = rl.Vector2Scale(vel, 0.8)
-			for i := range count + 1 {
-				ratio := (float32(i) + 1) / float32(count)
+		for i := range world.enemySpawner.wave / 20 {
+			vel := rl.Vector2Scale(vel, 0.8-float32(i)/10)
+			count := int(world.difficulty)*2 - 1 + int(i)*2
+			for j := range count + 1 {
+				ratio := (float32(j) + 1) / float32(count)
 				newProjectile(world, world.position[id], rl.Vector2Rotate(vel, math.Pi*2*ratio), typ.projectileType)
 			}
 		}
