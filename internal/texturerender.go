@@ -29,17 +29,29 @@ func renderNeededTextures(world *World, ids []Entity) {
 	for _, id := range ids {
 		texture := world.texture[id]
 		pos := world.position[id]
+		pos = util.CenterSomething(float32(assets.textures[texture].Width), float32(assets.textures[texture].Height), pos)
+		rotation := float32(0)
+
 		if texture == "knife" || texture == "magic_missile" {
-			pos := util.CenterSomething(4, 4, pos)
-			rl.DrawTextureEx(
-				assets.textures[texture],
-				pos,
-				-rl.Vector2Angle(world.velocity[id], rl.Vector2{X: 1, Y: 0})*rl.Rad2deg,
-				1,
-				rl.White,
-			)
-		} else {
-			util.DrawTextureCentered(assets.textures[texture], pos)
+			rotation = -rl.Vector2Angle(world.velocity[id], rl.Vector2{X: 1, Y: 0}) * rl.Rad2deg
 		}
+
+		shadowOffset := rl.Vector2{X: 0.5, Y: 0.5}
+		pos = rl.Vector2Add(pos, shadowOffset)
+		rl.DrawTextureEx(
+			assets.textures[texture],
+			pos,
+			rotation,
+			1,
+			rl.Black,
+		)
+		pos = rl.Vector2Subtract(pos, shadowOffset)
+		rl.DrawTextureEx(
+			assets.textures[texture],
+			pos,
+			rotation,
+			1,
+			rl.White,
+		)
 	}
 }
