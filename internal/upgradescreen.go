@@ -24,9 +24,11 @@ func renderUpgradeScreen(world *World) {
 	oldFontSize := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE)
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, 40)
 
+	width := float32(440)
+
 	rl.DrawRectangle(0, 0, int32(rl.GetScreenWidth()), int32(rl.GetScreenHeight()), rl.ColorAlpha(rl.Black, 0.4))
 	center := util.HalfScreenSize()
-	rect := rl.NewRectangle(center.X-320-60, center.Y-64, 320, 128)
+	rect := rl.NewRectangle(center.X-width-60, center.Y-64, width, 128)
 	raygui.Panel(rect, "")
 	raygui.Label(rect, world.uistate.upgradeScreen.upgrades[0].name)
 	rect.Y += 144
@@ -35,7 +37,7 @@ func renderUpgradeScreen(world *World) {
 		upgrade = 0
 	}
 
-	rect.X += 320 + 60*2
+	rect.X += width + 60*2
 	if raygui.Button(rect, "2") || rl.IsKeyPressed(rl.KeyTwo) {
 		upgrade = 1
 	}
