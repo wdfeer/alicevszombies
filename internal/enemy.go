@@ -33,8 +33,8 @@ func newEnemy(world *World, typ *EnemyType) Entity {
 	world.size[id] = typ.size
 
 	hp := typ.baseHP * (1 + float32(world.enemySpawner.wave/(23-uint32(world.difficulty)*3)))
-	if world.enemySpawner.wave > 30 {
-		hp *= 1 + float32(world.enemySpawner.wave-30+uint32(world.difficulty)*4)/30
+	if world.enemySpawner.wave > 33-uint32(world.difficulty)*3 {
+		hp *= 1 + float32(world.enemySpawner.wave-30+uint32(world.difficulty)*5)/30
 	}
 	world.hp[id] = newHP(hp)
 
