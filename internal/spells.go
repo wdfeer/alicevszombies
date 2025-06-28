@@ -17,7 +17,7 @@ func renderSpells(world *World) {
 	}
 
 	spellCount := 3
-	if superUpgradesAvailable(world) {
+	if world.playerData.upgradeCount() > 10 {
 		spellCount = 4
 	}
 	yPositions := util.SpaceCentered(size.Y*1.2, spellCount, pos.Y)

@@ -9,7 +9,7 @@ type PlayerData struct {
 	upgrades map[*Upgrade]uint32
 }
 
-func (data *PlayerData) upgradeCout() uint32 {
+func (data *PlayerData) upgradeCount() uint32 {
 	count := uint32(0)
 	for _, v := range data.upgrades {
 		count += v
@@ -29,8 +29,6 @@ func newPlayer(world *World) Entity {
 	return world.player
 }
 
-const PLAYER_ACCELERATION = 700
-
 func updatePlayer(world *World) {
 	dir := rl.Vector2Zero()
 
@@ -48,6 +46,7 @@ func updatePlayer(world *World) {
 	}
 	dir = rl.Vector2Normalize(dir)
 
-	delta := rl.Vector2Scale(dir, PLAYER_ACCELERATION*dt)
+	accel := float32(700 + world.playerData.upgrades[&MovementSpeed]*15)
+	delta := rl.Vector2Scale(dir, accel*dt)
 	world.velocity[world.player] = rl.Vector2Add(world.velocity[world.player], delta)
 }

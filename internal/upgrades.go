@@ -44,6 +44,13 @@ var (
 )
 
 var upgrades = []*Upgrade{&DollDamage, &DollSpeed, &LanceDoll, &ScytheDoll, &KnifeDoll, &MagicianDoll, &DestructionDoll}
+
+var (
+	MovementSpeed = Upgrade{
+		name: "Move Speed",
+	}
+)
+
 var superUpgrades = []*Upgrade{} // TODO: create super upgrades
 
 func availableUpgrades(world *World) []*Upgrade {
@@ -85,14 +92,15 @@ func randomUpgrades(world *World) [2]*Upgrade {
 	return [2]*Upgrade{upgrade1, upgrade2}
 }
 
-func randomSuperUpgrades(world *World) [2]*Upgrade {
+func randomSuperUpgrades(world *World) []*Upgrade {
 	available := availableSuperUpgrades(world)
 	upgrade1 := available[rand.Int()%len(available)]
-	upgrade2 := upgrade1
-	for upgrade2.name == upgrade1.name {
-		upgrade2 = available[rand.Int()%len(available)]
+	upgrade2 := available[rand.Int()%len(available)]
+	if upgrade1 != upgrade2 {
+		return []*Upgrade{upgrade1, upgrade2}
+	} else {
+		return []*Upgrade{upgrade1}
 	}
-	return [2]*Upgrade{upgrade1, upgrade2}
 }
 
 func availableSuperUpgrades(world *World) []*Upgrade {
