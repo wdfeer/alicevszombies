@@ -16,7 +16,11 @@ func renderSpells(world *World) {
 		raygui.Disable()
 	}
 
-	yPositions := util.SpaceCentered(size.Y*1.2, 3, pos.Y)
+	spellCount := 3
+	if superUpgradesAvailable(world) {
+		spellCount = 4
+	}
+	yPositions := util.SpaceCentered(size.Y*1.2, spellCount, pos.Y)
 
 	pos.Y = yPositions[0]
 	if (raygui.Button(util.CenterRectangle(pos, size), "") || rl.IsKeyPressed(rl.KeyH)) && world.playerData.mana >= 5 && !world.paused {
@@ -47,6 +51,18 @@ func renderSpells(world *World) {
 	}
 	util.DrawTextureCenteredScaled(assets.textures["pitem_icon"], rl.Vector2{X: pos.X - size.X/5, Y: pos.Y}, 4)
 	util.DrawTextCentered("K", 40, rl.Vector2{X: pos.X + size.X/5, Y: pos.Y})
+
+	if spellCount == 4 {
+		pos.Y = yPositions[3]
+		if (raygui.Button(util.CenterRectangle(pos, size), "") || rl.IsKeyPressed(rl.KeyL)) && world.playerData.mana >= 100 && !world.paused {
+			world.paused = true
+			world.playerData.mana -= 100
+			newSuperUpgradeScreen(world)
+		}
+		// TODO: use a different texture
+		util.DrawTextureCenteredScaled(assets.textures["pitem_icon"], rl.Vector2{X: pos.X - size.X/5, Y: pos.Y}, 4)
+		util.DrawTextCentered("L", 40, rl.Vector2{X: pos.X + size.X/5, Y: pos.Y})
+	}
 
 	raygui.Enable()
 }
