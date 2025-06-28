@@ -53,6 +53,9 @@ func renderSpells(world *World) {
 	util.DrawTextCentered("K", 40, rl.Vector2{X: pos.X + size.X/5, Y: pos.Y})
 
 	if spellCount == 4 {
+		if world.playerData.mana < 100 {
+			raygui.Disable()
+		}
 		pos.Y = yPositions[3]
 		if (raygui.Button(util.CenterRectangle(pos, size), "") || rl.IsKeyPressed(rl.KeyL)) && world.playerData.mana >= 100 && !world.paused {
 			world.paused = true
