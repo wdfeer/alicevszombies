@@ -2,6 +2,7 @@ package internal
 
 import (
 	"alicevszombies/internal/util"
+	"fmt"
 
 	"github.com/gen2brain/raylib-go/raygui"
 	rl "github.com/gen2brain/raylib-go/raylib"
@@ -26,33 +27,32 @@ func newSuperUpgradeScreen(world *World) {
 }
 
 func renderUpgradeScreen(world *World) {
-	upgrade := -1
-
 	oldFontSize := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE)
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, 40)
 
+	screen := world.uistate.upgradeScreen
+
 	width := float32(440)
 
-	rl.DrawRectangle(0, 0, int32(rl.GetScreenWidth()), int32(rl.GetScreenHeight()), rl.ColorAlpha(rl.Black, 0.4))
 	center := util.HalfScreenSize()
-	rect := rl.NewRectangle(center.X-width-60, center.Y-64, width, 128)
-	raygui.Panel(rect, "")
-	raygui.Label(rect, world.uistate.upgradeScreen.upgrades[0].name)
-	rect.Y += 144
-	rect.Height = 64
-	if raygui.Button(rect, "1") || rl.IsKeyPressed(rl.KeyOne) {
-		upgrade = 0
-	}
+	xPositions := util.SpaceCentered(width+120, len(screen.upgrades), center.X-width/2)
+	rl.DrawRectangle(0, 0, int32(rl.GetScreenWidth()), int32(rl.GetScreenHeight()), rl.ColorAlpha(rl.Black, 0.4))
 
-	if len(world.uistate.upgradeScreen.upgrades) > 1 {
-		rect.X += width + 60*2
-		if raygui.Button(rect, "2") || rl.IsKeyPressed(rl.KeyTwo) {
-			upgrade = 1
-		}
-		rect.Y -= 144
-		rect.Height = 128
+	keys := map[int]int32{
+		0: rl.KeyOne,
+		1: rl.KeyTwo,
+		2: rl.KeyThree,
+	}
+	upgrade := -1
+	for i := range len(screen.upgrades) {
+		rect := rl.NewRectangle(xPositions[i], center.Y-64, width, 128)
 		raygui.Panel(rect, "")
-		raygui.Label(rect, world.uistate.upgradeScreen.upgrades[1].name)
+		raygui.Label(rect, world.uistate.upgradeScreen.upgrades[i].name)
+		rect.Y += 144
+		rect.Height = 64
+		if raygui.Button(rect, fmt.Sprint(i+1)) || rl.IsKeyPressed(keys[i]) {
+			upgrade = i
+		}
 	}
 
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, oldFontSize)

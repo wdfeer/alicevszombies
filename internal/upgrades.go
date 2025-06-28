@@ -131,12 +131,7 @@ func randomSuperUpgrades(world *World) []*Upgrade {
 }
 
 func incrementUpgrade(world *World, upgrade *Upgrade) {
-	lvl, exists := world.playerData.upgrades[upgrade]
-	if exists {
-		world.playerData.upgrades[upgrade] = lvl + 1
-	} else {
-		world.playerData.upgrades[upgrade] = 1
-	}
+	world.playerData.upgrades[upgrade]++
 
 	pos := world.position[world.player]
 	pos.Y -= 5
