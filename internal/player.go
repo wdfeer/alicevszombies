@@ -9,6 +9,14 @@ type PlayerData struct {
 	upgrades map[*Upgrade]uint32
 }
 
+func (data *PlayerData) upgradeCout() uint32 {
+	count := uint32(0)
+	for _, v := range data.upgrades {
+		count += v
+	}
+	return count
+}
+
 func newPlayer(world *World) Entity {
 	world.player = world.newEntity()
 	world.position[world.player] = rl.Vector2Zero()

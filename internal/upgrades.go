@@ -6,6 +6,7 @@ type Upgrade struct {
 	name     string
 	dollType *DollType
 	cost     map[*DollType]uint8
+	super    bool
 }
 
 var (
@@ -42,9 +43,10 @@ var (
 	}
 )
 
-var allUpgrades = []*Upgrade{&DollDamage, &DollSpeed, &LanceDoll, &ScytheDoll, &KnifeDoll, &MagicianDoll, &DestructionDoll}
+var upgrades = []*Upgrade{&DollDamage, &DollSpeed, &LanceDoll, &ScytheDoll, &KnifeDoll, &MagicianDoll, &DestructionDoll}
+var superUpgrades = []*Upgrade{} // TODO: create super upgrades
 
-func getAvailableUpgrades(world *World) []*Upgrade {
+func availableUpgrades(world *World) []*Upgrade {
 	newSlice := []*Upgrade{}
 
 	dollCounts := make(map[*DollType]uint8, 0)
@@ -53,7 +55,7 @@ func getAvailableUpgrades(world *World) []*Upgrade {
 		dollCounts[typ]++
 	}
 
-	for _, up := range allUpgrades {
+	for _, up := range upgrades {
 		if up.cost == nil {
 			newSlice = append(newSlice, up)
 			continue
@@ -74,13 +76,35 @@ func getAvailableUpgrades(world *World) []*Upgrade {
 }
 
 func randomUpgrades(world *World) [2]*Upgrade {
-	available := getAvailableUpgrades(world)
+	available := availableUpgrades(world)
 	upgrade1 := available[rand.Int()%len(available)]
 	upgrade2 := upgrade1
 	for upgrade2.name == upgrade1.name {
 		upgrade2 = available[rand.Int()%len(available)]
 	}
 	return [2]*Upgrade{upgrade1, upgrade2}
+}
+
+func randomSuperUpgrades(world *World) [2]*Upgrade {
+	available := availableSuperUpgrades(world)
+	upgrade1 := available[rand.Int()%len(available)]
+	upgrade2 := upgrade1
+	for upgrade2.name == upgrade1.name {
+		upgrade2 = available[rand.Int()%len(available)]
+	}
+	return [2]*Upgrade{upgrade1, upgrade2}
+}
+
+func availableSuperUpgrades(world *World) []*Upgrade {
+	newSlice := make([]*Upgrade, 0)
+
+	for _, up := range superUpgrades {
+		if world.playerData.upgrades[up] == 0 {
+			newSlice = append(newSlice, up)
+		}
+	}
+
+	return newSlice
 }
 
 func incrementUpgrade(world *World, upgrade *Upgrade) {
