@@ -55,6 +55,7 @@ func LoadAssets() {
 	loadTexture("heal_icon")
 	loadTexture("doll_icon")
 	loadTexture("pitem_icon")
+	loadTexture("unique_upgrade_icon")
 	loadTexture("grass")
 
 	loadTexture("knife")

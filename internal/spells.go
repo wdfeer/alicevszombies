@@ -63,8 +63,7 @@ func renderSpells(world *World) {
 			world.playerData.mana -= 100
 			newSuperUpgradeScreen(world)
 		}
-		// TODO: use a different texture
-		util.DrawTextureCenteredScaled(assets.textures["pitem_icon"], rl.Vector2{X: pos.X - size.X/5, Y: pos.Y}, 4)
+		util.DrawTextureCenteredScaled(assets.textures["unique_upgrade_icon"], rl.Vector2{X: pos.X - size.X/5, Y: pos.Y}, 4)
 		util.DrawTextCentered("L", 40, rl.Vector2{X: pos.X + size.X/5, Y: pos.Y})
 	}
 
