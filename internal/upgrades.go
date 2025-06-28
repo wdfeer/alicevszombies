@@ -50,9 +50,36 @@ var (
 		name:  "Move Speed",
 		super: true,
 	}
+	UpgradeSelection = Upgrade{
+		name:  "Upgrade Selection",
+		super: true,
+	}
 )
 
-var superUpgrades = []*Upgrade{&MovementSpeed}
+var superUpgrades = []*Upgrade{&MovementSpeed, &UpgradeSelection}
+
+func randomUpgradesFrom(world *World, available []*Upgrade) []*Upgrade {
+	count := 2 + world.playerData.upgrades[&UpgradeSelection]
+	upgrades := make([]*Upgrade, 0)
+	for range count {
+		if len(available) == 0 {
+			break
+		}
+		index := rand.Int() % len(available)
+		upgrade := available[index]
+		unique := true
+		for _, up := range upgrades {
+			if up == upgrade {
+				unique = false
+			}
+		}
+		if unique {
+			upgrades = append(upgrades, upgrade)
+			available = append(available[:index], available[index+1:]...)
+		}
+	}
+	return upgrades
+}
 
 func availableUpgrades(world *World) []*Upgrade {
 	newSlice := []*Upgrade{}
@@ -83,16 +110,6 @@ func availableUpgrades(world *World) []*Upgrade {
 	return newSlice
 }
 
-func randomUpgrades(world *World) []*Upgrade {
-	available := availableUpgrades(world)
-	upgrade1 := available[rand.Int()%len(available)]
-	upgrade2 := upgrade1
-	for upgrade2.name == upgrade1.name {
-		upgrade2 = available[rand.Int()%len(available)]
-	}
-	return []*Upgrade{upgrade1, upgrade2}
-}
-
 func availableSuperUpgrades(world *World) []*Upgrade {
 	newSlice := make([]*Upgrade, 0)
 
@@ -105,15 +122,12 @@ func availableSuperUpgrades(world *World) []*Upgrade {
 	return newSlice
 }
 
+func randomUpgrades(world *World) []*Upgrade {
+	return randomUpgradesFrom(world, availableUpgrades(world))
+}
+
 func randomSuperUpgrades(world *World) []*Upgrade {
-	available := availableSuperUpgrades(world)
-	upgrade1 := available[rand.Int()%len(available)]
-	upgrade2 := available[rand.Int()%len(available)]
-	if upgrade1 != upgrade2 {
-		return []*Upgrade{upgrade1, upgrade2}
-	} else {
-		return []*Upgrade{upgrade1}
-	}
+	return randomUpgradesFrom(world, availableSuperUpgrades(world))
 }
 
 func incrementUpgrade(world *World, upgrade *Upgrade) {
