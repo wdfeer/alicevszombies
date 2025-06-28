@@ -53,11 +53,12 @@ func renderSpells(world *World) {
 	util.DrawTextCentered("K", 40, rl.Vector2{X: pos.X + size.X/5, Y: pos.Y})
 
 	if spellCount == 4 {
-		if world.playerData.mana < 100 || len(availableSuperUpgrades(world)) == 0 {
+		disable := world.playerData.mana < 100 || len(availableSuperUpgrades(world)) == 0
+		if disable {
 			raygui.Disable()
 		}
 		pos.Y = yPositions[3]
-		if (raygui.Button(util.CenterRectangle(pos, size), "") || rl.IsKeyPressed(rl.KeyL)) && world.playerData.mana >= 100 && !world.paused {
+		if (raygui.Button(util.CenterRectangle(pos, size), "") || rl.IsKeyPressed(rl.KeyL)) && !disable && !world.paused {
 			world.paused = true
 			world.playerData.mana -= 100
 			newSuperUpgradeScreen(world)
