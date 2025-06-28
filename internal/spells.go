@@ -53,7 +53,7 @@ func renderSpells(world *World) {
 	util.DrawTextCentered("K", 40, rl.Vector2{X: pos.X + size.X/5, Y: pos.Y})
 
 	if spellCount == 4 {
-		if world.playerData.mana < 100 {
+		if world.playerData.mana < 100 || len(availableSuperUpgrades(world)) == 0 {
 			raygui.Disable()
 		}
 		pos.Y = yPositions[3]

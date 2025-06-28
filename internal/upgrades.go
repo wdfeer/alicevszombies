@@ -93,17 +93,6 @@ func randomUpgrades(world *World) []*Upgrade {
 	return []*Upgrade{upgrade1, upgrade2}
 }
 
-func randomSuperUpgrades(world *World) []*Upgrade {
-	available := availableSuperUpgrades(world)
-	upgrade1 := available[rand.Int()%len(available)]
-	upgrade2 := available[rand.Int()%len(available)]
-	if upgrade1 != upgrade2 {
-		return []*Upgrade{upgrade1, upgrade2}
-	} else {
-		return []*Upgrade{upgrade1}
-	}
-}
-
 func availableSuperUpgrades(world *World) []*Upgrade {
 	newSlice := make([]*Upgrade, 0)
 
@@ -114,6 +103,17 @@ func availableSuperUpgrades(world *World) []*Upgrade {
 	}
 
 	return newSlice
+}
+
+func randomSuperUpgrades(world *World) []*Upgrade {
+	available := availableSuperUpgrades(world)
+	upgrade1 := available[rand.Int()%len(available)]
+	upgrade2 := available[rand.Int()%len(available)]
+	if upgrade1 != upgrade2 {
+		return []*Upgrade{upgrade1, upgrade2}
+	} else {
+		return []*Upgrade{upgrade1}
+	}
 }
 
 func incrementUpgrade(world *World, upgrade *Upgrade) {
