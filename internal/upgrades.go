@@ -50,11 +50,7 @@ func getAvailableUpgrades(world *World) []*Upgrade {
 	dollCounts := make(map[*DollType]uint8, 0)
 
 	for _, typ := range world.doll {
-		if _, ok := dollCounts[typ]; ok {
-			dollCounts[typ]++
-		} else {
-			dollCounts[typ] = 1
-		}
+		dollCounts[typ]++
 	}
 
 	for _, up := range allUpgrades {
