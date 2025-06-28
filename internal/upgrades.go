@@ -6,7 +6,7 @@ type Upgrade struct {
 	name     string
 	dollType *DollType
 	cost     map[*DollType]uint8
-	super    bool
+	unique    bool
 }
 
 var (
@@ -48,15 +48,15 @@ var upgrades = []*Upgrade{&DollDamage, &DollSpeed, &LanceDoll, &ScytheDoll, &Kni
 var (
 	MovementSpeed = Upgrade{
 		name:  "Move Speed",
-		super: true,
+		unique: true,
 	}
 	UpgradeSelection = Upgrade{
 		name:  "Upgrade Selection",
-		super: true,
+		unique: true,
 	}
 )
 
-var superUpgrades = []*Upgrade{&MovementSpeed, &UpgradeSelection}
+var uniqueUpgrades = []*Upgrade{&MovementSpeed, &UpgradeSelection}
 
 func randomUpgradesFrom(world *World, available []*Upgrade) []*Upgrade {
 	count := 2 + world.playerData.upgrades[&UpgradeSelection]
@@ -110,10 +110,10 @@ func availableUpgrades(world *World) []*Upgrade {
 	return newSlice
 }
 
-func availableSuperUpgrades(world *World) []*Upgrade {
+func availableUniqueUpgrades(world *World) []*Upgrade {
 	newSlice := make([]*Upgrade, 0)
 
-	for _, up := range superUpgrades {
+	for _, up := range uniqueUpgrades {
 		if world.playerData.upgrades[up] == 0 {
 			newSlice = append(newSlice, up)
 		}
@@ -126,8 +126,8 @@ func randomUpgrades(world *World) []*Upgrade {
 	return randomUpgradesFrom(world, availableUpgrades(world))
 }
 
-func randomSuperUpgrades(world *World) []*Upgrade {
-	return randomUpgradesFrom(world, availableSuperUpgrades(world))
+func randomUniqueUpgrades(world *World) []*Upgrade {
+	return randomUpgradesFrom(world, availableUniqueUpgrades(world))
 }
 
 func incrementUpgrade(world *World, upgrade *Upgrade) {

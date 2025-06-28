@@ -19,10 +19,10 @@ func newUpgradeScreen(world *World) {
 	}
 }
 
-func newSuperUpgradeScreen(world *World) {
+func newUniqueUpgradeScreen(world *World) {
 	world.uistate.isUpgradeScreen = true
 	world.uistate.upgradeScreen = UpgradeScreen{
-		upgrades: randomSuperUpgrades(world),
+		upgrades: randomUniqueUpgrades(world),
 	}
 }
 

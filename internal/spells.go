@@ -53,7 +53,7 @@ func renderSpells(world *World) {
 	util.DrawTextCentered("K", 40, rl.Vector2{X: pos.X + size.X/5, Y: pos.Y})
 
 	if spellCount == 4 {
-		disable := world.playerData.mana < 100 || len(availableSuperUpgrades(world)) == 0
+		disable := world.playerData.mana < 100 || len(availableUniqueUpgrades(world)) == 0
 		if disable {
 			raygui.Disable()
 		}
@@ -61,7 +61,7 @@ func renderSpells(world *World) {
 		if (raygui.Button(util.CenterRectangle(pos, size), "") || rl.IsKeyPressed(rl.KeyL)) && !disable && !world.paused {
 			world.paused = true
 			world.playerData.mana -= 100
-			newSuperUpgradeScreen(world)
+			newUniqueUpgradeScreen(world)
 		}
 		util.DrawTextureCenteredScaled(assets.textures["unique_upgrade_icon"], rl.Vector2{X: pos.X - size.X/5, Y: pos.Y}, 4)
 		util.DrawTextCentered("L", 40, rl.Vector2{X: pos.X + size.X/5, Y: pos.Y})
