@@ -19,6 +19,10 @@ type UIState struct {
 }
 
 func updateUI(world *World) {
+	if !rl.IsWindowFocused() {
+		world.paused = true
+	}
+
 	if world.uistate.isMainMenu {
 	} else if world.uistate.isDeathScreen {
 		updateDeathScreen(world)
