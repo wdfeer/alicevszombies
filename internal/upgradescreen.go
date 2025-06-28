@@ -8,13 +8,20 @@ import (
 )
 
 type UpgradeScreen struct {
-	upgrades [2]*Upgrade
+	upgrades [2]*Upgrade // TODO: unspecify size
 }
 
 func newUpgradeScreen(world *World) {
 	world.uistate.isUpgradeScreen = true
 	world.uistate.upgradeScreen = UpgradeScreen{
 		upgrades: randomUpgrades(world),
+	}
+}
+
+func newSuperUpgradeScreen(world *World) {
+	world.uistate.isUpgradeScreen = true
+	world.uistate.upgradeScreen = UpgradeScreen{
+		upgrades: randomSuperUpgrades(world),
 	}
 }
 
