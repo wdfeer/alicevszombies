@@ -34,7 +34,7 @@ func selectDifficulty(world *World, difficulty Difficulty) {
 
 	mana := float32(0)
 	if world.difficulty == EASY {
-		mana += 1000 // FIXME: reduce to 10
+		mana += 10
 	}
 	world.playerData = PlayerData{
 		mana:     mana,
