@@ -8,7 +8,7 @@ import (
 )
 
 type UpgradeScreen struct {
-	upgrades [2]*Upgrade // TODO: unspecify size
+	upgrades []*Upgrade
 }
 
 func newUpgradeScreen(world *World) {
@@ -44,14 +44,16 @@ func renderUpgradeScreen(world *World) {
 		upgrade = 0
 	}
 
-	rect.X += width + 60*2
-	if raygui.Button(rect, "2") || rl.IsKeyPressed(rl.KeyTwo) {
-		upgrade = 1
+	if len(world.uistate.upgradeScreen.upgrades) > 1 {
+		rect.X += width + 60*2
+		if raygui.Button(rect, "2") || rl.IsKeyPressed(rl.KeyTwo) {
+			upgrade = 1
+		}
+		rect.Y -= 144
+		rect.Height = 128
+		raygui.Panel(rect, "")
+		raygui.Label(rect, world.uistate.upgradeScreen.upgrades[1].name)
 	}
-	rect.Y -= 144
-	rect.Height = 128
-	raygui.Panel(rect, "")
-	raygui.Label(rect, world.uistate.upgradeScreen.upgrades[1].name)
 
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, oldFontSize)
 
