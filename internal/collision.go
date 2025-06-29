@@ -92,5 +92,15 @@ func updateCollisions(world *World) {
 			damageWithCooldown(world, world.player, proj.typ.damage, id)
 			break
 		}
+
+		// Projectile -> Doll
+		if proj.typ == &projectileTypes.blueBullet {
+			for doll := range world.doll {
+				dollRec := util.CenterRectangle(world.position[doll], world.size[doll])
+				if rl.CheckCollisionRecs(projRec, dollRec) {
+					applySlow(world, doll, statusDuration)
+				}
+			}
+		}
 	}
 }
