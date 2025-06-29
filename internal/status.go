@@ -27,6 +27,7 @@ func applyPoison(world *World, id Entity, duration float32) {
 	if duration > poison {
 		world.status[id] = Status{
 			poison: duration,
+			slow:   world.status[id].slow,
 		}
 	}
 }
@@ -35,7 +36,8 @@ func applySlow(world *World, id Entity, duration float32) {
 	slow := world.status[id].slow
 	if duration > slow {
 		world.status[id] = Status{
-			slow: duration,
+			poison: world.status[id].poison,
+			slow:   duration,
 		}
 	}
 }
