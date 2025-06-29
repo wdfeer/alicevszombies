@@ -89,9 +89,14 @@ func damageWithCooldown(world *World, id Entity, dmg float32, attacker Entity) {
 		println("WARNING: Tried damaging deleted enemy with id", id)
 		return
 	}
-	if cooldown, exists := hp.attackerCooldown[attacker]; !exists || cooldown <= 0 {
+	if onCooldown(world, id, attacker) {
 		hp.attackerCooldown[attacker] = hp.immuneTime
 		world.hp[id] = hp
 		damage(world, id, dmg)
 	}
+}
+
+func onCooldown(world *World, victim Entity, attacker Entity) bool {
+	cooldown, exists := world.hp[victim].attackerCooldown[attacker]
+	return !exists || cooldown <= 0
 }
