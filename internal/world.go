@@ -31,6 +31,7 @@ type World struct {
 	walkAnimated map[Entity]WalkAnimation
 	flippable    map[Entity]bool
 	shootTimer   map[Entity]float32
+	status       map[Entity]Status
 }
 
 func NewWorld() World {
@@ -64,6 +65,7 @@ func (world *World) Reset() {
 	world.flippable = make(map[Entity]bool)
 	world.projectile = make(map[Entity]Projectile)
 	world.shootTimer = make(map[Entity]float32)
+	world.status = make(map[Entity]Status)
 	world.uistate = UIState{
 		isMainMenu: true,
 		mainMenu: MainMenu{
@@ -86,6 +88,7 @@ func (world *World) Update() {
 
 	if !world.paused {
 		updateHP(world)
+		updateStatus(world)
 		updatePlayer(world)
 		updateDolls(world)
 		updateProjectiles(world)
@@ -136,4 +139,5 @@ func (world *World) deleteEntity(entity Entity) {
 	delete(world.walkAnimated, entity)
 	delete(world.projectile, entity)
 	delete(world.shootTimer, entity)
+	delete(world.status, entity)
 }
