@@ -1,10 +1,10 @@
 package internal
 
 import (
+	"alicevszombies/internal/colors"
 	"alicevszombies/internal/util"
 	"fmt"
 
-	"github.com/gen2brain/raylib-go/raygui"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
@@ -61,7 +61,8 @@ func renderHUD(world *World) {
 		}
 		if boss != -1 {
 			hp := world.hp[Entity(boss)]
-			raygui.ProgressBar(rl.NewRectangle(0, size.Y-16, size.X, 16), "", "", hp.val, 0, 100)
+			width := int32(size.X * hp.val / 100)
+			rl.DrawRectangle(0, int32(size.Y-16), width, 16, colors.Red)
 		}
 	}
 
