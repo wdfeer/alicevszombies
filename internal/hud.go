@@ -13,6 +13,7 @@ func renderHUD(world *World) {
 	halfSize := util.HalfScreenSize()
 
 	// Upper Center
+
 	{ // Wave counter
 		str := "Wave " + fmt.Sprint(world.enemySpawner.wave)
 		center := rl.Vector2{X: halfSize.X, Y: 200}
@@ -21,6 +22,7 @@ func renderHUD(world *World) {
 	}
 
 	// Lower Center
+
 	yPositions := util.SpaceCentered(50, 4, float32(rl.GetScreenHeight())-200)
 	{ // HP bar
 		str := "HP: " + fmt.Sprint(world.hp[world.player].val)
@@ -50,8 +52,8 @@ func renderHUD(world *World) {
 		rl.DrawText(str, int32(pos.X), int32(pos.Y), 32, colors.Blue)
 	}
 
-	// Boss Bar
-	{
+
+	{ // Boss Bar
 		boss := -1
 		for id, typ := range world.enemy {
 			if typ.spawnData.boss {
