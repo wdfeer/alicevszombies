@@ -48,7 +48,8 @@ func updatePlayer(world *World) {
 
 	accel := float32(700 + world.playerData.upgrades[&MovementSpeed]*15)
 	if world.status[world.player].slow > 0 {
-		accel -= 30
+		slowness := 10 + 10*world.difficulty
+		accel -= float32(slowness)
 	}
 	delta := rl.Vector2Scale(dir, accel*dt)
 	world.velocity[world.player] = rl.Vector2Add(world.velocity[world.player], delta)
