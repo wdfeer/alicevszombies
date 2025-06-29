@@ -68,7 +68,7 @@ var enemyTypes = struct {
 			active:         true,
 			projectileType: &projectileTypes.purpleBullet,
 			countFlat:      4,
-			countDiffMult:  1,
+			countDiffMult:  2,
 		},
 	},
 	EnemyType{
@@ -84,7 +84,7 @@ var enemyTypes = struct {
 		deathExplode: DeathExplode{
 			active:         true,
 			projectileType: &projectileTypes.blueBullet,
-			countFlat:      3,
+			countFlat:      4,
 			countDiffMult:  2,
 		},
 	},
