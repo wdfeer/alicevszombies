@@ -41,13 +41,13 @@ func renderHUD(world *World) {
 		str := "Poisoned"
 		center := rl.Vector2{X: halfSize.X, Y: yPositions[2]}
 		pos := util.CenterText(str, 32, center)
-		rl.DrawText(str, int32(pos.X), int32(pos.Y), 32, rl.Purple)
+		rl.DrawText(str, int32(pos.X), int32(pos.Y), 32, colors.Purple)
 	}
 	if world.status[world.player].slow > 0 {
 		str := "Slowed"
 		center := rl.Vector2{X: halfSize.X, Y: yPositions[3]}
 		pos := util.CenterText(str, 32, center)
-		rl.DrawText(str, int32(pos.X), int32(pos.Y), 32, rl.Blue)
+		rl.DrawText(str, int32(pos.X), int32(pos.Y), 32, colors.Blue)
 	}
 
 	// Boss Bar
