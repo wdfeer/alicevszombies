@@ -40,7 +40,7 @@ func renderHUD(world *World) {
 		rl.DrawText(str, int32(pos.X), int32(pos.Y), 32, rl.Purple)
 	}
 	if world.status[world.player].slow > 0 {
-		str := "Slow"
+		str := "Slowed"
 		center := rl.Vector2{X: float32(rl.GetScreenWidth()) / 2, Y: yPositions[3]}
 		pos := util.CenterText(str, 32, center)
 		rl.DrawText(str, int32(pos.X), int32(pos.Y), 32, rl.Blue)
