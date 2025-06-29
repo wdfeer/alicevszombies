@@ -66,6 +66,9 @@ func updateDeathEffects(world *World) {
 
 func renderDeathEffects(world *World) {
 	for id, eff := range world.deathEffect {
-		rl.DrawRectangleV(world.position[id], rl.Vector2{X: 1, Y: 1}, rl.ColorAlpha(eff.tint, min(eff.timeleft, 1)))
+		pos := rl.Vector2Add(world.position[id], rl.Vector2{X: 0.5, Y: 0.5})
+		rl.DrawRectangleV(pos, rl.Vector2{X: 1, Y: 1}, rl.ColorAlpha(rl.Black, min(eff.timeleft, 1)))
+		pos = world.position[id]
+		rl.DrawRectangleV(pos, rl.Vector2{X: 1, Y: 1}, rl.ColorAlpha(eff.tint, min(eff.timeleft, 1)))
 	}
 }
