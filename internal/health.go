@@ -9,6 +9,7 @@ import (
 
 type HP struct {
 	val              float32
+	max              float32
 	attackerCooldown map[Entity]float32
 	immuneTime       float32
 }
@@ -16,6 +17,7 @@ type HP struct {
 func newHP(amount float32) HP {
 	return HP{
 		val:              amount,
+		max:              amount,
 		attackerCooldown: make(map[Entity]float32),
 		immuneTime:       0.5,
 	}
@@ -29,6 +31,7 @@ func updateHP(world *World) {
 
 		world.hp[id] = HP{
 			val:              hp.val,
+			max:              hp.max,
 			attackerCooldown: hp.attackerCooldown,
 			immuneTime:       hp.immuneTime,
 		}
@@ -37,7 +40,7 @@ func updateHP(world *World) {
 
 func heal(world *World, id Entity, amount float32) {
 	hp := world.hp[id]
-	hp.val += amount
+	hp.val = min(hp.val+amount, hp.max)
 
 	ctextID := newCombatText(world, world.position[id], fmt.Sprint(amount))
 	world.combatText[ctextID] = CombatText{

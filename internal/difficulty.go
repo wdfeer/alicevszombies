@@ -28,6 +28,7 @@ func selectDifficulty(world *World, difficulty Difficulty) {
 	}
 	world.hp[world.player] = HP{
 		val:              10,
+		max:              1e6,
 		immuneTime:       iTime,
 		attackerCooldown: make(map[Entity]float32),
 	}
