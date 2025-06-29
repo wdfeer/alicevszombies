@@ -68,7 +68,7 @@ var projectileTypes = struct {
 	},
 	purpleBullet: ProjectileType{
 		hostile: true,
-		damage:  5,
+		damage:  3,
 		texture: "purple_bullet",
 		size:    rl.Vector2{X: 4, Y: 4},
 	},
