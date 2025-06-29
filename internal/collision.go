@@ -70,6 +70,11 @@ func updateCollisions(world *World) {
 		}
 	}
 
+	statusDuration := float32(3.5)
+	if world.difficulty > NORMAL {
+		statusDuration = 6.5
+	}
+
 	// Projectile -> Player
 	for id, proj := range world.projectile {
 		if !proj.typ.hostile {
@@ -79,12 +84,11 @@ func updateCollisions(world *World) {
 		projRec := util.CenterRectangle(world.position[id], proj.typ.size)
 		if rl.CheckCollisionRecs(playerRec, projRec) {
 			if proj.typ == &projectileTypes.purpleBullet { // TODO: generalize this
-				duration := float32(3.5)
-				if world.difficulty > NORMAL {
-					duration = 6.5
-				}
-				applyPoison(world, world.player, duration)
+				applyPoison(world, world.player, statusDuration)
+			} else if proj.typ == &projectileTypes.blueBullet {
+				applySlow(world, world.player, statusDuration)
 			}
+
 			damageWithCooldown(world, world.player, proj.typ.damage, id)
 			break
 		}

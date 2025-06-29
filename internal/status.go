@@ -4,7 +4,7 @@ import "alicevszombies/internal/util"
 
 type Status struct {
 	poison float32
-	// TODO: implement slow/weak for blue stuff
+	slow   float32
 }
 
 func updateStatus(world *World) {
@@ -13,9 +13,11 @@ func updateStatus(world *World) {
 			if util.ModF(status.poison, 1) < dt {
 				damage(world, id, 1)
 			}
-			world.status[id] = Status{
-				poison: status.poison - dt,
-			}
+		}
+
+		world.status[id] = Status{
+			poison: status.poison - dt,
+			slow:   status.slow - dt,
 		}
 	}
 }
@@ -25,6 +27,15 @@ func applyPoison(world *World, id Entity, duration float32) {
 	if duration > poison {
 		world.status[id] = Status{
 			poison: duration,
+		}
+	}
+}
+
+func applySlow(world *World, id Entity, duration float32) {
+	slow := world.status[id].slow
+	if duration > slow {
+		world.status[id] = Status{
+			slow: duration,
 		}
 	}
 }
