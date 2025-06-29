@@ -13,6 +13,7 @@ type Options struct {
 	Volume     float32
 	CursorType int32
 	Zoom       float32
+	Shadows    bool
 }
 
 var options Options
@@ -37,6 +38,7 @@ func loadOptions() {
 		Volume:     1,
 		CursorType: 0,
 		Zoom:       8,
+		Shadows:    true,
 	}
 
 	go saveOptions()
@@ -84,9 +86,12 @@ func renderOptions(origin rl.Vector2) {
 	raygui.SetStyle(raygui.SPINNER, raygui.ARROWS_SIZE, int64(buttonWidth)/7)
 	raygui.Spinner(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "Cursor", &newOptions.CursorType, 0, 1, false)
 
-	origin.Y += buttonHeight + buttonSpacing
 	buttonWidth += maxTextWidth
+	origin.Y += buttonHeight + buttonSpacing
 	newOptions.Fullscreen = raygui.Toggle(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "Fullscreen", options.Fullscreen)
+
+	origin.Y += buttonHeight + buttonSpacing
+	newOptions.Shadows = raygui.Toggle(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "Shadows", options.Shadows)
 
 	if newOptions != options {
 		options = newOptions
