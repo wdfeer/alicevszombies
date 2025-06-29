@@ -78,7 +78,9 @@ func updateCollisions(world *World) {
 
 		projRec := util.CenterRectangle(world.position[id], proj.typ.size)
 		if rl.CheckCollisionRecs(playerRec, projRec) {
-
+			if proj.typ == &projectileTypes.purpleBullet { // TODO: generalize this
+				applyPoison(world, world.player, 3)
+			}
 			damageWithCooldown(world, world.player, proj.typ.damage, id)
 			break
 		}

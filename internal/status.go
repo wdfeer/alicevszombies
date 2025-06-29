@@ -19,3 +19,12 @@ func updateStatus(world *World) {
 		}
 	}
 }
+
+func applyPoison(world *World, id Entity, duration float32) {
+	poison := world.status[id].poison
+	if duration > poison {
+		world.status[id] = Status{
+			poison: duration,
+		}
+	}
+}
