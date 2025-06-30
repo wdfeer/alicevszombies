@@ -54,6 +54,7 @@ func updatePlayer(world *World) {
 		accel *= 1.1
 		world.playerData.stamina -= dt
 		world.playerData.staminaRegenTimer = 1
+		world.animTimer[world.player] += dt / 2
 	} else {
 		world.playerData.staminaRegenTimer -= dt
 		if world.playerData.staminaRegenTimer <= 0 {
