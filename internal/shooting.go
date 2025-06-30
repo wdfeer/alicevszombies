@@ -2,6 +2,7 @@ package internal
 
 import (
 	"alicevszombies/internal/util"
+	"math"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
@@ -14,6 +15,8 @@ type ShootPattern struct {
 	count      uint8
 	// Only used on bosses
 	countExtraPerWave float32
+	// Only used for Spread ShootType
+	spread float32
 }
 
 type ShootType = uint8
@@ -73,7 +76,19 @@ func updateShooting(world *World) {
 			switch pattern.typ {
 			case Direct:
 				newProjectile(world, world.position[id], vel, pattern.projectile)
-				// TODO: implement Circle and Spread shooting
+			case Circle:
+				count := pattern.count + uint8(pattern.countExtraPerWave*float32(world.enemySpawner.wave))
+				for i := range count {
+					ratio := (float32(i) + 1) / float32(count)
+					newProjectile(world, world.position[id], rl.Vector2Rotate(vel, math.Pi*2*ratio), pattern.projectile)
+				}
+			case Spread:
+				count := pattern.count + uint8(pattern.countExtraPerWave*float32(world.enemySpawner.wave))
+				vel := rl.Vector2Rotate(vel, -pattern.spread/2)
+				for i := range count {
+					ratio := (float32(i) + 1) / float32(count)
+					newProjectile(world, world.position[id], rl.Vector2Rotate(vel, pattern.spread*ratio), pattern.projectile)
+				}
 			}
 		}
 	}
