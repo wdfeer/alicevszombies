@@ -101,7 +101,7 @@ var enemyTypes = struct {
 		size:         rl.Vector2{X: 8, Y: 16},
 		spawnData: SpawnData{
 			weight:          0.02,
-			minWave:         26,
+			minWave:         29,
 			minWaveDiffMult: -3,
 		},
 		shootPattern: ShootPattern{
@@ -109,9 +109,9 @@ var enemyTypes = struct {
 			cooldown:                2.5,
 			typ:                     Spread,
 			count:                   2,
-			countExtraPerDifficulty: 1.4,
-			spread:                  math.Pi / 4,
-			velocity:                100,
+			countExtraPerDifficulty: 1.25,
+			spread:                  math.Pi / 3,
+			velocity:                80,
 		},
 	},
 	EnemyType{
