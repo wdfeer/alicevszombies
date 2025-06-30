@@ -22,26 +22,26 @@ func renderHUD(world *World) {
 	}
 
 	// Lower Center
+	yPositions := util.SpaceCentered(50, 5, float32(rl.GetScreenHeight())-200)
 
 	// Stamina bar
 	if world.playerData.stamina < 1 {
-		pos := rl.Vector2{X: halfSize.X, Y: halfSize.Y + 170}
-		size := rl.Vector2{X: float32(200) * world.playerData.stamina}
-		pos = util.CenterSomethingV(pos, size)
+		width := float32(200) * world.playerData.stamina
+		pos := rl.Vector2{X: halfSize.X - width/2, Y: yPositions[0]}
+		size := rl.Vector2{X: width, Y: 8}
 		rl.DrawRectangleV(pos, size, colors.Yellow)
 	}
 
-	yPositions := util.SpaceCentered(50, 4, float32(rl.GetScreenHeight())-200)
 	{ // HP
 		str := "HP: " + fmt.Sprint(world.hp[world.player].val)
-		center := rl.Vector2{X: halfSize.X, Y: yPositions[0]}
+		center := rl.Vector2{X: halfSize.X, Y: yPositions[1]}
 		pos := util.CenterText(str, 32, center)
 		rl.DrawText(str, int32(pos.X), int32(pos.Y), 32, rl.White)
 	}
 
 	{ // MP
 		str := "MP: " + fmt.Sprint(world.playerData.mana)
-		center := rl.Vector2{X: halfSize.X, Y: yPositions[1]}
+		center := rl.Vector2{X: halfSize.X, Y: yPositions[2]}
 		pos := util.CenterText(str, 32, center)
 		rl.DrawText(str, int32(pos.X), int32(pos.Y), 32, rl.White)
 	}
@@ -49,13 +49,13 @@ func renderHUD(world *World) {
 	// Statuses
 	if world.status[world.player].poison > 0 {
 		str := "Poisoned"
-		center := rl.Vector2{X: halfSize.X, Y: yPositions[2]}
+		center := rl.Vector2{X: halfSize.X, Y: yPositions[3]}
 		pos := util.CenterText(str, 32, center)
 		rl.DrawText(str, int32(pos.X), int32(pos.Y), 32, colors.Purple)
 	}
 	if world.status[world.player].slow > 0 {
 		str := "Slowed"
-		center := rl.Vector2{X: halfSize.X, Y: yPositions[3]}
+		center := rl.Vector2{X: halfSize.X, Y: yPositions[4]}
 		pos := util.CenterText(str, 32, center)
 		rl.DrawText(str, int32(pos.X), int32(pos.Y), 32, colors.Blue)
 	}
