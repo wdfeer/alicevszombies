@@ -38,6 +38,10 @@ func newEnemy(world *World, typ *EnemyType) Entity {
 	}
 	world.hp[id] = newHP(hp)
 
+	if typ.shootPattern.projectile != nil {
+		world.shootTimer[id] = typ.shootPattern.cooldown
+	}
+
 	return id
 }
 

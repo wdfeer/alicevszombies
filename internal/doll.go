@@ -27,6 +27,10 @@ func newDoll(world *World, typ *DollType) Entity {
 		stats.DollsSummoned[world.difficulty]++
 	}
 
+	if typ.shootPattern.projectile != nil {
+		world.shootTimer[id] = typ.shootPattern.cooldown
+	}
+
 	return id
 }
 
