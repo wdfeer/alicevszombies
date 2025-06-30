@@ -88,6 +88,7 @@ func updateDollTargeting(world *World, doll Entity) Targeting {
 	return targeting
 }
 
+// TODO: delete this
 func updateDollRanged(world *World, doll Entity) {
 	world.shootTimer[doll] -= dt
 	if world.shootTimer[doll] <= 0 {

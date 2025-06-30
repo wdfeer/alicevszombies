@@ -65,6 +65,7 @@ func updateEnemies(world *World) {
 	}
 }
 
+// TODO: delete this
 func updateRangedEnemy(world *World, id Entity) {
 	world.shootTimer[id] -= dt
 	if world.shootTimer[id] <= 0 {
