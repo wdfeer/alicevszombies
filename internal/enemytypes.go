@@ -11,6 +11,7 @@ type EnemyType struct {
 	size           rl.Vector2
 	flippable      bool
 	spawnData      SpawnData
+	shootPattern   ShootPattern
 	deathExplode   DeathExplode
 }
 
@@ -112,6 +113,7 @@ var enemyTypes = struct {
 			boss:   true,
 			weight: 1,
 		},
+		// TODO: define projectile shooting
 	},
 	EnemyType{
 		texture:        "kogasa",
@@ -125,6 +127,7 @@ var enemyTypes = struct {
 			boss:   true,
 			weight: 1,
 		},
+		// TODO: define projectile shooting
 	},
 }
 
