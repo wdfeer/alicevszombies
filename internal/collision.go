@@ -13,7 +13,7 @@ func updateCollisions(world *World) {
 		enemyRec := util.CenterRectangle(world.position[enemy], world.size[enemy])
 
 		// Enemy -> Player
-		if rl.CheckCollisionRecs(playerRec, enemyRec) {
+		if util.CheckCollisionRecs(playerRec, enemyRec) {
 			damageWithCooldown(world, world.player, 1, enemy)
 
 			dir := util.Vector2Direction(world.position[world.player], world.position[enemy])
@@ -27,7 +27,7 @@ func updateCollisions(world *World) {
 			}
 
 			dollRec := util.CenterRectangle(world.position[doll], world.size[doll])
-			if rl.CheckCollisionRecs(dollRec, enemyRec) {
+			if util.CheckCollisionRecs(dollRec, enemyRec) {
 				if typ == &dollTypes.scytheDoll {
 					damageWithCooldown(world, enemy, typ.contactDamage+(float32(world.playerData.upgrades[&DollDamage])/2), doll)
 				} else {
@@ -44,7 +44,7 @@ func updateCollisions(world *World) {
 			}
 
 			projRec := util.CenterRectangle(world.position[id], proj.typ.size)
-			if rl.CheckCollisionRecs(enemyRec, projRec) {
+			if util.CheckCollisionRecs(enemyRec, projRec) {
 				if proj.typ.deleteOnHit {
 					damage(world, enemy, proj.typ.damage+(float32(world.playerData.upgrades[&DollDamage])/8))
 					world.deleteEntity(id)
@@ -62,7 +62,7 @@ func updateCollisions(world *World) {
 			otherRec := util.CenterRectangle(world.position[otherEnemy], world.size[otherEnemy])
 			otherRec.Width /= 2
 			otherRec.Y += otherRec.Width
-			if rl.CheckCollisionRecs(enemyRec, otherRec) {
+			if util.CheckCollisionRecs(enemyRec, otherRec) {
 				dir := util.Vector2Direction(world.position[enemy], world.position[otherEnemy])
 				world.velocity[otherEnemy] = rl.Vector2Add(world.velocity[otherEnemy], rl.Vector2Scale(dir, 800*dt))
 				world.velocity[enemy] = rl.Vector2Add(world.velocity[otherEnemy], rl.Vector2Scale(dir, -800*dt))
@@ -82,7 +82,7 @@ func updateCollisions(world *World) {
 		}
 
 		projRec := util.CenterRectangle(world.position[id], proj.typ.size)
-		if rl.CheckCollisionRecs(playerRec, projRec) {
+		if util.CheckCollisionRecs(playerRec, projRec) {
 			if proj.typ == &projectileTypes.purpleBullet { // TODO: generalize this
 				applyPoison(world, world.player, statusDuration)
 			} else if proj.typ == &projectileTypes.blueBullet {
@@ -97,7 +97,7 @@ func updateCollisions(world *World) {
 		if proj.typ == &projectileTypes.blueBullet {
 			for doll := range world.doll {
 				dollRec := util.CenterRectangle(world.position[doll], world.size[doll])
-				if rl.CheckCollisionRecs(projRec, dollRec) {
+				if util.CheckCollisionRecs(projRec, dollRec) {
 					applySlow(world, doll, statusDuration)
 				}
 			}

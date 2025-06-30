@@ -15,3 +15,11 @@ func RectangleV(position rl.Vector2, size rl.Vector2) rl.Rectangle {
 		Height: size.Y,
 	}
 }
+
+// Same as rl.CheckCollisionRecs. Used to avoid C calls for performance.
+func CheckCollisionRecs(rec1 rl.Rectangle, rec2 rl.Rectangle) bool {
+	return rec1.X+rec1.Width >= rec2.X &&
+		rec1.X <= rec2.X+rec2.Width &&
+		rec1.Y+rec1.Height >= rec2.Y &&
+		rec1.Y <= rec2.Y+rec2.Height
+}
