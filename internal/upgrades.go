@@ -47,12 +47,16 @@ var (
 var upgrades = []*Upgrade{&DollDamage, &DollSpeed, &LanceDoll, &ScytheDoll, &KnifeDoll, &MagicianDoll, &DestructionDoll}
 
 var (
+	UpgradeSelection = Upgrade{
+		name:   "Upgrade Selection",
+		unique: true,
+	}
 	MovementSpeed = Upgrade{
 		name:   "Move Speed",
 		unique: true,
 	}
-	UpgradeSelection = Upgrade{
-		name:   "Upgrade Selection",
+	SprintUpgrade = Upgrade{
+		name:   "Sprinting",
 		unique: true,
 	}
 )

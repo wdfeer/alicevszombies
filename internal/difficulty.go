@@ -39,6 +39,7 @@ func selectDifficulty(world *World, difficulty Difficulty) {
 	}
 	world.playerData = PlayerData{
 		mana:     mana,
+		stamina:  1,
 		upgrades: make(map[*Upgrade]uint32),
 	}
 

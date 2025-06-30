@@ -5,8 +5,10 @@ import (
 )
 
 type PlayerData struct {
-	mana     float32
-	upgrades map[*Upgrade]uint32
+	mana              float32
+	stamina           float32
+	staminaRegenTimer float32
+	upgrades          map[*Upgrade]uint32
 }
 
 func (data *PlayerData) upgradeCount() uint32 {
@@ -47,6 +49,18 @@ func updatePlayer(world *World) {
 	dir = rl.Vector2Normalize(dir)
 
 	accel := float32(700 + world.playerData.upgrades[&MovementSpeed]*15)
+
+	if world.playerData.upgrades[&SprintUpgrade] > 0 && world.playerData.stamina > 0 && rl.IsKeyDown(rl.KeyLeftShift) {
+		accel *= 1.1
+		world.playerData.stamina -= dt
+		world.playerData.staminaRegenTimer = 1
+	} else {
+		world.playerData.staminaRegenTimer -= dt
+		if world.playerData.staminaRegenTimer <= 0 {
+			world.playerData.stamina = min(world.playerData.stamina+dt, 1)
+		}
+	}
+
 	delta := rl.Vector2Scale(dir, accel*dt)
 	world.velocity[world.player] = rl.Vector2Add(world.velocity[world.player], delta)
 }
