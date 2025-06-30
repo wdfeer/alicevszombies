@@ -3,10 +3,11 @@ package internal
 import "math/rand"
 
 type Upgrade struct {
-	name     string
-	dollType *DollType
-	cost     map[*DollType]uint8
-	unique    bool
+	name         string
+	dollType     *DollType
+	cost         map[*DollType]uint8
+	unique       bool
+	incompatible []*Upgrade
 }
 
 var (
@@ -47,11 +48,11 @@ var upgrades = []*Upgrade{&DollDamage, &DollSpeed, &LanceDoll, &ScytheDoll, &Kni
 
 var (
 	MovementSpeed = Upgrade{
-		name:  "Move Speed",
+		name:   "Move Speed",
 		unique: true,
 	}
 	UpgradeSelection = Upgrade{
-		name:  "Upgrade Selection",
+		name:   "Upgrade Selection",
 		unique: true,
 	}
 )
@@ -100,6 +101,16 @@ func availableUpgrades(world *World) []*Upgrade {
 		for doll, required := range up.cost {
 			if count, ok := dollCounts[doll]; required > 0 && (!ok || count < required) {
 				failed = true
+				break
+			}
+		}
+
+		if !failed && up.incompatible != nil {
+			for _, x := range up.incompatible {
+				if world.playerData.upgrades[x] > 0 {
+					failed = true
+					break
+				}
 			}
 		}
 
@@ -114,7 +125,16 @@ func availableUniqueUpgrades(world *World) []*Upgrade {
 	newSlice := make([]*Upgrade, 0)
 
 	for _, up := range uniqueUpgrades {
-		if world.playerData.upgrades[up] == 0 {
+		compatible := true
+		if up.incompatible != nil {
+			for _, x := range up.incompatible {
+				if world.playerData.upgrades[x] > 0 {
+					compatible = false
+					break
+				}
+			}
+		}
+		if compatible && world.playerData.upgrades[up] == 0 {
 			newSlice = append(newSlice, up)
 		}
 	}
