@@ -23,15 +23,23 @@ func renderHUD(world *World) {
 
 	// Lower Center
 
+	// Stamina bar
+	if world.playerData.stamina < 1 {
+		pos := rl.Vector2{X: halfSize.X, Y: halfSize.Y + 170}
+		size := rl.Vector2{X: float32(200) * world.playerData.stamina}
+		pos = util.CenterSomethingV(pos, size)
+		rl.DrawRectangleV(pos, size, colors.Yellow)
+	}
+
 	yPositions := util.SpaceCentered(50, 4, float32(rl.GetScreenHeight())-200)
-	{ // HP bar
+	{ // HP
 		str := "HP: " + fmt.Sprint(world.hp[world.player].val)
 		center := rl.Vector2{X: halfSize.X, Y: yPositions[0]}
 		pos := util.CenterText(str, 32, center)
 		rl.DrawText(str, int32(pos.X), int32(pos.Y), 32, rl.White)
 	}
 
-	{ // MP bar
+	{ // MP
 		str := "MP: " + fmt.Sprint(world.playerData.mana)
 		center := rl.Vector2{X: halfSize.X, Y: yPositions[1]}
 		pos := util.CenterText(str, 32, center)
@@ -51,7 +59,6 @@ func renderHUD(world *World) {
 		pos := util.CenterText(str, 32, center)
 		rl.DrawText(str, int32(pos.X), int32(pos.Y), 32, colors.Blue)
 	}
-
 
 	{ // Boss Bar
 		boss := -1
