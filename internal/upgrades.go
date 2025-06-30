@@ -61,7 +61,7 @@ var (
 	}
 )
 
-var uniqueUpgrades = []*Upgrade{&MovementSpeed, &UpgradeSelection}
+var uniqueUpgrades = []*Upgrade{&MovementSpeed, &UpgradeSelection, &SprintUpgrade}
 
 func randomUpgradesFrom(world *World, available []*Upgrade) []*Upgrade {
 	count := 2 + world.playerData.upgrades[&UpgradeSelection]
