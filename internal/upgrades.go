@@ -63,6 +63,11 @@ var (
 
 var uniqueUpgrades = []*Upgrade{&MovementSpeed, &UpgradeSelection, &SprintUpgrade}
 
+func initUpgradeIncompatibility() {
+	MovementSpeed.incompatible = []*Upgrade{&SprintUpgrade}
+	SprintUpgrade.incompatible = []*Upgrade{&MovementSpeed}
+}
+
 func randomUpgradesFrom(world *World, available []*Upgrade) []*Upgrade {
 	count := 2 + world.playerData.upgrades[&UpgradeSelection]
 	upgrades := make([]*Upgrade, 0)

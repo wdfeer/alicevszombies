@@ -35,6 +35,8 @@ type World struct {
 }
 
 func NewWorld() World {
+	initUpgradeIncompatibility()
+
 	world := World{}
 	world.Reset()
 	return world
