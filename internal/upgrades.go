@@ -159,7 +159,12 @@ func incrementUpgrade(world *World, upgrade *Upgrade) {
 
 	pos := world.position[world.player]
 	pos.Y -= 5
-	newCombatText(world, pos, upgrade.name+" +")
+
+	str := upgrade.name + " +"
+	if upgrade == &SprintUpgrade {
+		str = "Hold SHIFT to sprint"
+	}
+	newCombatText(world, pos, str)
 
 	onUpgradeGet(world, upgrade)
 }
