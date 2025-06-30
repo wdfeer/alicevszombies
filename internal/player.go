@@ -50,8 +50,8 @@ func updatePlayer(world *World) {
 
 	accel := float32(700 + world.playerData.upgrades[&MovementSpeed]*15)
 
-	if world.playerData.upgrades[&SprintUpgrade] > 0 && world.playerData.stamina > 0 && rl.IsKeyDown(rl.KeyLeftShift) {
-		accel *= 1.1
+	if world.playerData.upgrades[&SprintUpgrade] > 0 && world.playerData.stamina > 0 && rl.IsKeyDown(rl.KeyLeftShift) && dir != rl.Vector2Zero() {
+		accel *= 1.8
 		world.playerData.stamina -= dt
 		world.playerData.staminaRegenTimer = 1
 		world.animTimer[world.player] += dt / 2
