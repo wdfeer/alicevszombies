@@ -44,6 +44,7 @@ var dollTypes = struct {
 			projectile: &projectileTypes.knife,
 			cooldown:   1,
 			typ:        Direct,
+			velocity:   200,
 		},
 	},
 	magicianDoll: DollType{
@@ -54,6 +55,7 @@ var dollTypes = struct {
 			projectile: &projectileTypes.magicMissile,
 			cooldown:   1,
 			typ:        Direct,
+			velocity:   200,
 		},
 	},
 	destructionDoll: DollType{
@@ -66,6 +68,7 @@ var dollTypes = struct {
 			cooldown:   1,
 			typ:        Circle,
 			count:      5,
+			velocity:   200,
 		},
 	},
 }

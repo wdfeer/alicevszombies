@@ -111,6 +111,7 @@ var enemyTypes = struct {
 			count:                   2,
 			countExtraPerDifficulty: 1.4,
 			spread:                  math.Pi / 4,
+			velocity:                100,
 		},
 	},
 	EnemyType{
@@ -131,6 +132,7 @@ var enemyTypes = struct {
 			count:                   4,
 			countExtraPerDifficulty: 1,
 			countExtraPerWave:       0.05,
+			velocity:                100,
 		},
 	},
 	EnemyType{
@@ -152,6 +154,7 @@ var enemyTypes = struct {
 			count:                   4,
 			countExtraPerDifficulty: 1,
 			countExtraPerWave:       0.05,
+			velocity:                100,
 		},
 	},
 }
