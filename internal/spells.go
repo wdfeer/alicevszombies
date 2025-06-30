@@ -12,10 +12,6 @@ func renderSpells(world *World) {
 	size := rl.Vector2{X: 200, Y: 80}
 	pos := rl.Vector2{X: 300, Y: halfHeight}
 
-	if world.playerData.mana < 5 {
-		raygui.Disable()
-	}
-
 	spellCount := 3
 	if world.playerData.upgradeCount() > 10 {
 		spellCount = 4
@@ -23,10 +19,15 @@ func renderSpells(world *World) {
 	yPositions := util.SpaceCentered(size.Y*1.2, spellCount, pos.Y)
 
 	pos.Y = yPositions[0]
-	if (raygui.Button(util.CenterRectangle(pos, size), "") || rl.IsKeyPressed(rl.KeyH)) && world.playerData.mana >= 5 && !world.paused {
+	canHeal := world.playerData.mana >= 5 && !(world.difficulty == LUNATIC && world.status[world.player].poison > 0)
+	if !canHeal {
+		raygui.Disable()
+	}
+	if (raygui.Button(util.CenterRectangle(pos, size), "") || rl.IsKeyPressed(rl.KeyH)) && canHeal && !world.paused {
 		heal(world, world.player, 5)
 		world.playerData.mana -= 5
 	}
+	raygui.Enable()
 	util.DrawTextureCenteredScaled(assets.textures["heal_icon"], rl.Vector2{X: pos.X - size.X/5, Y: pos.Y}, 4)
 	util.DrawTextCentered("H", 40, rl.Vector2{X: pos.X + size.X/5, Y: pos.Y})
 
