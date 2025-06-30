@@ -32,6 +32,7 @@ var enemyTypes = struct {
 	smallZombie  EnemyType
 	purpleZombie EnemyType
 	blueZombie   EnemyType
+	neriumGirl   EnemyType
 	medicine     EnemyType
 	kogasa       EnemyType
 }{
@@ -89,6 +90,18 @@ var enemyTypes = struct {
 		},
 	},
 	EnemyType{
+		texture:      "nerium_girl",
+		acceleration: 725,
+		baseHP:       9,
+		size:         rl.Vector2{X: 8, Y: 16},
+		spawnData: SpawnData{
+			weight:          0.02,
+			minWave:         26,
+			minWaveDiffMult: -3,
+		},
+		// TODO: define projectile shooting
+	},
+	EnemyType{
 		texture:        "medicine",
 		acceleration:   730,
 		baseHP:         50,
@@ -120,6 +133,7 @@ var allEnemyTypes = []*EnemyType{
 	&enemyTypes.smallZombie,
 	&enemyTypes.purpleZombie,
 	&enemyTypes.blueZombie,
+	&enemyTypes.neriumGirl,
 	&enemyTypes.medicine,
 	&enemyTypes.kogasa,
 }
