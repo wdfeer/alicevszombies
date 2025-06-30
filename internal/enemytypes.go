@@ -1,6 +1,10 @@
 package internal
 
-import rl "github.com/gen2brain/raylib-go/raylib"
+import (
+	"math"
+
+	rl "github.com/gen2brain/raylib-go/raylib"
+)
 
 type EnemyType struct {
 	texture        string
@@ -100,7 +104,14 @@ var enemyTypes = struct {
 			minWave:         26,
 			minWaveDiffMult: -3,
 		},
-		// TODO: define projectile shooting
+		shootPattern: ShootPattern{
+			projectile:              &projectileTypes.purpleBullet,
+			cooldown:                2.5,
+			typ:                     Spread,
+			count:                   2,
+			countExtraPerDifficulty: 1.4,
+			spread:                  math.Pi / 4,
+		},
 	},
 	EnemyType{
 		texture:        "medicine",
