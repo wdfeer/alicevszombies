@@ -31,11 +31,8 @@ func newDoll(world *World, typ *DollType) Entity {
 }
 
 func updateDolls(world *World) {
-	for doll, typ := range world.doll {
+	for doll := range world.doll {
 		world.targeting[doll] = updateDollTargeting(world, doll)
-		if typ.projectileType != nil {
-			updateDollRanged(world, doll)
-		}
 	}
 }
 
@@ -86,35 +83,4 @@ func updateDollTargeting(world *World, doll Entity) Targeting {
 		targeting.target = target
 	}
 	return targeting
-}
-
-// TODO: delete this
-func updateDollRanged(world *World, doll Entity) {
-	world.shootTimer[doll] -= dt
-	if world.shootTimer[doll] <= 0 {
-		enemyFound := false
-		var enemyTarget Entity
-		var minDist float32 = 220
-		for enemy := range world.enemy {
-			dist := rl.Vector2Distance(world.position[doll], world.position[enemy])
-			if dist < minDist {
-				enemyFound = true
-				enemyTarget = enemy
-				minDist = dist
-			}
-		}
-
-		if enemyFound {
-			dir := util.Vector2Direction(world.position[doll], world.position[enemyTarget])
-			newProjectile(world, world.position[doll], rl.Vector2Scale(dir, 200), world.doll[doll].projectileType)
-			world.shootTimer[doll] = 1
-
-			if world.doll[doll] == &dollTypes.destructionDoll {
-				for i := range 5 {
-					dir := rl.Vector2Rotate(dir, math.Pi*2*float32(i)/5)
-					newProjectile(world, world.position[doll], rl.Vector2Scale(dir, 200), world.doll[doll].projectileType)
-				}
-			}
-		}
-	}
 }

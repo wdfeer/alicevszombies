@@ -58,38 +58,6 @@ func updateEnemies(world *World) {
 			}
 		}
 		world.targeting[id] = targeting
-
-		if typ.ranged {
-			updateRangedEnemy(world, id)
-		}
-	}
-}
-
-// TODO: delete this
-func updateRangedEnemy(world *World, id Entity) {
-	world.shootTimer[id] -= dt
-	if world.shootTimer[id] <= 0 {
-		typ := world.enemy[id]
-		world.shootTimer[id] = 1 - float32(world.difficulty)/10
-
-		dir := util.Vector2Direction(world.position[id], world.position[world.player])
-		vel := rl.Vector2Scale(dir, 100)
-		newProjectile(world, world.position[id], vel, typ.projectileType)
-
-		count := int(world.difficulty)*2 - 2
-		for i := range count {
-			ratio := (float32(i) + 1) / float32(count)
-			newProjectile(world, world.position[id], rl.Vector2Rotate(vel, math.Pi*2*ratio), typ.projectileType)
-		}
-
-		for i := range world.enemySpawner.wave / 20 {
-			vel := rl.Vector2Scale(vel, 0.8-float32(i)/10)
-			count := int(world.difficulty)*2 - 1 + int(i)*2
-			for j := range count + 1 {
-				ratio := (float32(j) + 1) / float32(count)
-				newProjectile(world, world.position[id], rl.Vector2Rotate(vel, math.Pi*2*ratio), typ.projectileType)
-			}
-		}
 	}
 }
 

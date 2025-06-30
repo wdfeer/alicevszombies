@@ -113,7 +113,14 @@ var enemyTypes = struct {
 			boss:   true,
 			weight: 1,
 		},
-		// TODO: define projectile shooting
+		shootPattern: ShootPattern{
+			projectile:              &projectileTypes.purpleBullet,
+			cooldown:                1,
+			typ:                     Circle,
+			count:                   4,
+			countExtraPerDifficulty: 1,
+			countExtraPerWave:       0.05,
+		},
 	},
 	EnemyType{
 		texture:        "kogasa",
@@ -127,7 +134,14 @@ var enemyTypes = struct {
 			boss:   true,
 			weight: 1,
 		},
-		// TODO: define projectile shooting
+		shootPattern: ShootPattern{
+			projectile:              &projectileTypes.blueBullet,
+			cooldown:                1,
+			typ:                     Circle,
+			count:                   4,
+			countExtraPerDifficulty: 1,
+			countExtraPerWave:       0.05,
+		},
 	},
 }
 

@@ -40,22 +40,32 @@ var dollTypes = struct {
 		contactDamage: 0,
 		texture:       "doll_knife",
 		accel:         400,
-		// TODO: use shootPattern
-		projectileType: &projectileTypes.knife,
+		shootPattern: ShootPattern{
+			projectile: &projectileTypes.knife,
+			cooldown:   1,
+			typ:        Direct,
+		},
 	},
 	magicianDoll: DollType{
 		contactDamage: 0,
 		texture:       "doll_magician",
 		accel:         550,
-		// TODO: use shootPattern
-		projectileType: &projectileTypes.magicMissile,
+		shootPattern: ShootPattern{
+			projectile: &projectileTypes.magicMissile,
+			cooldown:   1,
+			typ:        Direct,
+		},
 	},
 	destructionDoll: DollType{
 		contactDamage: 5,
 		texture:       "doll_destruction",
 		accel:         400,
 		size:          rl.Vector2{X: 18, Y: 10},
-		// TODO: use shootPattern
-		projectileType: &projectileTypes.redBullet,
+		shootPattern: ShootPattern{
+			projectile: &projectileTypes.redBullet,
+			cooldown:   1,
+			typ:        Circle,
+			count:      5,
+		},
 	},
 }

@@ -8,11 +8,12 @@ import (
 )
 
 type ShootPattern struct {
-	projectile *ProjectileType
-	velocity   float32
-	cooldown   float32
-	typ        ShootType
-	count      uint8
+	projectile              *ProjectileType
+	velocity                float32
+	cooldown                float32
+	typ                     ShootType
+	count                   uint8
+	countExtraPerDifficulty float32
 	// Only used on bosses
 	countExtraPerWave float32
 	// Only used for Spread ShootType
@@ -77,13 +78,13 @@ func updateShooting(world *World) {
 			case Direct:
 				newProjectile(world, world.position[id], vel, pattern.projectile)
 			case Circle:
-				count := pattern.count + uint8(pattern.countExtraPerWave*float32(world.enemySpawner.wave))
+				count := pattern.count + uint8(pattern.countExtraPerWave*float32(world.enemySpawner.wave)+pattern.countExtraPerDifficulty*float32(world.difficulty))
 				for i := range count {
 					ratio := (float32(i) + 1) / float32(count)
 					newProjectile(world, world.position[id], rl.Vector2Rotate(vel, math.Pi*2*ratio), pattern.projectile)
 				}
 			case Spread:
-				count := pattern.count + uint8(pattern.countExtraPerWave*float32(world.enemySpawner.wave))
+				count := pattern.count + uint8(pattern.countExtraPerWave*float32(world.enemySpawner.wave)+pattern.countExtraPerDifficulty*float32(world.difficulty))
 				vel := rl.Vector2Rotate(vel, -pattern.spread/2)
 				for i := range count {
 					ratio := (float32(i) + 1) / float32(count)
