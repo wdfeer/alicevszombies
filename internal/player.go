@@ -48,17 +48,17 @@ func updatePlayer(world *World) {
 	}
 	dir = rl.Vector2Normalize(dir)
 
-	accel := float32(700 + world.playerData.upgrades[&MovementSpeed]*25)
+	accel := float32(700 + world.playerData.upgrades[&MovementSpeed]*20)
 
 	if world.playerData.upgrades[&SprintUpgrade] > 0 && world.playerData.stamina > 0 && rl.IsKeyDown(rl.KeyLeftShift) && dir != rl.Vector2Zero() {
-		accel *= 1.5
+		accel *= 1.7
 		world.playerData.stamina -= dt
 		world.playerData.staminaRegenTimer = 1
 		world.animTimer[world.player] += dt / 2
 	} else {
 		world.playerData.staminaRegenTimer -= dt
 		if world.playerData.staminaRegenTimer <= 0 {
-			world.playerData.stamina = min(world.playerData.stamina+dt, 1)
+			world.playerData.stamina = min(world.playerData.stamina+dt/3, 1)
 		}
 	}
 
