@@ -34,10 +34,16 @@ var (
 )
 
 func updateAchievements(world *World) {
+	if world.enemySpawner.wave >= 30 && len(world.doll) == 1 {
+		stats.Achievements[Wave30OneDoll.id] = 1
+	}
+	stats.Achievements[Wave50Lunatic.id] = float32(stats.HighestWave[LUNATIC]) / 50
 	stats.Achievements[Wave100Reached.id] = float32(stats.HighestWave[UNDEFINED]) / 100
 }
 
 var achievementsByID = map[uint8]*AchievementType{
+	Wave30OneDoll.id:  &Wave30OneDoll,
+	Wave50Lunatic.id:  &Wave50Lunatic,
 	Wave100Reached.id: &Wave100Reached,
 }
 
