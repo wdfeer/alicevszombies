@@ -41,18 +41,19 @@ func renderAchievements(origin rl.Vector2) {
 
 	raygui.Panel(util.RectangleV(origin, panelSize), "")
 
-	x := origin.X + spacing
+	origin.X += spacing
+	origin.Y += spacing
 	for id, progress := range stats.Achievements {
 		name := achievementsByID[id].name
 		description := achievementsByID[id].description
 
-		rect := rl.Rectangle{X: x, Y: origin.Y + (float32(id)+1)*(size.Y+spacing), Width: size.X, Height: size.Y / 4}
-		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, 32)
+		rect := rl.Rectangle{X: origin.X, Y: origin.Y + float32(id)*(size.Y+spacing), Width: size.X, Height: size.Y / 4}
+		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, 36)
 		raygui.Label(rect, name)
 		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, 24)
 		rect.Y += size.Y / 4
 		rect.Height = size.Y / 2
-		raygui.Label(rl.Rectangle{X: x, Y: origin.Y + (float32(id)+1)*(size.Y+spacing) + size.Y/2, Width: size.X, Height: size.Y / 2}, description)
+		raygui.Label(rect, description)
 		rect.Y += size.Y / 2
 		rect.Height = size.Y / 4
 		raygui.ProgressBar(rect, "", "", progress, 0, 1)
