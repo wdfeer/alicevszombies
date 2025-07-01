@@ -7,7 +7,7 @@ import (
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
-type Achievements = map[uint8]float32
+type Achievements = []float32
 
 type AchievementType struct {
 	id          uint8
@@ -28,7 +28,7 @@ var (
 	}
 	Wave100Reached = AchievementType{
 		id:          2,
-		name:        "Overachiever",
+		name:        "Youkai Exterminator",
 		description: "Reach Wave 100",
 	}
 )
@@ -60,16 +60,13 @@ func renderAchievements(origin rl.Vector2) {
 	origin.X += spacing
 	origin.Y += spacing
 	for id, progress := range stats.Achievements {
-		name := achievementsByID[id].name
-		description := achievementsByID[id].description
-
 		rect := rl.Rectangle{X: origin.X, Y: origin.Y + float32(id)*(size.Y+spacing), Width: size.X, Height: size.Y / 4}
 		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, 36)
-		raygui.Label(rect, name)
+		raygui.Label(rect, achievementsByID[uint8(id)].name)
 		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, 24)
 		rect.Y += size.Y / 4
 		rect.Height = size.Y / 2
-		raygui.Label(rect, description)
+		raygui.Label(rect, achievementsByID[uint8(id)].description)
 		rect.Y += size.Y / 2
 		rect.Height = size.Y / 4
 		raygui.ProgressBar(rect, "", "", progress, 0, 1)
