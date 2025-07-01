@@ -15,6 +15,7 @@ var stats = struct {
 	DollsSummoned map[Difficulty]uint
 	HighestWave   map[Difficulty]uint
 	RunCount      map[Difficulty]uint
+	Achievements  Achievements
 }{
 	TimePlayed:    make(map[Difficulty]float32),
 	EnemiesKilled: make(map[Difficulty]uint),
@@ -37,6 +38,8 @@ func updateStats(world *World) {
 		statAutosaveTimer = 0
 		go saveStats()
 	}
+
+	updateAchievements(world)
 }
 
 func loadStats() {
