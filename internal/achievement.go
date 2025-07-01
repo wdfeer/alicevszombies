@@ -27,6 +27,10 @@ func updateAchievements(world *World) {
 	stats.Achievements[Wave100Reached.id] = float32(stats.HighestWave[UNDEFINED]) / 100
 }
 
+var achievementsByID = map[uint8]*AchievementType{
+	Wave100Reached.id: &Wave100Reached,
+}
+
 func renderAchievements(origin rl.Vector2) {
 	size := rl.Vector2{X: 480, Y: 120}
 	spacing := float32(40)
@@ -38,15 +42,20 @@ func renderAchievements(origin rl.Vector2) {
 	raygui.Panel(util.RectangleV(origin, panelSize), "")
 
 	x := origin.X + spacing
-	for id, _ := range stats.Achievements {
-		// TODO: get name/description by id for displaying it
-		name := "TODO"
-		description := "TODO"
+	for id, progress := range stats.Achievements {
+		name := achievementsByID[id].name
+		description := achievementsByID[id].description
 
+		rect := rl.Rectangle{X: x, Y: origin.Y + (float32(id)+1)*(size.Y+spacing), Width: size.X, Height: size.Y / 4}
 		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, 32)
-		raygui.Label(rl.Rectangle{X: x, Y: origin.Y + (float32(id)+1)*(size.Y+spacing), Width: size.X, Height: size.Y / 2}, name)
+		raygui.Label(rect, name)
 		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, 24)
+		rect.Y += size.Y / 4
+		rect.Height = size.Y / 2
 		raygui.Label(rl.Rectangle{X: x, Y: origin.Y + (float32(id)+1)*(size.Y+spacing) + size.Y/2, Width: size.X, Height: size.Y / 2}, description)
+		rect.Y += size.Y / 2
+		rect.Height = size.Y / 4
+		raygui.ProgressBar(rect, "", "", progress, 0, 1)
 	}
 
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, oldFontsize)
