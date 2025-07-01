@@ -19,7 +19,7 @@ var (
 	Wave30OneDoll = AchievementType{
 		id:          0,
 		name:        "Perfect Servant",
-		description: "Reach Wave 30 while having only one Doll",
+		description: "Reach Wave 30 while\nhaving only one Doll",
 	}
 	Wave50Lunatic = AchievementType{
 		id:          1,
@@ -48,7 +48,7 @@ var achievementsByID = map[uint8]*AchievementType{
 }
 
 func renderAchievements(origin rl.Vector2) {
-	size := rl.Vector2{X: 900, Y: 120}
+	size := rl.Vector2{X: 480, Y: 120}
 	spacing := float32(40)
 	count := len(stats.Achievements)
 	panelSize := rl.Vector2{X: size.X + spacing*2, Y: size.Y*float32(count) + spacing*(float32(count)+1)}
@@ -66,7 +66,6 @@ func renderAchievements(origin rl.Vector2) {
 		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, 24)
 		rect.Y += size.Y / 4
 		rect.Height = size.Y / 2
-		// TODO: make the panel smaller and wrap text instead
 		raygui.Label(rect, achievementsByID[uint8(id)].description)
 		rect.Y += size.Y / 2
 		rect.Height = size.Y / 4
