@@ -55,21 +55,23 @@ func renderMainMenu(world *World) {
 	}
 
 	y += buttonHeight + buttonSpacing
-	raygui.Disable()
-	raygui.Toggle(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Goals", mainMenu.selected == 2)
-	raygui.Enable()
-
-	y += buttonHeight + buttonSpacing
-	if raygui.Toggle(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Stats", mainMenu.selected == 2) {
+	if raygui.Toggle(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Goals", mainMenu.selected == 2) {
 		mainMenu.selected = 2
 	} else if mainMenu.selected == 2 {
 		mainMenu.selected = 0
 	}
 
 	y += buttonHeight + buttonSpacing
-	if raygui.Toggle(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Options", mainMenu.selected == 3) {
+	if raygui.Toggle(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Stats", mainMenu.selected == 3) {
 		mainMenu.selected = 3
 	} else if mainMenu.selected == 3 {
+		mainMenu.selected = 0
+	}
+
+	y += buttonHeight + buttonSpacing
+	if raygui.Toggle(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Options", mainMenu.selected == 4) {
+		mainMenu.selected = 4
+	} else if mainMenu.selected == 4 {
 		mainMenu.selected = 0
 	}
 
@@ -101,8 +103,10 @@ func renderMainMenu(world *World) {
 			startGame(world, LUNATIC)
 		}
 	case 2:
-		renderStats(rl.Vector2{X: x, Y: y})
+		renderAchievements(rl.Vector2{X: x, Y: y})
 	case 3:
+		renderStats(rl.Vector2{X: x, Y: y})
+	case 4:
 		renderOptions(rl.Vector2{X: x, Y: y})
 	}
 }
