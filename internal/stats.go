@@ -22,6 +22,7 @@ var stats = struct {
 	DollsSummoned: make(map[Difficulty]uint),
 	HighestWave:   make(map[Difficulty]uint),
 	RunCount:      make(map[Difficulty]uint),
+	Achievements:  make(Achievements),
 }
 
 var statAutosaveTimer float32 = 0
