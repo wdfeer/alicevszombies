@@ -16,10 +16,20 @@ type AchievementType struct {
 }
 
 var (
-	Wave100Reached = AchievementType{
+	Wave30OneDoll = AchievementType{
 		id:          0,
+		name:        "Perfect Servant",
+		description: "Reach Wave 30 while having only one Doll",
+	}
+	Wave50Lunatic = AchievementType{
+		id:          1,
+		name:        "Master Puppeteer",
+		description: "Reach Wave 50 on Lunatic",
+	}
+	Wave100Reached = AchievementType{
+		id:          2,
 		name:        "Overachiever",
-		description: "Reach wave 100",
+		description: "Reach Wave 100",
 	}
 )
 
