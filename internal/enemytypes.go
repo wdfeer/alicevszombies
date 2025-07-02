@@ -131,7 +131,8 @@ var enemyTypes = struct {
 			minWave:         29,
 			minWaveDiffMult: -3,
 		},
-		targetingType: SlowMelee,
+		targetingType:  SlowMelee,
+		disableWalking: true,
 	},
 	EnemyType{
 		texture:        "medicine",
