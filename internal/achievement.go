@@ -68,6 +68,10 @@ func renderAchievements(origin rl.Vector2) {
 		rect := rl.Rectangle{X: origin.X, Y: origin.Y + float32(id)*(size.Y+margin*3), Width: size.X, Height: size.Y}
 		ach := achievementsByID[uint8(id)]
 
+		if progress >= 1 {
+			raygui.SetState(raygui.STATE_FOCUSED)
+		}
+
 		{ // Background panel
 			panelRect := rect
 			panelRect.X -= margin
@@ -93,6 +97,10 @@ func renderAchievements(origin rl.Vector2) {
 		rect.Height = size.Y / 4
 		raygui.ProgressBar(rect, "", "", progress, 0, 1)
 		raygui.Label(rect, fmt.Sprint(progress*ach.visualMaxProgress)+"/"+fmt.Sprint(ach.visualMaxProgress))
+
+		if progress >= 1 {
+			raygui.SetState(raygui.STATE_NORMAL)
+		}
 	}
 
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, oldFontsize)
