@@ -49,6 +49,7 @@ func LoadAssets() {
 	loadTexture("nerium_girl")
 	loadTexture("nerium_girl_walk0")
 	loadTexture("nerium_girl_walk1")
+	loadTexture("zombie_fairy")
 	loadTexture("medicine")
 	loadTexture("medicine_walk0")
 	loadTexture("medicine_walk1")
@@ -75,6 +76,7 @@ func LoadAssets() {
 	loadDeathEffect("purple_zombie")
 	loadDeathEffect("blue_zombie")
 	loadDeathEffect("nerium_girl")
+	loadDeathEffect("zombie_fairy")
 	loadDeathEffect("medicine")
 	loadDeathEffect("kogasa")
 
