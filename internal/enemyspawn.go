@@ -19,7 +19,8 @@ type SpawnData struct {
 func (data SpawnData) canSpawn(world *World) bool {
 	wave := world.enemySpawner.wave
 
-	minWaveCondition := wave >= uint32(int(data.minWave)+data.minWaveDiffMult*int(world.difficulty))
+	minWave := max(int(data.minWave)+data.minWaveDiffMult*int(world.difficulty), 0)
+	minWaveCondition := int(wave) >= minWave
 	bossWaveCondition := (!data.boss || (wave%10 == 0 && wave > 0))
 	onlyBossCondition := true
 

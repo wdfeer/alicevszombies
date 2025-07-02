@@ -9,6 +9,7 @@ import (
 type EnemyType struct {
 	texture        string
 	acceleration   float32
+	drag           float32
 	baseHP         float32
 	projectileType *ProjectileType
 	size           rl.Vector2
@@ -46,6 +47,7 @@ var enemyTypes = struct {
 	EnemyType{
 		texture:      "zombie",
 		acceleration: 680,
+		drag:         10,
 		baseHP:       3,
 		size:         rl.Vector2{X: 8, Y: 16},
 		spawnData: SpawnData{
@@ -56,6 +58,7 @@ var enemyTypes = struct {
 	EnemyType{
 		texture:      "small_zombie",
 		acceleration: 740,
+		drag:         10,
 		baseHP:       1,
 		size:         rl.Vector2{X: 4, Y: 8},
 		spawnData: SpawnData{
@@ -67,6 +70,7 @@ var enemyTypes = struct {
 	EnemyType{
 		texture:      "purple_zombie",
 		acceleration: 700,
+		drag:         10,
 		baseHP:       2,
 		size:         rl.Vector2{X: 8, Y: 16},
 		spawnData: SpawnData{
@@ -85,6 +89,7 @@ var enemyTypes = struct {
 	EnemyType{
 		texture:      "blue_zombie",
 		acceleration: 690,
+		drag:         10,
 		baseHP:       4,
 		size:         rl.Vector2{X: 8, Y: 16},
 		spawnData: SpawnData{
@@ -103,6 +108,7 @@ var enemyTypes = struct {
 	EnemyType{
 		texture:      "nerium_girl",
 		acceleration: 725,
+		drag:         10,
 		baseHP:       9,
 		size:         rl.Vector2{X: 8, Y: 16},
 		spawnData: SpawnData{
@@ -124,6 +130,7 @@ var enemyTypes = struct {
 	EnemyType{
 		texture:      "zombie_fairy",
 		acceleration: 770,
+		drag:         5,
 		baseHP:       2,
 		size:         rl.Vector2{X: 7, Y: 8},
 		spawnData: SpawnData{
@@ -137,6 +144,7 @@ var enemyTypes = struct {
 	EnemyType{
 		texture:        "medicine",
 		acceleration:   730,
+		drag:           10,
 		baseHP:         50,
 		size:           rl.Vector2{X: 8, Y: 16},
 		projectileType: &projectileTypes.purpleBullet,
@@ -158,6 +166,7 @@ var enemyTypes = struct {
 	EnemyType{
 		texture:        "kogasa",
 		acceleration:   715,
+		drag:           10,
 		baseHP:         70,
 		size:           rl.Vector2{X: 8, Y: 16},
 		flippable:      true,

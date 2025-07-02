@@ -25,7 +25,7 @@ func newEnemy(world *World, typ *EnemyType) Entity {
 		rl.Vector2Scale(util.Vector2Random(), 500),
 	)
 	world.velocity[id] = rl.Vector2Zero()
-	world.drag[id] = 10
+	world.drag[id] = typ.drag
 
 	world.texture[id] = typ.texture
 	if !typ.disableWalking {
