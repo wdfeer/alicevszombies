@@ -129,7 +129,7 @@ var enemyTypes = struct {
 	},
 	EnemyType{
 		texture:      "zombie_fairy",
-		acceleration: 1100,
+		acceleration: 600,
 		drag:         5,
 		baseHP:       2,
 		size:         rl.Vector2{X: 7, Y: 8},
@@ -138,7 +138,7 @@ var enemyTypes = struct {
 			minWave:         29,
 			minWaveDiffMult: -3,
 		},
-		targetingType:  SlowMelee,
+		targetingType:  CirclingMelee,
 		disableWalking: true,
 	},
 	EnemyType{

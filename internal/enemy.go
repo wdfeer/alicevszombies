@@ -53,28 +53,32 @@ type EnemyTargetingType = uint8
 
 const (
 	DirectMelee EnemyTargetingType = iota
+	CirclingMelee
 	Ranged
-	SlowMelee
 )
 
 func updateEnemies(world *World) {
 	for id, typ := range world.enemy {
 		targeting := world.targeting[id]
 		targeting.targetingTimer -= dt
-		if targeting.targetingTimer <= 0 || (rl.Vector2Distance(targeting.target, world.position[id]) < 2 && typ.targetingType != SlowMelee) {
-			if typ.targetingType == SlowMelee {
-				targeting.targetingTimer = 0.6
-			} else {
-				targeting.targetingTimer = 0.4
-			}
+		if targeting.targetingTimer <= 0 || rl.Vector2Distance(targeting.target, world.position[id]) < 4 {
+			targeting.targetingTimer = 0.4
 
 			distance := rl.Vector2Distance(world.position[id], world.position[world.player])
-			if typ.targetingType != Ranged {
-				delta := rl.Vector2Normalize(rl.Vector2Subtract(world.position[world.player], world.position[id]))
-				delta = rl.Vector2Rotate(delta, rand.Float32()/2)
-				delta = rl.Vector2Scale(delta, distance/3)
-				targeting.target = rl.Vector2Add(world.position[id], delta)
-			} else {
+			switch typ.targetingType {
+			case DirectMelee:
+				dir := util.Vector2Direction(world.position[id], world.position[world.player])
+				dir = rl.Vector2Rotate(dir, rand.Float32()/2)
+				dir = rl.Vector2Scale(dir, distance/3)
+				targeting.target = rl.Vector2Add(world.position[id], dir)
+			case CirclingMelee:
+				dir := util.Vector2Direction(world.position[id], world.position[world.player])
+				dir = rl.Vector2Rotate(dir, rand.Float32()/2)
+				velPart := rl.Vector2Normalize(world.velocity[id])
+				velPart = rl.Vector2Scale(velPart, 0.5)
+				dir = rl.Vector2Normalize(rl.Vector2Add(dir, velPart))
+				targeting.target = rl.Vector2Add(world.position[id], rl.Vector2Scale(dir, distance))
+			case Ranged:
 				targeting.target = rl.Vector2Add(world.position[world.player], rl.Vector2Scale(util.Vector2Random(), 70))
 			}
 		}
