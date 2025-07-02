@@ -17,29 +17,29 @@ type AchievementType struct {
 }
 
 var (
-	Wave30OneDoll = AchievementType{
+	AllUpgradesObtained = AchievementType{
 		id:                0,
+		name:              "Grimoirist",
+		description:       "Obtain each upgrade\nat least once",
+		visualMaxProgress: 0, // Set to upgrade count on upgrade init
+	}
+	Wave30OneDoll = AchievementType{
+		id:                1,
 		name:              "Perfect Servant",
 		description:       "Reach Wave 30 while\nhaving only one Doll",
 		visualMaxProgress: 1,
 	}
 	Wave50Lunatic = AchievementType{
-		id:                1,
+		id:                2,
 		name:              "Master Puppeteer",
 		description:       "Reach Wave 50 on Lunatic",
 		visualMaxProgress: 50,
 	}
 	Wave100Reached = AchievementType{
-		id:                2,
+		id:                3,
 		name:              "Youkai Exterminator",
 		description:       "Reach Wave 100",
 		visualMaxProgress: 100,
-	}
-	AllUpgradesObtained = AchievementType{
-		id:                3,
-		name:              "Grimoirist",
-		description:       "Obtain each upgrade\nat least once",
-		visualMaxProgress: 0, // Set to upgrade count on upgrade init
 	}
 )
 
