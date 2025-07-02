@@ -15,6 +15,7 @@ type UIState struct {
 	pauseMenu        PauseMenu
 	upgradeScreen    UpgradeScreen
 	mainMenu         MainMenu
+	displayFPS       bool
 }
 
 func updateUI(world *World) {
@@ -37,6 +38,10 @@ func updateUI(world *World) {
 		}
 		world.uistate.previousMousePos = rl.GetMousePosition()
 	}
+
+	if rl.IsKeyPressed(rl.KeyF3) {
+		world.uistate.displayFPS = !world.uistate.displayFPS
+	}
 }
 
 func renderUI(world *World) {
@@ -55,5 +60,9 @@ func renderUI(world *World) {
 
 	if world.uistate.cursorHideTimer < 2.5 {
 		rl.DrawTextureEx(assets.textures["cursor"+fmt.Sprint(options.CursorType)], rl.GetMousePosition(), 0, 4, rl.White)
+	}
+
+	if world.uistate.displayFPS {
+		rl.DrawText(fmt.Sprint(rl.GetFPS()), 1, 1, 16, rl.Green)
 	}
 }
