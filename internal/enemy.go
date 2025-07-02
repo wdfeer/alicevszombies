@@ -67,7 +67,7 @@ func updateEnemies(world *World) {
 			}
 
 			distance := rl.Vector2Distance(world.position[id], world.position[world.player])
-			if typ.targetingType == Ranged {
+			if typ.targetingType != Ranged {
 				delta := rl.Vector2Normalize(rl.Vector2Subtract(world.position[world.player], world.position[id]))
 				delta = rl.Vector2Rotate(delta, rand.Float32()/2)
 				delta = rl.Vector2Scale(delta, distance/3)
