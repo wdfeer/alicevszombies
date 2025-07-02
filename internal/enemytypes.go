@@ -13,6 +13,7 @@ type EnemyType struct {
 	ranged         bool
 	projectileType *ProjectileType
 	size           rl.Vector2
+	disableWalking bool
 	flippable      bool
 	spawnData      SpawnData
 	shootPattern   ShootPattern
@@ -38,6 +39,7 @@ var enemyTypes = struct {
 	purpleZombie EnemyType
 	blueZombie   EnemyType
 	neriumGirl   EnemyType
+	zombieFairy  EnemyType
 	medicine     EnemyType
 	kogasa       EnemyType
 }{
@@ -101,7 +103,7 @@ var enemyTypes = struct {
 		size:         rl.Vector2{X: 8, Y: 16},
 		spawnData: SpawnData{
 			weight:          0.02,
-			minWave:         29,
+			minWave:         35,
 			minWaveDiffMult: -3,
 		},
 		shootPattern: ShootPattern{
@@ -112,6 +114,17 @@ var enemyTypes = struct {
 			countExtraPerDifficulty: 1.25,
 			spread:                  math.Pi / 3,
 			velocity:                80,
+		},
+	},
+	EnemyType{
+		texture:      "zombie_fairy",
+		acceleration: 770,
+		baseHP:       2,
+		size:         rl.Vector2{X: 7, Y: 8},
+		spawnData: SpawnData{
+			weight:          0.06,
+			minWave:         29,
+			minWaveDiffMult: -3,
 		},
 	},
 	EnemyType{
@@ -165,6 +178,7 @@ var allEnemyTypes = []*EnemyType{
 	&enemyTypes.purpleZombie,
 	&enemyTypes.blueZombie,
 	&enemyTypes.neriumGirl,
+	&enemyTypes.zombieFairy,
 	&enemyTypes.medicine,
 	&enemyTypes.kogasa,
 }

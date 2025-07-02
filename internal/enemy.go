@@ -26,7 +26,9 @@ func newEnemy(world *World, typ *EnemyType) Entity {
 	)
 	world.velocity[id] = rl.Vector2Zero()
 	world.drag[id] = 10
-	world.walkAnimated[id] = WalkAnimation{typ.texture}
+	if !typ.disableWalking {
+		world.walkAnimated[id] = WalkAnimation{typ.texture}
+	}
 	if typ.flippable {
 		world.flippable[id] = true
 	}
