@@ -63,9 +63,11 @@ var (
 
 var uniqueUpgrades = []*Upgrade{&MovementSpeed, &UpgradeSelection, &SprintUpgrade}
 
-func initUpgradeIncompatibility() {
+func initUpgrades() {
 	MovementSpeed.incompatible = []*Upgrade{&SprintUpgrade}
 	SprintUpgrade.incompatible = []*Upgrade{&MovementSpeed}
+
+	AllUpgradesObtained.visualMaxProgress = float32(len(upgrades) + len(uniqueUpgrades))
 }
 
 func randomUpgradesFrom(world *World, available []*Upgrade) []*Upgrade {
@@ -171,14 +173,14 @@ func incrementUpgrade(world *World, upgrade *Upgrade) {
 	}
 	newCombatText(world, pos, str)
 
-	onUpgradeGet(world, upgrade)
-}
-
-func onUpgradeGet(world *World, upgrade *Upgrade) {
-	if upgrade.dollType == nil {
-		return
+	if upgrade.dollType != nil {
+		summonDollFromUpgrade(world, upgrade)
 	}
 
+	stats.UpgradesUsed[upgrade.name]++
+}
+
+func summonDollFromUpgrade(world *World, upgrade *Upgrade) {
 	for typ, count := range upgrade.cost {
 		for id, d := range world.doll {
 			if d == typ {

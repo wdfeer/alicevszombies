@@ -16,6 +16,7 @@ var stats = struct {
 	HighestWave   map[Difficulty]uint
 	RunCount      map[Difficulty]uint
 	Achievements  Achievements
+	UpgradesUsed  map[string]uint
 }{
 	TimePlayed:    make(map[Difficulty]float32),
 	EnemiesKilled: make(map[Difficulty]uint),
@@ -23,6 +24,7 @@ var stats = struct {
 	HighestWave:   make(map[Difficulty]uint),
 	RunCount:      make(map[Difficulty]uint),
 	Achievements:  make(Achievements, len(achievementsByID)),
+	UpgradesUsed:  make(map[string]uint),
 }
 
 var statAutosaveTimer float32 = 0

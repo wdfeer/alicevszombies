@@ -35,6 +35,12 @@ var (
 		description:       "Reach Wave 100",
 		visualMaxProgress: 100,
 	}
+	AllUpgradesObtained = AchievementType{
+		id:                3,
+		name:              "Grimoirist",
+		description:       "Obtain each upgrade\nat least once",
+		visualMaxProgress: 0, // Set to upgrade count on upgrade init
+	}
 )
 
 func updateAchievements(world *World) {
@@ -51,12 +57,15 @@ func updateAchievements(world *World) {
 		}
 	}
 	stats.Achievements[Wave100Reached.id] = float32(highestWave) / 100
+
+	stats.Achievements[AllUpgradesObtained.id] = float32(len(stats.UpgradesUsed)) / AllUpgradesObtained.visualMaxProgress
 }
 
 var achievementsByID = map[uint8]*AchievementType{
-	Wave30OneDoll.id:  &Wave30OneDoll,
-	Wave50Lunatic.id:  &Wave50Lunatic,
-	Wave100Reached.id: &Wave100Reached,
+	Wave30OneDoll.id:       &Wave30OneDoll,
+	Wave50Lunatic.id:       &Wave50Lunatic,
+	Wave100Reached.id:      &Wave100Reached,
+	AllUpgradesObtained.id: &AllUpgradesObtained,
 }
 
 func renderAchievements(origin rl.Vector2) {
@@ -64,9 +73,9 @@ func renderAchievements(origin rl.Vector2) {
 	oldFontsize := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE)
 
 	margin := float32(20)
-	for id, progress := range stats.Achievements {
+	for id, ach := range achievementsByID {
+		progress := stats.Achievements[id]
 		rect := rl.Rectangle{X: origin.X, Y: origin.Y + float32(id)*(size.Y+margin*3), Width: size.X, Height: size.Y}
-		ach := achievementsByID[uint8(id)]
 
 		if progress >= 1 {
 			raygui.SetState(raygui.STATE_FOCUSED)
