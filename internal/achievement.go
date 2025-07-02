@@ -1,8 +1,6 @@
 package internal
 
 import (
-	"alicevszombies/internal/util"
-
 	"github.com/gen2brain/raylib-go/raygui"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
@@ -37,7 +35,9 @@ func updateAchievements(world *World) {
 	if world.enemySpawner.wave >= 30 && len(world.doll) == 1 {
 		stats.Achievements[Wave30OneDoll.id] = 1
 	}
+
 	stats.Achievements[Wave50Lunatic.id] = float32(stats.HighestWave[LUNATIC]) / 50
+
 	var highestWave uint
 	for _, v := range stats.HighestWave {
 		if v > highestWave {
@@ -55,38 +55,36 @@ var achievementsByID = map[uint8]*AchievementType{
 
 func renderAchievements(origin rl.Vector2) {
 	size := rl.Vector2{X: 480, Y: 120}
-	spacing := float32(40)
-	count := len(stats.Achievements)
-	panelSize := rl.Vector2{X: size.X + spacing*2, Y: size.Y*float32(count) + spacing*(float32(count)+1)}
-
 	oldFontsize := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE)
 
-	raygui.Panel(util.RectangleV(origin, panelSize), "")
-
-	origin.X += spacing
-	origin.Y += spacing
+	margin := float32(20)
 	for id, progress := range stats.Achievements {
-		rect := rl.Rectangle{X: origin.X, Y: origin.Y + float32(id)*(size.Y+spacing), Width: size.X, Height: size.Y / 4}
+		rect := rl.Rectangle{X: origin.X, Y: origin.Y + float32(id)*(size.Y+margin*3), Width: size.X, Height: size.Y}
 
+		{ // Background panel
+			panelRect := rect
+			panelRect.X -= margin
+			panelRect.Y -= margin
+			panelRect.Width += margin * 2
+			panelRect.Height += margin * 2
+			raygui.Panel(panelRect, "")
+		}
+
+		// Title
+		rect.Height /= 4
 		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, 36)
 		raygui.Label(rect, achievementsByID[uint8(id)].name)
 
+		// Description
 		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, 24)
 		rect.Y += size.Y / 4
 		rect.Height = size.Y / 2
 		raygui.Label(rect, achievementsByID[uint8(id)].description)
 
+		// Progress
 		rect.Y += size.Y / 2
 		rect.Height = size.Y / 4
 		raygui.ProgressBar(rect, "", "", progress, 0, 1)
-
-		if id != len(achievementsByID)-1 {
-			rect.Y += spacing
-			rect.Height = 16
-			rect.X -= spacing
-			rect.Width = panelSize.X
-			raygui.Line(rect, "")
-		}
 	}
 
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, oldFontsize)
