@@ -47,14 +47,27 @@ func newEnemy(world *World, typ *EnemyType) Entity {
 	return id
 }
 
+type EnemyTargetingType = uint8
+
+const (
+	DirectMelee EnemyTargetingType = iota
+	Ranged
+	SlowMelee
+)
+
 func updateEnemies(world *World) {
 	for id, typ := range world.enemy {
 		targeting := world.targeting[id]
 		targeting.targetingTimer -= dt
-		if targeting.targetingTimer <= 0 || rl.Vector2Distance(targeting.target, world.position[id]) < 2 {
-			targeting.targetingTimer = 0.4
+		if targeting.targetingTimer <= 0 || (rl.Vector2Distance(targeting.target, world.position[id]) < 2 && typ.targetingType != SlowMelee) {
+			if typ.targetingType == SlowMelee {
+				targeting.targetingTimer = 0.6
+			} else {
+				targeting.targetingTimer = 0.4
+			}
+
 			distance := rl.Vector2Distance(world.position[id], world.position[world.player])
-			if !typ.ranged {
+			if typ.targetingType == Ranged {
 				delta := rl.Vector2Normalize(rl.Vector2Subtract(world.position[world.player], world.position[id]))
 				delta = rl.Vector2Rotate(delta, rand.Float32()/2)
 				delta = rl.Vector2Scale(delta, distance/3)

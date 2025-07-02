@@ -10,11 +10,11 @@ type EnemyType struct {
 	texture        string
 	acceleration   float32
 	baseHP         float32
-	ranged         bool
 	projectileType *ProjectileType
 	size           rl.Vector2
 	disableWalking bool
 	flippable      bool
+	targetingType  EnemyTargetingType
 	spawnData      SpawnData
 	shootPattern   ShootPattern
 	deathExplode   DeathExplode
@@ -51,6 +51,7 @@ var enemyTypes = struct {
 		spawnData: SpawnData{
 			weight: 1,
 		},
+		targetingType: DirectMelee,
 	},
 	EnemyType{
 		texture:      "small_zombie",
@@ -61,6 +62,7 @@ var enemyTypes = struct {
 			weight:  0.2,
 			minWave: 4,
 		},
+		targetingType: DirectMelee,
 	},
 	EnemyType{
 		texture:      "purple_zombie",
@@ -78,6 +80,7 @@ var enemyTypes = struct {
 			countFlat:      4,
 			countDiffMult:  2,
 		},
+		targetingType: DirectMelee,
 	},
 	EnemyType{
 		texture:      "blue_zombie",
@@ -95,6 +98,7 @@ var enemyTypes = struct {
 			countFlat:      4,
 			countDiffMult:  2,
 		},
+		targetingType: DirectMelee,
 	},
 	EnemyType{
 		texture:      "nerium_girl",
@@ -109,12 +113,13 @@ var enemyTypes = struct {
 		shootPattern: ShootPattern{
 			projectile:              &projectileTypes.purpleBullet,
 			cooldown:                2.5,
-			typ:                     Spread,
+			typ:                     SpreadShoot,
 			count:                   2,
 			countExtraPerDifficulty: 1.25,
 			spread:                  math.Pi / 3,
 			velocity:                80,
 		},
+		targetingType: Ranged,
 	},
 	EnemyType{
 		texture:      "zombie_fairy",
@@ -126,12 +131,12 @@ var enemyTypes = struct {
 			minWave:         29,
 			minWaveDiffMult: -3,
 		},
+		targetingType: SlowMelee,
 	},
 	EnemyType{
 		texture:        "medicine",
 		acceleration:   730,
 		baseHP:         50,
-		ranged:         true,
 		size:           rl.Vector2{X: 8, Y: 16},
 		projectileType: &projectileTypes.purpleBullet,
 		spawnData: SpawnData{
@@ -141,18 +146,18 @@ var enemyTypes = struct {
 		shootPattern: ShootPattern{
 			projectile:              &projectileTypes.purpleBullet,
 			cooldown:                1,
-			typ:                     Circle,
+			typ:                     CircleShoot,
 			count:                   4,
 			countExtraPerDifficulty: 1,
 			countExtraPerWave:       0.05,
 			velocity:                100,
 		},
+		targetingType: Ranged,
 	},
 	EnemyType{
 		texture:        "kogasa",
 		acceleration:   715,
 		baseHP:         70,
-		ranged:         true,
 		size:           rl.Vector2{X: 8, Y: 16},
 		flippable:      true,
 		projectileType: &projectileTypes.blueBullet,
@@ -163,12 +168,13 @@ var enemyTypes = struct {
 		shootPattern: ShootPattern{
 			projectile:              &projectileTypes.blueBullet,
 			cooldown:                1,
-			typ:                     Circle,
+			typ:                     CircleShoot,
 			count:                   4,
 			countExtraPerDifficulty: 1,
 			countExtraPerWave:       0.05,
 			velocity:                100,
 		},
+		targetingType: Ranged,
 	},
 }
 

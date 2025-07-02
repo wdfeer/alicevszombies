@@ -23,9 +23,9 @@ type ShootPattern struct {
 type ShootType = uint8
 
 const (
-	Direct ShootType = iota
-	Circle
-	Spread
+	DirectShoot ShootType = iota
+	CircleShoot
+	SpreadShoot
 )
 
 func updateShooting(world *World) {
@@ -75,15 +75,15 @@ func updateShooting(world *World) {
 			vel := rl.Vector2Scale(dir, pattern.velocity)
 
 			switch pattern.typ {
-			case Direct:
+			case DirectShoot:
 				newProjectile(world, world.position[id], vel, pattern.projectile)
-			case Circle:
+			case CircleShoot:
 				count := pattern.count + uint8(pattern.countExtraPerWave*float32(world.enemySpawner.wave)+pattern.countExtraPerDifficulty*float32(world.difficulty))
 				for i := range count {
 					ratio := (float32(i) + 1) / float32(count)
 					newProjectile(world, world.position[id], rl.Vector2Rotate(vel, math.Pi*2*ratio), pattern.projectile)
 				}
-			case Spread:
+			case SpreadShoot:
 				count := pattern.count + uint8(pattern.countExtraPerWave*float32(world.enemySpawner.wave)+pattern.countExtraPerDifficulty*float32(world.difficulty))
 				vel := rl.Vector2Rotate(vel, -pattern.spread/2)
 				for i := range count {

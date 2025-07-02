@@ -43,7 +43,7 @@ var dollTypes = struct {
 		shootPattern: ShootPattern{
 			projectile: &projectileTypes.knife,
 			cooldown:   1,
-			typ:        Direct,
+			typ:        DirectShoot,
 			velocity:   200,
 		},
 	},
@@ -54,7 +54,7 @@ var dollTypes = struct {
 		shootPattern: ShootPattern{
 			projectile: &projectileTypes.magicMissile,
 			cooldown:   1,
-			typ:        Direct,
+			typ:        DirectShoot,
 			velocity:   200,
 		},
 	},
@@ -66,7 +66,7 @@ var dollTypes = struct {
 		shootPattern: ShootPattern{
 			projectile: &projectileTypes.redBullet,
 			cooldown:   1,
-			typ:        Circle,
+			typ:        CircleShoot,
 			count:      5,
 			velocity:   200,
 		},
