@@ -9,7 +9,7 @@ import (
 func updateCollisions(world *World) {
 	playerRec := util.CenterRectangle(world.position[world.player], world.size[world.player])
 
-	for enemy := range world.enemy {
+	for enemy, enemyType := range world.enemy {
 		enemyRec := util.CenterRectangle(world.position[enemy], world.size[enemy])
 
 		// Enemy -> Player
@@ -56,16 +56,23 @@ func updateCollisions(world *World) {
 		}
 
 		// Enemy <-> Enemy, knockback only
-		enemyRec.Width /= 2
-		enemyRec.Y += enemyRec.Width
-		for otherEnemy := range world.enemy {
-			otherRec := util.CenterRectangle(world.position[otherEnemy], world.size[otherEnemy])
-			otherRec.Width /= 2
-			otherRec.Y += otherRec.Width
-			if util.CheckCollisionRecs(enemyRec, otherRec) {
-				dir := util.Vector2Direction(world.position[enemy], world.position[otherEnemy])
-				world.velocity[otherEnemy] = rl.Vector2Add(world.velocity[otherEnemy], rl.Vector2Scale(dir, 800*dt))
-				world.velocity[enemy] = rl.Vector2Add(world.velocity[otherEnemy], rl.Vector2Scale(dir, -800*dt))
+		if !enemyType.flying {
+
+			enemyRec.Width /= 2
+			enemyRec.Y += enemyRec.Width
+			for otherEnemy, otherType := range world.enemy {
+				if otherType.flying {
+					continue
+				}
+
+				otherRec := util.CenterRectangle(world.position[otherEnemy], world.size[otherEnemy])
+				otherRec.Width /= 2
+				otherRec.Y += otherRec.Width
+				if util.CheckCollisionRecs(enemyRec, otherRec) {
+					dir := util.Vector2Direction(world.position[enemy], world.position[otherEnemy])
+					world.velocity[otherEnemy] = rl.Vector2Add(world.velocity[otherEnemy], rl.Vector2Scale(dir, 800*dt))
+					world.velocity[enemy] = rl.Vector2Add(world.velocity[otherEnemy], rl.Vector2Scale(dir, -800*dt))
+				}
 			}
 		}
 	}

@@ -19,6 +19,8 @@ type EnemyType struct {
 	spawnData      SpawnData
 	shootPattern   ShootPattern
 	deathExplode   DeathExplode
+	// don't collide with other enemies
+	flying bool
 }
 
 type DeathExplode struct {
@@ -140,6 +142,7 @@ var enemyTypes = struct {
 		},
 		targetingType:  CirclingMelee,
 		disableWalking: true,
+		flying:         true,
 	},
 	EnemyType{
 		texture:        "medicine",
