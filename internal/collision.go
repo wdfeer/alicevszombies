@@ -7,16 +7,18 @@ import (
 )
 
 func updateCollisions(world *World) {
-	playerRec := util.CenterRectangle(world.position[world.player], world.size[world.player])
+	playerPos := world.position[world.player]
+	playerRec := util.CenterRectangle(playerPos, world.size[world.player])
 
 	for enemy, enemyType := range world.enemy {
-		enemyRec := util.CenterRectangle(world.position[enemy], world.size[enemy])
+		enemyPos := world.position[enemy]
+		enemyRec := util.CenterRectangle(enemyPos, world.size[enemy])
 
 		// Enemy -> Player
 		if util.CheckCollisionRecs(playerRec, enemyRec) {
 			damageWithCooldown(world, world.player, 1, enemy)
 
-			dir := util.Vector2Direction(world.position[world.player], world.position[enemy])
+			dir := util.Vector2Direction(playerPos, enemyPos)
 			world.velocity[enemy] = rl.Vector2Add(world.velocity[enemy], rl.Vector2Scale(dir, 800*dt))
 		}
 
@@ -57,7 +59,6 @@ func updateCollisions(world *World) {
 
 		// Enemy <-> Enemy, knockback only
 		if !enemyType.flying {
-
 			enemyRec.Width /= 2
 			enemyRec.Y += enemyRec.Width
 			for otherEnemy, otherType := range world.enemy {
@@ -65,11 +66,12 @@ func updateCollisions(world *World) {
 					continue
 				}
 
-				otherRec := util.CenterRectangle(world.position[otherEnemy], world.size[otherEnemy])
+				otherPos := world.position[otherEnemy]
+				otherRec := util.CenterRectangle(otherPos, world.size[otherEnemy])
 				otherRec.Width /= 2
 				otherRec.Y += otherRec.Width
 				if util.CheckCollisionRecs(enemyRec, otherRec) {
-					dir := util.Vector2Direction(world.position[enemy], world.position[otherEnemy])
+					dir := util.Vector2Direction(enemyPos, otherPos)
 					world.velocity[otherEnemy] = rl.Vector2Add(world.velocity[otherEnemy], rl.Vector2Scale(dir, 800*dt))
 					world.velocity[enemy] = rl.Vector2Add(world.velocity[otherEnemy], rl.Vector2Scale(dir, -800*dt))
 				}
