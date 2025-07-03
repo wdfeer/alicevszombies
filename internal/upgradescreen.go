@@ -61,8 +61,8 @@ func renderUpgradeScreen(world *World) {
 		// Doll Cost
 		if up.cost != nil {
 			dollCostRect := rect
-			dollCostRect.X += 16
-			dollCostRect.Width -= 32
+			dollCostRect.X += 32
+			dollCostRect.Width -= 64
 			dollCostRect.Y += height / 8
 			raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_ALIGNMENT, int64(raygui.TEXT_ALIGN_LEFT))
 			raygui.Label(dollCostRect, "Cost:")
@@ -71,15 +71,12 @@ func renderUpgradeScreen(world *World) {
 			// Calculate dimensions of the doll cost
 			const dollScale = 4
 			const dollSpacing = 4
-			totalDollCostWidth := float32(0)
 			maxHeight := int32(0)
-			for dollT, count := range up.cost {
-				totalDollCostWidth += float32(assets.textures[dollT.texture].Width*dollScale+dollSpacing) * float32(count)
+			for dollT := range up.cost {
 				if assets.textures[dollT.texture].Height > maxHeight {
 					maxHeight = assets.textures[dollT.texture].Height
 				}
 			}
-			pos := util.CenterSomething(totalDollCostWidth, float32(maxHeight), rl.Vector2{X: xPositions[i] + width/2, Y: dollCostRect.Y + dollCostRect.Height/2 - float32(maxHeight)*dollScale/2})
 
 			// Sort the doll costs by type
 			type dollCost struct {
@@ -95,10 +92,12 @@ func renderUpgradeScreen(world *World) {
 			})
 
 			// Rendering of Dolls
+			x := xPositions[i] + dollCostRect.Width
 			for _, data := range sortedCosts {
 				for range data.count {
+					pos := rl.Vector2{X: x, Y: dollCostRect.Y + dollCostRect.Height/2 - float32(assets.textures[data.typ.texture].Height)*dollScale/2}
 					rl.DrawTextureEx(assets.textures[data.typ.texture], pos, 0, float32(dollScale), rl.White)
-					pos.X += float32(assets.textures[data.typ.texture].Width*dollScale + dollSpacing)
+					x -= float32(assets.textures[data.typ.texture].Width*dollScale + dollSpacing)
 				}
 			}
 		}
