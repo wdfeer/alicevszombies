@@ -36,7 +36,11 @@ func renderHUD(world *World) {
 		str := "HP: " + fmt.Sprint(world.hp[world.player].val)
 		center := rl.Vector2{X: halfSize.X, Y: yPositions[1]}
 		pos := util.CenterText(str, 32, center)
-		rl.DrawText(str, int32(pos.X), int32(pos.Y), 32, rl.White)
+		if world.hp[world.player].val <= 5 {
+			pos := util.CenterText(str, 34, center)
+			rl.DrawTextEx(rl.GetFontDefault(), str, pos, 34, 2, rl.Red)
+		}
+		rl.DrawTextEx(rl.GetFontDefault(), str, pos, 32, 2, rl.White)
 	}
 
 	{ // MP
