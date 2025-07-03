@@ -80,7 +80,7 @@ func renderUpgradeScreen(world *World) {
 			for dollT, count := range up.cost {
 				for range count {
 					rl.DrawTextureEx(assets.textures[dollT.texture], pos, 0, float32(dollScale), rl.White)
-					pos.X += float32(assets.textures[dollT.texture].Width + dollSpacing)
+					pos.X += float32(assets.textures[dollT.texture].Width*dollScale + dollSpacing)
 				}
 			}
 		}
