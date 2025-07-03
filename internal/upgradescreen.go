@@ -3,6 +3,7 @@ package internal
 import (
 	"alicevszombies/internal/util"
 	"fmt"
+	"sort"
 
 	"github.com/gen2brain/raylib-go/raygui"
 	rl "github.com/gen2brain/raylib-go/raylib"
@@ -57,6 +58,7 @@ func renderUpgradeScreen(world *World) {
 		}
 		raygui.Label(titleRect, world.uistate.upgradeScreen.upgrades[i].name)
 
+		// Doll Cost
 		if up.cost != nil {
 			dollCostRect := rect
 			dollCostRect.X += 16
@@ -66,6 +68,7 @@ func renderUpgradeScreen(world *World) {
 			raygui.Label(dollCostRect, "Cost:")
 			raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_ALIGNMENT, int64(raygui.TEXT_ALIGN_CENTER))
 
+			// Calculate dimensions of the doll cost
 			const dollScale = 4
 			const dollSpacing = 4
 			totalDollCostWidth := float32(0)
@@ -77,10 +80,25 @@ func renderUpgradeScreen(world *World) {
 				}
 			}
 			pos := util.CenterSomething(totalDollCostWidth, float32(maxHeight), rl.Vector2{X: xPositions[i] + width/2, Y: dollCostRect.Y + dollCostRect.Height/2 - float32(maxHeight)*dollScale/2})
-			for dollT, count := range up.cost {
-				for range count {
-					rl.DrawTextureEx(assets.textures[dollT.texture], pos, 0, float32(dollScale), rl.White)
-					pos.X += float32(assets.textures[dollT.texture].Width*dollScale + dollSpacing)
+
+			// Sort the doll costs by type
+			type dollCost struct {
+				typ   *DollType
+				count uint8
+			}
+			sortedCosts := make([]dollCost, 0, len(up.cost))
+			for typ, count := range up.cost {
+				sortedCosts = append(sortedCosts, dollCost{typ, count})
+			}
+			sort.Slice(sortedCosts, func(i, j int) bool {
+				return sortedCosts[i].typ.texture < sortedCosts[j].typ.texture
+			})
+
+			// Rendering of Dolls
+			for _, data := range sortedCosts {
+				for range data.count {
+					rl.DrawTextureEx(assets.textures[data.typ.texture], pos, 0, float32(dollScale), rl.White)
+					pos.X += float32(assets.textures[data.typ.texture].Width*dollScale + dollSpacing)
 				}
 			}
 		}
