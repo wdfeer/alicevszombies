@@ -28,8 +28,7 @@ func updateCollisions(world *World) {
 				continue
 			}
 
-			dollRec := util.CenterRectangle(world.position[doll], world.size[doll])
-			if util.CheckCollisionRecs(dollRec, enemyRec) {
+			if util.CheckCollisionCenteredVsRec(world.position[doll], world.size[doll], enemyRec) {
 				if typ == &dollTypes.scytheDoll {
 					damageWithCooldown(world, enemy, typ.contactDamage+(float32(world.playerData.upgrades[&DollDamage])/2), doll)
 				} else {
@@ -45,8 +44,7 @@ func updateCollisions(world *World) {
 				continue
 			}
 
-			projRec := util.CenterRectangle(world.position[id], proj.typ.size)
-			if util.CheckCollisionRecs(enemyRec, projRec) {
+			if util.CheckCollisionCenteredVsRec(world.position[id], proj.typ.size, enemyRec) {
 				if proj.typ.deleteOnHit {
 					damage(world, enemy, proj.typ.damage+(float32(world.playerData.upgrades[&DollDamage])/8))
 					world.deleteEntity(id)

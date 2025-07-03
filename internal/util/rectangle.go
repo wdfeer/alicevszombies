@@ -23,3 +23,23 @@ func CheckCollisionRecs(rec1 rl.Rectangle, rec2 rl.Rectangle) bool {
 		rec1.Y+rec1.Height >= rec2.Y &&
 		rec1.Y <= rec2.Y+rec2.Height
 }
+
+// Combination of CenterRectangle and CheckCollisionRecs.
+func CheckCollisionCentered(pos1, size1, pos2, size2 rl.Vector2) bool {
+	x1 := pos1.X - size1.X/2
+	y1 := pos1.Y - size1.Y/2
+	x2 := pos2.X - size2.X/2
+	y2 := pos2.Y - size2.Y/2
+
+	return x1 < x2+size2.X && x1+size1.X > x2 &&
+		y1 < y2+size2.Y && y1+size1.Y > y2
+}
+
+// Combination of CenterRectangle and CheckCollisionRecs, with other rect precalculated.
+func CheckCollisionCenteredVsRec(pos, size rl.Vector2, other rl.Rectangle) bool {
+	x := pos.X - size.X/2
+	y := pos.Y - size.Y/2
+
+	return x < other.X+other.Width && x+size.X > other.X &&
+		y < other.Y+other.Height && y+size.Y > other.Y
+}
