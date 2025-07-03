@@ -53,6 +53,7 @@ type EnemyTargetingType = uint8
 
 const (
 	DirectMelee EnemyTargetingType = iota
+	LeadingMelee
 	CirclingMelee
 	Ranged
 )
@@ -71,6 +72,12 @@ func updateEnemies(world *World) {
 				dir = rl.Vector2Rotate(dir, rand.Float32()/2)
 				dir = rl.Vector2Scale(dir, distance/3)
 				targeting.target = rl.Vector2Add(world.position[id], dir)
+			case LeadingMelee:
+				delta := util.Vector2Direction(world.position[id], world.position[world.player])
+				delta = rl.Vector2Rotate(delta, rand.Float32()/2)
+				delta = rl.Vector2Lerp(delta, rl.Vector2Normalize(world.velocity[world.player]), 0.2)
+				delta = rl.Vector2Scale(delta, distance/2)
+				targeting.target = rl.Vector2Add(world.position[id], delta)
 			case CirclingMelee:
 				dir := util.Vector2Direction(world.position[id], world.position[world.player])
 				dir = rl.Vector2Rotate(dir, rand.Float32()/2)

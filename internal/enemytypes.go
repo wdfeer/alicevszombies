@@ -187,7 +187,7 @@ var enemyTypes = struct {
 			countExtraPerWave:       0.05,
 			velocity:                100,
 		},
-		targetingType: Ranged,
+		targetingType: LeadingMelee,
 	},
 }
 
