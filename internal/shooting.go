@@ -3,6 +3,7 @@ package internal
 import (
 	"alicevszombies/internal/util"
 	"math"
+	"math/rand"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
@@ -26,6 +27,7 @@ const (
 	DirectShoot ShootType = iota
 	CircleShoot
 	SpreadShoot
+	UnknownShoot
 )
 
 func updateShooting(world *World) {
@@ -89,6 +91,19 @@ func updateShooting(world *World) {
 				for i := range count {
 					ratio := (float32(i) + 1) / float32(count)
 					newProjectile(world, world.position[id], rl.Vector2Rotate(vel, pattern.spread*ratio), pattern.projectile)
+				}
+			case UnknownShoot:
+				count := pattern.count + uint8(pattern.countExtraPerWave*float32(world.enemySpawner.wave)+pattern.countExtraPerDifficulty*float32(world.difficulty))
+				count += uint8(rand.Float32() * float32(count))
+				for range count {
+					vel = rl.Vector2Scale(rl.Vector2Add(vel, rl.Vector2Scale(util.Vector2Random(), pattern.velocity/10)), 0.75+rand.Float32()/2)
+					var projType *ProjectileType
+					if rand.Float32() < 0.5 {
+						projType = &projectileTypes.purpleBullet
+					} else {
+						projType = &projectileTypes.blueBullet
+					}
+					newProjectile(world, world.position[id], vel, projType)
 				}
 			}
 		}
