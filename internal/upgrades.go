@@ -59,9 +59,13 @@ var (
 		name:   "Sprinting",
 		unique: true,
 	}
+	ImmuneTime = Upgrade{
+		name:   "Immune Time",
+		unique: true,
+	}
 )
 
-var uniqueUpgrades = []*Upgrade{&MovementSpeed, &UpgradeSelection, &SprintUpgrade}
+var uniqueUpgrades = []*Upgrade{&MovementSpeed, &UpgradeSelection, &SprintUpgrade, &ImmuneTime}
 
 func initUpgrades() {
 	MovementSpeed.incompatible = []*Upgrade{&SprintUpgrade}
@@ -175,6 +179,16 @@ func incrementUpgrade(world *World, upgrade *Upgrade) {
 
 	if upgrade.dollType != nil {
 		summonDollFromUpgrade(world, upgrade)
+	}
+
+	if upgrade == &ImmuneTime {
+		hp := world.hp[world.player]
+		world.hp[world.player] = HP{
+			val:              hp.val,
+			max:              hp.max,
+			attackerCooldown: hp.attackerCooldown,
+			immuneTime:       hp.immuneTime * 2,
+		}
 	}
 
 	stats.UpgradesUsed[upgrade.name]++
