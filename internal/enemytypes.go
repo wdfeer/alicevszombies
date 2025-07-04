@@ -220,4 +220,5 @@ var allEnemyTypes = []*EnemyType{
 	&enemyTypes.zombieFairy,
 	&enemyTypes.medicine,
 	&enemyTypes.kogasa,
+	&enemyTypes.tojiko,
 }
