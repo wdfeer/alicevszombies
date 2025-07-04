@@ -190,7 +190,7 @@ var enemyTypes = struct {
 	},
 	EnemyType{
 		texture:        "tojiko",
-		acceleration:   450,
+		acceleration:   400,
 		drag:           4,
 		baseHP:         40,
 		size:           rl.Vector2{X: 8, Y: 16},
