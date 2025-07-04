@@ -193,7 +193,7 @@ var enemyTypes = struct {
 	},
 	EnemyType{
 		texture:        "tojiko",
-		acceleration:   580,
+		acceleration:   450,
 		drag:           4,
 		baseHP:         40,
 		size:           rl.Vector2{X: 8, Y: 16},
@@ -203,6 +203,12 @@ var enemyTypes = struct {
 		spawnData: SpawnData{
 			boss:   true,
 			weight: 1,
+		},
+		shootPattern: ShootPattern{
+			projectile: &projectileTypes.lightningBolt,
+			cooldown:   0.8,
+			typ:        DirectShoot,
+			velocity:   150,
 		},
 		targetingType: CirclingMelee,
 	},
