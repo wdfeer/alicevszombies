@@ -79,10 +79,10 @@ var achievementsByID = map[uint8]*AchievementType{
 }
 
 func renderAchievements(origin rl.Vector2) {
-	size := rl.Vector2{X: 640, Y: 160}
+	size := rl.Vector2{X: 640, Y: 120}
 	oldFontsize := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE)
 	oldLineSpacing := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_LINE_SPACING)
-	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_LINE_SPACING, 32)
+	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_LINE_SPACING, 20)
 
 	margin := float32(20)
 	for id, ach := range achievementsByID {
@@ -104,11 +104,11 @@ func renderAchievements(origin rl.Vector2) {
 
 		// Title
 		rect.Height /= 4
-		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, 40)
+		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, 32)
 		raygui.Label(rect, ach.name)
 
 		// Description
-		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, 32)
+		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, 24)
 		rect.Y += size.Y / 4
 		rect.Height = size.Y / 2
 		raygui.Label(rect, ach.description)
