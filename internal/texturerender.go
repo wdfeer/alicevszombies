@@ -31,7 +31,7 @@ func renderNeededTextures(world *World, ids []Entity) {
 		centeredPos := util.CenterSomething(float32(assets.textures[texture].Width), float32(assets.textures[texture].Height), world.position[id])
 		rotation := float32(0)
 
-		if texture == "knife" || texture == "magic_missile" {
+		if texture == "knife" || texture == "magic_missile" || texture == "lightning_bolt" {
 			rotation = -rl.Vector2Angle(world.velocity[id], rl.Vector2{X: 1, Y: 0}) * rl.Rad2deg
 		}
 
