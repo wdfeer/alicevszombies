@@ -37,8 +37,12 @@ func renderUpgradeScreen(world *World) {
 	const height = float32(240)
 
 	center := util.HalfScreenSize()
-	xPositions := util.SpaceCentered(width+120, len(screen.upgrades), center.X-width/2)
 	rl.DrawRectangle(0, 0, int32(rl.GetScreenWidth()), int32(rl.GetScreenHeight()), rl.ColorAlpha(rl.Black, 0.4))
+
+	oldTextSize := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE)
+	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, 64)
+	raygui.Label(rl.Rectangle{X: center.X - 320, Y: center.Y - height*1.6, Width: 640, Height: 120}, "Select Upgrade")
+	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, oldTextSize)
 
 	keys := map[int]int32{
 		0: rl.KeyOne,
@@ -46,6 +50,7 @@ func renderUpgradeScreen(world *World) {
 		2: rl.KeyThree,
 	}
 	upgrade := -1
+	xPositions := util.SpaceCentered(width+120, len(screen.upgrades), center.X-width/2)
 	for i, up := range screen.upgrades {
 		rect := rl.Rectangle{X: xPositions[i], Y: center.Y - height/2, Width: width, Height: height}
 		raygui.Panel(rect, "")
