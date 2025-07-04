@@ -10,21 +10,23 @@ import (
 )
 
 var stats = struct {
-	TimePlayed    map[Difficulty]float32
-	EnemiesKilled map[Difficulty]uint
-	DollsSummoned map[Difficulty]uint
-	HighestWave   map[Difficulty]uint
-	RunCount      map[Difficulty]uint
-	Achievements  Achievements
-	UpgradesUsed  map[string]uint
+	TimePlayed           map[Difficulty]float32
+	EnemiesKilledTotal   map[Difficulty]uint
+	DollsSummoned        map[Difficulty]uint
+	HighestWave          map[Difficulty]uint
+	RunCount             map[Difficulty]uint
+	Achievements         Achievements
+	UpgradesUsed         map[string]uint
+	EnemiesKilledPerType map[string]uint
 }{
-	TimePlayed:    make(map[Difficulty]float32),
-	EnemiesKilled: make(map[Difficulty]uint),
-	DollsSummoned: make(map[Difficulty]uint),
-	HighestWave:   make(map[Difficulty]uint),
-	RunCount:      make(map[Difficulty]uint),
-	Achievements:  make(Achievements, len(achievementsByID)),
-	UpgradesUsed:  make(map[string]uint),
+	TimePlayed:           make(map[Difficulty]float32),
+	EnemiesKilledTotal:   make(map[Difficulty]uint),
+	DollsSummoned:        make(map[Difficulty]uint),
+	HighestWave:          make(map[Difficulty]uint),
+	RunCount:             make(map[Difficulty]uint),
+	Achievements:         Achievements{},
+	UpgradesUsed:         make(map[string]uint),
+	EnemiesKilledPerType: make(map[string]uint),
 }
 
 var statAutosaveTimer float32 = 0
@@ -139,11 +141,11 @@ func renderStats(origin rl.Vector2) { // TODO: refactor this monstrosity of a fu
 	origin.Y += spacing
 	kills := uint(0)
 	if statSelectedDifficulty == UNDEFINED {
-		for _, v := range stats.EnemiesKilled {
+		for _, v := range stats.EnemiesKilledTotal {
 			kills += v
 		}
 	} else {
-		kills = stats.EnemiesKilled[statSelectedDifficulty]
+		kills = stats.EnemiesKilledTotal[statSelectedDifficulty]
 	}
 	killCounter := "Enemies killed: " + fmt.Sprint(kills)
 	raygui.Label(util.RectangleV(origin, size), killCounter)

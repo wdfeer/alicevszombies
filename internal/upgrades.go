@@ -70,8 +70,6 @@ var uniqueUpgrades = []*Upgrade{&MovementSpeed, &UpgradeSelection, &SprintUpgrad
 func initUpgrades() {
 	MovementSpeed.incompatible = []*Upgrade{&SprintUpgrade}
 	SprintUpgrade.incompatible = []*Upgrade{&MovementSpeed}
-
-	AllUpgradesObtained.visualMaxProgress = float32(len(upgrades) + len(uniqueUpgrades))
 }
 
 func randomUpgradesFrom(world *World, available []*Upgrade) []*Upgrade {

@@ -36,6 +36,7 @@ type World struct {
 
 func NewWorld() World {
 	initUpgrades()
+	initAchievements()
 
 	world := World{}
 	world.Reset()

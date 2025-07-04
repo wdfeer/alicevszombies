@@ -7,7 +7,7 @@ import (
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
-type Achievements = []float32
+type Achievements = [5]float32
 
 type AchievementType struct {
 	id                uint8
@@ -18,30 +18,39 @@ type AchievementType struct {
 
 var (
 	AllUpgradesObtained = AchievementType{
-		id:                0,
-		name:              "Arcane Arsenal",
-		description:       "Obtain each upgrade once",
-		visualMaxProgress: 0, // Set to upgrade count on upgrade init
+		id:          0,
+		name:        "Arcane Arsenal",
+		description: "Obtain each upgrade once",
+	}
+	AllEnemiesKilled = AchievementType{
+		id:          1,
+		name:        "Aparition Expert",
+		description: "Defeat every enemy once",
 	}
 	Wave30OneDoll = AchievementType{
-		id:                1,
+		id:                2,
 		name:              "Solo Marionette",
 		description:       "Reach Wave 30 while\nhaving only one Doll",
 		visualMaxProgress: 1,
 	}
 	Wave50Lunatic = AchievementType{
-		id:                2,
+		id:                3,
 		name:              "Crimson Thread",
 		description:       "Reach Wave 50 on Lunatic",
 		visualMaxProgress: 50,
 	}
 	Wave100Reached = AchievementType{
-		id:                3,
+		id:                4,
 		name:              "Zombie Slayer",
 		description:       "Reach Wave 100",
 		visualMaxProgress: 100,
 	}
 )
+
+func initAchievements() {
+	AllUpgradesObtained.visualMaxProgress = float32(len(upgrades) + len(uniqueUpgrades))
+	AllEnemiesKilled.visualMaxProgress = float32(len(allEnemyTypes))
+}
 
 func updateAchievements(world *World) {
 	if world.enemySpawner.wave >= 30 && len(world.doll) == 1 {
@@ -66,6 +75,7 @@ var achievementsByID = map[uint8]*AchievementType{
 	Wave50Lunatic.id:       &Wave50Lunatic,
 	Wave100Reached.id:      &Wave100Reached,
 	AllUpgradesObtained.id: &AllUpgradesObtained,
+	AllEnemiesKilled.id:    &AllEnemiesKilled,
 }
 
 func renderAchievements(origin rl.Vector2) {
