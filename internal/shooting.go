@@ -97,12 +97,32 @@ func updateShooting(world *World) {
 				count += uint8(rand.Float32() * float32(count))
 				for range count {
 					vel = rl.Vector2Scale(rl.Vector2Add(vel, rl.Vector2Scale(util.Vector2Random(), pattern.velocity/10)), 0.75+rand.Float32()/2)
+
+					// Leading shot on X
+					if rand.Float32() < 0.1 {
+						if world.velocity[world.player].X < 0 {
+							vel.X -= pattern.velocity / 4
+						} else {
+							vel.X += pattern.velocity / 4
+						}
+					}
+
+					// Leading shot on Y
+					if rand.Float32() < 0.1 {
+						if world.velocity[world.player].Y < 0 {
+							vel.Y -= pattern.velocity / 4
+						} else {
+							vel.Y += pattern.velocity / 4
+						}
+					}
+
 					var projType *ProjectileType
 					if rand.Float32() < 0.5 {
 						projType = &projectileTypes.purpleBullet
 					} else {
 						projType = &projectileTypes.blueBullet
 					}
+
 					newProjectile(world, world.position[id], vel, projType)
 				}
 			}
