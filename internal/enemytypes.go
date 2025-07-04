@@ -198,8 +198,9 @@ var enemyTypes = struct {
 		disableWalking: true,
 		flying:         true,
 		spawnData: SpawnData{
-			boss:   true,
-			weight: 1,
+			boss:    true,
+			weight:  1,
+			minWave: 20,
 		},
 		shootPattern: ShootPattern{
 			projectile: &projectileTypes.lightningBolt,
