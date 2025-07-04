@@ -225,6 +225,7 @@ var enemyTypes = struct {
 		},
 		shootPattern: ShootPattern{
 			cooldown:                float32(2) / 3,
+			projectile:              &projectileTypes.purpleBullet,
 			typ:                     UnknownShoot,
 			count:                   2,
 			countExtraPerDifficulty: 0.2,
