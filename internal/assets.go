@@ -56,6 +56,7 @@ func LoadAssets() {
 	loadTextureAndFlipped("kogasa")
 	loadTextureAndFlipped("kogasa_walk0")
 	loadTextureAndFlipped("kogasa_walk1")
+	loadTextureAndFlipped("tojiko")
 	loadTexture("heal_icon")
 	loadTexture("doll_icon")
 	loadTexture("pitem_icon")
@@ -79,6 +80,7 @@ func LoadAssets() {
 	loadDeathEffect("zombie_fairy")
 	loadDeathEffect("medicine")
 	loadDeathEffect("kogasa")
+	loadDeathEffect("tojiko")
 
 	println("INFO: Death Effects loaded!")
 
