@@ -11,7 +11,6 @@ type EnemyType struct {
 	acceleration   float32
 	drag           float32
 	baseHP         float32
-	projectileType *ProjectileType
 	size           rl.Vector2
 	disableWalking bool
 	flippable      bool
@@ -146,12 +145,11 @@ var enemyTypes = struct {
 		flying:         true,
 	},
 	EnemyType{
-		texture:        "medicine",
-		acceleration:   730,
-		drag:           10,
-		baseHP:         50,
-		size:           rl.Vector2{X: 8, Y: 16},
-		projectileType: &projectileTypes.purpleBullet,
+		texture:      "medicine",
+		acceleration: 730,
+		drag:         10,
+		baseHP:       50,
+		size:         rl.Vector2{X: 8, Y: 16},
 		spawnData: SpawnData{
 			boss:   true,
 			weight: 1,
@@ -168,13 +166,12 @@ var enemyTypes = struct {
 		targetingType: Ranged,
 	},
 	EnemyType{
-		texture:        "kogasa",
-		acceleration:   680,
-		drag:           10,
-		baseHP:         70,
-		size:           rl.Vector2{X: 8, Y: 16},
-		flippable:      true,
-		projectileType: &projectileTypes.blueBullet,
+		texture:      "kogasa",
+		acceleration: 680,
+		drag:         10,
+		baseHP:       70,
+		size:         rl.Vector2{X: 8, Y: 16},
+		flippable:    true,
 		spawnData: SpawnData{
 			boss:   true,
 			weight: 1,
