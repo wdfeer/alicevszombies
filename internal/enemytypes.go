@@ -45,6 +45,7 @@ var enemyTypes = struct {
 	medicine     EnemyType
 	kogasa       EnemyType
 	tojiko       EnemyType
+	nue          EnemyType
 }{
 	EnemyType{
 		texture:      "zombie",
@@ -210,6 +211,29 @@ var enemyTypes = struct {
 		},
 		targetingType: CirclingMelee,
 	},
+	EnemyType{
+		texture:        "nue",
+		acceleration:   700,
+		drag:           10,
+		baseHP:         100,
+		size:           rl.Vector2{X: 8, Y: 16},
+		flippable:      true,
+		disableWalking: true,
+		flying:         true,
+		spawnData: SpawnData{
+			boss:    true,
+			weight:  1.5,
+			minWave: 30,
+		},
+		shootPattern: ShootPattern{
+			cooldown: 0.3,
+			typ:      SpreadShoot,
+			count:    4,
+			spread:   math.Pi / 5,
+			velocity: 80,
+		},
+		targetingType: Ranged,
+	},
 }
 
 var allEnemyTypes = []*EnemyType{
@@ -222,4 +246,5 @@ var allEnemyTypes = []*EnemyType{
 	&enemyTypes.medicine,
 	&enemyTypes.kogasa,
 	&enemyTypes.tojiko,
+	&enemyTypes.nue,
 }
