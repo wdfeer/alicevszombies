@@ -45,6 +45,7 @@ var enemyTypes = struct {
 	zombieFairy  EnemyType
 	medicine     EnemyType
 	kogasa       EnemyType
+	tojiko       EnemyType
 }{
 	EnemyType{
 		texture:      "zombie",
@@ -189,6 +190,21 @@ var enemyTypes = struct {
 			velocity:                80,
 		},
 		targetingType: LeadingMelee,
+	},
+	EnemyType{
+		texture:        "tojiko",
+		acceleration:   580,
+		drag:           4,
+		baseHP:         40,
+		size:           rl.Vector2{X: 8, Y: 16},
+		flippable:      true,
+		disableWalking: true,
+		flying:         true,
+		spawnData: SpawnData{
+			boss:   true,
+			weight: 1,
+		},
+		targetingType: CirclingMelee,
 	},
 }
 
