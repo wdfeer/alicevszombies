@@ -2,40 +2,32 @@ package internal
 
 import "alicevszombies/internal/util"
 
-type Status struct {
-	poison float32
-	slow   float32
-}
+type Status = [2]float32
+type StatusType = uint
+
+const (
+	Poison StatusType = iota
+	Slow
+)
 
 func updateStatus(world *World) {
 	for id, status := range world.status {
-		if status.poison > 0 {
-			if util.ModF(status.poison, 1) < dt {
+		if status[Poison] > 0 {
+			if util.ModF(status[Poison], 1) < dt {
 				damage(world, id, 1)
 			}
 		}
 
-		world.status[id] = Status{
-			poison: status.poison - dt,
-			slow:   status.slow - dt,
+		newStatus := status
+		for i := range newStatus {
+			newStatus[i] -= dt
 		}
+		world.status[id] = newStatus
 	}
 }
 
-func applyPoison(world *World, id Entity, duration float32) {
-	if duration > world.status[id].poison {
-		world.status[id] = Status{
-			poison: duration,
-			slow:   world.status[id].slow,
-		}
-	}
-}
-
-func applySlow(world *World, id Entity, duration float32) {
-	if duration > world.status[id].slow {
-		world.status[id] = Status{
-			poison: world.status[id].poison,
-			slow:   duration,
-		}
-	}
+func applyStatus(world *World, id Entity, typ StatusType, duration float32) {
+	newStatus := world.status[id]
+	newStatus[typ] = max(newStatus[typ], duration)
+	world.status[id] = newStatus
 }

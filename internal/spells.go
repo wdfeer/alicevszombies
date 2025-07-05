@@ -19,7 +19,7 @@ func renderSpells(world *World) {
 	yPositions := util.SpaceCentered(size.Y*1.2, spellCount, pos.Y)
 
 	pos.Y = yPositions[0]
-	canHeal := world.playerData.mana >= 5 && !(world.difficulty == LUNATIC && world.status[world.player].poison > 0)
+	canHeal := world.playerData.mana >= 5 && !(world.difficulty == LUNATIC && world.status[world.player][Poison] > 0)
 	if !canHeal {
 		raygui.Disable()
 	}

@@ -55,13 +55,13 @@ func renderHUD(world *World) {
 	}
 
 	// Statuses
-	if world.status[world.player].poison > 0 {
+	if world.status[world.player][Poison] > 0 {
 		str := "Poisoned"
 		center := rl.Vector2{X: halfSize.X, Y: yPositions[3]}
 		pos := util.CenterText(str, 32, center)
 		rl.DrawText(str, int32(pos.X), int32(pos.Y), 32, colors.Purple)
 	}
-	if world.status[world.player].slow > 0 {
+	if world.status[world.player][Slow] > 0 {
 		str := "Slowed"
 		center := rl.Vector2{X: halfSize.X, Y: yPositions[4]}
 		pos := util.CenterText(str, 32, center)

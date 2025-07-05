@@ -8,7 +8,7 @@ import (
 
 func updateDrag(world *World) {
 	for id, drag := range world.drag {
-		if world.status[id].slow > 0 {
+		if world.status[id][Slow] > 0 {
 			drag += 0.5 + float32(world.difficulty)/3
 		}
 

@@ -92,9 +92,9 @@ func updateCollisions(world *World) {
 		projRec := util.CenterRectangle(world.position[id], proj.typ.size)
 		if util.CheckCollisionRecs(playerRec, projRec) {
 			if proj.typ == &projectileTypes.purpleBullet { // TODO: generalize this
-				applyPoison(world, world.player, statusDuration)
+				applyStatus(world, world.player, Poison, statusDuration)
 			} else if proj.typ == &projectileTypes.blueBullet {
-				applySlow(world, world.player, statusDuration)
+				applyStatus(world, world.player, Slow, statusDuration)
 			}
 
 			damageWithCooldown(world, world.player, proj.typ.damage, id)
@@ -106,7 +106,7 @@ func updateCollisions(world *World) {
 			for doll := range world.doll {
 				dollRec := util.CenterRectangle(world.position[doll], world.size[doll])
 				if util.CheckCollisionRecs(projRec, dollRec) {
-					applySlow(world, doll, statusDuration)
+					applyStatus(world, doll, Slow, statusDuration)
 				}
 			}
 		}
