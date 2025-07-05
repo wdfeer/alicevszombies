@@ -43,7 +43,11 @@ func updateEnemySpawner(world *World) {
 		spawner.enemiesToSpawn = 2 + spawner.wave*2
 	}
 
-	spawner.spawnTimer = spawner.spawnTimer - dt
+	spawner.spawnTimer -= dt
+	if world.status[world.player][Bleed] > 0 {
+		spawner.spawnTimer -= dt * 2
+	}
+
 	if spawner.spawnTimer <= 0 {
 		newEnemy(world, enemyTypeToSpawn(world))
 
