@@ -22,7 +22,7 @@ func renderHUD(world *World) {
 	}
 
 	// Lower Center
-	yPositions := util.SpaceCentered(50, 5, float32(rl.GetScreenHeight())-200)
+	yPositions := util.SpaceCentered(50, 6, float32(rl.GetScreenHeight())-200)
 
 	// Stamina bar
 	if world.playerData.stamina < 1 {
@@ -66,6 +66,12 @@ func renderHUD(world *World) {
 		center := rl.Vector2{X: halfSize.X, Y: yPositions[4]}
 		pos := util.CenterText(str, 32, center)
 		rl.DrawText(str, int32(pos.X), int32(pos.Y), 32, colors.Blue)
+	}
+	if world.status[world.player][Bleed] > 0 {
+		str := "Bleeding"
+		center := rl.Vector2{X: halfSize.X, Y: yPositions[5]}
+		pos := util.CenterText(str, 32, center)
+		rl.DrawText(str, int32(pos.X), int32(pos.Y), 32, colors.Red)
 	}
 
 	{ // Boss Bar
