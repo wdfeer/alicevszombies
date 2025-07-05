@@ -17,7 +17,7 @@ func updateCollisions(world *World) {
 		// Enemy -> Player
 		if util.CheckCollisionRecs(playerRec, enemyRec) {
 			if world.difficulty == LUNATIC {
-				applyStatus(world, world.player, Bleed, 4.5)
+				applyStatus(world, world.player, Bleed, 5.5)
 			}
 			damageWithCooldown(world, world.player, 1, enemy)
 

@@ -16,7 +16,7 @@ func updateStatus(world *World) {
 		if status[Poison] > 0 && util.ModF(status[Poison], 1) < dt {
 			damage(world, id, 1)
 		}
-		if status[Bleed] > 0 && util.ModF(status[Bleed], 1) < dt {
+		if status[Bleed] > 0 && util.ModF(status[Bleed], 2) < dt {
 			damage(world, id, 1)
 		}
 
