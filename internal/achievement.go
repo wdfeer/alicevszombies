@@ -24,7 +24,7 @@ var (
 	}
 	AllEnemiesKilled = AchievementType{
 		id:          1,
-		name:        "Aparition Expert",
+		name:        "Apparition Expert",
 		description: "Defeat every enemy once",
 	}
 	Wave30OneDoll = AchievementType{
