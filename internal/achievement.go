@@ -68,6 +68,8 @@ func updateAchievements(world *World) {
 	stats.Achievements[Wave100Reached.id] = float32(highestWave) / 100
 
 	stats.Achievements[AllUpgradesObtained.id] = float32(len(stats.UpgradesUsed)) / AllUpgradesObtained.visualMaxProgress
+
+	stats.Achievements[AllEnemiesKilled.id] = float32(len(stats.EnemiesKilledPerType)) / AllEnemiesKilled.visualMaxProgress
 }
 
 var achievementsByID = map[uint8]*AchievementType{
