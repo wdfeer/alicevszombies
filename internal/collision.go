@@ -45,11 +45,12 @@ func updateCollisions(world *World) {
 			}
 
 			if util.CheckCollisionCenteredVsRec(world.position[id], proj.typ.size, enemyRec) {
+				dmg := proj.typ.damage + (float32(world.playerData.upgrades[&DollDamage]/2) / 4)
 				if proj.typ.deleteOnHit {
-					damage(world, enemy, proj.typ.damage+(float32(world.playerData.upgrades[&DollDamage])/8))
+					damage(world, enemy, dmg)
 					world.deleteEntity(id)
 				} else {
-					damageWithCooldown(world, enemy, proj.typ.damage+(float32(world.playerData.upgrades[&DollDamage])/8), id)
+					damageWithCooldown(world, enemy, dmg, id)
 				}
 				break
 			}
