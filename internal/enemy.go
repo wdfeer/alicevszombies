@@ -13,11 +13,8 @@ func newEnemy(world *World, typ *EnemyType) Entity {
 	world.enemy[id] = typ
 
 	accel := typ.acceleration
-	switch world.difficulty {
-	case EASY:
+	if world.difficulty == EASY {
 		accel *= 0.92
-	case LUNATIC:
-		accel *= 1.01
 	}
 	world.targeting[id] = Targeting{
 		accel: accel,
