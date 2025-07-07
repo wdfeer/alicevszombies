@@ -78,7 +78,7 @@ var enemyTypes = struct {
 		baseHP:       7,
 		size:         rl.Vector2{X: 15, Y: 16},
 		spawnData: SpawnData{
-			weight:  0.1,
+			weight:  0.2,
 			minWave: 8,
 		},
 		targetingType: DirectMelee,
