@@ -38,6 +38,7 @@ func (exploding DeathExplode) getProjectileCount(world *World) uint {
 var enemyTypes = struct {
 	zombie       EnemyType
 	smallZombie  EnemyType
+	chunkyZombie EnemyType
 	purpleZombie EnemyType
 	blueZombie   EnemyType
 	neriumGirl   EnemyType
@@ -67,6 +68,18 @@ var enemyTypes = struct {
 		spawnData: SpawnData{
 			weight:  0.2,
 			minWave: 4,
+		},
+		targetingType: DirectMelee,
+	},
+	EnemyType{
+		texture:      "chunky_zombie",
+		acceleration: 680,
+		drag:         12,
+		baseHP:       7,
+		size:         rl.Vector2{X: 15, Y: 16},
+		spawnData: SpawnData{
+			weight:  0.1,
+			minWave: 8,
 		},
 		targetingType: DirectMelee,
 	},
@@ -239,6 +252,7 @@ var enemyTypes = struct {
 var allEnemyTypes = []*EnemyType{
 	&enemyTypes.zombie,
 	&enemyTypes.smallZombie,
+	&enemyTypes.chunkyZombie,
 	&enemyTypes.purpleZombie,
 	&enemyTypes.blueZombie,
 	&enemyTypes.neriumGirl,
