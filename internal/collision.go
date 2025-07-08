@@ -19,10 +19,13 @@ func updateCollisions(world *World) {
 			switch world.difficulty {
 			case HARD:
 				applyStatus(world, world.player, Bleed, 1.5)
+				damageWithCooldown(world, world.player, 1, enemy)
 			case LUNATIC:
-				applyStatus(world, world.player, Bleed, 5.5)
+				applyStatus(world, world.player, Bleed, 3.5)
+				damageWithCooldown(world, world.player, 2, enemy)
+			default:
+				damageWithCooldown(world, world.player, 1, enemy)
 			}
-			damageWithCooldown(world, world.player, 1, enemy)
 
 			dir := util.Vector2Direction(playerPos, enemyPos)
 			world.velocity[enemy] = rl.Vector2Add(world.velocity[enemy], rl.Vector2Scale(dir, 800*dt))
