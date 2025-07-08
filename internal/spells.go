@@ -69,4 +69,11 @@ func renderSpells(world *World) {
 	}
 
 	raygui.Enable()
+
+	pos.Y = halfHeight*2 - size.Y - 80
+	if (raygui.Button(util.CenterRectangle(pos, size), "") || rl.IsKeyPressed(rl.KeySemicolon)) && !world.paused {
+		// TODO: switch doll targeting
+	}
+	util.DrawTextureCenteredScaled(assets.textures["doll_config_icon"], rl.Vector2{X: pos.X - size.X/5, Y: pos.Y}, 4)
+	util.DrawTextCentered(";", 40, rl.Vector2{X: pos.X + size.X/5, Y: pos.Y})
 }

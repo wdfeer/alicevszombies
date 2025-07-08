@@ -63,10 +63,13 @@ func LoadAssets() {
 	loadTextureAndFlipped("nue")
 	loadTextureAndFlipped("nue_walk0")
 	loadTextureAndFlipped("nue_walk1")
+
 	loadTexture("heal_icon")
 	loadTexture("doll_icon")
 	loadTexture("pitem_icon")
 	loadTexture("unique_upgrade_icon")
+	// TODO: create doll config icon
+
 	loadTexture("grass")
 
 	loadTexture("knife")
