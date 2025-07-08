@@ -12,6 +12,7 @@ type HP struct {
 	max              float32
 	attackerCooldown map[Entity]float32
 	immuneTime       float32
+	damageMult       float32
 }
 
 func newHP(amount float32) HP {
@@ -20,6 +21,7 @@ func newHP(amount float32) HP {
 		max:              amount,
 		attackerCooldown: make(map[Entity]float32),
 		immuneTime:       0.5,
+		damageMult:       1,
 	}
 }
 
@@ -34,6 +36,7 @@ func updateHP(world *World) {
 			max:              hp.max,
 			attackerCooldown: hp.attackerCooldown,
 			immuneTime:       hp.immuneTime,
+			damageMult:       hp.damageMult,
 		}
 	}
 }
@@ -57,6 +60,8 @@ func damage(world *World, id Entity, dmg float32) {
 		println("WARNING: Tried damaging deleted enemy with id", id)
 		return
 	}
+
+	dmg *= hp.damageMult
 
 	hp.val -= dmg
 
