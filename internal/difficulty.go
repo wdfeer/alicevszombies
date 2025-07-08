@@ -31,6 +31,7 @@ func selectDifficulty(world *World, difficulty Difficulty) {
 		max:              1e6,
 		immuneTime:       iTime,
 		attackerCooldown: make(map[Entity]float32),
+		damageMult:       1,
 	}
 
 	mana := float32(0)
