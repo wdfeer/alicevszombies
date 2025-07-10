@@ -68,7 +68,7 @@ func LoadAssets() {
 	loadTexture("doll_icon")
 	loadTexture("pitem_icon")
 	loadTexture("unique_upgrade_icon")
-	// TODO: create doll config icon
+	loadTexture("doll_config_icon")
 
 	loadTexture("grass")
 
