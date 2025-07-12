@@ -45,6 +45,8 @@ func updateUI(world *World) {
 	}
 }
 
+const CursorHideCooldown = 2.5
+
 func renderUI(world *World) {
 	if world.uistate.isMainMenu {
 		renderMainMenu(world)
@@ -59,7 +61,7 @@ func renderUI(world *World) {
 		}
 	}
 
-	if world.uistate.cursorHideTimer < 2.5 {
+	if world.uistate.cursorHideTimer < CursorHideCooldown {
 		rl.DrawTextureEx(assets.textures["cursor"+fmt.Sprint(options.CursorType)], rl.GetMousePosition(), 0, 4, rl.White)
 	}
 

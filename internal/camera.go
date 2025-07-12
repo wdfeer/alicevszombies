@@ -19,7 +19,7 @@ func createCamera(world *World) rl.Camera2D {
 	target := world.position[world.player]
 
 	offset := rl.Vector2{X: 0, Y: 0}
-	if world.uistate.cursorHideTimer < 2.5 {
+	if world.uistate.cursorHideTimer < CursorHideCooldown {
 		offset = rl.GetMousePosition()
 		offset = rl.Vector2Subtract(offset, util.HalfScreenSize())
 		offset = rl.Vector2Scale(offset, 1/options.Zoom/4)
