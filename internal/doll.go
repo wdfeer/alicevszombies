@@ -13,7 +13,19 @@ func spawnDollWithAnimation(world *World, typ *DollType) {
 	world.playerData.dollToSpawn = typ
 	world.playerData.dollSpawnPosition = rl.Vector2Add(world.position[world.player], rl.Vector2Scale(util.Vector2Random(), 24))
 
-	// TODO: spawn particles
+	particles := newBreakdown(world, typ.texture, world.playerData.dollSpawnPosition)
+	for _, id := range particles {
+		offset := util.Vector2Random()
+		offset = rl.Vector2Scale(offset, 3)
+
+		world.position[id] = rl.Vector2Add(world.position[id], offset)
+		world.velocity[id] = rl.Vector2Scale(offset, -1/world.playerData.dollSpawnTimer)
+		world.pixelParticle[id] = PixelParticle{
+			timeleft:     world.playerData.dollSpawnTimer,
+			tint:         world.pixelParticle[id].tint,
+			reverseAlpha: true,
+		}
+	}
 }
 
 func newDoll(world *World, typ *DollType) Entity {
