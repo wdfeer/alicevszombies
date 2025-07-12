@@ -12,9 +12,10 @@ func render(world *World) {
 
 	rl.ClearBackground(rl.Black)
 
-	rl.BeginMode2D(createCamera(world))
-	renderGrass(world)
-	renderTextures(world)
+	camera := createCamera(world)
+	rl.BeginMode2D(camera)
+	renderGrass(&camera)
+	renderTextures(world, &camera)
 	renderCombatText(world)
 	renderPixelParticles(world)
 	rl.EndMode2D()
@@ -22,9 +23,9 @@ func render(world *World) {
 	renderUI(world)
 }
 
-func renderGrass(world *World) {
+func renderGrass(camera *rl.Camera2D) {
 	const GRASS_SIZE = 32
-	origin := world.position[world.player]
+	origin := camera.Target
 	origin.X -= util.ModF(origin.X, GRASS_SIZE)
 	origin.Y -= util.ModF(origin.Y, GRASS_SIZE)
 	for x := -400; x < 400; x += GRASS_SIZE {
