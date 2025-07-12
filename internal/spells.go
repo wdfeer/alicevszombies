@@ -18,6 +18,7 @@ func renderSpells(world *World) {
 	}
 	yPositions := util.SpaceCentered(size.Y*1.2, spellCount, pos.Y)
 
+	// Heal Spell
 	pos.Y = yPositions[0]
 	canHeal := world.playerData.mana >= 5 && !(world.difficulty == LUNATIC && world.status[world.player][Poison] > 0)
 	if !canHeal {
@@ -31,17 +32,19 @@ func renderSpells(world *World) {
 	util.DrawTextureCenteredScaled(assets.textures["heal_icon"], rl.Vector2{X: pos.X - size.X/5, Y: pos.Y}, 4)
 	util.DrawTextCentered("1", 40, rl.Vector2{X: pos.X + size.X/5, Y: pos.Y})
 
+	// Doll Summon
 	if world.playerData.mana < 10 || world.playerData.dollToSpawn != nil {
 		raygui.Disable()
 	}
 	pos.Y = yPositions[1]
-	if (raygui.Button(util.CenterRectangle(pos, size), "") || rl.IsKeyPressed(rl.KeyTwo)) && world.playerData.mana >= 10 && !world.paused {
+	if (raygui.Button(util.CenterRectangle(pos, size), "") || rl.IsKeyPressed(rl.KeyTwo)) && (world.playerData.mana >= 10 && world.playerData.dollToSpawn == nil) && !world.paused {
 		spawnDollWithAnimation(world, &dollTypes.basicDoll)
 		world.playerData.mana -= 10
 	}
 	util.DrawTextureCenteredScaled(assets.textures["doll_icon"], rl.Vector2{X: pos.X - size.X/5, Y: pos.Y}, 4)
 	util.DrawTextCentered("2", 40, rl.Vector2{X: pos.X + size.X/5, Y: pos.Y})
 
+	// Upgrade
 	if world.playerData.mana >= 10 {
 		raygui.Enable()
 	}
@@ -54,6 +57,7 @@ func renderSpells(world *World) {
 	util.DrawTextureCenteredScaled(assets.textures["pitem_icon"], rl.Vector2{X: pos.X - size.X/5, Y: pos.Y}, 4)
 	util.DrawTextCentered("3", 40, rl.Vector2{X: pos.X + size.X/5, Y: pos.Y})
 
+	// Unique Upgrade
 	if spellCount == 4 {
 		disable := world.playerData.mana < 100 || len(availableUniqueUpgrades(world)) == 0
 		if disable {
