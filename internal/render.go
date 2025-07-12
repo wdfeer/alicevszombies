@@ -29,9 +29,11 @@ func render(world *World) {
 	rl.BeginDrawing()
 	defer rl.EndDrawing()
 
-	rl.BeginShaderMode(assets.shaders["bloom"])
+	if options.Bloom {
+		rl.BeginShaderMode(assets.shaders["bloom"])
+		defer rl.EndShaderMode()
+	}
 	rl.DrawTextureRec(assets.renderTexture.Texture, rl.Rectangle{X: 0, Y: 0, Width: float32(rl.GetScreenWidth()), Height: -float32(rl.GetScreenHeight())}, rl.Vector2{X: 0, Y: 0}, rl.White)
-	rl.EndShaderMode()
 }
 
 func renderGrass(camera *rl.Camera2D) {

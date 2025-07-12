@@ -14,6 +14,7 @@ type Options struct {
 	CursorType int32
 	Zoom       float32
 	Shadows    bool
+	Bloom      bool
 }
 
 var options Options
@@ -39,6 +40,7 @@ func loadOptions() {
 		CursorType: 0,
 		Zoom:       8,
 		Shadows:    true,
+		Bloom:      true,
 	}
 
 	go saveOptions()
@@ -92,6 +94,9 @@ func renderOptions(origin rl.Vector2) {
 
 	origin.Y += buttonHeight + buttonSpacing
 	newOptions.Shadows = raygui.Toggle(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "Shadows", options.Shadows)
+
+	origin.Y += buttonHeight + buttonSpacing
+	newOptions.Bloom = raygui.Toggle(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "Bloom", options.Bloom)
 
 	if newOptions != options {
 		options = newOptions
