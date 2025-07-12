@@ -6,13 +6,13 @@ import (
 )
 
 var assets = struct {
-	textures     map[string]rl.Texture2D
-	deathEffects map[string]DeathEffectAsset
-	sounds       map[string]rl.Sound
+	textures   map[string]rl.Texture2D
+	breakdowns map[string]TextureBreakdown
+	sounds     map[string]rl.Sound
 }{
-	textures:     make(map[string]rl.Texture2D),
-	deathEffects: make(map[string]DeathEffectAsset),
-	sounds:       make(map[string]rl.Sound),
+	textures:   make(map[string]rl.Texture2D),
+	breakdowns: make(map[string]TextureBreakdown),
+	sounds:     make(map[string]rl.Sound),
 }
 
 func LoadAssets() {
@@ -78,18 +78,18 @@ func LoadAssets() {
 
 	println("INFO: Textures loaded!")
 
-	loadDeathEffect("player")
-	loadDeathEffect("zombie")
-	loadDeathEffect("small_zombie")
-	loadDeathEffect("chunky_zombie")
-	loadDeathEffect("purple_zombie")
-	loadDeathEffect("blue_zombie")
-	loadDeathEffect("nerium_girl")
-	loadDeathEffect("zombie_fairy")
-	loadDeathEffect("medicine")
-	loadDeathEffect("kogasa")
-	loadDeathEffect("tojiko")
-	loadDeathEffect("nue")
+	loadBreakdown("player")
+	loadBreakdown("zombie")
+	loadBreakdown("small_zombie")
+	loadBreakdown("chunky_zombie")
+	loadBreakdown("purple_zombie")
+	loadBreakdown("blue_zombie")
+	loadBreakdown("nerium_girl")
+	loadBreakdown("zombie_fairy")
+	loadBreakdown("medicine")
+	loadBreakdown("kogasa")
+	loadBreakdown("tojiko")
+	loadBreakdown("nue")
 
 	println("INFO: Death Effects loaded!")
 
