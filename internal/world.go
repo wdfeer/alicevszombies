@@ -8,30 +8,30 @@ import (
 
 type Entity = uint32
 type World struct {
-	paused       bool
-	uistate      UIState
-	difficulty   Difficulty
-	nextID       Entity
-	player       Entity
-	playerData   PlayerData
-	enemySpawner EnemySpawner
-	targeting    map[Entity]Targeting
-	doll         map[Entity]*DollType
-	enemy        map[Entity]*EnemyType
-	projectile   map[Entity]Projectile
-	position     map[Entity]rl.Vector2
-	velocity     map[Entity]rl.Vector2
-	drag         map[Entity]float32
-	texture      map[Entity]string
-	hp           map[Entity]HP
-	combatText   map[Entity]CombatText
-	size         map[Entity]rl.Vector2
-	deathEffect  map[Entity]DeathEffectParticle
-	animTimer    map[Entity]float32
-	walkAnimated map[Entity]WalkAnimation
-	flippable    map[Entity]bool
-	shootTimer   map[Entity]float32
-	status       map[Entity]Status
+	paused        bool
+	uistate       UIState
+	difficulty    Difficulty
+	nextID        Entity
+	player        Entity
+	playerData    PlayerData
+	enemySpawner  EnemySpawner
+	targeting     map[Entity]Targeting
+	doll          map[Entity]*DollType
+	enemy         map[Entity]*EnemyType
+	projectile    map[Entity]Projectile
+	position      map[Entity]rl.Vector2
+	velocity      map[Entity]rl.Vector2
+	drag          map[Entity]float32
+	texture       map[Entity]string
+	hp            map[Entity]HP
+	combatText    map[Entity]CombatText
+	size          map[Entity]rl.Vector2
+	pixelParticle map[Entity]PixelParticle
+	animTimer     map[Entity]float32
+	walkAnimated  map[Entity]WalkAnimation
+	flippable     map[Entity]bool
+	shootTimer    map[Entity]float32
+	status        map[Entity]Status
 }
 
 func NewWorld() World {
@@ -63,7 +63,7 @@ func (world *World) Reset() {
 	world.hp = make(map[Entity]HP)
 	world.combatText = make(map[Entity]CombatText)
 	world.size = make(map[Entity]rl.Vector2)
-	world.deathEffect = make(map[Entity]DeathEffectParticle)
+	world.pixelParticle = make(map[Entity]PixelParticle)
 	world.walkAnimated = make(map[Entity]WalkAnimation)
 	world.flippable = make(map[Entity]bool)
 	world.projectile = make(map[Entity]Projectile)
@@ -103,7 +103,7 @@ func (world *World) Update() {
 		updateVelocity(world)
 		updateCollisions(world)
 
-		updateDeathEffects(world)
+		updatePixelParticles(world)
 		updateCombatText(world)
 		updateAnimationData(world)
 	}
@@ -139,7 +139,7 @@ func (world *World) deleteEntity(entity Entity) {
 	delete(world.hp, entity)
 	delete(world.combatText, entity)
 	delete(world.size, entity)
-	delete(world.deathEffect, entity)
+	delete(world.pixelParticle, entity)
 	delete(world.walkAnimated, entity)
 	delete(world.projectile, entity)
 	delete(world.shootTimer, entity)

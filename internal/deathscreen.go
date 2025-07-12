@@ -24,7 +24,7 @@ func onPlayerDeath(world *World) {
 func updateDeathScreen(world *World) {
 	world.uistate.cursorHideTimer = 0
 
-	updateDeathEffects(world)
+	updatePixelParticles(world)
 	updateVelocity(world)
 
 	if rl.IsKeyPressed(rl.KeyEscape) {

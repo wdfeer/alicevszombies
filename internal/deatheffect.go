@@ -6,11 +6,6 @@ import (
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
-type DeathEffectParticle struct {
-	timeleft float32
-	tint     rl.Color
-}
-
 type DeathEffectAsset struct {
 	pixels map[rl.Vector2]rl.Color
 	size   rl.Vector2
@@ -43,33 +38,9 @@ func newDeathEffect(world *World, name string, center rl.Vector2) {
 		world.position[id] = rl.Vector2Add(position, pixelpos)
 		world.velocity[id] = rl.Vector2Rotate(rl.Vector2{X: 0, Y: 20}, rand.Float32()-0.5)
 		world.drag[id] = rand.Float32()/10 + 0.1
-		world.deathEffect[id] = DeathEffectParticle{
+		world.pixelParticle[id] = PixelParticle{
 			timeleft: 1,
 			tint:     color,
 		}
-	}
-}
-
-func updateDeathEffects(world *World) {
-	for id, eff := range world.deathEffect {
-		time := eff.timeleft - dt
-		if time > 0 {
-			world.deathEffect[id] = DeathEffectParticle{
-				timeleft: time,
-				tint:     eff.tint,
-			}
-		} else {
-			world.deleteEntity(id)
-		}
-	}
-}
-
-func renderDeathEffects(world *World) {
-	for id, eff := range world.deathEffect {
-		if options.Shadows {
-			pos := rl.Vector2Add(world.position[id], rl.Vector2{X: 0.5, Y: 0.5})
-			rl.DrawRectangleV(pos, rl.Vector2{X: 1, Y: 1}, rl.ColorAlpha(rl.Black, min(eff.timeleft, 1)))
-		}
-		rl.DrawRectangleV(world.position[id], rl.Vector2{X: 1, Y: 1}, rl.ColorAlpha(eff.tint, min(eff.timeleft, 1)))
 	}
 }

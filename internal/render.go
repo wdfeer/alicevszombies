@@ -16,7 +16,7 @@ func render(world *World) {
 	renderGrass(world)
 	renderTextures(world)
 	renderCombatText(world)
-	renderDeathEffects(world)
+	renderPixelParticles(world)
 	rl.EndMode2D()
 
 	renderUI(world)
