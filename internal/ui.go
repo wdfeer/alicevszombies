@@ -53,11 +53,12 @@ func renderUI(world *World) {
 	} else if world.uistate.isDeathScreen {
 		renderDeathScreen(world)
 	} else {
-		renderHUD(world)
 		if world.uistate.isUpgradeScreen {
 			renderUpgradeScreen(world)
 		} else if world.paused {
 			renderPauseMenu(world)
+		} else {
+			renderHUD(world)
 		}
 	}
 
