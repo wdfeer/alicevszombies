@@ -31,10 +31,9 @@ func renderSpells(world *World) {
 	util.DrawTextureCenteredScaled(assets.textures["heal_icon"], rl.Vector2{X: pos.X - size.X/5, Y: pos.Y}, 4)
 	util.DrawTextCentered("1", 40, rl.Vector2{X: pos.X + size.X/5, Y: pos.Y})
 
-	if world.playerData.mana < 10 {
+	if world.playerData.mana < 10 || world.playerData.dollToSpawn != nil {
 		raygui.Disable()
 	}
-
 	pos.Y = yPositions[1]
 	if (raygui.Button(util.CenterRectangle(pos, size), "") || rl.IsKeyPressed(rl.KeyTwo)) && world.playerData.mana >= 10 && !world.paused {
 		spawnDollWithAnimation(world, &dollTypes.basicDoll)
@@ -43,6 +42,9 @@ func renderSpells(world *World) {
 	util.DrawTextureCenteredScaled(assets.textures["doll_icon"], rl.Vector2{X: pos.X - size.X/5, Y: pos.Y}, 4)
 	util.DrawTextCentered("2", 40, rl.Vector2{X: pos.X + size.X/5, Y: pos.Y})
 
+	if world.playerData.mana >= 10 {
+		raygui.Enable()
+	}
 	pos.Y = yPositions[2]
 	if (raygui.Button(util.CenterRectangle(pos, size), "") || rl.IsKeyPressed(rl.KeyThree)) && world.playerData.mana >= 10 && !world.paused {
 		world.paused = true

@@ -9,6 +9,10 @@ import (
 )
 
 func spawnDollWithAnimation(world *World, typ *DollType) {
+	if world.playerData.dollToSpawn != nil {
+		println("WARNING: Overriding doll to spawn!")
+	}
+
 	world.playerData.dollSpawnTimer = 0.5
 	world.playerData.dollToSpawn = typ
 	world.playerData.dollSpawnPosition = rl.Vector2Add(world.position[world.player], rl.Vector2Scale(util.Vector2Random(), 24))

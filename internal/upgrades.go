@@ -105,29 +105,31 @@ func availableUpgrades(world *World) []*Upgrade {
 	}
 
 	for _, up := range upgrades {
-		if up.cost == nil {
-			newSlice = append(newSlice, up)
+		switch {
+		case up.dollType != nil && world.playerData.dollToSpawn != nil:
 			continue
-		}
-
-		failed := false
-		for doll, required := range up.cost {
-			if count, ok := dollCounts[doll]; required > 0 && (!ok || count < required) {
-				failed = true
-				break
-			}
-		}
-
-		if !failed && up.incompatible != nil {
-			for _, x := range up.incompatible {
-				if world.playerData.upgrades[x] > 0 {
+		case up.cost != nil:
+			failed := false
+			for doll, required := range up.cost {
+				if count, ok := dollCounts[doll]; required > 0 && (!ok || count < required) {
 					failed = true
 					break
 				}
 			}
-		}
 
-		if !failed {
+			if !failed && up.incompatible != nil {
+				for _, x := range up.incompatible {
+					if world.playerData.upgrades[x] > 0 {
+						failed = true
+						break
+					}
+				}
+			}
+
+			if !failed {
+				newSlice = append(newSlice, up)
+			}
+		default:
 			newSlice = append(newSlice, up)
 		}
 	}
