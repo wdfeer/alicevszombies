@@ -16,6 +16,7 @@ type UIState struct {
 	upgradeScreen    UpgradeScreen
 	mainMenu         MainMenu
 	displayFPS       bool
+	cameraOffset     rl.Vector2
 }
 
 func updateUI(world *World) {

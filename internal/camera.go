@@ -17,12 +17,16 @@ func updateCameraZoom() {
 
 func createCamera(world *World) rl.Camera2D {
 	target := world.position[world.player]
+
+	offset := rl.Vector2{X: 0, Y: 0}
 	if world.uistate.cursorHideTimer < 2.5 {
-		offset := rl.GetMousePosition()
+		offset = rl.GetMousePosition()
 		offset = rl.Vector2Subtract(offset, util.HalfScreenSize())
 		offset = rl.Vector2Scale(offset, 1/options.Zoom/4)
-		target = rl.Vector2Add(target, offset)
 	}
+	world.uistate.cameraOffset = rl.Vector2Lerp(world.uistate.cameraOffset, offset, 0.2)
+
+	target = rl.Vector2Add(target, world.uistate.cameraOffset)
 	camera := rl.Camera2D{
 		Target: target,
 		Offset: util.HalfScreenSize(),
