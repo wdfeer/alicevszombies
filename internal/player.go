@@ -9,6 +9,9 @@ type PlayerData struct {
 	stamina           float32
 	staminaRegenTimer float32
 	upgrades          map[*Upgrade]uint32
+	dollSpawnTimer    float32
+	dollToSpawn       *DollType
+	dollSpawnPosition rl.Vector2
 }
 
 func (data *PlayerData) upgradeCount() uint32 {
@@ -64,4 +67,14 @@ func updatePlayer(world *World) {
 
 	delta := rl.Vector2Scale(dir, accel*dt)
 	world.velocity[world.player] = rl.Vector2Add(world.velocity[world.player], delta)
+
+	if world.playerData.dollToSpawn != nil {
+		newDollSpawnTimer := world.playerData.dollSpawnTimer - dt
+		if world.playerData.dollSpawnTimer > 0 && newDollSpawnTimer < 0 {
+			id := newDoll(world, world.playerData.dollToSpawn)
+			world.position[id] = world.playerData.dollSpawnPosition
+			world.playerData.dollToSpawn = nil
+		}
+		world.playerData.dollSpawnTimer = newDollSpawnTimer
+	}
 }

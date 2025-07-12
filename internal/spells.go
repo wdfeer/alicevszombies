@@ -37,8 +37,7 @@ func renderSpells(world *World) {
 
 	pos.Y = yPositions[1]
 	if (raygui.Button(util.CenterRectangle(pos, size), "") || rl.IsKeyPressed(rl.KeyTwo)) && world.playerData.mana >= 10 && !world.paused {
-		id := newDoll(world, &dollTypes.basicDoll)
-		world.position[id] = world.position[world.player]
+		spawnDollWithAnimation(world, &dollTypes.basicDoll)
 		world.playerData.mana -= 10
 	}
 	util.DrawTextureCenteredScaled(assets.textures["doll_icon"], rl.Vector2{X: pos.X - size.X/5, Y: pos.Y}, 4)

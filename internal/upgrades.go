@@ -206,6 +206,5 @@ func summonDollFromUpgrade(world *World, upgrade *Upgrade) {
 		}
 	}
 
-	id := newDoll(world, upgrade.dollType)
-	world.position[id] = world.position[world.player]
+	spawnDollWithAnimation(world, upgrade.dollType)
 }

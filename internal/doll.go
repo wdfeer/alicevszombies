@@ -8,6 +8,14 @@ import (
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
+func spawnDollWithAnimation(world *World, typ *DollType) {
+	world.playerData.dollSpawnTimer = 0.5
+	world.playerData.dollToSpawn = typ
+	world.playerData.dollSpawnPosition = rl.Vector2Add(world.position[world.player], rl.Vector2Scale(util.Vector2Random(), 24))
+
+	// TODO: spawn particles
+}
+
 func newDoll(world *World, typ *DollType) Entity {
 	id := world.newEntity()
 	world.doll[id] = typ
