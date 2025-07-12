@@ -91,7 +91,14 @@ func LoadAssets() {
 	loadBreakdown("tojiko")
 	loadBreakdown("nue")
 
-	println("INFO: Death Effects loaded!")
+	loadBreakdown("doll_sword")
+	loadBreakdown("doll_lance")
+	loadBreakdown("doll_scythe")
+	loadBreakdown("doll_destruction")
+	loadBreakdown("doll_knife")
+	loadBreakdown("doll_magician")
+
+	println("INFO: Texture Breakdowns loaded!")
 
 	rl.InitAudioDevice()
 	loadSound("player_hit")
