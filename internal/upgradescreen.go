@@ -11,6 +11,9 @@ import (
 
 type UpgradeScreen struct {
 	upgrades []*Upgrade
+	// To prevent getting upgrade 3 right after pressing 3 to open the upgrade screen
+	// set to false on first frame
+	active bool
 }
 
 func newUpgradeScreen(world *World) {
@@ -109,7 +112,7 @@ func renderUpgradeScreen(world *World) {
 
 		rect.Y += height + 48
 		rect.Height = 64
-		if raygui.Button(rect, fmt.Sprint(i+1)) || rl.IsKeyPressed(keys[i]) {
+		if raygui.Button(rect, fmt.Sprint(i+1)) || rl.IsKeyPressed(keys[i]) && world.uistate.upgradeScreen.active {
 			upgrade = i
 		}
 	}
@@ -121,4 +124,6 @@ func renderUpgradeScreen(world *World) {
 		world.paused = false
 		world.uistate.isUpgradeScreen = false
 	}
+
+	world.uistate.upgradeScreen.active = true
 }
