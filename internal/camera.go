@@ -7,10 +7,10 @@ import (
 )
 
 func updateCameraZoom() {
-	if rl.IsKeyPressed(rl.KeyMinus) {
+	if rl.IsKeyPressed(rl.KeyMinus) || rl.GetMouseWheelMoveV().Y < 0 {
 		options.Zoom = max(4, options.Zoom-1)
 	}
-	if rl.IsKeyPressed(rl.KeyEqual) {
+	if rl.IsKeyPressed(rl.KeyEqual) || rl.GetMouseWheelMoveV().Y > 0 {
 		options.Zoom = min(12, options.Zoom+1)
 	}
 }
