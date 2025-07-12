@@ -6,13 +6,16 @@ import (
 )
 
 var assets = struct {
-	textures   map[string]rl.Texture2D
-	breakdowns map[string]TextureBreakdown
-	sounds     map[string]rl.Sound
+	renderTexture rl.RenderTexture2D
+	textures      map[string]rl.Texture2D
+	breakdowns    map[string]TextureBreakdown
+	sounds        map[string]rl.Sound
+	shaders       map[string]rl.Shader
 }{
 	textures:   make(map[string]rl.Texture2D),
 	breakdowns: make(map[string]TextureBreakdown),
 	sounds:     make(map[string]rl.Sound),
+	shaders:    make(map[string]rl.Shader),
 }
 
 func LoadAssets() {
@@ -20,6 +23,9 @@ func LoadAssets() {
 
 	rl.SetWindowIcon(*rl.LoadImage("assets/icon.png"))
 	println("INFO: Icon loaded!")
+
+	assets.renderTexture = rl.LoadRenderTexture(int32(rl.GetScreenWidth()), int32(rl.GetScreenHeight()))
+	println("INFO: Render Texture loaded!")
 
 	loadTexture("player")
 	loadTexture("player_walk0")
@@ -100,6 +106,9 @@ func LoadAssets() {
 
 	println("INFO: Texture Breakdowns loaded!")
 
+	assets.shaders["bloom"] = rl.LoadShader("", "assets/bloom.fs")
+	println("INFO: Shaders loaded!")
+
 	rl.InitAudioDevice()
 	loadSound("player_hit")
 	loadSound("enemy_hit")
@@ -121,6 +130,12 @@ func UnloadAssets() {
 	for _, sound := range assets.sounds {
 		rl.UnloadSound(sound)
 	}
+
+	for _, shader := range assets.shaders {
+		rl.UnloadShader(shader)
+	}
+
+	rl.UnloadRenderTexture(assets.renderTexture)
 }
 
 func loadTexture(name string) {
