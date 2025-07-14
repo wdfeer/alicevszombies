@@ -1,7 +1,9 @@
 package internal
 
 import (
+	"fmt"
 	"strings"
+	"time"
 
 	"github.com/gen2brain/raylib-go/raygui"
 	rl "github.com/gen2brain/raylib-go/raylib"
@@ -21,6 +23,12 @@ var assets = struct {
 }
 
 func LoadAssets() {
+	start := time.Now()
+	defer func() {
+		elapsed := time.Since(start)
+		fmt.Printf("INFO: Loading assets took %s\n", elapsed)
+	}()
+
 	println("INFO: Starting to load assets...")
 
 	rl.SetWindowIcon(*rl.LoadImage("assets/images/icon.png"))
