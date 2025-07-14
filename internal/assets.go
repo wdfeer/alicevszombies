@@ -122,7 +122,7 @@ func LoadAssets() {
 	rl.InitAudioDevice()
 	loadSound("player_hit")
 	loadSound("enemy_hit")
-	loadSound("music.ogg")
+	go loadSound("music.ogg") // blocks for >300 ms otherwise
 	println("INFO: Sounds loaded!")
 
 	raygui.LoadStyle("assets/style.rgs")
