@@ -3,8 +3,10 @@ package internal
 import rl "github.com/gen2brain/raylib-go/raylib"
 
 func updateMusic() {
-	rl.SetSoundVolume(assets.sounds["alice_boss"], options.Volume)
-	if !rl.IsSoundPlaying(assets.sounds["alice_boss"]) {
-		rl.PlaySound(assets.sounds["alice_boss"])
+	rl.SetMusicVolume(assets.music["alice_boss"], options.Volume)
+	if !rl.IsMusicStreamPlaying(assets.music["alice_boss"]) {
+		rl.PlayMusicStream(assets.music["alice_boss"])
 	}
+
+	rl.UpdateMusicStream(assets.music["alice_boss"])
 }

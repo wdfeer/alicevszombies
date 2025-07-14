@@ -12,12 +12,14 @@ var assets = struct {
 	renderTexture rl.RenderTexture2D
 	textures      map[string]rl.Texture2D
 	breakdowns    map[string]TextureBreakdown
-	sounds        map[string]rl.Sound
+	sfx           map[string]rl.Sound
+	music         map[string]rl.Music
 	shaders       map[string]rl.Shader
 }{
 	textures:   make(map[string]rl.Texture2D),
 	breakdowns: make(map[string]TextureBreakdown),
-	sounds:     make(map[string]rl.Sound),
+	sfx:        make(map[string]rl.Sound),
+	music:      make(map[string]rl.Music),
 	shaders:    make(map[string]rl.Shader),
 }
 
@@ -121,7 +123,7 @@ func LoadAssets() {
 	rl.InitAudioDevice()
 	loadSFX("player_hit")
 	loadSFX("enemy_hit")
-	go loadMusic("alice_boss") // blocks for >300 ms otherwise
+	loadMusic("alice_boss")
 	println("INFO: Sounds loaded!")
 
 	raygui.LoadStyle("assets/style.rgs")
@@ -137,7 +139,7 @@ func UnloadAssets() {
 	}
 
 	rl.CloseAudioDevice()
-	for _, sound := range assets.sounds {
+	for _, sound := range assets.sfx {
 		rl.UnloadSound(sound)
 	}
 
@@ -162,9 +164,9 @@ func loadTextureAndFlipped(name string) {
 }
 
 func loadSFX(name string) {
-	assets.sounds[name] = rl.LoadSound("assets/sfx/" + name + ".wav")
+	assets.sfx[name] = rl.LoadSound("assets/sfx/" + name + ".wav")
 }
 
 func loadMusic(name string) {
-	assets.sounds[name] = rl.LoadSound("assets/music/" + name + ".ogg")
+	assets.music[name] = rl.LoadMusicStream("assets/music/" + name + ".ogg")
 }
