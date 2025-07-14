@@ -123,6 +123,7 @@ func LoadAssets() {
 	rl.InitAudioDevice()
 	loadSFX("player_hit")
 	loadSFX("enemy_hit")
+	loadMusic("alice_stage")
 	loadMusic("alice_boss")
 	println("INFO: Sounds loaded!")
 

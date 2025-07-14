@@ -1,12 +1,28 @@
 package internal
 
-import rl "github.com/gen2brain/raylib-go/raylib"
+import (
+	"math/rand"
+
+	rl "github.com/gen2brain/raylib-go/raylib"
+)
+
+var musicTracks = []string{"alice_stage", "alice_boss"}
 
 func updateMusic() {
-	rl.SetMusicVolume(assets.music["alice_boss"], options.Volume)
-	if !rl.IsMusicStreamPlaying(assets.music["alice_boss"]) {
-		rl.PlayMusicStream(assets.music["alice_boss"])
+	played := ""
+
+	for _, name := range musicTracks {
+		if rl.IsMusicStreamPlaying(assets.music[name]) {
+			played = name
+			break
+		}
 	}
 
-	rl.UpdateMusicStream(assets.music["alice_boss"])
+	if played != "" {
+		rl.SetMusicVolume(assets.music[played], options.Volume)
+		rl.UpdateMusicStream(assets.music[played])
+	} else {
+		index := rand.Int() % len(musicTracks)
+		rl.PlayMusicStream(assets.music[musicTracks[index]])
+	}
 }
