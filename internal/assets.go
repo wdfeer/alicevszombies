@@ -23,7 +23,7 @@ var assets = struct {
 func LoadAssets() {
 	println("INFO: Starting to load assets...")
 
-	rl.SetWindowIcon(*rl.LoadImage("assets/icon.png"))
+	rl.SetWindowIcon(*rl.LoadImage("assets/images/icon.png"))
 	println("INFO: Icon loaded!")
 
 	assets.renderTexture = rl.LoadRenderTexture(int32(rl.GetScreenWidth()), int32(rl.GetScreenHeight()))
@@ -108,7 +108,7 @@ func LoadAssets() {
 
 	println("INFO: Texture Breakdowns loaded!")
 
-	assets.shaders["bloom"] = rl.LoadShader("", "assets/bloom.fs")
+	assets.shaders["bloom"] = rl.LoadShader("", "assets/shaders/bloom.fs")
 	println("INFO: Shaders loaded!")
 
 	rl.InitAudioDevice()
@@ -142,13 +142,13 @@ func UnloadAssets() {
 }
 
 func loadTexture(name string) {
-	assets.textures[name] = rl.LoadTexture("assets/" + name + ".png")
+	assets.textures[name] = rl.LoadTexture("assets/images/" + name + ".png")
 }
 
 const FlippedSuffix = "_fliph"
 
 func loadTextureAndFlipped(name string) {
-	image := rl.LoadImage("assets/" + name + ".png")
+	image := rl.LoadImage("assets/images/" + name + ".png")
 	assets.textures[name] = rl.LoadTextureFromImage(image)
 	rl.ImageFlipHorizontal(image)
 	assets.textures[name+FlippedSuffix] = rl.LoadTextureFromImage(image)
@@ -163,5 +163,6 @@ func loadSound(filename string) {
 	} else {
 		format = ".wav"
 	}
-	assets.sounds[name] = rl.LoadSound("assets/" + name + format)
+
+	assets.sounds[name] = rl.LoadSound("assets/sounds/" + name + format)
 }
