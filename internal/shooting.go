@@ -55,12 +55,28 @@ func updateShooting(world *World) {
 				enemyFound := false
 				var enemyTarget Entity
 				var minDist float32 = 220
-				for enemy := range world.enemy {
-					dist := rl.Vector2Distance(world.position[id], world.position[enemy])
-					if dist < minDist {
-						enemyFound = true
-						enemyTarget = enemy
-						minDist = dist
+
+				// Prioritize special enemies close to player
+				for enemy, typ := range world.enemy {
+					if typ != &enemyTypes.zombie {
+						ownDist := rl.Vector2Distance(world.position[id], world.position[enemy])
+						playerDist := rl.Vector2Distance(world.position[world.player], world.position[enemy])
+						if ownDist < minDist && playerDist < minDist/2 {
+							enemyFound = true
+							enemyTarget = enemy
+							minDist = ownDist
+						}
+					}
+				}
+
+				if !enemyFound {
+					for enemy := range world.enemy {
+						dist := rl.Vector2Distance(world.position[id], world.position[enemy])
+						if dist < minDist {
+							enemyFound = true
+							enemyTarget = enemy
+							minDist = dist
+						}
 					}
 				}
 
