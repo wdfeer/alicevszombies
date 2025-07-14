@@ -2,6 +2,17 @@ package internal
 
 import rl "github.com/gen2brain/raylib-go/raylib"
 
+func initMusic() {
+	rl.PlaySound(assets.sounds["music"])
+}
+
+func updateMusic() {
+	rl.SetSoundVolume(assets.sounds["music"], options.Volume)
+	if !rl.IsSoundPlaying(assets.sounds["music"]) {
+		rl.PlaySound(assets.sounds["music"])
+	}
+}
+
 func playSound(name string) {
 	rl.SetSoundVolume(assets.sounds[name], options.Volume)
 	rl.PlaySound(assets.sounds[name])

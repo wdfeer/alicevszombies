@@ -1,6 +1,8 @@
 package internal
 
 import (
+	"strings"
+
 	"github.com/gen2brain/raylib-go/raygui"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
@@ -112,6 +114,7 @@ func LoadAssets() {
 	rl.InitAudioDevice()
 	loadSound("player_hit")
 	loadSound("enemy_hit")
+	loadSound("music.ogg")
 	println("INFO: Sounds loaded!")
 
 	raygui.LoadStyle("assets/style.rgs")
@@ -151,6 +154,14 @@ func loadTextureAndFlipped(name string) {
 	assets.textures[name+FlippedSuffix] = rl.LoadTextureFromImage(image)
 }
 
-func loadSound(name string) {
-	assets.sounds[name] = rl.LoadSound("assets/" + name + ".wav")
+func loadSound(filename string) {
+	split := strings.Split(filename, ".")
+	name := split[0]
+	var format string
+	if len(split) > 1 {
+		format = "." + split[1]
+	} else {
+		format = ".wav"
+	}
+	assets.sounds[name] = rl.LoadSound("assets/" + name + format)
 }
