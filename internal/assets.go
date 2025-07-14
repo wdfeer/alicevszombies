@@ -142,6 +142,9 @@ func UnloadAssets() {
 	for _, sound := range assets.sfx {
 		rl.UnloadSound(sound)
 	}
+	for _, music := range assets.music {
+		rl.UnloadMusicStream(music)
+	}
 
 	for _, shader := range assets.shaders {
 		rl.UnloadShader(shader)
