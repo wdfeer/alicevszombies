@@ -36,7 +36,7 @@ func renderUpgradeScreen(world *World) {
 
 	screen := world.uistate.upgradeScreen
 
-	const width = float32(440)
+	const width = float32(480)
 	const height = float32(240)
 
 	center := util.HalfScreenSize()
