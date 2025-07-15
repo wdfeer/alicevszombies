@@ -9,6 +9,10 @@ import (
 var musicTracks = []string{"alice_stage", "alice_boss"}
 
 func updateMusic() {
+	if options.Volume == 0 {
+		return
+	}
+
 	played := ""
 
 	for _, name := range musicTracks {
