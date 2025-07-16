@@ -16,7 +16,7 @@ CGO_ENABLED=1 CC=x86_64-w64-mingw32-gcc GOOS=windows GOARCH=amd64 \
 
 echo "Building Linux binary..."
 CGO_ENABLED=1 GOOS=linux GOARCH=amd64 \
-    go build -o "$BUILD_DIR/${APP_NAME}" -ldflags "-s -w"
+    go build -o "$BUILD_DIR/${APP_NAME}.x86_64" -ldflags "-s -w"
 
 echo "Copying assets and license..."
 cp -r "$ASSETS_DIR" "$BUILD_DIR/"
@@ -27,6 +27,6 @@ cd "$BUILD_DIR"
 zip -r "${APP_NAME}.zip" "${APP_NAME}" "${APP_NAME}.exe" "$ASSETS_DIR" "$LICENSE_FILE"
 
 echo "Cleaning up release directory..."
-rm -rf "${APP_NAME}" "${APP_NAME}.exe" "$ASSETS_DIR" "$LICENSE_FILE"
+rm -rf "${APP_NAME}.x86_64" "${APP_NAME}.exe" "$ASSETS_DIR" "$LICENSE_FILE"
 
 echo "Release package created at: $BUILD_DIR/${APP_NAME}.zip"
