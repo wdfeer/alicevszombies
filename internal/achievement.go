@@ -33,17 +33,17 @@ var (
 		description:       "Reach Wave 30 while\nhaving only one Doll",
 		visualMaxProgress: 1,
 	}
-	Wave50Lunatic = AchievementType{
+	Wave30Lunatic = AchievementType{
 		id:                3,
 		name:              "Crimson Thread",
-		description:       "Reach Wave 50 on Lunatic",
-		visualMaxProgress: 50,
+		description:       "Reach Wave 30 on Lunatic",
+		visualMaxProgress: 30,
 	}
-	Wave100Reached = AchievementType{
+	Wave50Reached = AchievementType{
 		id:                4,
 		name:              "Zombie Slayer",
-		description:       "Reach Wave 100",
-		visualMaxProgress: 100,
+		description:       "Reach Wave 50",
+		visualMaxProgress: 50,
 	}
 )
 
@@ -57,7 +57,7 @@ func updateAchievements(world *World) {
 		stats.Achievements[Wave30OneDoll.id] = 1
 	}
 
-	stats.Achievements[Wave50Lunatic.id] = float32(stats.HighestWave[LUNATIC]) / 50
+	stats.Achievements[Wave30Lunatic.id] = float32(stats.HighestWave[LUNATIC]) / 30
 
 	var highestWave uint
 	for _, v := range stats.HighestWave {
@@ -65,7 +65,7 @@ func updateAchievements(world *World) {
 			highestWave = v
 		}
 	}
-	stats.Achievements[Wave100Reached.id] = float32(highestWave) / 100
+	stats.Achievements[Wave50Reached.id] = float32(highestWave) / 50
 
 	stats.Achievements[AllUpgradesObtained.id] = float32(len(stats.UpgradesUsed)) / AllUpgradesObtained.visualMaxProgress
 
@@ -74,8 +74,8 @@ func updateAchievements(world *World) {
 
 var achievementsByID = map[uint8]*AchievementType{
 	Wave30OneDoll.id:       &Wave30OneDoll,
-	Wave50Lunatic.id:       &Wave50Lunatic,
-	Wave100Reached.id:      &Wave100Reached,
+	Wave30Lunatic.id:       &Wave30Lunatic,
+	Wave50Reached.id:       &Wave50Reached,
 	AllUpgradesObtained.id: &AllUpgradesObtained,
 	AllEnemiesKilled.id:    &AllEnemiesKilled,
 }
