@@ -4,14 +4,19 @@
 
 _alicevszombies_ is a top-down action game where you control Alice and fight off waves of undead using magical dolls and spell upgrades.
 
+Made with [Raylib](https://www.raylib.com/) and [raylib-go](https://github.com/gen2brain/raylib-go) bindings.
+
 ## Features
 
-- 🧟 11 enemy types total, including 4 bosses
+- 🧟 11 enemy types total, including 4 unique bosses
 - 🪆 6 doll types with unique behaviors
+- 🛡️ Status effects inflicted by enemies
+- 🎯 Achievement system with 5 unlockable goals
+- 📊 Stats tracking per difficulty
+- 🎚️ Four difficulty levels: Easy, Normal, Hard, Lunatic
 - 📈 Upgrade system with random choices
 - 🎶 Touhou MIDI arrangements (by sweetmusic) rendered with custom soundfont
 - 🧱 Low-res pixel art style
-- ⚙️ Built with Raylib and raylib-go bindings
 
 ## Controls
 
