@@ -24,7 +24,7 @@ cp "$LICENSE_FILE" "$BUILD_DIR/"
 
 echo "Creating release zip..."
 cd "$BUILD_DIR"
-zip -r "${APP_NAME}.zip" "${APP_NAME}" "${APP_NAME}.exe" "$ASSETS_DIR" "$LICENSE_FILE"
+zip -r "${APP_NAME}.zip" "${APP_NAME}.x86_64" "${APP_NAME}.exe" "$ASSETS_DIR" "$LICENSE_FILE"
 
 echo "Cleaning up release directory..."
 rm -rf "${APP_NAME}.x86_64" "${APP_NAME}.exe" "$ASSETS_DIR" "$LICENSE_FILE"
