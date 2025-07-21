@@ -81,7 +81,7 @@ var achievementsByID = map[uint8]*AchievementType{
 }
 
 func renderAchievements(origin rl.Vector2) {
-	size := rl.Vector2{X: 640, Y: 120}
+	size := rl.Vector2{X: 580, Y: 120}
 	oldFontsize := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE)
 	oldLineSpacing := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_LINE_SPACING)
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_LINE_SPACING, 20)
