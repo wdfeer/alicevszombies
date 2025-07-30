@@ -128,8 +128,7 @@ func LoadAssets() {
 	println("INFO: Sounds loaded!")
 
 	raygui.LoadStyle("assets/style.rgs")
-	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, 80)
-	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SPACING, 8)
+	updateUIScale()
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_ALIGNMENT, raygui.TEXT_ALIGN_CENTER)
 	println("INFO: Raygui style loaded!")
 }

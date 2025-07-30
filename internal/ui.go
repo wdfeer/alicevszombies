@@ -43,6 +43,8 @@ func updateUI(world *World) {
 	if rl.IsKeyPressed(rl.KeyF3) {
 		world.uistate.displayFPS = !world.uistate.displayFPS
 	}
+
+	updateUIScale()
 }
 
 const CursorHideCooldown = 2.5
