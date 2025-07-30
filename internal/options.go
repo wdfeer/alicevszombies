@@ -106,25 +106,23 @@ func renderOptions(origin rl.Vector2) {
 		origin.Y += buttonHeight + buttonSpacing
 	}
 
-	newOptions.Volume = raygui.SliderBar(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "", "Volume", options.Volume, 0, 1)
-
-	origin.Y += buttonHeight + buttonSpacing
-	raygui.SetStyle(raygui.SPINNER, raygui.ARROWS_SIZE, int64(buttonWidth)/7)
-	raygui.Spinner(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "Cursor", &newOptions.CursorType, 0, 1, false)
-
-	buttonWidth += maxTextWidth
-	origin.Y += buttonHeight + buttonSpacing
-	newOptions.Fullscreen = raygui.Toggle(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "Fullscreen", options.Fullscreen)
-
-	origin.Y += buttonHeight + buttonSpacing
-	newOptions.Shadows = raygui.Toggle(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "Shadows", options.Shadows)
-
-	origin.Y += buttonHeight + buttonSpacing
-	newOptions.Bloom = raygui.Toggle(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "Bloom", options.Bloom)
+	switch newOptions.optionsTab {
+	case 0:
+		raygui.SetStyle(raygui.SPINNER, raygui.ARROWS_SIZE, int64(buttonWidth)/7)
+		raygui.Spinner(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "Cursor", &newOptions.CursorType, 0, 1, false)
+	case 1:
+		newOptions.Volume = raygui.SliderBar(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "", "Volume", options.Volume, 0, 1)
+	case 2:
+		buttonWidth += maxTextWidth
+		newOptions.Fullscreen = raygui.Toggle(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "Fullscreen", options.Fullscreen)
+		origin.Y += buttonHeight + buttonSpacing
+		newOptions.Shadows = raygui.Toggle(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "Shadows", options.Shadows)
+		origin.Y += buttonHeight + buttonSpacing
+		newOptions.Bloom = raygui.Toggle(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "Bloom", options.Bloom)
+	}
 
 	if newOptions != options {
 		options = newOptions
 		go saveOptions()
 	}
-
 }
