@@ -8,7 +8,7 @@ import (
 )
 
 func renderTextures(world *World, camera *rl.Camera2D) {
-	cameraRect := util.CenterRectangle(camera.Target, rl.Vector2Scale(util.ScreenSize(), 1/options.Zoom))
+	cameraRect := util.CenterRectangle(camera.Target, rl.Vector2Scale(util.ScreenSize(), 1/float32(options.Zoom)))
 	items := make([]Entity, 0)
 	for id, textureName := range world.texture {
 		pos, ok := world.position[id]
