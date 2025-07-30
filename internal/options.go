@@ -79,9 +79,9 @@ func renderOptions(origin rl.Vector2) {
 	cursorTextSize := float32(rl.MeasureText("Cursor", int32(raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE))))
 	maxTextWidth = max(volumeTextSize, cursorTextSize)
 
-	buttonWidth := float32(616)
-	buttonHeight := float32(120)
-	buttonSpacing := float32(40)
+	buttonWidth := float32(616) * uiScale
+	buttonHeight := float32(120) * uiScale
+	buttonSpacing := float32(40) * uiScale
 
 	buttonWidth -= maxTextWidth / 2
 
@@ -89,7 +89,7 @@ func renderOptions(origin rl.Vector2) {
 		o := origin
 		oldTextSize := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE)
 		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, oldTextSize/2)
-		buttonWidth := float32(480 / 2)
+		buttonWidth := 240. * uiScale
 		buttonSpacing := buttonSpacing / 2
 		buttonHeight := buttonHeight * 0.75
 		if raygui.Toggle(rl.Rectangle{X: o.X, Y: o.Y, Width: buttonWidth, Height: buttonHeight}, "General", newOptions.optionsTab == 0) {

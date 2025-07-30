@@ -18,9 +18,9 @@ func renderMainMenu(world *World) {
 	screenSize := util.ScreenSize()
 	rl.DrawRectangleV(rl.Vector2Zero(), screenSize, rl.ColorAlpha(rl.Black, 0.9))
 
-	buttonWidth := float32(480)
-	buttonHeight := float32(120)
-	buttonSpacing := float32(40)
+	buttonWidth := float32(480) * uiScale
+	buttonHeight := float32(120) * uiScale
+	buttonSpacing := float32(40) * uiScale
 	startY := buttonHeight + buttonSpacing
 
 	x := screenSize.X / 20
