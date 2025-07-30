@@ -2,6 +2,7 @@ package internal
 
 import (
 	"alicevszombies/internal/util"
+	"fmt"
 
 	"github.com/gen2brain/raylib-go/raygui"
 	rl "github.com/gen2brain/raylib-go/raylib"
@@ -46,5 +47,15 @@ func renderPauseMenu(world *World) {
 	pos.Y += rectSize.Y + spacing
 	if raygui.Button(util.RectangleV(pos, rectSize), "Main Menu") {
 		world.Reset()
+	}
+
+	{ // Doll Counter
+		oldAlignH := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_ALIGNMENT)
+		oldAlignV := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_ALIGNMENT_VERTICAL)
+		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_ALIGNMENT, raygui.TEXT_ALIGN_RIGHT)
+		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_ALIGNMENT_VERTICAL, raygui.TEXT_ALIGN_BOTTOM)
+		raygui.Label(rl.Rectangle{X: float32(rl.GetScreenWidth()) - 400, Y: float32(rl.GetScreenHeight()) - 64, Width: 400, Height: 64}, fmt.Sprintf("%d Dolls", len(world.doll)))
+		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_ALIGNMENT, oldAlignH)
+		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_ALIGNMENT_VERTICAL, oldAlignV)
 	}
 }
