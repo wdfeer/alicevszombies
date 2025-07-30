@@ -9,13 +9,14 @@ import (
 )
 
 type Options struct {
-	optionsTab uint8
-	Fullscreen bool
-	Volume     float32
-	CursorType int32
-	Zoom       float32
-	Shadows    bool
-	Bloom      bool
+	optionsTab  uint8
+	Fullscreen  bool
+	MusicVolume float32
+	SoundVolume float32
+	CursorType  int32
+	Zoom        float32
+	Shadows     bool
+	Bloom       bool
 }
 
 var options Options
@@ -36,12 +37,12 @@ func loadOptions() {
 	println("WARNING: Creating default options file...")
 
 	options = Options{
-		Fullscreen: true,
-		Volume:     1,
-		CursorType: 0,
-		Zoom:       8,
-		Shadows:    true,
-		Bloom:      true,
+		Fullscreen:  true,
+		MusicVolume: 1,
+		CursorType:  0,
+		Zoom:        8,
+		Shadows:     true,
+		Bloom:       true,
 	}
 
 	go saveOptions()
@@ -111,7 +112,9 @@ func renderOptions(origin rl.Vector2) {
 		raygui.SetStyle(raygui.SPINNER, raygui.ARROWS_SIZE, int64(buttonWidth)/7)
 		raygui.Spinner(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "Cursor", &newOptions.CursorType, 0, 1, false)
 	case 1:
-		newOptions.Volume = raygui.SliderBar(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "", "Volume", options.Volume, 0, 1)
+		newOptions.MusicVolume = raygui.SliderBar(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "", "Music", options.MusicVolume, 0, 1)
+		origin.Y += buttonHeight + buttonSpacing
+		newOptions.SoundVolume = raygui.SliderBar(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "", "SFX", options.SoundVolume, 0, 1)
 	case 2:
 		buttonWidth += maxTextWidth
 		newOptions.Fullscreen = raygui.Toggle(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "Fullscreen", options.Fullscreen)

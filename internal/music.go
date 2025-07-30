@@ -9,7 +9,7 @@ import (
 var musicTracks = []string{"alice_stage", "alice_boss"}
 
 func updateMusic() {
-	if options.Volume == 0 {
+	if options.MusicVolume == 0 {
 		return
 	}
 
@@ -23,7 +23,7 @@ func updateMusic() {
 	}
 
 	if played != "" {
-		rl.SetMusicVolume(assets.music[played], options.Volume)
+		rl.SetMusicVolume(assets.music[played], options.MusicVolume)
 		rl.UpdateMusicStream(assets.music[played])
 	} else {
 		index := rand.Int() % len(musicTracks)
