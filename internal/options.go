@@ -14,7 +14,7 @@ type Options struct {
 	MusicVolume float32
 	SoundVolume float32
 	CursorType  int32
-	Zoom        float32
+	Zoom        int32
 	Shadows     bool
 	Bloom       bool
 }
@@ -111,6 +111,8 @@ func renderOptions(origin rl.Vector2) {
 	case 0:
 		raygui.SetStyle(raygui.SPINNER, raygui.ARROWS_SIZE, int64(buttonWidth)/7)
 		raygui.Spinner(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "Cursor", &newOptions.CursorType, 0, 1, false)
+		origin.Y += buttonHeight + buttonSpacing
+		raygui.Spinner(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "Zoom", &newOptions.Zoom, MinZoom, MaxZoom, false)
 	case 1:
 		newOptions.MusicVolume = raygui.SliderBar(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "", "Music", options.MusicVolume, 0, 1)
 		origin.Y += buttonHeight + buttonSpacing

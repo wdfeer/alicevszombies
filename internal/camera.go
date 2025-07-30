@@ -6,12 +6,15 @@ import (
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
+const MinZoom = 4
+const MaxZoom = 12
+
 func updateCameraZoom() {
 	if rl.IsKeyPressed(rl.KeyMinus) || rl.GetMouseWheelMoveV().Y < 0 {
-		options.Zoom = max(4, options.Zoom-1)
+		options.Zoom = max(MinZoom, options.Zoom-1)
 	}
 	if rl.IsKeyPressed(rl.KeyEqual) || rl.GetMouseWheelMoveV().Y > 0 {
-		options.Zoom = min(12, options.Zoom+1)
+		options.Zoom = min(MaxZoom, options.Zoom+1)
 	}
 }
 
@@ -22,7 +25,7 @@ func createCamera(world *World) rl.Camera2D {
 	if world.uistate.cursorHideTimer < CursorHideCooldown {
 		offset = rl.GetMousePosition()
 		offset = rl.Vector2Subtract(offset, util.HalfScreenSize())
-		offset = rl.Vector2Scale(offset, 1/options.Zoom/4)
+		offset = rl.Vector2Scale(offset, 1/float32(options.Zoom)/4)
 	}
 	world.uistate.cameraOffset = rl.Vector2Lerp(world.uistate.cameraOffset, offset, 0.2)
 
@@ -30,7 +33,7 @@ func createCamera(world *World) rl.Camera2D {
 	camera := rl.Camera2D{
 		Target: target,
 		Offset: util.HalfScreenSize(),
-		Zoom:   options.Zoom,
+		Zoom:   float32(options.Zoom),
 	}
 	return camera
 }
