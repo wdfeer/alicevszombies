@@ -29,8 +29,14 @@ func render(world *World) {
 	rl.BeginDrawing()
 	defer rl.EndDrawing()
 
-	if options.ChromaAbberation {
-		rl.BeginShaderMode(assets.shaders["chromatic_abberation"])
+	if options.Bloom && options.ChromaAbberation {
+		rl.BeginShaderMode(assets.shaders["bloom_chrabb"])
+		defer rl.EndShaderMode()
+	} else if options.Bloom {
+		rl.BeginShaderMode(assets.shaders["bloom"])
+		defer rl.EndShaderMode()
+	} else if options.ChromaAbberation {
+		rl.BeginShaderMode(assets.shaders["chroma_abberation"])
 		defer rl.EndShaderMode()
 	}
 	rl.DrawTextureRec(assets.renderTexture.Texture, rl.Rectangle{X: 0, Y: 0, Width: float32(rl.GetScreenWidth()), Height: -float32(rl.GetScreenHeight())}, rl.Vector2{X: 0, Y: 0}, rl.White)
