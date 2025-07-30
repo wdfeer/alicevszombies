@@ -78,12 +78,19 @@ func renderOptions(origin rl.Vector2) {
 	cursorTextSize := float32(rl.MeasureText("Cursor", int32(raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE))))
 	maxTextWidth = max(volumeTextSize, cursorTextSize)
 
-	buttonWidth := float32(480)
+	buttonWidth := float32(616)
 	buttonHeight := float32(120)
 	buttonSpacing := float32(40)
 
-	{
+	buttonWidth -= maxTextWidth / 2
+
+	{ // Tabs
 		o := origin
+		oldTextSize := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE)
+		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, oldTextSize/2)
+		buttonWidth := float32(480 / 2)
+		buttonSpacing := buttonSpacing / 2
+		buttonHeight := buttonHeight * 0.75
 		if raygui.Toggle(rl.Rectangle{X: o.X, Y: o.Y, Width: buttonWidth, Height: buttonHeight}, "General", newOptions.optionsTab == 0) {
 			newOptions.optionsTab = 0
 		}
@@ -95,10 +102,10 @@ func renderOptions(origin rl.Vector2) {
 		if raygui.Toggle(rl.Rectangle{X: o.X, Y: o.Y, Width: buttonWidth, Height: buttonHeight}, "Graphics", newOptions.optionsTab == 2) {
 			newOptions.optionsTab = 2
 		}
+		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, oldTextSize)
+		origin.Y += buttonHeight + buttonSpacing
 	}
-	origin.Y += buttonHeight + buttonSpacing
 
-	buttonWidth -= maxTextWidth / 2
 	newOptions.Volume = raygui.SliderBar(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "", "Volume", options.Volume, 0, 1)
 
 	origin.Y += buttonHeight + buttonSpacing
@@ -119,4 +126,5 @@ func renderOptions(origin rl.Vector2) {
 		options = newOptions
 		go saveOptions()
 	}
+
 }
