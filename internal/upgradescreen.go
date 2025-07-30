@@ -32,19 +32,19 @@ func newUniqueUpgradeScreen(world *World) {
 
 func renderUpgradeScreen(world *World) {
 	oldFontSize := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE)
-	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, 40)
+	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, textSize40)
 
 	screen := world.uistate.upgradeScreen
 
-	const width = float32(480)
-	const height = float32(240)
+	width := float32(480) * uiScale
+	height := float32(240) * uiScale
 
 	center := util.HalfScreenSize()
 	rl.DrawRectangle(0, 0, int32(rl.GetScreenWidth()), int32(rl.GetScreenHeight()), rl.ColorAlpha(rl.Black, 0.4))
 
 	oldTextSize := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE)
-	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, 64)
-	raygui.Label(rl.Rectangle{X: center.X - 320, Y: center.Y - height*1.6, Width: 640, Height: 120}, "Select Upgrade")
+	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, textSize64)
+	raygui.Label(rl.Rectangle{X: center.X - 320*uiScale, Y: center.Y - height*1.6, Width: 640 * uiScale, Height: 120 * uiScale}, "Select Upgrade")
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, oldTextSize)
 
 	keys := map[int]int32{
@@ -53,7 +53,7 @@ func renderUpgradeScreen(world *World) {
 		2: rl.KeyThree,
 	}
 	upgrade := -1
-	xPositions := util.SpaceCentered(width+120, len(screen.upgrades), center.X-width/2)
+	xPositions := util.SpaceCentered(width+120*uiScale, len(screen.upgrades), center.X-width/2)
 	for i, up := range screen.upgrades {
 		rect := rl.Rectangle{X: xPositions[i], Y: center.Y - height/2, Width: width, Height: height}
 		raygui.Panel(rect, "")
@@ -69,16 +69,16 @@ func renderUpgradeScreen(world *World) {
 		// Doll Cost
 		if up.cost != nil {
 			dollCostRect := rect
-			dollCostRect.X += 32
-			dollCostRect.Width -= 64
+			dollCostRect.X += 32 * uiScale
+			dollCostRect.Width -= 64 * uiScale
 			dollCostRect.Y += height / 8
 			raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_ALIGNMENT, int64(raygui.TEXT_ALIGN_LEFT))
 			raygui.Label(dollCostRect, "Cost:")
 			raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_ALIGNMENT, int64(raygui.TEXT_ALIGN_CENTER))
 
 			// Calculate dimensions of the doll cost
-			const dollScale = 4
-			const dollSpacing = 4
+			dollScale := 4 * uiScale
+			dollSpacing := 4 * uiScale
 			maxHeight := int32(0)
 			for dollT := range up.cost {
 				if assets.textures[dollT.texture].Height > maxHeight {
@@ -105,7 +105,7 @@ func renderUpgradeScreen(world *World) {
 				for range data.count {
 					pos := rl.Vector2{X: x, Y: dollCostRect.Y + dollCostRect.Height/2 - float32(assets.textures[data.typ.texture].Height)*dollScale/2}
 					rl.DrawTextureEx(assets.textures[data.typ.texture], pos, 0, float32(dollScale), rl.White)
-					x -= float32(assets.textures[data.typ.texture].Width*dollScale + dollSpacing)
+					x -= float32(assets.textures[data.typ.texture].Width*int32(dollScale) + int32(dollSpacing))
 				}
 			}
 		}
