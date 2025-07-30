@@ -9,12 +9,12 @@ import (
 )
 
 var assets = struct {
-	renderTexture rl.RenderTexture2D
-	textures      map[string]rl.Texture2D
-	breakdowns    map[string]TextureBreakdown
-	sfx           map[string]rl.Sound
-	music         map[string]rl.Music
-	shaders       map[string]rl.Shader
+	renderTextures [2]rl.RenderTexture2D
+	textures       map[string]rl.Texture2D
+	breakdowns     map[string]TextureBreakdown
+	sfx            map[string]rl.Sound
+	music          map[string]rl.Music
+	shaders        map[string]rl.Shader
 }{
 	textures:   make(map[string]rl.Texture2D),
 	breakdowns: make(map[string]TextureBreakdown),
@@ -35,7 +35,10 @@ func LoadAssets() {
 	rl.SetWindowIcon(*rl.LoadImage("assets/images/icon.png"))
 	println("INFO: Icon loaded!")
 
-	assets.renderTexture = rl.LoadRenderTexture(int32(rl.GetScreenWidth()), int32(rl.GetScreenHeight()))
+	assets.renderTextures = [2]rl.RenderTexture2D{
+		rl.LoadRenderTexture(int32(rl.GetScreenWidth()), int32(rl.GetScreenHeight())),
+		rl.LoadRenderTexture(int32(rl.GetScreenWidth()), int32(rl.GetScreenHeight())),
+	}
 	println("INFO: Render Texture loaded!")
 
 	loadTexture("player")
@@ -152,7 +155,9 @@ func UnloadAssets() {
 		rl.UnloadShader(shader)
 	}
 
-	rl.UnloadRenderTexture(assets.renderTexture)
+	for _, v := range assets.renderTextures {
+		rl.UnloadRenderTexture(v)
+	}
 }
 
 func loadTexture(name string) {
