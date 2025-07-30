@@ -29,8 +29,7 @@ func render(world *World) {
 	rl.BeginDrawing()
 	defer rl.EndDrawing()
 
-	// TODO: figure out applying both bloom and chromatic_abberation
-	if options.Bloom {
+	if options.ChromaAbberation {
 		rl.BeginShaderMode(assets.shaders["chromatic_abberation"])
 		defer rl.EndShaderMode()
 	}

@@ -9,15 +9,16 @@ import (
 )
 
 type Options struct {
-	optionsTab  uint8
-	Fullscreen  bool
-	MusicVolume float32
-	SoundVolume float32
-	CursorType  int32
-	Zoom        int32
-	Shadows     bool
-	Bloom       bool
-	UIScale     int32
+	optionsTab       uint8
+	Fullscreen       bool
+	MusicVolume      float32
+	SoundVolume      float32
+	CursorType       int32
+	Zoom             int32
+	Shadows          bool
+	Bloom            bool
+	ChromaAbberation bool
+	UIScale          int32
 }
 
 var options Options
@@ -38,12 +39,13 @@ func loadOptions() {
 	println("WARNING: Creating default options file...")
 
 	options = Options{
-		Fullscreen:  true,
-		MusicVolume: 1,
-		CursorType:  0,
-		Zoom:        8,
-		Shadows:     true,
-		Bloom:       true,
+		Fullscreen:       true,
+		MusicVolume:      1,
+		CursorType:       0,
+		Zoom:             8,
+		Shadows:          true,
+		Bloom:            true,
+		ChromaAbberation: true,
 	}
 
 	go saveOptions()
@@ -125,6 +127,8 @@ func renderOptions(origin rl.Vector2) {
 		newOptions.Shadows = raygui.Toggle(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "Shadows", options.Shadows)
 		origin.Y += buttonHeight + buttonSpacing
 		newOptions.Bloom = raygui.Toggle(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "Bloom", options.Bloom)
+		origin.Y += buttonHeight + buttonSpacing
+		newOptions.ChromaAbberation = raygui.Toggle(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "Chr. Abberation", options.ChromaAbberation)
 	}
 
 	if newOptions != options {
