@@ -1,6 +1,9 @@
 package internal
 
-import "math/rand"
+import (
+	"math"
+	"math/rand"
+)
 
 type EnemySpawner struct {
 	wave           uint32
@@ -56,7 +59,7 @@ func updateEnemySpawner(world *World) {
 			spawner.spawnTimer /= max(2, float32(world.difficulty))
 		}
 		if spawner.enemiesToSpawn > 30 {
-			spawner.spawnTimer /= 2
+			spawner.spawnTimer /= float32(math.Exp2(float64(spawner.enemiesToSpawn) / 30))
 		}
 		spawner.enemiesToSpawn--
 	}
