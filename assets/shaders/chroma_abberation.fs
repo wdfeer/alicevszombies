@@ -10,8 +10,9 @@ uniform vec4 colDiffuse;
 
 void main()
 {
-    float r = texture(texture0, fragTexCoord + vec2(-0.0006, 0)).r;
-    float b = texture(texture0, fragTexCoord + vec2(0.0006, 0)).b;
+    const float offset = 0.0006;
+    float r = texture(texture0, fragTexCoord + vec2(-offset, 0)).r;
+    float b = texture(texture0, fragTexCoord + vec2(offset, 0)).b;
 
     finalColor = vec4(r, texture(texture0, fragTexCoord).g, b, fragColor.a) * colDiffuse;
 }

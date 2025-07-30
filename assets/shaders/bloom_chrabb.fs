@@ -8,21 +8,19 @@ out vec4 finalColor;
 uniform sampler2D texture0;
 uniform vec4 colDiffuse;
 
-const vec2 size = vec2(1600, 900);   // Framebuffer size
-const float samples = 13;            // Pixels per axis; higher = bigger glow, worse performance
-const float quality = 0.8;           // Defines size factor: Lower = smaller glow, better quality
+const vec2 size = vec2(1600, 900);
+// Fewer samples and lower quality to compensate for only 50% bloom
+const float samples = 9;
+const float quality = 0.6;
 
 void main()
 {
     // BLOOM
+
     vec4 sum = vec4(0);
     vec2 sizeFactor = vec2(1)/size*quality;
-
-    // Texel color fetching from texture sampler
     vec4 source = texture(texture0, fragTexCoord);
-
-    const int range = 3; // should be = (samples - 1)/2;
-
+    const int range = 3; // bigger range to compensate for only 50% bloom
     for (int x = -range; x <= range; x++)
     {
         for (int y = -range; y <= range; y++)
@@ -30,17 +28,16 @@ void main()
             sum += texture(texture0, fragTexCoord + vec2(x, y)*sizeFactor);
         }
     }
-
-    // Calculate final fragment color
-    vec4 bloomed = ((sum/(samples*samples)) + source)*colDiffuse;
+    vec4 bloom = ((sum/(samples*samples)) + source)*colDiffuse;
 
     // CHROMATIC ABBERATION
-    float r = texture(texture0, fragTexCoord + vec2(-0.0006, 0)).r;
-    float b = texture(texture0, fragTexCoord + vec2(0.0006, 0)).b;
 
+    const float offset = 0.0011; // bigger range to compensate for only 50% chromatic abberation
+    float r = texture(texture0, fragTexCoord + vec2(-offset, 0)).r;
+    float b = texture(texture0, fragTexCoord + vec2(offset, 0)).b;
     vec4 chrabb = vec4(r, texture(texture0, fragTexCoord).g, b, fragColor.a) * colDiffuse;
 
     // COMBINE
 
-    finalColor = bloomed/2+chrabb/2;
+    finalColor = bloom/2+chrabb/2;
 }
