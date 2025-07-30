@@ -93,7 +93,7 @@ func renderHUD(world *World) {
 	renderSpells(world)
 
 	// Right
-	{ // Doll Info
+	if options.DollInfo {
 		center := rl.Vector2{X: size.X - 200*uiScale, Y: halfSize.Y}
 		util.DrawTextCenteredSpaced(fmt.Sprintf("%d Dolls", len(world.doll)), float32(textSize40), center, 4)
 	}

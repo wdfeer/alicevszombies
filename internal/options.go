@@ -18,6 +18,7 @@ type Options struct {
 	Shadows     bool
 	Bloom       bool
 	UIScale     int32
+	DollInfo    bool
 }
 
 var options Options
@@ -44,6 +45,8 @@ func loadOptions() {
 		Zoom:        8,
 		Shadows:     true,
 		Bloom:       true,
+		UIScale:     0,
+		DollInfo:    false,
 	}
 
 	go saveOptions()
@@ -114,6 +117,9 @@ func renderOptions(origin rl.Vector2) {
 		raygui.Spinner(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "Zoom", &newOptions.Zoom, MinZoom, MaxZoom, false)
 		origin.Y += buttonHeight + buttonSpacing
 		raygui.Spinner(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "UI Scale", &newOptions.UIScale, 0, 3, false)
+		origin.Y += buttonHeight + buttonSpacing
+		buttonWidth += maxTextWidth
+		newOptions.DollInfo = raygui.Toggle(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "Doll Info", options.DollInfo)
 	case 1:
 		newOptions.MusicVolume = raygui.SliderBar(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "", "Music", options.MusicVolume, 0, 1)
 		origin.Y += buttonHeight + buttonSpacing
