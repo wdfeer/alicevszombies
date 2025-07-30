@@ -118,6 +118,7 @@ func LoadAssets() {
 	println("INFO: Texture Breakdowns loaded!")
 
 	assets.shaders["bloom"] = rl.LoadShader("", "assets/shaders/bloom.fs")
+	assets.shaders["chromatic_abberation"] = rl.LoadShader("", "assets/shaders/chromatic_abberation.fs")
 	println("INFO: Shaders loaded!")
 
 	rl.InitAudioDevice()
