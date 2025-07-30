@@ -39,7 +39,11 @@ func renderMainMenu(world *World) {
 	}
 	for i, p := range mainMenu.dollPosition {
 		if p != rl.Vector2Zero() {
-			rl.DrawTextureEx(assets.textures["doll_sword"], p, 0, 8, rl.White)
+			texture := "doll_sword"
+			if i%5 == 4 {
+				texture = "doll_magician"
+			}
+			rl.DrawTextureEx(assets.textures[texture], p, 0, 8, rl.White)
 			mainMenu.dollVelocity[i] = rl.Vector2Add(mainMenu.dollVelocity[i], rl.Vector2{X: 0, Y: screenSize.Y * dt * 4})
 			mainMenu.dollPosition[i] = rl.Vector2Add(p, rl.Vector2Scale(mainMenu.dollVelocity[i], dt))
 			if mainMenu.dollPosition[i].Y > screenSize.Y+100 {
