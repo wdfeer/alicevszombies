@@ -75,6 +75,10 @@ func (world *World) Reset() {
 			dollPosition: [8]rl.Vector2{},
 			dollVelocity: [8]rl.Vector2{},
 		},
+		pauseMenu: PauseMenu{
+			dollPosition: make(map[Entity]rl.Vector2),
+			dollVelocity: make(map[Entity]rl.Vector2),
+		},
 	}
 
 	newPlayer(world)
