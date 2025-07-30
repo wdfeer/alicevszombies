@@ -73,7 +73,7 @@ func renderPauseMenu(world *World) {
 
 		for id := range world.doll {
 			if _, ok := pMenu.dollPosition[id]; !ok {
-				pMenu.dollPosition[id] = rl.Vector2{X: float32(rl.GetScreenWidth()) * rand.Float32(), Y: 16 + 32*rand.Float32()}
+				pMenu.dollPosition[id] = rl.Vector2{X: float32(rl.GetScreenWidth()) * rand.Float32(), Y: (16 + 32*rand.Float32()) * uiScale}
 				pMenu.dollVelocity[id] = rl.Vector2{X: (rand.Float32() - 0.5) * 200 * uiScale} // TODO: add vertical velocity and bounciness
 			}
 
