@@ -17,6 +17,7 @@ type Options struct {
 	Zoom        int32
 	Shadows     bool
 	Bloom       bool
+	UIScale     int32
 }
 
 var options Options
@@ -74,10 +75,8 @@ func saveOptions() {
 func renderOptions(origin rl.Vector2) {
 	newOptions := options
 
-	var maxTextWidth float32
-	volumeTextSize := float32(rl.MeasureText("Volume", int32(raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE))))
-	cursorTextSize := float32(rl.MeasureText("Cursor", int32(raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE))))
-	maxTextWidth = max(volumeTextSize, cursorTextSize)
+	// TODO: use the actual longest spinner label
+	maxTextWidth := float32(rl.MeasureText("Cursor", int32(raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE))))
 
 	buttonWidth := float32(616) * uiScale
 	buttonHeight := float32(120) * uiScale
@@ -113,6 +112,8 @@ func renderOptions(origin rl.Vector2) {
 		raygui.Spinner(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "Cursor", &newOptions.CursorType, 0, 1, false)
 		origin.Y += buttonHeight + buttonSpacing
 		raygui.Spinner(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "Zoom", &newOptions.Zoom, MinZoom, MaxZoom, false)
+		origin.Y += buttonHeight + buttonSpacing
+		raygui.Spinner(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "UI Scale", &newOptions.UIScale, 0, 3, false)
 	case 1:
 		newOptions.MusicVolume = raygui.SliderBar(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "", "Music", options.MusicVolume, 0, 1)
 		origin.Y += buttonHeight + buttonSpacing
