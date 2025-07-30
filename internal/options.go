@@ -9,6 +9,7 @@ import (
 )
 
 type Options struct {
+	optionsTab uint8
 	Fullscreen bool
 	Volume     float32
 	CursorType int32
@@ -80,6 +81,22 @@ func renderOptions(origin rl.Vector2) {
 	buttonWidth := float32(480)
 	buttonHeight := float32(120)
 	buttonSpacing := float32(40)
+
+	{
+		o := origin
+		if raygui.Toggle(rl.Rectangle{X: o.X, Y: o.Y, Width: buttonWidth, Height: buttonHeight}, "General", newOptions.optionsTab == 0) {
+			newOptions.optionsTab = 0
+		}
+		o.X += buttonWidth + buttonSpacing
+		if raygui.Toggle(rl.Rectangle{X: o.X, Y: o.Y, Width: buttonWidth, Height: buttonHeight}, "Audio", newOptions.optionsTab == 1) {
+			newOptions.optionsTab = 1
+		}
+		o.X += buttonWidth + buttonSpacing
+		if raygui.Toggle(rl.Rectangle{X: o.X, Y: o.Y, Width: buttonWidth, Height: buttonHeight}, "Graphics", newOptions.optionsTab == 2) {
+			newOptions.optionsTab = 2
+		}
+	}
+	origin.Y += buttonHeight + buttonSpacing
 
 	buttonWidth -= maxTextWidth / 2
 	newOptions.Volume = raygui.SliderBar(rl.Rectangle{X: origin.X, Y: origin.Y, Width: buttonWidth, Height: buttonHeight}, "", "Volume", options.Volume, 0, 1)
