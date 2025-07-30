@@ -8,10 +8,10 @@ out vec4 finalColor;
 uniform sampler2D texture0;
 uniform vec4 colDiffuse;
 
+// Bloom stuff
 const vec2 size = vec2(1600, 900);
-// Fewer samples and lower quality to compensate for only 50% bloom
-const float samples = 9;
-const float quality = 0.6;
+const float samples = 13;
+const float quality = 0.8;
 
 void main()
 {
@@ -20,7 +20,7 @@ void main()
     vec4 sum = vec4(0);
     vec2 sizeFactor = vec2(1)/size*quality;
     vec4 source = texture(texture0, fragTexCoord);
-    const int range = 3; // bigger range to compensate for only 50% bloom
+    const int range = 3; // should be = (samples - 1)/2;
     for (int x = -range; x <= range; x++)
     {
         for (int y = -range; y <= range; y++)
@@ -32,10 +32,9 @@ void main()
 
     // CHROMATIC ABBERATION
 
-    const float offset = 0.0011; // bigger range to compensate for only 50% chromatic abberation
-    float r = texture(texture0, fragTexCoord + vec2(-offset, 0)).r;
-    float b = texture(texture0, fragTexCoord + vec2(offset, 0)).b;
-    vec4 chrabb = vec4(r, texture(texture0, fragTexCoord).g, b, fragColor.a) * colDiffuse;
+    float r = texture(texture0, fragTexCoord + vec2(-0.0006, 0)).r;
+    float b = texture(texture0, fragTexCoord + vec2(0.0006, 0)).b;
+    vec4 chrabb = vec4(r, source.g, b, fragColor.a) * colDiffuse;
 
     // COMBINE
 
