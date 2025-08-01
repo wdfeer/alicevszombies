@@ -44,5 +44,5 @@ func selectDifficulty(world *World, difficulty Difficulty) {
 		upgrades: make(map[*Upgrade]uint32),
 	}
 
-	stats.RunCount[difficulty]++
+	history.RunCount[difficulty]++
 }

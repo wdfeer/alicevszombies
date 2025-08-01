@@ -54,22 +54,22 @@ func initAchievements() {
 
 func updateAchievements(world *World) {
 	if world.enemySpawner.wave >= 30 && len(world.doll) == 1 {
-		stats.Achievements[Wave30OneDoll.id] = 1
+		history.Achievements[Wave30OneDoll.id] = 1
 	}
 
-	stats.Achievements[Wave30Lunatic.id] = float32(stats.HighestWave[LUNATIC]) / 30
+	history.Achievements[Wave30Lunatic.id] = float32(history.HighestWave[LUNATIC]) / 30
 
 	var highestWave uint
-	for _, v := range stats.HighestWave {
+	for _, v := range history.HighestWave {
 		if v > highestWave {
 			highestWave = v
 		}
 	}
-	stats.Achievements[Wave50Reached.id] = float32(highestWave) / 50
+	history.Achievements[Wave50Reached.id] = float32(highestWave) / 50
 
-	stats.Achievements[AllUpgradesObtained.id] = float32(len(stats.UpgradesUsed)) / AllUpgradesObtained.visualMaxProgress
+	history.Achievements[AllUpgradesObtained.id] = float32(len(history.UpgradesUsed)) / AllUpgradesObtained.visualMaxProgress
 
-	stats.Achievements[AllEnemiesKilled.id] = float32(len(stats.EnemiesKilledPerType)) / AllEnemiesKilled.visualMaxProgress
+	history.Achievements[AllEnemiesKilled.id] = float32(len(history.EnemiesKilledPerType)) / AllEnemiesKilled.visualMaxProgress
 }
 
 var achievementsByID = map[uint8]*AchievementType{
@@ -88,7 +88,7 @@ func renderAchievements(origin rl.Vector2) {
 
 	margin := float32(20)
 	for id, ach := range achievementsByID {
-		progress := stats.Achievements[id]
+		progress := history.Achievements[id]
 		rect := rl.Rectangle{X: origin.X, Y: origin.Y + float32(id)*(size.Y+margin*3), Width: size.X, Height: size.Y}
 
 		if progress >= 1 {

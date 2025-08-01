@@ -106,6 +106,6 @@ func preEnemyDeath(world *World, id Entity) {
 	world.playerData.mana += 1
 	newDeathEffect(world, world.enemy[id].texture, world.position[id])
 
-	stats.EnemiesKilledTotal[world.difficulty]++
-	stats.EnemiesKilledPerType[world.enemy[id].texture]++
+	history.EnemiesKilledTotal[world.difficulty]++
+	history.EnemiesKilledPerType[world.enemy[id].texture]++
 }

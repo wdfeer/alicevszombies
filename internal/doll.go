@@ -48,7 +48,7 @@ func newDoll(world *World, typ *DollType) Entity {
 	}
 
 	if !world.uistate.isMainMenu && !world.uistate.isDeathScreen {
-		stats.DollsSummoned[world.difficulty]++
+		history.DollsSummoned[world.difficulty]++
 	}
 
 	if typ.shootPattern.projectile != nil {

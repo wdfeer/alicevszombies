@@ -192,7 +192,7 @@ func incrementUpgrade(world *World, upgrade *Upgrade) {
 		}
 	}
 
-	stats.UpgradesUsed[upgrade.name]++
+	history.UpgradesUsed[upgrade.name]++
 }
 
 func summonDollFromUpgrade(world *World, upgrade *Upgrade) {

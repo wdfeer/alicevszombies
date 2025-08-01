@@ -3,90 +3,10 @@ package internal
 import (
 	"alicevszombies/internal/util"
 	"fmt"
-	"os"
 
 	"github.com/gen2brain/raylib-go/raygui"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
-
-var stats = struct {
-	TimePlayed           map[Difficulty]float32
-	EnemiesKilledTotal   map[Difficulty]uint
-	DollsSummoned        map[Difficulty]uint
-	HighestWave          map[Difficulty]uint
-	RunCount             map[Difficulty]uint
-	Achievements         Achievements
-	UpgradesUsed         map[string]uint
-	EnemiesKilledPerType map[string]uint
-}{
-	TimePlayed:           make(map[Difficulty]float32),
-	EnemiesKilledTotal:   make(map[Difficulty]uint),
-	DollsSummoned:        make(map[Difficulty]uint),
-	HighestWave:          make(map[Difficulty]uint),
-	RunCount:             make(map[Difficulty]uint),
-	Achievements:         Achievements{},
-	UpgradesUsed:         make(map[string]uint),
-	EnemiesKilledPerType: make(map[string]uint),
-}
-
-var statAutosaveTimer float32 = 0
-
-func updateStats(world *World) {
-	stats.TimePlayed[world.difficulty] += dt
-
-	if world.enemySpawner.wave > uint32(stats.HighestWave[world.difficulty]) {
-		stats.HighestWave[world.difficulty] = uint(world.enemySpawner.wave)
-	}
-
-	statAutosaveTimer += dt
-	if statAutosaveTimer >= 15 {
-		statAutosaveTimer = 0
-		go saveStats()
-	}
-
-	updateAchievements(world)
-}
-
-func loadStats() {
-	data, err := os.ReadFile("user/stats.bin")
-	if err == nil {
-		if err = util.Deserialize(data, &stats); err == nil {
-			println("INFO: Loaded stats successfully!")
-			return
-		} else {
-			println("ERROR: Failed deserializing stats!")
-		}
-	} else {
-		println("ERROR: Failed reading stats file!")
-	}
-
-	println("WARNING: Creating default stats file...")
-
-	go saveStats()
-}
-
-func saveStats() {
-	bytes, err := util.Serialize(&stats)
-	if err != nil {
-		println("ERROR: Failed serializing stats!")
-		return
-	}
-
-	if _, err = os.Stat("user"); err != nil {
-		err = os.Mkdir("user", 0755)
-		if err != nil {
-			println("ERROR: Failed creating \"user\" directory!")
-			return
-		}
-	}
-
-	err = os.WriteFile("user/stats.bin", bytes, 0644)
-	if err != nil {
-		println("ERROR: Failed writing stats file!")
-		return
-	}
-	println("INFO: Stats saved!")
-}
 
 var statSelectedDifficulty Difficulty = UNDEFINED
 
@@ -111,11 +31,11 @@ func renderStats(origin rl.Vector2) { // TODO: refactor this monstrosity of a fu
 	origin.Y += spacing + size.Y
 	timePlayed := float32(0)
 	if statSelectedDifficulty == UNDEFINED {
-		for _, v := range stats.TimePlayed {
+		for _, v := range history.TimePlayed {
 			timePlayed += v
 		}
 	} else {
-		timePlayed = stats.TimePlayed[statSelectedDifficulty]
+		timePlayed = history.TimePlayed[statSelectedDifficulty]
 	}
 	timePlayedText := "Time played: "
 	if timePlayed > 60 {
@@ -129,11 +49,11 @@ func renderStats(origin rl.Vector2) { // TODO: refactor this monstrosity of a fu
 	origin.Y += spacing
 	dollsSummoned := uint(0)
 	if statSelectedDifficulty == UNDEFINED {
-		for _, v := range stats.DollsSummoned {
+		for _, v := range history.DollsSummoned {
 			dollsSummoned += v
 		}
 	} else {
-		dollsSummoned = stats.DollsSummoned[statSelectedDifficulty]
+		dollsSummoned = history.DollsSummoned[statSelectedDifficulty]
 	}
 	dollsSummonedText := "Dolls summoned: " + fmt.Sprint(dollsSummoned)
 	raygui.Label(util.RectangleV(origin, size), dollsSummonedText)
@@ -141,11 +61,11 @@ func renderStats(origin rl.Vector2) { // TODO: refactor this monstrosity of a fu
 	origin.Y += spacing
 	kills := uint(0)
 	if statSelectedDifficulty == UNDEFINED {
-		for _, v := range stats.EnemiesKilledTotal {
+		for _, v := range history.EnemiesKilledTotal {
 			kills += v
 		}
 	} else {
-		kills = stats.EnemiesKilledTotal[statSelectedDifficulty]
+		kills = history.EnemiesKilledTotal[statSelectedDifficulty]
 	}
 	killCounter := "Enemies killed: " + fmt.Sprint(kills)
 	raygui.Label(util.RectangleV(origin, size), killCounter)
@@ -153,13 +73,13 @@ func renderStats(origin rl.Vector2) { // TODO: refactor this monstrosity of a fu
 	origin.Y += spacing
 	var highestWave uint
 	if statSelectedDifficulty == UNDEFINED {
-		for _, v := range stats.HighestWave {
+		for _, v := range history.HighestWave {
 			if v > highestWave {
 				highestWave = v
 			}
 		}
 	} else {
-		highestWave = stats.HighestWave[statSelectedDifficulty]
+		highestWave = history.HighestWave[statSelectedDifficulty]
 	}
 	highestWaveText := "Highest wave: " + fmt.Sprint(highestWave)
 	raygui.Label(util.RectangleV(origin, size), highestWaveText)
@@ -167,11 +87,11 @@ func renderStats(origin rl.Vector2) { // TODO: refactor this monstrosity of a fu
 	origin.Y += spacing
 	var runCount uint
 	if statSelectedDifficulty == UNDEFINED {
-		for _, v := range stats.RunCount {
+		for _, v := range history.RunCount {
 			runCount += v
 		}
 	} else {
-		runCount = stats.RunCount[statSelectedDifficulty]
+		runCount = history.RunCount[statSelectedDifficulty]
 	}
 	runCountText := "Run count: " + fmt.Sprint(runCount)
 	raygui.Label(util.RectangleV(origin, size), runCountText)

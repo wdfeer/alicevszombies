@@ -2,7 +2,7 @@ package internal
 
 func LoadUserData() {
 	loadOptions()
-	loadStats()
+	loadHistory()
 }
 
 func SaveUserData() {
