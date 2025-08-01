@@ -41,14 +41,16 @@ func updateHistory(world *World) {
 	historyAutosaveTimer += dt
 	if historyAutosaveTimer >= 15 {
 		historyAutosaveTimer = 0
-		go saveStats()
+		go saveHistory()
 	}
 
 	updateAchievements(world)
 }
 
+const historyPath = "user/history.bin"
+
 func loadHistory() {
-	data, err := os.ReadFile("user/history.bin")
+	data, err := os.ReadFile(historyPath)
 	if err == nil {
 		if err = util.Deserialize(data, &history); err == nil {
 			println("INFO: Loaded history successfully!")
@@ -62,10 +64,10 @@ func loadHistory() {
 
 	println("WARNING: Creating default history file...")
 
-	go saveStats()
+	go saveHistory()
 }
 
-func saveStats() {
+func saveHistory() {
 	bytes, err := util.Serialize(&history)
 	if err != nil {
 		println("ERROR: Failed serializing history!")
@@ -80,7 +82,7 @@ func saveStats() {
 		}
 	}
 
-	err = os.WriteFile("user/history.bin", bytes, 0644)
+	err = os.WriteFile(historyPath, bytes, 0644)
 	if err != nil {
 		println("ERROR: Failed writing history file!")
 		return

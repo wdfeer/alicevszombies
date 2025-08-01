@@ -7,5 +7,5 @@ func LoadUserData() {
 
 func SaveUserData() {
 	saveOptions()
-	saveStats()
+	saveHistory()
 }
