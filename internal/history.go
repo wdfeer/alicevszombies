@@ -91,14 +91,13 @@ func saveHistory() {
 }
 
 func renderHistory(origin rl.Vector2) {
-
 	{ // Tabs
 		o := origin
 		oldTextSize := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE)
 		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, oldTextSize/2)
-		buttonWidth := 240. * uiScale
-		buttonSpacing := 60 * uiScale
-		buttonHeight := 30 * uiScale
+		buttonWidth := 360 * uiScale
+		buttonHeight := 90 * uiScale
+		buttonSpacing := 20 * uiScale
 		if raygui.Toggle(rl.Rectangle{X: o.X, Y: o.Y, Width: buttonWidth, Height: buttonHeight}, "Stats", history.tabSelected == 0) {
 			history.tabSelected = 0
 		}

@@ -9,6 +9,7 @@ var uiScale float32 = 1
 var textSize256 int64 = 256
 var textSize64 int64 = 64
 var textSize40 int64 = 40
+var textSize24 int64 = 24
 
 func updateUIScale() {
 	scaleType := options.UIScale
@@ -30,6 +31,7 @@ func updateUIScale() {
 		textSize256 = 256
 		textSize64 = 64
 		textSize40 = 40
+		textSize24 = 24
 		uiScale = 1
 	case 2:
 		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, 64)
@@ -37,6 +39,7 @@ func updateUIScale() {
 		textSize256 = 160
 		textSize64 = 48
 		textSize40 = 32
+		textSize24 = 16
 		uiScale = 64. / 80
 	case 3:
 		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, 32)
@@ -44,6 +47,7 @@ func updateUIScale() {
 		textSize256 = 80
 		textSize64 = 24
 		textSize40 = 16
+		textSize24 = 12
 		uiScale = 32. / 80
 	}
 }
