@@ -94,25 +94,36 @@ func renderHistory(origin rl.Vector2) {
 	{ // Tabs
 		o := origin
 		oldTextSize := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE)
-		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, oldTextSize/2)
-		buttonWidth := 360 * uiScale
+		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, textSize40)
+		buttonWidth := 240 * uiScale
 		buttonHeight := 90 * uiScale
 		buttonSpacing := 20 * uiScale
-		if raygui.Toggle(rl.Rectangle{X: o.X, Y: o.Y, Width: buttonWidth, Height: buttonHeight}, "Stats", history.tabSelected == 0) {
-			history.tabSelected = 0
-		}
-		o.X += buttonWidth + buttonSpacing
-		if raygui.Toggle(rl.Rectangle{X: o.X, Y: o.Y, Width: buttonWidth, Height: buttonHeight}, "Achievements", history.tabSelected == 1) {
+
+		raygui.SetState(raygui.STATE_DISABLED)
+		raygui.Toggle(rl.Rectangle{X: o.X, Y: o.Y, Width: buttonWidth * 0.8, Height: buttonHeight}, "Runs", history.tabSelected == 0)
+		// TODO: implement run history
+		raygui.SetState(raygui.STATE_NORMAL)
+		o.X += buttonWidth*0.8 + buttonSpacing
+
+		if raygui.Toggle(rl.Rectangle{X: o.X, Y: o.Y, Width: buttonWidth * 0.8, Height: buttonHeight}, "Stats", history.tabSelected == 1) {
 			history.tabSelected = 1
 		}
+		o.X += buttonWidth*0.8 + buttonSpacing
+
+		if raygui.Toggle(rl.Rectangle{X: o.X, Y: o.Y, Width: buttonWidth * 1.4, Height: buttonHeight}, "Achievements", history.tabSelected == 2) {
+			history.tabSelected = 2
+		}
+
 		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, oldTextSize)
-		origin.Y += buttonHeight + buttonSpacing
+		origin.Y += buttonHeight + buttonSpacing*2
 	}
 
 	switch history.tabSelected {
 	case 0:
-		renderStats(origin)
+		// TODO: render run history
 	case 1:
+		renderStats(origin)
+	case 2:
 		renderAchievements(origin)
 	}
 }

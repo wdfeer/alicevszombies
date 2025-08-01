@@ -89,7 +89,7 @@ func renderOptions(origin rl.Vector2) {
 	{ // Tabs
 		o := origin
 		oldTextSize := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE)
-		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, oldTextSize/2)
+		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, textSize40)
 		buttonWidth := 240. * uiScale
 		buttonSpacing := buttonSpacing / 2
 		buttonHeight := buttonHeight * 0.75

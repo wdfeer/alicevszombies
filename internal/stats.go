@@ -11,7 +11,7 @@ import (
 var statSelectedDifficulty Difficulty = UNDEFINED
 
 func renderStats(origin rl.Vector2) { // TODO: refactor this monstrosity of a function
-	size := rl.Vector2{X: 480 * uiScale, Y: 120 * uiScale}
+	size := rl.Vector2{X: 760 * uiScale, Y: 120 * uiScale}
 	spacing := float32(40) * uiScale
 	panelSize := rl.Vector2{X: size.X, Y: size.Y*4 + spacing*5}
 
@@ -19,7 +19,6 @@ func renderStats(origin rl.Vector2) { // TODO: refactor this monstrosity of a fu
 
 	raygui.Panel(util.RectangleV(origin, panelSize), "")
 
-	origin.Y += spacing
 	diffText := "Overall\nEasy\nNormal\nHard\nLunatic"
 
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, textSize64)

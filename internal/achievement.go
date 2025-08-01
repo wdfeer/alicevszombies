@@ -81,7 +81,7 @@ var achievementsByID = map[uint8]*AchievementType{
 }
 
 func renderAchievements(origin rl.Vector2) {
-	size := rl.Vector2{X: 580 * uiScale, Y: 120 * uiScale}
+	size := rl.Vector2{X: 720 * uiScale, Y: 120 * uiScale}
 	oldFontsize := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE)
 	oldLineSpacing := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_LINE_SPACING)
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_LINE_SPACING, textSize40/2)
@@ -89,7 +89,7 @@ func renderAchievements(origin rl.Vector2) {
 	margin := float32(20) * uiScale
 	for id, ach := range achievementsByID {
 		progress := history.Achievements[id]
-		rect := rl.Rectangle{X: origin.X, Y: origin.Y + float32(id)*(size.Y+margin*3), Width: size.X, Height: size.Y}
+		rect := rl.Rectangle{X: origin.X + margin, Y: origin.Y + float32(id)*(size.Y+margin*3) + margin, Width: size.X, Height: size.Y}
 
 		if progress >= 1 {
 			raygui.SetState(raygui.STATE_FOCUSED)
