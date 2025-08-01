@@ -41,6 +41,8 @@ func render(world *World) {
 	defer rl.EndDrawing()
 
 	if options.Bloom && options.ChromaAbberation {
+		offsetLocation := rl.GetShaderLocation(assets.shaders["chroma_abberation"], "offset")
+		rl.SetShaderValue(assets.shaders["chroma_abberation"], offsetLocation, []float32{0.0006 * 1440 / float32(rl.GetScreenHeight())}, rl.ShaderUniformFloat)
 		rl.BeginShaderMode(assets.shaders["chroma_abberation"])
 		rl.DrawTextureRec(assets.renderTextures[1].Texture,
 			rl.Rectangle{X: 0, Y: 0, Width: float32(rl.GetScreenWidth()), Height: -float32(rl.GetScreenHeight())},
@@ -51,6 +53,8 @@ func render(world *World) {
 			rl.Rectangle{X: 0, Y: 0, Width: float32(rl.GetScreenWidth()), Height: -float32(rl.GetScreenHeight())},
 			rl.Vector2{X: 0, Y: 0}, rl.White)
 	} else if options.ChromaAbberation {
+		offsetLocation := rl.GetShaderLocation(assets.shaders["chroma_abberation"], "offset")
+		rl.SetShaderValue(assets.shaders["chroma_abberation"], offsetLocation, []float32{0.0006 * 1440 / float32(rl.GetScreenHeight())}, rl.ShaderUniformFloat)
 		rl.BeginShaderMode(assets.shaders["chroma_abberation"])
 		rl.DrawTextureRec(assets.renderTextures[0].Texture,
 			rl.Rectangle{X: 0, Y: 0, Width: float32(rl.GetScreenWidth()), Height: -float32(rl.GetScreenHeight())},
