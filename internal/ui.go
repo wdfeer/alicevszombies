@@ -17,6 +17,7 @@ type UIState struct {
 	mainMenu         MainMenu
 	displayFPS       bool
 	cameraOffset     rl.Vector2
+	spellState       SpellUIState
 }
 
 func updateUI(world *World) {
@@ -45,6 +46,8 @@ func updateUI(world *World) {
 	}
 
 	updateUIScale()
+
+	updateSpells(world)
 }
 
 const CursorHideCooldown = 2.5
