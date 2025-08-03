@@ -52,7 +52,11 @@ func updateEnemySpawner(world *World) {
 	}
 
 	if spawner.spawnTimer <= 0 {
-		newEnemy(world, enemyTypeToSpawn(world))
+		typ := enemyTypeToSpawn(world)
+		newEnemy(world, typ)
+		if typ.spawnData.boss {
+			playSound("boss_spawn")
+		}
 
 		spawner.spawnTimer = 2 - min(1.4, float32(spawner.wave)/10)
 		if spawner.enemiesToSpawn > 10 {
