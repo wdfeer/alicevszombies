@@ -108,4 +108,7 @@ func preEnemyDeath(world *World, id Entity) {
 
 	history.EnemiesKilledTotal[world.difficulty]++
 	history.EnemiesKilledPerType[world.enemy[id].texture]++
+
+	dist := rl.Vector2Distance(world.position[id], world.position[world.player])
+	playSoundVolumePitch("enemy_kill", (0.75 - dist/400), 0.9+0.15*rand.Float32())
 }
