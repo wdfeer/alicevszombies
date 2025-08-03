@@ -69,7 +69,7 @@ func renderPauseMenu(world *World) {
 
 		origin := rl.Vector2{X: 0, Y: float32(rl.GetScreenHeight()) - 64*uiScale}
 		rect = rl.Rectangle{X: origin.X, Y: origin.Y, Width: float32(rl.GetScreenWidth()), Height: 64 * uiScale}
-		raygui.Panel(rect, "")
+		rl.DrawRectangleRec(rect, rl.ColorAlpha(rl.Black, 0.25))
 
 		for id := range world.doll {
 			if _, ok := pMenu.dollPosition[id]; !ok {
