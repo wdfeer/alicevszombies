@@ -9,7 +9,7 @@ import (
 )
 
 var runHistory = struct {
-	Entries map[uint]RunEntry
+	Entries map[uint16]RunEntry
 }{}
 
 type RunEntry = struct {
@@ -46,7 +46,7 @@ func saveRunHistory() {
 		return
 	}
 
-	if _, err = os.Stat("user"); err != nil {
+	if_, err = os.Stat("user"); err != nil {
 		err = os.Mkdir("user", 0755)
 		if err != nil {
 			println("ERROR: Failed creating \"user\" directory!")
