@@ -99,10 +99,9 @@ func renderHistory(origin rl.Vector2) {
 		buttonHeight := 90 * uiScale
 		buttonSpacing := 20 * uiScale
 
-		raygui.SetState(raygui.STATE_DISABLED)
-		raygui.Toggle(rl.Rectangle{X: o.X, Y: o.Y, Width: buttonWidth * 0.8, Height: buttonHeight}, "Runs", history.tabSelected == 0)
-		// TODO: implement run history
-		raygui.SetState(raygui.STATE_NORMAL)
+		if raygui.Toggle(rl.Rectangle{X: o.X, Y: o.Y, Width: buttonWidth * 0.8, Height: buttonHeight}, "Runs", history.tabSelected == 0) {
+			history.tabSelected = 0
+		}
 		o.X += buttonWidth*0.8 + buttonSpacing
 
 		if raygui.Toggle(rl.Rectangle{X: o.X, Y: o.Y, Width: buttonWidth * 0.8, Height: buttonHeight}, "Stats", history.tabSelected == 1) {
@@ -120,7 +119,7 @@ func renderHistory(origin rl.Vector2) {
 
 	switch history.tabSelected {
 	case 0:
-		// TODO: render run history
+		renderRunHistory(origin)
 	case 1:
 		renderStats(origin)
 	case 2:
