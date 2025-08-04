@@ -10,7 +10,9 @@ import (
 
 var runHistory = struct {
 	Entries map[uint16]RunEntry
-}{}
+}{
+	Entries: make(map[uint16]RunEntry),
+}
 
 type RunEntry = struct {
 	Difficulty   Difficulty
@@ -36,7 +38,7 @@ func loadRunHistory() {
 
 	println("WARNING: Creating default history file...")
 
-	go saveHistory()
+	go saveRunHistory()
 }
 
 func saveRunHistory() {
@@ -46,7 +48,7 @@ func saveRunHistory() {
 		return
 	}
 
-	if_, err = os.Stat("user"); err != nil {
+	if _, err = os.Stat("user"); err != nil {
 		err = os.Mkdir("user", 0755)
 		if err != nil {
 			println("ERROR: Failed creating \"user\" directory!")
