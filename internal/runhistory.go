@@ -5,6 +5,7 @@ import (
 	"alicevszombies/internal/util"
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/gen2brain/raylib-go/raygui"
 	rl "github.com/gen2brain/raylib-go/raylib"
@@ -17,6 +18,7 @@ var runHistory = struct {
 }
 
 type RunEntry = struct {
+	Time         time.Time
 	Difficulty   Difficulty
 	WaveReached  uint16
 	DollCount    uint16
@@ -69,6 +71,7 @@ func saveRunHistory() {
 func SaveRun(world *World) {
 	if world.enemySpawner.wave > 1 {
 		runHistory.Entries[uint16(len(runHistory.Entries))] = RunEntry{
+			Time:         time.Now(),
 			Difficulty:   world.difficulty,
 			WaveReached:  uint16(world.enemySpawner.wave),
 			DollCount:    uint16(len(world.doll)),
