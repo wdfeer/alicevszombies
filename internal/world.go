@@ -32,6 +32,8 @@ type World struct {
 	flippable     map[Entity]bool
 	shootTimer    map[Entity]float32
 	status        map[Entity]Status
+	// Total time in seconds the world was unpaused
+	playtime float32
 }
 
 func NewWorld() World {
@@ -94,6 +96,7 @@ var dt float32
 
 func (world *World) Update() {
 	dt = rl.Clamp(rl.GetFrameTime(), 0.002, 0.05)
+	world.playtime += dt
 
 	if !world.paused {
 		updateHP(world)

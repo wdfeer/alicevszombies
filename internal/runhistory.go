@@ -23,6 +23,7 @@ type RunEntry = struct {
 	WaveReached  uint16
 	DollCount    uint16
 	UpgradeCount uint16
+	Playtime     float32
 }
 
 const runHistoryPath = "user/runhistory.bin"
@@ -76,6 +77,7 @@ func SaveRun(world *World) {
 			WaveReached:  uint16(world.enemySpawner.wave),
 			DollCount:    uint16(len(world.doll)),
 			UpgradeCount: uint16(world.playerData.upgradeCount()),
+			Playtime:     world.playtime,
 		})
 	}
 }
