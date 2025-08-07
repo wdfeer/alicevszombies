@@ -92,9 +92,11 @@ func renderRunHistory(origin rl.Vector2) {
 
 	margin := float32(20) * uiScale
 	startIndex := max(len(runHistory.Entries)-3, 0)
+	runsShown := len(runHistory.Entries) - startIndex
 	for i := range min(len(runHistory.Entries), 3) {
 		index := startIndex + i
-		rect := rl.Rectangle{X: origin.X + margin, Y: origin.Y + float32(i)*(size.Y+margin*3) + margin, Width: size.X, Height: size.Y}
+		rectY := origin.Y + float32((3-i)-(4-runsShown))*(size.Y+margin*3) + margin // Surely it doesn't need to be so complicated...
+		rect := rl.Rectangle{X: origin.X + margin, Y: rectY, Width: size.X, Height: size.Y}
 
 		{ // Background panel
 			panelRect := rect
