@@ -44,14 +44,7 @@ func NewWorld() World {
 }
 
 func (world *World) Reset() {
-	if world.enemySpawner.wave > 1 {
-		runHistory.Entries[uint16(len(runHistory.Entries))] = RunEntry{
-			Difficulty:   world.difficulty,
-			WaveReached:  uint16(world.enemySpawner.wave),
-			DollCount:    uint16(len(world.doll)),
-			UpgradeCount: uint16(world.playerData.upgradeCount()),
-		}
-	}
+	SaveRun(world)
 
 	{
 		halfSize := util.HalfScreenSize()

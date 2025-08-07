@@ -19,6 +19,8 @@ func main() {
 	defer internal.UnloadAssets()
 
 	world := internal.NewWorld()
+	defer internal.SaveRun(&world)
+
 	for !rl.WindowShouldClose() {
 		world.Update()
 	}

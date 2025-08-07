@@ -64,6 +64,17 @@ func saveRunHistory() {
 	println("INFO: Run history saved!")
 }
 
+func SaveRun(world *World) {
+	if world.enemySpawner.wave > 1 {
+		runHistory.Entries[uint16(len(runHistory.Entries))] = RunEntry{
+			Difficulty:   world.difficulty,
+			WaveReached:  uint16(world.enemySpawner.wave),
+			DollCount:    uint16(len(world.doll)),
+			UpgradeCount: uint16(world.playerData.upgradeCount()),
+		}
+	}
+}
+
 func renderRunHistory(origin rl.Vector2) {
 	size := rl.Vector2{X: 720 * uiScale, Y: 480 * uiScale}
 	oldFontsize := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE)
