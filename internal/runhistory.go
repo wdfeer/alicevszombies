@@ -13,6 +13,7 @@ import (
 
 var runHistory = struct {
 	Entries []RunEntry
+	page    int32
 }{
 	Entries: make([]RunEntry, 0),
 }
@@ -86,30 +87,34 @@ func SaveRun(world *World) {
 
 func renderRunHistory(origin rl.Vector2) {
 	size := rl.Vector2{X: 720 * uiScale, Y: 120 * uiScale}
+	margin := float32(20) * uiScale
+
 	oldFontsize := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE)
 	oldLineSpacing := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_LINE_SPACING)
 	oldTextAlign := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_ALIGNMENT)
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, textSize40)
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_LINE_SPACING, textSize40/2)
 
-	margin := float32(20) * uiScale
-	startIndex := max(len(runHistory.Entries)-3, 0)
-	runsShown := len(runHistory.Entries) - startIndex
-	for i := range min(len(runHistory.Entries), 3) {
-		index := startIndex + i
-		rectY := origin.Y + float32((3-i)-(4-runsShown))*(size.Y+margin*3) + margin // Surely it doesn't need to be so complicated...
+	var startIndex int
+	if len(runHistory.Entries) > 3 { // Show page switcher
+		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, textSize64)
+		textWidth := float32(rl.MeasureText("Page", int32(textSize64)))
+		width := size.X - textWidth
+		raygui.SetStyle(raygui.SPINNER, raygui.ARROWS_SIZE, int64(width)/7)
+		raygui.Spinner(rl.Rectangle{X: origin.X, Y: origin.Y, Width: width, Height: size.Y + margin}, "Page", &runHistory.page, 1, max(1, len(runHistory.Entries)/3+1), false)
+		startIndex = int(runHistory.page)*3 - 3
+		origin.Y += size.Y + margin*2
+	} else {
+		startIndex = max(len(runHistory.Entries)-3, 0)
+	}
+
+	shownRuns := runHistory.Entries[startIndex:min(startIndex+3, len(runHistory.Entries))]
+	for i, e := range shownRuns {
+		// TODO: revert y positions to put recent runs on top
+		rectY := origin.Y + float32(i)*(size.Y+margin*3) + margin
 		rect := rl.Rectangle{X: origin.X + margin, Y: rectY, Width: size.X, Height: size.Y}
 
-		{ // Background panel
-			panelRect := rect
-			panelRect.X -= margin
-			panelRect.Y -= margin
-			panelRect.Width += margin * 2
-			panelRect.Height += margin * 2
-			raygui.Panel(panelRect, "")
-		}
-
-		e := &runHistory.Entries[index]
+		raygui.Panel(rl.Rectangle{X: origin.X, Y: rectY - margin, Width: size.X + margin*2, Height: size.Y + margin*2}, "")
 
 		// Difficulty
 		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, textSize40)
