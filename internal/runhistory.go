@@ -77,10 +77,11 @@ func SaveRun(world *World) {
 }
 
 func renderRunHistory(origin rl.Vector2) {
-	size := rl.Vector2{X: 720 * uiScale, Y: 480 * uiScale}
+	size := rl.Vector2{X: 720 * uiScale, Y: 120 * uiScale}
 	oldFontsize := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE)
 	oldLineSpacing := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_LINE_SPACING)
 	oldTextAlign := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_ALIGNMENT)
+	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, textSize40)
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_LINE_SPACING, textSize40/2)
 
 	margin := float32(20) * uiScale
