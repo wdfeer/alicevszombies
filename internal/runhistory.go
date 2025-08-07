@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"alicevszombies/internal/colors"
 	"alicevszombies/internal/util"
 	"fmt"
 	"os"
@@ -98,19 +99,30 @@ func renderRunHistory(origin rl.Vector2) {
 		}
 
 		// Difficulty
-		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_ALIGNMENT, int64(raygui.TEXT_ALIGN_LEFT))
-		var diffStr string
-		switch e.Difficulty {
-		case EASY:
-			diffStr = "Easy"
-		case NORMAL:
-			diffStr = "Normal"
-		case HARD:
-			diffStr = "Hard"
-		case LUNATIC:
-			diffStr = "Lunatic"
+		{
+			oldColor := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_COLOR_NORMAL)
+			raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_ALIGNMENT, int64(raygui.TEXT_ALIGN_LEFT))
+			var diffStr string
+			var diffColor rl.Color
+			switch e.Difficulty {
+			case EASY:
+				diffStr = "Easy"
+				diffColor = rl.White
+			case NORMAL:
+				diffStr = "Normal"
+				diffColor = colors.Yellow
+			case HARD:
+				diffStr = "Hard"
+				diffColor = colors.Red
+			case LUNATIC:
+				diffStr = "Lunatic"
+				diffColor = colors.Purple
+			}
+			raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_COLOR_NORMAL, int64(rl.ColorToInt(diffColor)))
+			raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_ALIGNMENT, int64(raygui.TEXT_ALIGN_LEFT))
+			raygui.Label(rect, diffStr)
+			raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_COLOR_NORMAL, oldColor)
 		}
-		raygui.Label(rect, diffStr)
 
 		// Wave Reached
 		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_ALIGNMENT, int64(raygui.TEXT_ALIGN_RIGHT))
