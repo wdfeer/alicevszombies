@@ -91,8 +91,10 @@ func renderRunHistory(origin rl.Vector2) {
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_LINE_SPACING, textSize40/2)
 
 	margin := float32(20) * uiScale
-	for id, e := range runHistory.Entries {
-		rect := rl.Rectangle{X: origin.X + margin, Y: origin.Y + float32(id)*(size.Y+margin*3) + margin, Width: size.X, Height: size.Y}
+	startIndex := max(len(runHistory.Entries)-3, 0)
+	for i := range min(len(runHistory.Entries), 3) {
+		index := startIndex + i
+		rect := rl.Rectangle{X: origin.X + margin, Y: origin.Y + float32(i)*(size.Y+margin*3) + margin, Width: size.X, Height: size.Y}
 
 		{ // Background panel
 			panelRect := rect
@@ -102,6 +104,8 @@ func renderRunHistory(origin rl.Vector2) {
 			panelRect.Height += margin * 2
 			raygui.Panel(panelRect, "")
 		}
+
+		e := &runHistory.Entries[index]
 
 		// Difficulty
 		{
