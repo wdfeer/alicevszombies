@@ -12,9 +12,9 @@ import (
 )
 
 var runHistory = struct {
-	Entries map[uint16]RunEntry
+	Entries []RunEntry
 }{
-	Entries: make(map[uint16]RunEntry),
+	Entries: make([]RunEntry, 0),
 }
 
 type RunEntry = struct {
@@ -70,13 +70,13 @@ func saveRunHistory() {
 
 func SaveRun(world *World) {
 	if world.enemySpawner.wave > 1 {
-		runHistory.Entries[uint16(len(runHistory.Entries))] = RunEntry{
+		runHistory.Entries = append(runHistory.Entries, RunEntry{
 			Time:         time.Now(),
 			Difficulty:   world.difficulty,
 			WaveReached:  uint16(world.enemySpawner.wave),
 			DollCount:    uint16(len(world.doll)),
 			UpgradeCount: uint16(world.playerData.upgradeCount()),
-		}
+		})
 	}
 }
 
