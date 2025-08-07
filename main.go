@@ -13,15 +13,18 @@ func main() {
 	internal.InitWindowSettings()
 
 	internal.LoadUserData()
-	defer internal.SaveUserData()
 
 	internal.LoadAssets()
 	defer internal.UnloadAssets()
 
 	world := internal.NewWorld()
-	defer internal.SaveRun(&world)
 
 	for !rl.WindowShouldClose() {
 		world.Update()
 	}
+
+	internal.SaveRun(&world)
+
+	// FIXME: this doesn't seem to actually call the function
+	internal.SaveUserData()
 }

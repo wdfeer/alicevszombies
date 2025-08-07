@@ -32,16 +32,16 @@ func loadRunHistory() {
 	data, err := os.ReadFile(runHistoryPath)
 	if err == nil {
 		if err = util.Deserialize(data, &runHistory); err == nil {
-			println("INFO: Loaded history successfully!")
+			println(fmt.Sprintf("INFO: Loaded run history with %d entries successfully!", len(runHistory.Entries)))
 			return
 		} else {
-			println("ERROR: Failed deserializing history!")
+			println("ERROR: Failed deserializing run history!")
 		}
 	} else {
-		println("ERROR: Failed reading history file!")
+		println("ERROR: Failed reading run history file!")
 	}
 
-	println("WARNING: Creating default history file...")
+	println("WARNING: Creating default run history file...")
 
 	go saveRunHistory()
 }
@@ -66,7 +66,7 @@ func saveRunHistory() {
 		println("ERROR: Failed writing run history file!")
 		return
 	}
-	println("INFO: Run history saved!")
+	println(fmt.Sprintf("INFO: Run history saved with %d entries", len(runHistory.Entries)))
 }
 
 func SaveRun(world *World) {
@@ -79,6 +79,8 @@ func SaveRun(world *World) {
 			UpgradeCount: uint16(world.playerData.upgradeCount()),
 			Playtime:     world.playtime,
 		})
+
+		go saveRunHistory()
 	}
 }
 
