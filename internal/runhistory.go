@@ -5,6 +5,7 @@ import (
 	"alicevszombies/internal/util"
 	"fmt"
 	"os"
+	"sort"
 	"time"
 
 	"github.com/gen2brain/raylib-go/raygui"
@@ -95,22 +96,33 @@ func renderRunHistory(origin rl.Vector2) {
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, textSize40)
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_LINE_SPACING, textSize40/2)
 
-	var startIndex int
-	if len(runHistory.Entries) > 3 { // Show page switcher
+	sort.Slice(runHistory.Entries, func(i, j int) bool {
+		return runHistory.Entries[i].Time.After(runHistory.Entries[j].Time)
+	})
+
+	const entriesPerPage = 4
+	totalEntries := len(runHistory.Entries)
+	maxPage := (totalEntries + entriesPerPage - 1) / entriesPerPage
+
+	if totalEntries > entriesPerPage {
 		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, textSize64)
 		textWidth := float32(rl.MeasureText("Page", int32(textSize64)))
 		width := size.X - textWidth
 		raygui.SetStyle(raygui.SPINNER, raygui.ARROWS_SIZE, int64(width)/7)
-		raygui.Spinner(rl.Rectangle{X: origin.X, Y: origin.Y, Width: width, Height: size.Y + margin}, "Page", &runHistory.page, 1, max(1, len(runHistory.Entries)/3+1), false)
-		startIndex = int(runHistory.page)*3 - 3
+
+		raygui.Spinner(rl.Rectangle{X: origin.X, Y: origin.Y, Width: width, Height: size.Y + margin},
+			"Page", &runHistory.page, 1, maxPage, false)
 		origin.Y += size.Y + margin*2
 	} else {
-		startIndex = max(len(runHistory.Entries)-3, 0)
+		runHistory.page = 1
 	}
 
-	shownRuns := runHistory.Entries[startIndex:min(startIndex+3, len(runHistory.Entries))]
+	startIndex := (int(runHistory.page) - 1) * entriesPerPage
+	endIndex := min(startIndex+entriesPerPage, totalEntries)
+
+	shownRuns := runHistory.Entries[startIndex:endIndex]
+
 	for i, e := range shownRuns {
-		// TODO: revert y positions to put recent runs on top
 		rectY := origin.Y + float32(i)*(size.Y+margin*3) + margin
 		rect := rl.Rectangle{X: origin.X + margin, Y: rectY, Width: size.X, Height: size.Y}
 
