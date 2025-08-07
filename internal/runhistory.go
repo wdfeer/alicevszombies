@@ -108,6 +108,7 @@ func renderRunHistory(origin rl.Vector2) {
 		e := &runHistory.Entries[index]
 
 		// Difficulty
+		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, textSize40)
 		{
 			oldColor := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_COLOR_NORMAL)
 			raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_ALIGNMENT, int64(raygui.TEXT_ALIGN_LEFT))
@@ -137,6 +138,13 @@ func renderRunHistory(origin rl.Vector2) {
 		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_ALIGNMENT, int64(raygui.TEXT_ALIGN_RIGHT))
 		waveStr := fmt.Sprintf("%d Waves", e.WaveReached)
 		raygui.Label(rect, waveStr)
+
+		// How long ago Played
+		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, textSize24)
+		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_ALIGNMENT, int64(raygui.TEXT_ALIGN_CENTER))
+		timeAgoStr := util.TimeAgo(e.Time)
+		rect.Height /= 4
+		raygui.Label(rect, timeAgoStr)
 	}
 
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, oldFontsize)
