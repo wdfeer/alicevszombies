@@ -2,6 +2,7 @@ package internal
 
 import (
 	"alicevszombies/internal/util"
+	"fmt"
 	"os"
 
 	"github.com/gen2brain/raylib-go/raygui"
@@ -79,12 +80,44 @@ func renderRunHistory(origin rl.Vector2) {
 	size := rl.Vector2{X: 720 * uiScale, Y: 480 * uiScale}
 	oldFontsize := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE)
 	oldLineSpacing := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_LINE_SPACING)
+	oldTextAlign := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_ALIGNMENT)
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_LINE_SPACING, textSize40/2)
 
-	raygui.Panel(util.RectangleV(origin, size), "TODO")
+	margin := float32(20) * uiScale
+	for id, e := range runHistory.Entries {
+		rect := rl.Rectangle{X: origin.X + margin, Y: origin.Y + float32(id)*(size.Y+margin*3) + margin, Width: size.X, Height: size.Y}
 
-	// TODO: implement run rendering
+		{ // Background panel
+			panelRect := rect
+			panelRect.X -= margin
+			panelRect.Y -= margin
+			panelRect.Width += margin * 2
+			panelRect.Height += margin * 2
+			raygui.Panel(panelRect, "")
+		}
+
+		// Difficulty
+		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_ALIGNMENT, int64(raygui.TEXT_ALIGN_LEFT))
+		var diffStr string
+		switch e.Difficulty {
+		case EASY:
+			diffStr = "Easy"
+		case NORMAL:
+			diffStr = "Normal"
+		case HARD:
+			diffStr = "Hard"
+		case LUNATIC:
+			diffStr = "Lunatic"
+		}
+		raygui.Label(rect, diffStr)
+
+		// Wave Reached
+		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_ALIGNMENT, int64(raygui.TEXT_ALIGN_RIGHT))
+		waveStr := fmt.Sprintf("%d Waves", e.WaveReached)
+		raygui.Label(rect, waveStr)
+	}
 
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, oldFontsize)
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_LINE_SPACING, oldLineSpacing)
+	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_ALIGNMENT, oldTextAlign)
 }
