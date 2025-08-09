@@ -7,17 +7,18 @@ import (
 )
 
 type UIState struct {
-	isMainMenu       bool
-	isUpgradeScreen  bool
-	isDeathScreen    bool
-	previousMousePos rl.Vector2
-	cursorHideTimer  float32
-	pauseMenu        PauseMenu
-	upgradeScreen    UpgradeScreen
-	mainMenu         MainMenu
-	displayFPS       bool
-	cameraOffset     rl.Vector2
-	spellState       SpellUIState
+	isMainMenu              bool
+	isUpgradeScreen         bool
+	isDeathScreen           bool
+	previousMousePos        rl.Vector2
+	cursorHideTimer         float32
+	pauseMenu               PauseMenu
+	upgradeScreen           UpgradeScreen
+	mainMenu                MainMenu
+	displayFPS              bool
+	cameraOffset            rl.Vector2
+	spellState              SpellUIState
+	achievementNotification AchievementNotification
 }
 
 func updateUI(world *World) {

@@ -77,7 +77,7 @@ func updateAchievements(world *World) {
 	if history.Achievements != oldAchievements {
 		for i, v := range history.Achievements {
 			if v >= 1 && oldAchievements[i] < 1 {
-				// TODO: show achievement achieved notification
+				showAchievementNotification(world, uint8(i))
 			}
 		}
 	}
@@ -151,4 +151,25 @@ func renderAchievement(origin rl.Vector2, achievementID uint8) {
 	if progress >= 1 {
 		raygui.SetState(raygui.STATE_NORMAL)
 	}
+}
+
+type AchievementNotification = struct {
+	id       uint8
+	timeLeft float32
+}
+
+func showAchievementNotification(world *World, achievementID uint8) {
+	world.uistate.achievementNotification = AchievementNotification{
+		id:       achievementID,
+		timeLeft: 1.5,
+	}
+}
+
+func renderAchievementNotification(world *World) {
+	if world.uistate.achievementNotification.timeLeft < 0 {
+		return
+	}
+
+	renderAchievement(rl.Vector2Subtract(util.ScreenSize(), rl.Vector2{X: 720 * uiScale, Y: 120 * uiScale}), world.uistate.achievementNotification.id)
+	world.uistate.achievementNotification.timeLeft -= dt
 }

@@ -89,5 +89,6 @@ func renderHUD(world *World) {
 		}
 	}
 
+	renderAchievementNotification(world)
 	renderSpells(world)
 }
