@@ -159,12 +159,20 @@ func showAchievementNotification(world *World, achievementID uint8) {
 }
 
 func renderAchievementNotification(world *World) {
-	if world.uistate.achievementNotification.timeLeft <= 0 {
+	timeLeft := &world.uistate.achievementNotification.timeLeft
+	if *timeLeft <= 0 {
 		return
 	}
 
 	size := rl.Vector2{X: 560 * uiScale, Y: 120 * uiScale}
 	margin := float32(16) * uiScale
-	renderAchievement(rl.Vector2Subtract(util.ScreenSize(), rl.Vector2Add(size, rl.Vector2{X: margin * 2, Y: margin * 2})), size, margin, world.uistate.achievementNotification.id)
-	world.uistate.achievementNotification.timeLeft -= dt
+
+	offset := rl.Vector2Add(size, rl.Vector2{X: margin * 2, Y: margin * 2})
+	pos := rl.Vector2Subtract(util.ScreenSize(), offset)
+
+	if *timeLeft <= 0.3 {
+		pos.Y += offset.Y * (1 - *timeLeft/0.3)
+	}
+	renderAchievement(pos, size, margin, world.uistate.achievementNotification.id)
+	*timeLeft -= dt
 }
