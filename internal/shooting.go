@@ -48,7 +48,11 @@ func updateShooting(world *World) {
 				continue
 			}
 
-			world.shootTimer[id] = pattern.cooldown
+			if e, ok := world.enemy[id]; ok && e.spawnData.boss && (world.hp[id].val/world.hp[id].max) < 0.4 {
+				world.shootTimer[id] = pattern.cooldown / 2
+			} else {
+				world.shootTimer[id] = pattern.cooldown
+			}
 
 			var target rl.Vector2
 			if friendly {
