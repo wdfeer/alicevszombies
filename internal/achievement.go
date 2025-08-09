@@ -96,40 +96,31 @@ func renderAchievements(origin rl.Vector2) {
 	oldLineSpacing := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_LINE_SPACING)
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_LINE_SPACING, textSize40/2)
 
-	height := 120 * uiScale
+	size := rl.Vector2{X: 760 * uiScale, Y: 120 * uiScale}
 	margin := float32(20) * uiScale
 
 	for id := range achievementsByID {
-		origin := rl.Vector2{X: origin.X + margin, Y: origin.Y + float32(id)*(height+margin*3) + margin}
-		renderAchievement(origin, id)
+		origin := rl.Vector2{X: origin.X, Y: origin.Y + float32(id)*(size.Y+margin*3)}
+		renderAchievement(origin, size, margin, id)
 	}
 
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, oldFontsize)
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_LINE_SPACING, oldLineSpacing)
 }
 
-func renderAchievement(origin rl.Vector2, achievementID uint8) {
-	// maybe unionize with the same stuff from renderAchievements ?
-	size := rl.Vector2{X: 720 * uiScale, Y: 120 * uiScale}
-	margin := float32(20) * uiScale
-
+func renderAchievement(origin rl.Vector2, size rl.Vector2, margin float32, achievementID uint8) {
 	ach := achievementsByID[achievementID]
 
 	progress := history.Achievements[achievementID]
-	rect := util.RectangleV(origin, size)
+	panelRect := util.RectangleV(origin, size)
 
 	if progress >= 1 {
 		raygui.SetState(raygui.STATE_FOCUSED)
 	}
 
-	{ // Background panel
-		panelRect := rect
-		panelRect.X -= margin
-		panelRect.Y -= margin
-		panelRect.Width += margin * 2
-		panelRect.Height += margin * 2
-		raygui.Panel(panelRect, "")
-	}
+	raygui.Panel(panelRect, "")
+
+	rect := rl.Rectangle{X: panelRect.X + margin, Y: panelRect.Y + margin, Width: panelRect.Width - margin*2, Height: panelRect.Height - margin*2}
 
 	// Title
 	rect.Height /= 4
@@ -143,7 +134,9 @@ func renderAchievement(origin rl.Vector2, achievementID uint8) {
 	raygui.Label(rect, ach.description)
 
 	// Progress
-	rect.Y += size.Y / 2
+	rect.X = panelRect.X
+	rect.Width = panelRect.Width
+	rect.Y += size.Y/2 + margin/2
 	rect.Height = size.Y / 4
 	raygui.ProgressBar(rect, "", "", progress, 0, 1)
 	raygui.Label(rect, fmt.Sprint(progress*ach.visualMaxProgress)+"/"+fmt.Sprint(ach.visualMaxProgress))
@@ -166,10 +159,12 @@ func showAchievementNotification(world *World, achievementID uint8) {
 }
 
 func renderAchievementNotification(world *World) {
-	if world.uistate.achievementNotification.timeLeft < 0 {
+	if world.uistate.achievementNotification.timeLeft <= 0 {
 		return
 	}
 
-	renderAchievement(rl.Vector2Subtract(util.ScreenSize(), rl.Vector2{X: 720 * uiScale, Y: 120 * uiScale}), world.uistate.achievementNotification.id)
+	size := rl.Vector2{X: 560 * uiScale, Y: 120 * uiScale}
+	margin := float32(16) * uiScale
+	renderAchievement(rl.Vector2Subtract(util.ScreenSize(), rl.Vector2Add(size, rl.Vector2{X: margin * 2, Y: margin * 2})), size, margin, world.uistate.achievementNotification.id)
 	world.uistate.achievementNotification.timeLeft -= dt
 }
