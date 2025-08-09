@@ -95,7 +95,7 @@ func updateEnemies(world *World) {
 		world.targeting[id] = targeting
 
 		if typ.spawnData.boss {
-			const immuneDuration = 8
+			const immuneDuration = 10
 			newHP := world.hp[id]
 			ratio := newHP.val / newHP.max
 			if ratio > 0.4 && ratio < 0.6 {
