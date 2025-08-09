@@ -8,7 +8,7 @@ import (
 
 var musicTracks = []string{"alice_stage", "alice_boss", "medicine", "nue", "kogasa", "tojiko"}
 
-func updateMusic() {
+func updateMusic(world *World) {
 	if options.MusicVolume == 0 {
 		return
 	}
@@ -22,11 +22,21 @@ func updateMusic() {
 		}
 	}
 
+	for _, v := range world.enemy {
+		if v.spawnData.boss {
+			music := v.texture
+			if playing != music {
+				rl.PlayMusicStream(assets.music[music])
+			}
+			break
+		}
+	}
+
 	if playing != "" {
 		rl.SetMusicVolume(assets.music[playing], options.MusicVolume)
 		rl.UpdateMusicStream(assets.music[playing])
 	} else {
-		index := rand.Int() % len(musicTracks)
+		index := rand.Int() % 2 // either alice_stage or alice_boss
 		rl.PlayMusicStream(assets.music[musicTracks[index]])
 	}
 }
