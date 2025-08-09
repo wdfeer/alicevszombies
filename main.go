@@ -7,10 +7,8 @@ import (
 )
 
 func main() {
-	rl.InitWindow(int32(rl.GetScreenWidth()), int32(rl.GetScreenHeight()), "alicevszombies")
+	internal.InitWindow()
 	defer rl.CloseWindow()
-
-	internal.InitWindowSettings()
 
 	internal.LoadUserData()
 
