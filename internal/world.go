@@ -117,7 +117,7 @@ func (world *World) Update() {
 		updateAnimationData(world)
 	}
 
-	updateMusic()
+	updateMusic(world)
 	updateUI(world)
 	updateFullscreen()
 	updateHistory(world)

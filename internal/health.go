@@ -61,6 +61,16 @@ func damage(world *World, id Entity, dmg float32) {
 		return
 	}
 
+	// Bosses are immune between 40% and 60% hp
+	if e, ok := world.enemy[id]; ok {
+		if e.spawnData.boss {
+			ratio := hp.val / hp.max
+			if ratio > 0.4 && ratio < 0.6 {
+				return
+			}
+		}
+	}
+
 	dmg *= hp.damageMult
 
 	hp.val -= dmg
