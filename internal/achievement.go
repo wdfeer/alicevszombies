@@ -53,6 +53,8 @@ func initAchievements() {
 }
 
 func updateAchievements(world *World) {
+	oldAchievements := history.Achievements
+
 	if world.enemySpawner.wave >= 30 && len(world.doll) == 1 {
 		history.Achievements[Wave30OneDoll.id] = 1
 	}
@@ -70,6 +72,14 @@ func updateAchievements(world *World) {
 	history.Achievements[AllUpgradesObtained.id] = float32(len(history.UpgradesUsed)) / AllUpgradesObtained.visualMaxProgress
 
 	history.Achievements[AllEnemiesKilled.id] = float32(len(history.EnemiesKilledPerType)) / AllEnemiesKilled.visualMaxProgress
+
+	if history.Achievements != oldAchievements {
+		for i, v := range history.Achievements {
+			if v >= 1 && oldAchievements[i] < 1 {
+				// TODO: show achievement achieved notification
+			}
+		}
+	}
 }
 
 var achievementsByID = map[uint8]*AchievementType{
