@@ -84,8 +84,31 @@ func renderHUD(world *World) {
 		}
 		if boss != -1 {
 			hp := world.hp[Entity(boss)]
-			width := int32(size.X * hp.val / hp.max)
-			rl.DrawRectangle(0, int32(size.Y-16*uiScale), width, int32(16*uiScale), colors.Red)
+			ratio := hp.val / hp.max
+
+			var width1 int32
+			if ratio <= 0.4 {
+				width1 = int32(size.X * ratio)
+			} else {
+				width1 = int32(size.X * 0.4)
+			}
+			rl.DrawRectangle(0, int32(size.Y-16*uiScale), width1, int32(16*uiScale), colors.Red)
+
+			// Invincibility Bar
+			if ratio > 0.4 {
+				var width2 int32
+				if ratio <= 0.6 {
+					width1 = int32(size.X * (ratio - 0.4))
+				} else {
+					width1 = int32(size.X * 0.2)
+				}
+				rl.DrawRectangle(width1, int32(size.Y-16*uiScale), width2, int32(16*uiScale), rl.Gray)
+			}
+
+			if ratio > 0.6 {
+				width3 := int32(size.X * (ratio - 0.6))
+				rl.DrawRectangle(int32(size.X*0.6), int32(size.Y-16*uiScale), width3, int32(16*uiScale), colors.Red)
+			}
 		}
 	}
 
