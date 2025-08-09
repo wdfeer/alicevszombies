@@ -131,9 +131,8 @@ func LoadAssets() {
 	loadSFX("boss_spawn")
 	println("INFO: Sounds loaded!")
 
-	for _, name := range musicTracks {
+	for name := range musicTracks {
 		loadMusic(name)
-		println("INFO: Music,", name, " loaded!")
 	}
 	println("INFO: Sounds loaded!")
 

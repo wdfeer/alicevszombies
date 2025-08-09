@@ -4,7 +4,14 @@ import (
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
-var musicTracks = []string{"alice_stage", "alice_boss", "medicine", "nue", "kogasa", "tojiko"}
+var musicTracks = map[string]float32{
+	"alice_stage": 0,
+	"alice_boss":  0,
+	"medicine":    0,
+	"nue":         0,
+	"kogasa":      0,
+	"tojiko":      0,
+}
 
 func updateMusic(world *World) {
 	if options.MusicVolume == 0 {
@@ -28,30 +35,27 @@ func updateMusic(world *World) {
 		}
 	}
 	if musicToPlay == "" {
-		if world.enemySpawner.wave < 10 {
+		if world.enemySpawner.wave < 11 {
 			musicToPlay = "alice_stage"
 		} else {
 			musicToPlay = "alice_boss"
 		}
 	}
 
-	playing := ""
-
-	for _, name := range musicTracks {
+	for name, vol := range musicTracks {
 		if rl.IsMusicStreamPlaying(assets.music[name]) {
-			playing = name
-			break
+			musicTracks[name] = rl.Clamp(vol, 0, 1)
+			if vol == 0 {
+				rl.StopMusicStream(assets.music[name])
+			} else {
+				rl.SetMusicVolume(assets.music[name], options.MusicVolume*vol)
+				rl.UpdateMusicStream(assets.music[name])
+				musicTracks[name] -= dt
+			}
+		} else if vol > 0 {
+			rl.PlayMusicStream(assets.music[name])
 		}
 	}
 
-	if playing != musicToPlay {
-		if playing != "" {
-			rl.StopMusicStream(assets.music[playing])
-		}
-		rl.PlayMusicStream(assets.music[musicToPlay])
-		playing = musicToPlay
-	}
-
-	rl.SetMusicVolume(assets.music[playing], options.MusicVolume)
-	rl.UpdateMusicStream(assets.music[playing])
+	musicTracks[musicToPlay] += dt * 1.5
 }
