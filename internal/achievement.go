@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"alicevszombies/internal/util"
 	"fmt"
 
 	"github.com/gen2brain/raylib-go/raygui"
@@ -91,51 +92,63 @@ var achievementsByID = map[uint8]*AchievementType{
 }
 
 func renderAchievements(origin rl.Vector2) {
-	size := rl.Vector2{X: 720 * uiScale, Y: 120 * uiScale}
 	oldFontsize := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE)
 	oldLineSpacing := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_LINE_SPACING)
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_LINE_SPACING, textSize40/2)
 
+	height := 120 * uiScale
 	margin := float32(20) * uiScale
-	for id, ach := range achievementsByID {
-		progress := history.Achievements[id]
-		rect := rl.Rectangle{X: origin.X + margin, Y: origin.Y + float32(id)*(size.Y+margin*3) + margin, Width: size.X, Height: size.Y}
 
-		if progress >= 1 {
-			raygui.SetState(raygui.STATE_FOCUSED)
-		}
-
-		{ // Background panel
-			panelRect := rect
-			panelRect.X -= margin
-			panelRect.Y -= margin
-			panelRect.Width += margin * 2
-			panelRect.Height += margin * 2
-			raygui.Panel(panelRect, "")
-		}
-
-		// Title
-		rect.Height /= 4
-		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, textSize40)
-		raygui.Label(rect, ach.name)
-
-		// Description
-		raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, textSize24)
-		rect.Y += size.Y / 4
-		rect.Height = size.Y / 2
-		raygui.Label(rect, ach.description)
-
-		// Progress
-		rect.Y += size.Y / 2
-		rect.Height = size.Y / 4
-		raygui.ProgressBar(rect, "", "", progress, 0, 1)
-		raygui.Label(rect, fmt.Sprint(progress*ach.visualMaxProgress)+"/"+fmt.Sprint(ach.visualMaxProgress))
-
-		if progress >= 1 {
-			raygui.SetState(raygui.STATE_NORMAL)
-		}
+	for id := range achievementsByID {
+		origin := rl.Vector2{X: origin.X + margin, Y: origin.Y + float32(id)*(height+margin*3) + margin}
+		renderAchievement(origin, id)
 	}
 
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, oldFontsize)
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_LINE_SPACING, oldLineSpacing)
+}
+
+func renderAchievement(origin rl.Vector2, achievementID uint8) {
+	// maybe unionize with the same stuff from renderAchievements ?
+	size := rl.Vector2{X: 720 * uiScale, Y: 120 * uiScale}
+	margin := float32(20) * uiScale
+
+	ach := achievementsByID[achievementID]
+
+	progress := history.Achievements[achievementID]
+	rect := util.RectangleV(origin, size)
+
+	if progress >= 1 {
+		raygui.SetState(raygui.STATE_FOCUSED)
+	}
+
+	{ // Background panel
+		panelRect := rect
+		panelRect.X -= margin
+		panelRect.Y -= margin
+		panelRect.Width += margin * 2
+		panelRect.Height += margin * 2
+		raygui.Panel(panelRect, "")
+	}
+
+	// Title
+	rect.Height /= 4
+	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, textSize40)
+	raygui.Label(rect, ach.name)
+
+	// Description
+	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, textSize24)
+	rect.Y += size.Y / 4
+	rect.Height = size.Y / 2
+	raygui.Label(rect, ach.description)
+
+	// Progress
+	rect.Y += size.Y / 2
+	rect.Height = size.Y / 4
+	raygui.ProgressBar(rect, "", "", progress, 0, 1)
+	raygui.Label(rect, fmt.Sprint(progress*ach.visualMaxProgress)+"/"+fmt.Sprint(ach.visualMaxProgress))
+
+	if progress >= 1 {
+		raygui.SetState(raygui.STATE_NORMAL)
+	}
 }
