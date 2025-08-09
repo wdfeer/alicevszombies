@@ -98,9 +98,9 @@ func renderHUD(world *World) {
 			if ratio > 0.4 {
 				var width2 int32
 				if ratio <= 0.6 {
-					width1 = int32(size.X * (ratio - 0.4))
+					width2 = int32(size.X * (ratio - 0.4))
 				} else {
-					width1 = int32(size.X * 0.2)
+					width2 = int32(size.X * 0.2)
 				}
 				rl.DrawRectangle(width1, int32(size.Y-16*uiScale), width2, int32(16*uiScale), rl.Gray)
 			}
