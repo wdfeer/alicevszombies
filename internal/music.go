@@ -1,8 +1,6 @@
 package internal
 
 import (
-	"math/rand"
-
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
@@ -11,6 +9,30 @@ var musicTracks = []string{"alice_stage", "alice_boss", "medicine", "nue", "koga
 func updateMusic(world *World) {
 	if options.MusicVolume == 0 {
 		return
+	}
+
+	var musicToPlay string
+	for _, v := range world.enemy {
+		if v.spawnData.boss {
+			switch v {
+			case &enemyTypes.medicine:
+				musicToPlay = "medicine"
+			case &enemyTypes.nue:
+				musicToPlay = "nue"
+			case &enemyTypes.kogasa:
+				musicToPlay = "kogasa"
+			case &enemyTypes.tojiko:
+				musicToPlay = "tojiko"
+			}
+			break
+		}
+	}
+	if musicToPlay == "" {
+		if world.enemySpawner.wave < 10 {
+			musicToPlay = "alice_stage"
+		} else {
+			musicToPlay = "alice_boss"
+		}
 	}
 
 	playing := ""
@@ -22,21 +44,14 @@ func updateMusic(world *World) {
 		}
 	}
 
-	for _, v := range world.enemy {
-		if v.spawnData.boss {
-			music := v.texture
-			if playing != music {
-				rl.PlayMusicStream(assets.music[music])
-			}
-			break
+	if playing != musicToPlay {
+		if playing != "" {
+			rl.StopMusicStream(assets.music[playing])
 		}
+		rl.PlayMusicStream(assets.music[musicToPlay])
+		playing = musicToPlay
 	}
 
-	if playing != "" {
-		rl.SetMusicVolume(assets.music[playing], options.MusicVolume)
-		rl.UpdateMusicStream(assets.music[playing])
-	} else {
-		index := rand.Int() % 2 // either alice_stage or alice_boss
-		rl.PlayMusicStream(assets.music[musicTracks[index]])
-	}
+	rl.SetMusicVolume(assets.music[playing], options.MusicVolume)
+	rl.UpdateMusicStream(assets.music[playing])
 }
