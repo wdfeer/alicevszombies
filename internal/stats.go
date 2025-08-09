@@ -11,23 +11,28 @@ import (
 var statSelectedDifficulty Difficulty = UNDEFINED
 
 func renderStats(origin rl.Vector2) { // TODO: refactor this monstrosity of a function
-	size := rl.Vector2{X: 760 * uiScale, Y: 120 * uiScale}
+	size := rl.Vector2{X: 760 * uiScale, Y: 250 * uiScale}
+	diffSelectorHeight := 120 * uiScale
 	spacing := float32(40) * uiScale
-	panelSize := rl.Vector2{X: size.X, Y: size.Y*4 + spacing*5}
 
 	oldFontsize := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_SIZE)
+	oldLineSpacing := raygui.GetStyle(raygui.DEFAULT, raygui.TEXT_LINE_SPACING)
 
-	raygui.Panel(util.RectangleV(origin, panelSize), "")
+	panelPos := rl.Vector2{X: origin.X, Y: origin.Y + diffSelectorHeight + spacing}
+	panelSize := rl.Vector2{X: size.X, Y: size.Y}
+	raygui.Panel(util.RectangleV(panelPos, panelSize), "")
 
 	diffText := "Overall\nEasy\nNormal\nHard\nLunatic"
 
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, textSize64)
 	raygui.SetStyle(raygui.COMBOBOX, raygui.COMBO_BUTTON_WIDTH, int64(size.X)/4)
-	statSelectedDifficulty = Difficulty(raygui.ComboBox(util.RectangleV(origin, size), diffText, int32(statSelectedDifficulty)))
+	statSelectedDifficulty = Difficulty(raygui.ComboBox(util.RectangleV(origin, rl.Vector2{X: size.X, Y: diffSelectorHeight}), diffText, int32(statSelectedDifficulty)))
 
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, textSize40)
+	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_LINE_SPACING, textSize40)
 
-	origin.Y += spacing + size.Y
+	str := ""
+
 	timePlayed := float32(0)
 	if statSelectedDifficulty == UNDEFINED {
 		for _, v := range history.TimePlayed {
@@ -43,9 +48,8 @@ func renderStats(origin rl.Vector2) { // TODO: refactor this monstrosity of a fu
 	} else {
 		timePlayedText += fmt.Sprint(int(timePlayed)) + "s"
 	}
-	raygui.Label(util.RectangleV(origin, size), timePlayedText)
+	str += timePlayedText + "\n"
 
-	origin.Y += spacing
 	dollsSummoned := uint(0)
 	if statSelectedDifficulty == UNDEFINED {
 		for _, v := range history.DollsSummoned {
@@ -55,9 +59,8 @@ func renderStats(origin rl.Vector2) { // TODO: refactor this monstrosity of a fu
 		dollsSummoned = history.DollsSummoned[statSelectedDifficulty]
 	}
 	dollsSummonedText := "Dolls summoned: " + fmt.Sprint(dollsSummoned)
-	raygui.Label(util.RectangleV(origin, size), dollsSummonedText)
+	str += dollsSummonedText + "\n"
 
-	origin.Y += spacing
 	kills := uint(0)
 	if statSelectedDifficulty == UNDEFINED {
 		for _, v := range history.EnemiesKilledTotal {
@@ -67,9 +70,8 @@ func renderStats(origin rl.Vector2) { // TODO: refactor this monstrosity of a fu
 		kills = history.EnemiesKilledTotal[statSelectedDifficulty]
 	}
 	killCounter := "Enemies killed: " + fmt.Sprint(kills)
-	raygui.Label(util.RectangleV(origin, size), killCounter)
+	str += killCounter + "\n"
 
-	origin.Y += spacing
 	var highestWave uint
 	if statSelectedDifficulty == UNDEFINED {
 		for _, v := range history.HighestWave {
@@ -81,9 +83,8 @@ func renderStats(origin rl.Vector2) { // TODO: refactor this monstrosity of a fu
 		highestWave = history.HighestWave[statSelectedDifficulty]
 	}
 	highestWaveText := "Highest wave: " + fmt.Sprint(highestWave)
-	raygui.Label(util.RectangleV(origin, size), highestWaveText)
+	str += highestWaveText + "\n"
 
-	origin.Y += spacing
 	var runCount uint
 	if statSelectedDifficulty == UNDEFINED {
 		for _, v := range history.RunCount {
@@ -93,7 +94,11 @@ func renderStats(origin rl.Vector2) { // TODO: refactor this monstrosity of a fu
 		runCount = history.RunCount[statSelectedDifficulty]
 	}
 	runCountText := "Run count: " + fmt.Sprint(runCount)
-	raygui.Label(util.RectangleV(origin, size), runCountText)
+	str += runCountText + "\n"
+
+	panelPos.Y += float32(textSize40) * 1.75 // The text is too high otherwise. IDK why
+	raygui.Label(util.RectangleV(panelPos, panelSize), str)
 
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, oldFontsize)
+	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, oldLineSpacing)
 }
