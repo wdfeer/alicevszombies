@@ -129,8 +129,9 @@ func LoadAssets() {
 	loadSFX("enemy_hit")
 	loadSFX("enemy_kill")
 	loadSFX("boss_spawn")
-	loadMusic("alice_stage")
-	loadMusic("alice_boss")
+	for _, name := range musicTracks {
+		loadMusic(name)
+	}
 	println("INFO: Sounds loaded!")
 
 	raygui.LoadStyle("assets/style.rgs")
