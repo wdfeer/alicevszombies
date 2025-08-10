@@ -15,18 +15,11 @@ const (
 
 func updateStatus(world *World) {
 	for id, status := range world.status {
-		var damageOverTime float32
-		if world.enemySpawner.wave > 30 {
-			damageOverTime = 1 + float32((world.enemySpawner.wave-30)/20)
-		} else {
-			damageOverTime = 1
-		}
-
 		if status[Poison] > 0 && util.ModF(status[Poison], 1) < dt {
-			damage(world, id, damageOverTime)
+			damage(world, id, 1)
 		}
 		if status[Bleed] > 0 && util.ModF(status[Bleed], 2) < dt {
-			damage(world, id, damageOverTime)
+			damage(world, id, 1)
 		}
 
 		newStatus := status

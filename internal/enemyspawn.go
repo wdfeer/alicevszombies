@@ -42,6 +42,11 @@ func updateEnemySpawner(world *World) {
 	spawner := world.enemySpawner
 
 	if spawner.enemiesToSpawn <= 0 {
+		if spawner.wave > 40 && (spawner.wave-40)%10 == 0 {
+			hp := world.hp[world.player]
+			hp.damageMult += 0.5
+			world.hp[world.player] = hp
+		}
 		spawner.wave++
 		spawner.enemiesToSpawn = 2 + spawner.wave*2
 	}

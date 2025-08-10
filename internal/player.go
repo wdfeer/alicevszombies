@@ -77,4 +77,5 @@ func updatePlayer(world *World) {
 		}
 		world.playerData.dollSpawnTimer = newDollSpawnTimer
 	}
+
 }

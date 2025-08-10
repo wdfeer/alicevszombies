@@ -16,20 +16,15 @@ func updateCollisions(world *World) {
 
 		// Enemy -> Player
 		if util.CheckCollisionRecs(playerRec, enemyRec) {
-			damageMult := float32(1)
-			if world.enemySpawner.wave > 30 {
-				damageMult += float32((world.enemySpawner.wave - 30) / 20)
-			}
-
 			switch world.difficulty {
 			case HARD:
 				applyStatus(world, world.player, Bleed, 1.5)
-				damageWithCooldown(world, world.player, damageMult, enemy)
+				damageWithCooldown(world, world.player, 1, enemy)
 			case LUNATIC:
 				applyStatus(world, world.player, Bleed, 3.5)
-				damageWithCooldown(world, world.player, 2*damageMult, enemy)
+				damageWithCooldown(world, world.player, 2, enemy)
 			default:
-				damageWithCooldown(world, world.player, 1*damageMult, enemy)
+				damageWithCooldown(world, world.player, 1, enemy)
 			}
 
 			dir := util.Vector2Direction(playerPos, enemyPos)
