@@ -236,7 +236,7 @@ func renderChosenUpgradeAnimation(world *World) { // TODO: refactor this shit
 	rect.Height = 64
 	raygui.Button(rect, fmt.Sprint(i+1))
 
-	screen.chosenUpgradeAnimTimer -= dt * 2
+	screen.chosenUpgradeAnimTimer -= dt * 3
 
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_SIZE, oldFontSize)
 	raygui.SetStyle(raygui.DEFAULT, raygui.BACKGROUND_COLOR, oldColor1)
