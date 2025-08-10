@@ -65,6 +65,7 @@ func renderUI(world *World) {
 			renderPauseMenu(world)
 		} else {
 			renderHUD(world)
+			renderChosenUpgradeAnimation(world)
 		}
 	}
 
