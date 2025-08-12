@@ -1,6 +1,8 @@
 package internal
 
-import "alicevszombies/internal/util"
+import (
+	"alicevszombies/internal/util"
+)
 
 type Status = [3]float32
 type StatusType = uint

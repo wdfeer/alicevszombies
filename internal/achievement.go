@@ -154,7 +154,7 @@ type AchievementNotification = struct {
 func showAchievementNotification(world *World, achievementID uint8) {
 	world.uistate.achievementNotification = AchievementNotification{
 		id:       achievementID,
-		timeLeft: 1.5,
+		timeLeft: 3,
 	}
 }
 
