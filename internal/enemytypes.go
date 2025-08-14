@@ -86,7 +86,7 @@ var enemyTypes = struct {
 	},
 	EnemyType{
 		texture:      "bucket_zombie",
-		acceleration: 700,
+		acceleration: 710,
 		drag:         10,
 		baseHP:       15,
 		size:         rl.Vector2{X: 12, Y: 16},

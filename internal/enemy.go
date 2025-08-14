@@ -58,6 +58,7 @@ const (
 	DirectMelee EnemyTargetingType = iota
 	LeadingMelee
 	CirclingMelee
+	Confused
 	Ranged
 )
 
@@ -71,10 +72,10 @@ func updateEnemies(world *World) {
 			distance := rl.Vector2Distance(world.position[id], world.position[world.player])
 			switch typ.targetingType {
 			case DirectMelee:
-				dir := util.Vector2Direction(world.position[id], world.position[world.player])
-				dir = rl.Vector2Rotate(dir, rand.Float32()/2)
-				dir = rl.Vector2Scale(dir, distance/3)
-				targeting.target = rl.Vector2Add(world.position[id], dir)
+				delta := util.Vector2Direction(world.position[id], world.position[world.player])
+				delta = rl.Vector2Rotate(delta, rand.Float32()/2)
+				delta = rl.Vector2Scale(delta, distance/3)
+				targeting.target = rl.Vector2Add(world.position[id], delta)
 			case LeadingMelee:
 				delta := util.Vector2Direction(world.position[id], world.position[world.player])
 				delta = rl.Vector2Rotate(delta, rand.Float32()/2)
@@ -88,6 +89,12 @@ func updateEnemies(world *World) {
 				velPart = rl.Vector2Scale(velPart, 0.5)
 				dir = rl.Vector2Normalize(rl.Vector2Add(dir, velPart))
 				targeting.target = rl.Vector2Add(world.position[id], rl.Vector2Scale(dir, distance))
+			case Confused:
+				delta := util.Vector2Direction(world.position[id], world.position[world.player])
+				delta = rl.Vector2Rotate(delta, rand.Float32()/2)
+				delta = rl.Vector2Scale(delta, distance/3)
+				delta = rl.Vector2Rotate(delta, (rand.Float32()-0.5)*2)
+				targeting.target = rl.Vector2Add(world.position[id], delta)
 			case Ranged:
 				targeting.target = rl.Vector2Add(world.position[world.player], rl.Vector2Scale(util.Vector2Random(), 70))
 			}
