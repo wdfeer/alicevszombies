@@ -103,6 +103,10 @@ func updateDollTargeting(world *World, doll Entity) Targeting {
 			} else {
 				target = rl.Vector2Add(enemyPos, rl.Vector2Scale(util.Vector2Random(), 32))
 			}
+
+			if dist := rl.Vector2Distance(world.position[doll], enemyPos); dist < 160 {
+				targeting.targetingTimer *= 0.2 + 0.8*(dist/160)
+			}
 		} else {
 			delta := rl.Vector2Rotate(rl.Vector2{X: 20, Y: 0}, rand.Float32()*math.Pi*2)
 			target = rl.Vector2Add(world.position[world.player], delta)
