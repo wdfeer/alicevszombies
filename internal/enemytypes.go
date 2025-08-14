@@ -39,6 +39,7 @@ var enemyTypes = struct {
 	zombie       EnemyType
 	smallZombie  EnemyType
 	chunkyZombie EnemyType
+	bucketZombie EnemyType
 	purpleZombie EnemyType
 	blueZombie   EnemyType
 	neriumGirl   EnemyType
@@ -82,6 +83,18 @@ var enemyTypes = struct {
 			minWave: 8,
 		},
 		targetingType: DirectMelee,
+	},
+	EnemyType{
+		texture:      "bucket_zombie",
+		acceleration: 700,
+		drag:         10,
+		baseHP:       15,
+		size:         rl.Vector2{X: 12, Y: 16},
+		spawnData: SpawnData{
+			weight:  0.1,
+			minWave: 20,
+		},
+		targetingType: Confused,
 	},
 	EnemyType{
 		texture:      "purple_zombie",
@@ -253,6 +266,7 @@ var allEnemyTypes = []*EnemyType{
 	&enemyTypes.zombie,
 	&enemyTypes.smallZombie,
 	&enemyTypes.chunkyZombie,
+	&enemyTypes.bucketZombie,
 	&enemyTypes.purpleZombie,
 	&enemyTypes.blueZombie,
 	&enemyTypes.neriumGirl,
