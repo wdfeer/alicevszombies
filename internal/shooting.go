@@ -49,18 +49,17 @@ func updateShooting(world *World) {
 			}
 
 			// Increase boss fire rate conditionally
+			world.shootTimer[id] = pattern.cooldown
 			if e, ok := world.enemy[id]; ok && e.spawnData.boss {
 				if (world.hp[id].val / world.hp[id].max) < 0.6 {
-					world.shootTimer[id] = pattern.cooldown / 1.5
+					world.shootTimer[id] = world.shootTimer[id] / 1.5
 				}
 				if (world.hp[id].val / world.hp[id].max) < 0.4 {
-					world.shootTimer[id] = pattern.cooldown / 1.5
+					world.shootTimer[id] = world.shootTimer[id] / 1.5
 				}
 				if world.enemySpawner.wave%10 > 5 {
-					world.shootTimer[id] = pattern.cooldown / 1.5
+					world.shootTimer[id] = world.shootTimer[id] / 1.5
 				}
-			} else {
-				world.shootTimer[id] = pattern.cooldown
 			}
 
 			var target rl.Vector2
