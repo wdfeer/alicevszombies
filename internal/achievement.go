@@ -31,7 +31,7 @@ var (
 	Wave30OneDoll = AchievementType{
 		id:                2,
 		name:              "Solo Marionette",
-		description:       "Reach Wave 30 while\nhaving only one Doll",
+		description:       "Reach Wave 30 while\npossessing only one Doll",
 		visualMaxProgress: 1,
 	}
 	Wave30Lunatic = AchievementType{
