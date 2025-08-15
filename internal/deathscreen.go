@@ -35,8 +35,9 @@ func updateDeathScreen(world *World) {
 func renderDeathScreen(world *World) {
 	rl.DrawRectangle(0, 0, int32(rl.GetScreenWidth()), int32(rl.GetScreenHeight()), rl.ColorAlpha(rl.Black, 0.7))
 	pos := util.HalfScreenSize()
+	pos.Y -= float32(textSize256) + 32*uiScale
 	util.DrawTextCenteredSpaced("You Died!", float32(textSize256), pos, 16)
-	pos.Y += 128 * uiScale
+	pos.Y += float32(textSize256) + 64*uiScale
 	util.DrawTextCenteredSpaced("Reached Wave "+fmt.Sprint(world.enemySpawner.wave), 64, pos, 4)
 
 	buttonWidth := float32(450)
