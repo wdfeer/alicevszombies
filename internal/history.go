@@ -47,7 +47,7 @@ func updateHistory(world *World) {
 	updateAchievements(world)
 }
 
-const historyPath = "user/history.bin"
+const historyPath = "user/stats.bin"
 
 func loadHistory() {
 	data, err := os.ReadFile(historyPath)
