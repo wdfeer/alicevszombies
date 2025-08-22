@@ -1,7 +1,7 @@
 package internal
 
 import (
-	"math/rand"
+	"alicevszombies/internal/util"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
@@ -55,20 +55,26 @@ func newBreakdown(world *World, name string, center rl.Vector2) []Entity {
 // Returns all the PixelParticle ids
 func mergeBreakdown(world *World, name string, center rl.Vector2, particles []Entity) {
 	position := rl.Vector2Subtract(center, rl.Vector2Scale(assets.breakdowns[name].size, 0.5))
+	index := 0
+	indexIncrement := float32(len(particles)) / float32(len(assets.breakdowns[name].pixels))
 	for pixelpos, desiredTint := range assets.breakdowns[name].pixels {
-		// TODO: make corresponding pixels unique
-		corresponding := particles[rand.Int()%len(particles)]
+		if len(particles) > index {
+			corresponding := particles[index]
+			index += util.RandomRound(indexIncrement)
 
-		desiredPos := rl.Vector2Add(position, pixelpos)
-		world.velocity[corresponding] = rl.Vector2Subtract(desiredPos, world.position[corresponding])
+			desiredPos := rl.Vector2Add(position, pixelpos)
+			world.velocity[corresponding] = rl.Vector2Subtract(desiredPos, world.position[corresponding])
 
-		oldParticle := world.pixelParticle[corresponding]
-		world.pixelParticle[corresponding] = PixelParticle{
-			timeleft:     1,
-			tint:         oldParticle.tint,
-			changeTint:   true,
-			targetTint:   desiredTint,
-			reverseAlpha: true,
+			oldParticle := world.pixelParticle[corresponding]
+			world.pixelParticle[corresponding] = PixelParticle{
+				timeleft:     1,
+				tint:         oldParticle.tint,
+				changeTint:   true,
+				targetTint:   desiredTint,
+				reverseAlpha: true,
+			}
+		} else {
+			break
 		}
 	}
 }
