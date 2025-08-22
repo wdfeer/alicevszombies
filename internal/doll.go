@@ -25,9 +25,9 @@ func spawnDollWithAnimation(world *World, typ *DollType) {
 		world.position[id] = rl.Vector2Add(world.position[id], offset)
 		world.velocity[id] = rl.Vector2Scale(offset, -1/world.playerData.dollSpawnTimer)
 		world.pixelParticle[id] = PixelParticle{
-			timeleft:     world.playerData.dollSpawnTimer,
-			tint:         world.pixelParticle[id].tint,
-			reverseAlpha: true,
+			timeleft:  world.playerData.dollSpawnTimer,
+			tint:      world.pixelParticle[id].tint,
+			alphaMode: 1,
 		}
 	}
 }

@@ -3,20 +3,23 @@ package internal
 import rl "github.com/gen2brain/raylib-go/raylib"
 
 type PixelParticle struct {
-	timeleft     float32
-	tint         rl.Color
-	changeTint   bool
-	targetTint   rl.Color
-	reverseAlpha bool
+	timeleft   float32
+	tint       rl.Color
+	changeTint bool
+	targetTint rl.Color
+	alphaMode  uint8
 }
 
 func renderPixelParticles(world *World) {
 	for id, eff := range world.pixelParticle {
 		var alpha float32
-		if eff.reverseAlpha {
-			alpha = max(1-eff.timeleft, 0)
-		} else {
+		switch eff.alphaMode {
+		case 0:
 			alpha = min(eff.timeleft, 1)
+		case 1:
+			alpha = max(1-eff.timeleft, 0)
+		case 2:
+			alpha = 1
 		}
 
 		if options.Shadows {
@@ -38,11 +41,11 @@ func updatePixelParticles(world *World) {
 		time := eff.timeleft - dt
 		if time > 0 {
 			world.pixelParticle[id] = PixelParticle{
-				timeleft:     time,
-				tint:         eff.tint,
-				changeTint:   eff.changeTint,
-				targetTint:   eff.targetTint,
-				reverseAlpha: eff.reverseAlpha,
+				timeleft:   time,
+				tint:       eff.tint,
+				changeTint: eff.changeTint,
+				targetTint: eff.targetTint,
+				alphaMode:  eff.alphaMode,
 			}
 		} else {
 			world.deleteEntity(id)

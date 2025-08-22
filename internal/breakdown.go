@@ -67,11 +67,11 @@ func mergeBreakdown(world *World, name string, center rl.Vector2, particles []En
 
 			oldParticle := world.pixelParticle[corresponding]
 			world.pixelParticle[corresponding] = PixelParticle{
-				timeleft:     1,
-				tint:         oldParticle.tint,
-				changeTint:   true,
-				targetTint:   desiredTint,
-				reverseAlpha: true,
+				timeleft:   1,
+				tint:       oldParticle.tint,
+				changeTint: true,
+				targetTint: desiredTint,
+				alphaMode:  2,
 			}
 		} else {
 			break
