@@ -2,6 +2,7 @@ package internal
 
 import (
 	"alicevszombies/internal/util"
+	"math/rand"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
@@ -63,15 +64,17 @@ func mergeBreakdown(world *World, name string, center rl.Vector2, particles []En
 			index += util.RandomRound(indexIncrement)
 
 			desiredPos := rl.Vector2Add(position, pixelpos)
-			world.velocity[corresponding] = rl.Vector2Subtract(desiredPos, world.position[corresponding])
 
 			oldParticle := world.pixelParticle[corresponding]
 			world.pixelParticle[corresponding] = PixelParticle{
-				timeleft:   1,
-				tint:       oldParticle.tint,
-				changeTint: true,
-				targetTint: desiredTint,
-				alphaMode:  2,
+				timeleft:     1,
+				tint:         oldParticle.tint,
+				changeTint:   true,
+				targetTint:   desiredTint,
+				alphaMode:    2,
+				easingFactor: rand.Float32(),
+				initialPos:   world.position[corresponding],
+				targetPos:    desiredPos,
 			}
 		} else {
 			break

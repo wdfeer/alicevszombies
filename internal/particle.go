@@ -1,13 +1,18 @@
 package internal
 
-import rl "github.com/gen2brain/raylib-go/raylib"
+import (
+	rl "github.com/gen2brain/raylib-go/raylib"
+)
 
 type PixelParticle struct {
-	timeleft   float32
-	tint       rl.Color
-	changeTint bool
-	targetTint rl.Color
-	alphaMode  uint8
+	timeleft     float32
+	alphaMode    uint8
+	tint         rl.Color
+	changeTint   bool
+	targetTint   rl.Color
+	easingFactor float32
+	initialPos   rl.Vector2
+	targetPos    rl.Vector2
 }
 
 func renderPixelParticles(world *World) {
@@ -41,11 +46,17 @@ func updatePixelParticles(world *World) {
 		time := eff.timeleft - dt
 		if time > 0 {
 			world.pixelParticle[id] = PixelParticle{
-				timeleft:   time,
-				tint:       eff.tint,
-				changeTint: eff.changeTint,
-				targetTint: eff.targetTint,
-				alphaMode:  eff.alphaMode,
+				timeleft:     time,
+				tint:         eff.tint,
+				changeTint:   eff.changeTint,
+				targetTint:   eff.targetTint,
+				alphaMode:    eff.alphaMode,
+				easingFactor: eff.easingFactor,
+				initialPos:   eff.initialPos,
+				targetPos:    eff.targetPos,
+			}
+			if eff.targetPos.X != 0 && eff.targetPos.Y != 0 {
+				world.position[id] = rl.Vector2Lerp(eff.initialPos, eff.targetPos, 1-min(eff.timeleft*eff.timeleft*eff.easingFactor, 1))
 			}
 		} else {
 			world.deleteEntity(id)
