@@ -41,9 +41,13 @@ func spawnDollWithMergeAnimation(world *World, typ *DollType, deadDolls []Entity
 	world.playerData.dollToSpawn = typ
 	world.playerData.dollSpawnPosition = rl.Vector2Add(world.position[world.player], rl.Vector2Scale(util.Vector2Random(), 24))
 
-	particles := make([]Entity, 16)
+	var particles []Entity
 	for _, e := range deadDolls {
-		particles = append(particles, newBreakdown(world, world.doll[e].texture, world.position[e])...)
+		if typ, ok := world.doll[e]; ok {
+			particles = append(particles, newBreakdown(world, typ.texture, world.position[e])...) // Line 46
+		} else {
+			println("WARNING: Dead doll", e, "not found!")
+		}
 	}
 	mergeBreakdown(world, typ.texture, world.playerData.dollSpawnPosition, particles)
 }

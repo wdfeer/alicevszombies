@@ -196,7 +196,7 @@ func incrementUpgrade(world *World, upgrade *Upgrade) {
 }
 
 func summonDollFromUpgrade(world *World, upgrade *Upgrade) {
-	dead := make([]Entity, len(upgrade.cost))
+	var dead []Entity
 	for typ, count := range upgrade.cost {
 		for id, d := range world.doll {
 			if d == typ {
