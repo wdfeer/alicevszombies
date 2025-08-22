@@ -5,6 +5,8 @@ import rl "github.com/gen2brain/raylib-go/raylib"
 type PixelParticle struct {
 	timeleft     float32
 	tint         rl.Color
+	changeTint   bool
+	targetTint   rl.Color
 	reverseAlpha bool
 }
 
@@ -21,7 +23,13 @@ func renderPixelParticles(world *World) {
 			pos := rl.Vector2Add(world.position[id], rl.Vector2{X: 0.5, Y: 0.5})
 			rl.DrawRectangleV(pos, rl.Vector2{X: 1, Y: 1}, rl.ColorAlpha(rl.Black, alpha))
 		}
-		rl.DrawRectangleV(world.position[id], rl.Vector2{X: 1, Y: 1}, rl.ColorAlpha(eff.tint, alpha))
+
+		tint := eff.tint
+		if eff.changeTint {
+			tint = rl.ColorLerp(eff.targetTint, tint, alpha)
+		}
+
+		rl.DrawRectangleV(world.position[id], rl.Vector2{X: 1, Y: 1}, rl.ColorAlpha(tint, alpha))
 	}
 }
 
@@ -32,6 +40,8 @@ func updatePixelParticles(world *World) {
 			world.pixelParticle[id] = PixelParticle{
 				timeleft:     time,
 				tint:         eff.tint,
+				changeTint:   eff.changeTint,
+				targetTint:   eff.targetTint,
 				reverseAlpha: eff.reverseAlpha,
 			}
 		} else {

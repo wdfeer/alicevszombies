@@ -32,6 +32,22 @@ func spawnDollWithAnimation(world *World, typ *DollType) {
 	}
 }
 
+func spawnDollWithMergeAnimation(world *World, typ *DollType, deadDolls []Entity) {
+	if world.playerData.dollToSpawn != nil {
+		println("WARNING: Overriding doll to spawn!")
+	}
+
+	world.playerData.dollSpawnTimer = 1
+	world.playerData.dollToSpawn = typ
+	world.playerData.dollSpawnPosition = rl.Vector2Add(world.position[world.player], rl.Vector2Scale(util.Vector2Random(), 24))
+
+	particles := make([]Entity, 16)
+	for _, e := range deadDolls {
+		particles = append(particles, newBreakdown(world, world.doll[e].texture, world.position[e])...)
+	}
+	mergeBreakdown(world, typ.texture, world.playerData.dollSpawnPosition, particles)
+}
+
 func newDoll(world *World, typ *DollType) Entity {
 	id := world.newEntity()
 	world.doll[id] = typ

@@ -196,11 +196,12 @@ func incrementUpgrade(world *World, upgrade *Upgrade) {
 }
 
 func summonDollFromUpgrade(world *World, upgrade *Upgrade) {
+	dead := make([]Entity, len(upgrade.cost))
 	for typ, count := range upgrade.cost {
 		for id, d := range world.doll {
 			if d == typ {
 				count--
-				world.deleteEntity(id)
+				dead = append(dead, id)
 			}
 			if count <= 0 {
 				break
@@ -208,5 +209,12 @@ func summonDollFromUpgrade(world *World, upgrade *Upgrade) {
 		}
 	}
 
-	spawnDollWithAnimation(world, upgrade.dollType)
+	if len(dead) > 0 {
+		spawnDollWithMergeAnimation(world, upgrade.dollType, dead)
+		for _, id := range dead {
+			world.deleteEntity(id)
+		}
+	} else {
+		spawnDollWithAnimation(world, upgrade.dollType)
+	}
 }

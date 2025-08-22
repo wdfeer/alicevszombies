@@ -1,6 +1,8 @@
 package internal
 
 import (
+	"math/rand"
+
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
@@ -47,4 +49,26 @@ func newBreakdown(world *World, name string, center rl.Vector2) []Entity {
 		}
 	}
 	return entities
+}
+
+// Takes the existing particles and puts them in place of the pixels of the texture under `name`
+// Returns all the PixelParticle ids
+func mergeBreakdown(world *World, name string, center rl.Vector2, particles []Entity) {
+	position := rl.Vector2Subtract(center, rl.Vector2Scale(assets.breakdowns[name].size, 0.5))
+	for pixelpos, desiredTint := range assets.breakdowns[name].pixels {
+		// TODO: make corresponding pixels unique
+		corresponding := particles[rand.Int()%len(particles)]
+
+		desiredPos := rl.Vector2Add(position, pixelpos)
+		world.velocity[corresponding] = rl.Vector2Subtract(desiredPos, world.position[corresponding])
+
+		oldParticle := world.pixelParticle[corresponding]
+		world.pixelParticle[corresponding] = PixelParticle{
+			timeleft:     1,
+			tint:         oldParticle.tint,
+			changeTint:   true,
+			targetTint:   desiredTint,
+			reverseAlpha: true,
+		}
+	}
 }
