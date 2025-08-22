@@ -29,7 +29,7 @@ func renderPixelParticles(world *World) {
 
 		tint := eff.tint
 		if eff.changeTint {
-			tint = rl.ColorLerp(eff.targetTint, tint, alpha)
+			tint = rl.ColorLerp(tint, eff.targetTint, max(1-eff.timeleft, 0))
 		}
 
 		rl.DrawRectangleV(world.position[id], rl.Vector2{X: 1, Y: 1}, rl.ColorAlpha(tint, alpha))

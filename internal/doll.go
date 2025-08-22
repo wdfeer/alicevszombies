@@ -43,7 +43,7 @@ func spawnDollWithMergeAnimation(world *World, typ *DollType, deadDolls []Entity
 
 	var particles []Entity
 	for _, e := range deadDolls {
-		particles = append(particles, newBreakdown(world, world.texture[e], world.position[e])...)
+		particles = append(particles, newBreakdown(world, world.doll[e].texture, world.position[e])...)
 	}
 	mergeBreakdown(world, typ.texture, world.playerData.dollSpawnPosition, particles)
 }
