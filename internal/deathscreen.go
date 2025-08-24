@@ -17,7 +17,7 @@ func onPlayerDeath(world *World) {
 	for id := range world.velocity {
 		world.velocity[id] = rl.Vector2Zero()
 	}
-	newDeathEffect(world, "player", world.position[world.player])
+	newDeathEffect(world, "player", world.position[world.player], deathEffectExplode)
 	delete(world.texture, world.player)
 }
 

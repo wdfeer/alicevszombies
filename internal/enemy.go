@@ -125,7 +125,35 @@ func preEnemyDeath(world *World, id Entity) {
 	}
 
 	world.playerData.mana += 1
-	newDeathEffect(world, world.enemy[id].texture, world.position[id])
+
+	deathEffectType := deathEffectNormal
+	var attacker Entity
+	maxCooldown := float32(0)
+	for id, v := range world.hp[id].attackerCooldown {
+		if v > maxCooldown {
+			attacker = id
+			maxCooldown = v
+		}
+	}
+	if dollType, ok := world.doll[attacker]; ok {
+		switch dollType {
+		case &dollTypes.basicDoll:
+			deathEffectType = deathEffectSlice
+		case &dollTypes.scytheDoll:
+			deathEffectType = deathEffectSlice
+		case &dollTypes.destructionDoll:
+			deathEffectType = deathEffectExplode
+		}
+	} else if proj, ok := world.projectile[attacker]; ok {
+		switch proj.typ {
+		case &projectileTypes.knife:
+			deathEffectType = deathEffectSlice
+		case &projectileTypes.redBullet:
+			deathEffectType = deathEffectExplode
+		}
+	}
+
+	newDeathEffect(world, world.enemy[id].texture, world.position[id], deathEffectType)
 
 	history.EnemiesKilledTotal[world.difficulty]++
 	history.EnemiesKilledPerType[world.enemy[id].texture]++
