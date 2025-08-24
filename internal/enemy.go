@@ -137,8 +137,6 @@ func preEnemyDeath(world *World, id Entity) {
 	}
 	if dollType, ok := world.doll[attacker]; ok {
 		switch dollType {
-		case &dollTypes.basicDoll:
-			deathEffectType = deathEffectSlice
 		case &dollTypes.scytheDoll:
 			deathEffectType = deathEffectSlice
 		case &dollTypes.destructionDoll:

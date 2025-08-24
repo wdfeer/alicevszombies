@@ -19,7 +19,7 @@ const (
 func newDeathEffect(world *World, name string, center rl.Vector2, typ DeathEffectType) {
 	particles := newBreakdown(world, name, center)
 
-	sliceVel := rl.Vector2Rotate(rl.Vector2{X: 25, Y: 0}, rand.Float32()*math.Pi)
+	sliceVel := rl.Vector2Scale(util.Vector2Random(), 17)
 	minusSliceVel := rl.Vector2Scale(sliceVel, -1)
 
 	for _, id := range particles {
@@ -31,9 +31,9 @@ func newDeathEffect(world *World, name string, center rl.Vector2, typ DeathEffec
 		case deathEffectSlice:
 			dot := rl.Vector2DotProduct(rl.Vector2Subtract(world.position[id], center), sliceVel)
 			if math.Signbit(float64(dot)) {
-				world.velocity[id] = sliceVel
+				world.velocity[id] = rl.Vector2Add(minusSliceVel, rl.Vector2Scale(util.Vector2Random(), 3))
 			} else {
-				world.velocity[id] = minusSliceVel
+				world.velocity[id] = rl.Vector2Add(sliceVel, rl.Vector2Scale(util.Vector2Random(), 3))
 			}
 		}
 
