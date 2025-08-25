@@ -55,11 +55,9 @@ func updateCollisions(world *World) {
 
 			if util.CheckCollisionCenteredVsRec(world.position[id], proj.typ.size, enemyRec) {
 				dmg := proj.typ.damage + (float32(world.playerData.upgrades[&DollDamage]/2) / 4)
+				damageWithCooldown(world, enemy, dmg, id) // For custom kill animation
 				if proj.typ.deleteOnHit {
-					damage(world, enemy, dmg)
 					world.deleteEntity(id)
-				} else {
-					damageWithCooldown(world, enemy, dmg, id)
 				}
 				break
 			}
