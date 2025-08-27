@@ -2,7 +2,7 @@
 set -e
 
 APP_NAME="alicevszombies"
-BUILD_DIR="release"
+BUILD_DIR="build"
 ASSETS_DIR="assets"
 LICENSE_FILE="LICENSE"
 
