@@ -53,6 +53,7 @@ func updatePlayer(world *World) {
 
 	accel := float32(700 + world.playerData.upgrades[&MovementSpeed]*20)
 
+	// Sprinting
 	if world.playerData.upgrades[&SprintUpgrade] > 0 && world.playerData.stamina > 0 && rl.IsKeyDown(rl.KeyLeftShift) && dir != rl.Vector2Zero() {
 		accel *= 1.7
 		world.playerData.stamina -= dt
@@ -63,6 +64,12 @@ func updatePlayer(world *World) {
 		if world.playerData.staminaRegenTimer <= 0 {
 			world.playerData.stamina = min(world.playerData.stamina+dt/3, 1)
 		}
+	}
+
+	// Focus
+	if world.playerData.upgrades[&FocusUpgrade] > 0 && rl.IsKeyDown(rl.KeyLeftShift) && dir != rl.Vector2Zero() {
+		accel *= 0.5
+		// TODO: show small hitbox
 	}
 
 	delta := rl.Vector2Scale(dir, accel*dt)
@@ -77,5 +84,4 @@ func updatePlayer(world *World) {
 		}
 		world.playerData.dollSpawnTimer = newDollSpawnTimer
 	}
-
 }

@@ -59,17 +59,21 @@ var (
 		name:   "Sprinting",
 		unique: true,
 	}
+	FocusUpgrade = Upgrade{
+		name:   "Focus",
+		unique: true,
+	}
 	DamageResistance = Upgrade{
 		name:   "Damage Resistance",
 		unique: true,
 	}
 )
 
-var uniqueUpgrades = []*Upgrade{&MovementSpeed, &UpgradeSelection, &SprintUpgrade, &DamageResistance}
+var uniqueUpgrades = []*Upgrade{&MovementSpeed, &UpgradeSelection, &SprintUpgrade, &DamageResistance, &FocusUpgrade}
 
 func initUpgrades() {
-	MovementSpeed.incompatible = []*Upgrade{&SprintUpgrade}
-	SprintUpgrade.incompatible = []*Upgrade{&MovementSpeed}
+	SprintUpgrade.incompatible = []*Upgrade{&FocusUpgrade}
+	FocusUpgrade.incompatible = []*Upgrade{&SprintUpgrade}
 }
 
 func randomUpgradesFrom(world *World, available []*Upgrade) []*Upgrade {
@@ -174,6 +178,9 @@ func incrementUpgrade(world *World, upgrade *Upgrade) {
 	str := upgrade.name + " +"
 	if upgrade == &SprintUpgrade {
 		str = "Hold SHIFT to sprint"
+	} else if upgrade == &FocusUpgrade {
+		str = "Hold SHIFT to focus"
+		// TODO: make player hitbox smaller
 	}
 	newCombatText(world, pos, str)
 
