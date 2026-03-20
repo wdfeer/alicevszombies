@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"alicevszombies/internal/network"
 	"alicevszombies/internal/util"
 	"math/rand"
 
@@ -108,12 +109,13 @@ func renderMainMenu(world *World) {
 		}
 	case 2:
 		if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Host") {
-			// TODO: host game
+			network.HostGame()
+			// TODO: show party/lobby screen
 		}
 		y += buttonHeight + buttonSpacing
 
 		if raygui.Button(rl.Rectangle{X: x, Y: y, Width: buttonWidth, Height: buttonHeight}, "Join") {
-			// TODO: open join menu
+			// TODO: open joining screen to type in an ip
 		}
 	case 3:
 		renderHistory(rl.Vector2{X: x, Y: y})
