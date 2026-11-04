@@ -15,6 +15,7 @@ type World struct {
 	player        Entity
 	playerData    PlayerData
 	enemySpawner  EnemySpawner
+	worldgen      WorldGen
 	targeting     map[Entity]Targeting
 	doll          map[Entity]*DollType
 	enemy         map[Entity]*EnemyType
