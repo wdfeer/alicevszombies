@@ -75,7 +75,7 @@ func renderGrass(world *World, camera *rl.Camera2D) {
 	for x := -400; x < 400; x += GRASS_SIZE {
 		for y := -400; y < 400; y += GRASS_SIZE {
 			pos := rl.Vector2{X: origin.X + float32(x), Y: origin.Y + float32(y)}
-			rl.DrawTextureV(assets.textures[world.worldgen.getGrassTexture(pos)], pos, rl.White)
+			rl.DrawTextureV(assets.textures[world.worldgen.GetGrassTexture(pos)], pos, rl.White)
 		}
 	}
 }

@@ -2,6 +2,7 @@ package internal
 
 import (
 	"alicevszombies/internal/util"
+	"alicevszombies/internal/worldgen"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
@@ -15,7 +16,7 @@ type World struct {
 	player        Entity
 	playerData    PlayerData
 	enemySpawner  EnemySpawner
-	worldgen      WorldGen
+	worldgen      worldgen.WorldGen
 	targeting     map[Entity]Targeting
 	doll          map[Entity]*DollType
 	enemy         map[Entity]*EnemyType
