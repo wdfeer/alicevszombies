@@ -1,0 +1,9 @@
+package worldgen
+
+var biomes = struct {
+	plains Biome
+}{
+	plains: Biome{
+		grass: "grass",
+	},
+}

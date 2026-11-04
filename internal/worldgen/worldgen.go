@@ -6,6 +6,10 @@ type WorldGen struct {
 	seed int
 }
 
+func (self *WorldGen) GetBiome(pos rl.Vector2) *Biome {
+	return &biomes.plains
+}
+
 func (self *WorldGen) GetGrassTexture(pos rl.Vector2) string {
-	return "grass"
+	return self.GetBiome(pos).grass
 }
