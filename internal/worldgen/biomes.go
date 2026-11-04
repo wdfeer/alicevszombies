@@ -4,6 +4,6 @@ var biomes = struct {
 	plains Biome
 }{
 	plains: Biome{
-		grass: "grass",
+		grass: "green_grass",
 	},
 }

@@ -90,7 +90,7 @@ func LoadAssets() {
 	loadTexture("doll_icon")
 	loadTexture("pitem_icon")
 	loadTexture("unique_upgrade_icon")
-	loadTexture("grass")
+	loadTexture("green_grass")
 
 	loadTexture("knife")
 	loadTexture("red_bullet")
