@@ -41,6 +41,8 @@ func LoadAssets() {
 	}
 	println("INFO: Render Texture loaded!")
 
+	// TODO: pls automate loading all textures in the asset files
+
 	loadTexture("player")
 	loadTexture("player_walk0")
 	loadTexture("player_walk1")
@@ -90,7 +92,10 @@ func LoadAssets() {
 	loadTexture("doll_icon")
 	loadTexture("pitem_icon")
 	loadTexture("unique_upgrade_icon")
+
 	loadTexture("green_grass")
+	loadTexture("green_foliage0")
+	loadTexture("green_foliage1")
 
 	loadTexture("knife")
 	loadTexture("red_bullet")
