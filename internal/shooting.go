@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"alicevszombies/internal/log"
 	"alicevszombies/internal/util"
 	"math"
 	"math/rand"
@@ -44,7 +45,7 @@ func updateShooting(world *World) {
 				pattern = typ.shootPattern
 				friendly = true
 			} else {
-				println("WARNING: entity with shootTimer is neither an enemy nor a doll!")
+				log.Warn("Entity with shootTimer is neither an enemy nor a doll!")
 				continue
 			}
 

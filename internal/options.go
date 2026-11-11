@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"alicevszombies/internal/log"
 	"alicevszombies/internal/util"
 	"os"
 
@@ -27,16 +28,16 @@ func loadOptions() {
 	data, err := os.ReadFile("user/options.bin")
 	if err == nil {
 		if err = util.Deserialize(data, &options); err == nil {
-			println("INFO: Loaded options successfully!")
+			log.Info("Loaded options successfully!")
 			return
 		} else {
-			println("ERROR: Failed deserializing options!")
+			log.Error("Failed deserializing options!")
 		}
 	} else {
-		println("ERROR: Failed reading options file!")
+		log.Error("Failed reading options file!")
 	}
 
-	println("WARNING: Creating default options file...")
+	log.Warn("Creating default options file...")
 
 	options = Options{
 		Fullscreen:       true,
@@ -54,24 +55,24 @@ func loadOptions() {
 func saveOptions() {
 	bytes, err := util.Serialize(&options)
 	if err != nil {
-		println("ERROR: Failed serializing options!")
+		log.Error("Failed serializing options!")
 		return
 	}
 
 	if _, err = os.Stat("user"); err != nil {
 		err = os.Mkdir("user", 0755)
 		if err != nil {
-			println("ERROR: Failed creating \"user\" directory!")
+			log.Error("Failed creating \"user\" directory!")
 			return
 		}
 	}
 
 	err = os.WriteFile("user/options.bin", bytes, 0644)
 	if err != nil {
-		println("ERROR: Failed writing options file!")
+		log.Error("Failed writing options file!")
 		return
 	}
-	println("INFO: Options saved!")
+	log.Info("Options saved!")
 }
 
 func renderOptions(origin rl.Vector2) {

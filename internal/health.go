@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"alicevszombies/internal/log"
 	"fmt"
 	"math/rand"
 
@@ -57,7 +58,7 @@ func heal(world *World, id Entity, amount float32) {
 func damage(world *World, id Entity, dmg float32) {
 	hp, exists := world.hp[id]
 	if !exists {
-		println("WARNING: Tried damaging deleted enemy with id", id)
+		log.Warn("Tried damaging deleted enemy with id", id)
 		return
 	}
 
@@ -104,7 +105,7 @@ func damage(world *World, id Entity, dmg float32) {
 func damageWithCooldown(world *World, id Entity, dmg float32, attacker Entity) {
 	hp, exists := world.hp[id]
 	if !exists {
-		println("WARNING: Tried damaging deleted enemy with id", id)
+		log.Warn("Tried damaging deleted enemy with id", id)
 		return
 	}
 	if onCooldown(world, id, attacker) {
