@@ -2,6 +2,7 @@ package internal
 
 import (
 	"alicevszombies/internal/colors"
+	"alicevszombies/internal/log"
 	"alicevszombies/internal/util"
 	"fmt"
 	"os"
@@ -34,16 +35,16 @@ func loadRunHistory() {
 	data, err := os.ReadFile(runHistoryPath)
 	if err == nil {
 		if err = util.Deserialize(data, &runHistory); err == nil {
-			println(fmt.Sprintf("INFO: Loaded run history with %d entries successfully!", len(runHistory.Entries)))
+			log.Info(fmt.Sprintf("Loaded run history with %d entries successfully!", len(runHistory.Entries)))
 			return
 		} else {
-			println("ERROR: Failed deserializing run history!")
+			log.Error("Failed deserializing run history!")
 		}
 	} else {
-		println("ERROR: Failed reading run history file!")
+		log.Error("Failed reading run history file!")
 	}
 
-	println("WARNING: Creating default run history file...")
+	log.Warn("Creating default run history file...")
 
 	go saveRunHistory()
 }
@@ -51,24 +52,24 @@ func loadRunHistory() {
 func saveRunHistory() {
 	bytes, err := util.Serialize(&runHistory)
 	if err != nil {
-		println("ERROR: Failed serializing run history!")
+		log.Error("Failed serializing run history!")
 		return
 	}
 
 	if _, err = os.Stat("user"); err != nil {
 		err = os.Mkdir("user", 0755)
 		if err != nil {
-			println("ERROR: Failed creating \"user\" directory!")
+			log.Error("Failed creating \"user\" directory!")
 			return
 		}
 	}
 
 	err = os.WriteFile(runHistoryPath, bytes, 0644)
 	if err != nil {
-		println("ERROR: Failed writing run history file!")
+		log.Error("Failed writing run history file!")
 		return
 	}
-	println(fmt.Sprintf("INFO: Run history saved with %d entries", len(runHistory.Entries)))
+	log.Info(fmt.Sprintf("Run history saved with %d entries", len(runHistory.Entries)))
 }
 
 func SaveRun(world *World) {

@@ -1,14 +1,16 @@
 package internal
 
+import "alicevszombies/internal/log"
+
 func LoadUserData() {
-	println("INFO: Loading user data...")
+	log.Info("Loading user data...")
 	loadOptions()
 	loadRunHistory()
 	loadHistory()
 }
 
 func SaveUserData() {
-	println("INFO: Saving user data...")
+	log.Info("Saving user data...")
 	saveOptions()
 	saveRunHistory()
 	saveHistory()

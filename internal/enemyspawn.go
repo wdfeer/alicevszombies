@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"alicevszombies/internal/log"
 	"math"
 	"math/rand"
 )
@@ -89,7 +90,7 @@ func enemyTypeToSpawn(world *World) *EnemyType {
 	}
 
 	if len(valid) == 0 {
-		println("WARNING: no valid enemy type to spawn found!")
+		log.Warn("No valid enemy type to spawn found!")
 		return &enemyTypes.zombie
 	}
 
@@ -102,6 +103,6 @@ func enemyTypeToSpawn(world *World) *EnemyType {
 		}
 	}
 
-	println("WARNING: weighted enemy spawning failed!")
+	log.Warn("Weighted enemy spawning failed!")
 	return valid[rand.Int()%len(valid)]
 }

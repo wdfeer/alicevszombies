@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"alicevszombies/internal/log"
 	"alicevszombies/internal/util"
 	"os"
 
@@ -53,16 +54,16 @@ func loadHistory() {
 	data, err := os.ReadFile(historyPath)
 	if err == nil {
 		if err = util.Deserialize(data, &history); err == nil {
-			println("INFO: Loaded history successfully!")
+			log.Info("Loaded history successfully!")
 			return
 		} else {
-			println("ERROR: Failed deserializing history!")
+			log.Error("Failed deserializing history!")
 		}
 	} else {
-		println("ERROR: Failed reading history file!")
+		log.Error("Failed reading history file!")
 	}
 
-	println("WARNING: Creating default history file...")
+	log.Warn("Creating default history file...")
 
 	go saveHistory()
 }
@@ -70,24 +71,24 @@ func loadHistory() {
 func saveHistory() {
 	bytes, err := util.Serialize(&history)
 	if err != nil {
-		println("ERROR: Failed serializing history!")
+		log.Error("Failed serializing history!")
 		return
 	}
 
 	if _, err = os.Stat("user"); err != nil {
 		err = os.Mkdir("user", 0755)
 		if err != nil {
-			println("ERROR: Failed creating \"user\" directory!")
+			log.Error("Failed creating \"user\" directory!")
 			return
 		}
 	}
 
 	err = os.WriteFile(historyPath, bytes, 0644)
 	if err != nil {
-		println("ERROR: Failed writing history file!")
+		log.Error("Failed writing history file!")
 		return
 	}
-	println("INFO: History saved!")
+	log.Info("History saved!")
 }
 
 func renderHistory(origin rl.Vector2) {

@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"alicevszombies/internal/log"
 	"fmt"
 	"time"
 
@@ -27,19 +28,19 @@ func LoadAssets() {
 	start := time.Now()
 	defer func() {
 		elapsed := time.Since(start)
-		fmt.Printf("INFO: Loading assets took %s\n", elapsed)
+		log.Info(fmt.Sprintf("Loading assets took %s\n", elapsed))
 	}()
 
-	println("INFO: Starting to load assets...")
+	log.Info("Starting to load assets...")
 
 	rl.SetWindowIcon(*rl.LoadImage("assets/images/icon.png"))
-	println("INFO: Icon loaded!")
+	log.Info("Icon loaded!")
 
 	assets.renderTextures = [2]rl.RenderTexture2D{
 		rl.LoadRenderTexture(int32(rl.GetScreenWidth()), int32(rl.GetScreenHeight())),
 		rl.LoadRenderTexture(int32(rl.GetScreenWidth()), int32(rl.GetScreenHeight())),
 	}
-	println("INFO: Render Texture loaded!")
+	log.Info("Render Texture loaded!")
 
 	loadTexture("player")
 	loadTexture("player_walk0")
@@ -99,7 +100,7 @@ func LoadAssets() {
 	loadTexture("blue_bullet")
 	loadTexture("lightning_bolt")
 
-	println("INFO: Textures loaded!")
+	log.Info("Textures loaded!")
 
 	loadBreakdown("player")
 	loadBreakdown("zombie")
@@ -122,28 +123,28 @@ func LoadAssets() {
 	loadBreakdown("doll_knife")
 	loadBreakdown("doll_magician")
 
-	println("INFO: Texture Breakdowns loaded!")
+	log.Info("Texture Breakdowns loaded!")
 
 	assets.shaders["bloom"] = rl.LoadShader("", "assets/shaders/bloom.fs")
 	assets.shaders["chroma_abberation"] = rl.LoadShader("", "assets/shaders/chroma_abberation.fs")
-	println("INFO: Shaders loaded!")
+	log.Info("Shaders loaded!")
 
 	rl.InitAudioDevice()
 	loadSFX("player_hit")
 	loadSFX("enemy_hit")
 	loadSFX("enemy_kill")
 	loadSFX("boss_spawn")
-	println("INFO: Sounds loaded!")
+	log.Info("Sounds loaded!")
 
 	for name := range musicTracks {
 		loadMusic(name)
 	}
-	println("INFO: Sounds loaded!")
+	log.Info("Sounds loaded!")
 
 	raygui.LoadStyle("assets/style.rgs")
 	updateUIScale()
 	raygui.SetStyle(raygui.DEFAULT, raygui.TEXT_ALIGNMENT, raygui.TEXT_ALIGN_CENTER)
-	println("INFO: Raygui style loaded!")
+	log.Info("Raygui style loaded!")
 }
 
 func UnloadAssets() {

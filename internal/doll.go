@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"alicevszombies/internal/log"
 	"alicevszombies/internal/util"
 	"math"
 	"math/rand"
@@ -10,7 +11,7 @@ import (
 
 func spawnDollWithAnimation(world *World, typ *DollType) {
 	if world.playerData.dollToSpawn != nil {
-		println("WARNING: Overriding doll to spawn!")
+		log.Warn("Overriding doll to spawn!")
 	}
 
 	world.playerData.dollSpawnTimer = 0.5
@@ -34,7 +35,7 @@ func spawnDollWithAnimation(world *World, typ *DollType) {
 
 func spawnDollWithMergeAnimation(world *World, typ *DollType, deadDolls []Entity) {
 	if world.playerData.dollToSpawn != nil {
-		println("WARNING: Overriding doll to spawn!")
+		log.Warn("Overriding doll to spawn!")
 	}
 
 	world.playerData.dollSpawnTimer = 1
