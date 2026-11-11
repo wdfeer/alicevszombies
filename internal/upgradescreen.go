@@ -201,12 +201,6 @@ func renderChosenUpgradeAnimation(world *World) { // TODO: refactor this shit
 		// Calculate dimensions of the doll cost
 		dollScale := 4 * uiScale
 		dollSpacing := 4 * uiScale
-		maxHeight := int32(0)
-		for dollT := range up.cost {
-			if assets.textures[dollT.texture].Height > maxHeight {
-				maxHeight = assets.textures[dollT.texture].Height
-			}
-		}
 
 		// Sort the doll costs by type
 		type dollCost struct {
