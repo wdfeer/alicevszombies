@@ -1,5 +1,6 @@
 package worldgen
 
 type Biome struct {
-	grass string
+	grass   string
+	foliage []string
 }
