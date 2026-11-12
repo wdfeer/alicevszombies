@@ -8,12 +8,12 @@ import (
 )
 
 type WorldGen struct {
-	seed int
+	seed uint32
 }
 
 func NewWorldGen() WorldGen {
 	return WorldGen{
-		rand.Int(),
+		rand.Uint32(),
 	}
 }
 
@@ -38,13 +38,13 @@ func (self *WorldGen) GetFoliageOnScreen(start rl.Vector2, end rl.Vector2) map[r
 	for x := start.X; x < end.X; x += SIZE {
 		for y := start.Y; y < end.Y; y += SIZE {
 			pos := rl.Vector2{X: x, Y: y}
-			// TODO: make this depend on `self.seed` and `pos`
-			if rand.Int()%100 < 8 {
-				pos.X += float32(rand.Int() % SIZE)
-				pos.Y += float32(rand.Int() % SIZE)
+			seed := self.seed + util.Hash(uint32(pos.X)) + util.Hash(uint32(pos.Y))
+			if util.Hash(seed)%100 < 8 {
+				pos.X += float32(util.Hash(seed+1) % SIZE)
+				pos.Y += float32(util.Hash(seed+2) % SIZE)
 
 				biome := self.GetBiome(pos)
-				foliage := biome.foliage[rand.Int()%len(biome.foliage)]
+				foliage := biome.foliage[util.Hash(seed+3)%uint32(len(biome.foliage))]
 				m[pos] = foliage
 			}
 		}
